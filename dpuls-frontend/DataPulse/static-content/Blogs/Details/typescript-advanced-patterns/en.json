@@ -1,0 +1,80 @@
+{
+  "seo": {
+    "title": "Advanced TypeScript Patterns for Enterprise Apps | Data Pulse",
+    "description": "Master advanced TypeScript patterns including generics and conditional types.",
+    "keywords": "typescript, advanced patterns, architecture"
+  },
+  "hero": {
+    "dispatch_prefix": "DISPATCH: ",
+    "read_label": "MIN READ",
+    "label_left": "EST. 2024",
+    "label_right_prefix": "HASH: ",
+    "scroll_label": "SCROLL DOWN"
+  },
+  "meta_ticker": {
+    "integrity_label": "INTEGRITY",
+    "integrity_value": "VERIFIED",
+    "source_label": "SOURCE",
+    "node_prefix": "NODE // ",
+    "node_suffix": " // SYSTEM",
+    "download_button": "SAVE DISPATCH"
+  },
+  "sidebar": {
+    "index_label": "INDEX",
+    "node_prefix": "NODE_",
+    "quote": "Types are the documentation that never lies."
+  },
+  "content": {
+    "section1_title": "The Type Safety Promise",
+    "section1_p1": "TypeScript in the enterprise isn't just about catching typos; it's about modeling complex domain logic in the type system.",
+    "section1_p2": "Advanced patterns allow for",
+    "section1_strong": "compile-time verification.",
+    "section1_p2_cont": " Eliminate entire classes of runtime errors before they happen.",
+    "callout_label": "ENGINEERING CORE",
+    "callout_text": "Using mapped types to automate API response validation.",
+    "section2_title": "Generic Excellence",
+    "section2_p1": "Well-designed generic interfaces provide the flexibility of JavaScript with the safety of a strongly typed language."
+  },
+  "related": {
+    "title_line1": "KEEP",
+    "title_line2": "EXPLORING",
+    "subtitle": "Related engineering insights.",
+    "view_archive": "VIEW ALL",
+    "access_label": "READ"
+  },
+  "article": {
+    "id": "12",
+    "uid": "ENG-2024-12",
+    "category": "software",
+    "title": "Advanced",
+    "title_accent": "TypeScript.",
+    "subtitle": "Advanced TypeScript Patterns for Enterprise Apps",
+    "lead": "Master advanced TypeScript patterns for enterprise applications.",
+    "author": {
+      "name": "Chris Martinez",
+      "role": "Principal Engineer",
+      "image": "https://i.pravatar.cc/150?img=37",
+      "id": "DP-ATH-12"
+    },
+    "meta": {
+      "date": "APR 12, 2024",
+      "readTime": "14",
+      "hash": "0x22d12eb2",
+      "security": "Public Dispatch"
+    }
+  },
+  "index": [
+    {
+      "id": "infrastructure-trap",
+      "label": "The Type Safety Promise"
+    },
+    {
+      "id": "architectural-core",
+      "label": "ENGINEERING CORE"
+    },
+    {
+      "id": "logic-kernels",
+      "label": "Generic Excellence"
+    }
+  ]
+}

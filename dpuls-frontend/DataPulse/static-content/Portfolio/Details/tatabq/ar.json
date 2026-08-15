@@ -1,0 +1,207 @@
+{
+  "seo": {
+    "title": "تطابق | المنصة الموثوقة لمطابقة الأرصدة",
+    "description": "تطابق هي المنصة الإلكترونية الرائدة لمطابقة الأرصدة الموثقة بين الشركات في المملكة العربية السعودية.",
+    "keywords": "تطابق, مطابقة أرصدة, مطابقة شركات, مطابقة إلكترونية, نفاذ"
+  },
+  "project": {
+    "id": "tatabq",
+    "title": "تطابق",
+    "client": "تطابق للحلول المتكاملة",
+    "year": "2025",
+    "role": "تطوير منصة تقنية مالية",
+    "image": "/assets/images/projects/systems/tatabq/1.png",
+    "strategyImage": "/assets/images/projects/systems/tatabq/2.png",
+    "experienceImage": "/assets/images/projects/systems/tatabq/7.png",
+    "featuresImage": "/assets/images/projects/systems/tatabq/3.png",
+    "designImage": "/assets/images/projects/systems/tatabq/5.png",
+    "deviceLarge": "/assets/images/projects/systems/tatabq/1.png",
+    "deviceSmall": "/assets/images/projects/systems/tatabq/2.png",
+    "liveUrl": "https://tatabq.sa/",
+    "shortDesc": "المنصة الموثوقة لمطابقة الأرصدة بين الشركات إلكترونياً.",
+    "tags": ["تقنية مالية", "مؤسسات", "أمان"],
+    "overview": {
+      "about": "تطابق هي المنصة الموثوقة لمطابقة الأرصدة بين الشركات إلكترونياً. توفر طريقة موثقة وآمنة للتحقق من الأرصدة، متكاملة مع نفاذ لتسجيل دخول آمن للمنشآت. يمكن للشركات بسهولة اختيار منشأتها وبدء عملية المطابقة من أي مكان.",
+      "goal": "تبسيط وتوثيق عملية مطابقة الأرصدة، وضمان الشفافية والامتثال القانوني بين الكيانات الشركاتية.",
+      "audience": "أقسام المحاسبة، المديرين الماليين، المراجعين، وأصحاب الأعمال."
+    },
+    "challenge": {
+      "description": "ضمان الصحة القانونية للمطابقة الإلكترونية والتكامل مع أنظمة الهوية الوطنية (نفاذ) مع الحفاظ على تجربة مستخدم سلسة لمستخدمي الشركات.",
+      "points": [
+        "التحقق من الهوية عبر نفاذ",
+        "شهادات مطابقة موثقة",
+        "إدارة منشآت متعددة"
+      ]
+    },
+    "solution": {
+      "description": "قمنا بتطوير منظومة تقنية مالية قوية تتعامل مع سير عمل المطابقة المعقد. يولد النظام مستندات ملزمة قانوناً ويوفر تتبعاً في الوقت الفعلي لجميع طلبات المطابقة.",
+      "approach": "بناء منصة آمنة من حيث التصميم تركز على التوثيق القانوني وسهولة الوصول."
+    },
+    "features": [
+      {
+        "title": "التكامل مع نفاذ",
+        "desc": "تسجيل دخول آمن للمنشآت والتحقق من الهوية عبر بوابة النفاذ الوطني الموحد.",
+        "icon": "fa-user-shield"
+      },
+      {
+        "title": "مستندات إلكترونية",
+        "desc": "توليد فوري لشهادات مطابقة أرصدة موثقة ومختومة.",
+        "icon": "fa-file-signature"
+      },
+      {
+        "title": "منشآت متعددة",
+        "desc": "إدارة شركات متعددة وطلبات مطابقة من لوحة تحكم واحدة.",
+        "icon": "fa-building-columns"
+      },
+      {
+        "title": "تتبع فوري",
+        "desc": "مراقبة حالة طلبات المطابقة والموافقات في الوقت الفعلي.",
+        "icon": "fa-clock-rotate-left"
+      }
+    ],
+    "design": {
+      "philosophy": "موثوق واحترافي. استخدام جمالية مؤسسية نظيفة تؤكد على الأمان والموثوقية.",
+      "colors": ["#00593c", "#f8f9fa", "#1e293b", "#ffffff"],
+      "typography": "Inter & IBM Plex Sans"
+    },
+    "techStack": [
+      "Next.js",
+      "TypeScript",
+      "PostgreSQL",
+      "Nafath API",
+      "Tailwind CSS"
+    ],
+    "results": {
+      "impact": "تسهيل أكثر من 5,000 طلب مطابقة موثق في الشهر الأول وتقليل وقت التوثيق اليدوي بنسبة 80٪.",
+      "metrics": [
+        {"label": "درجة الثقة", "value": "99.9%"},
+        {"label": "سرعة المعالجة", "value": "10 أضعاف"},
+        {"label": "مستوى الأمان", "value": "بنكي"}
+      ]
+    },
+    "gallery": [
+      "/assets/images/projects/systems/tatabq/1.png",
+      "/assets/images/projects/systems/tatabq/3.png",
+      "/assets/images/projects/systems/tatabq/4.png",
+      "/assets/images/projects/systems/tatabq/5.png",
+      "/assets/images/projects/systems/tatabq/6.png",
+      "/assets/images/projects/systems/tatabq/7.png",
+      "/assets/images/projects/systems/tatabq/8.png",
+      "/assets/images/projects/systems/tatabq/9.png",
+      "/assets/images/projects/systems/tatabq/10.png",
+      "/assets/images/projects/systems/tatabq/11.png",
+      "/assets/images/projects/systems/tatabq/12.png",
+      "/assets/images/projects/systems/tatabq/13.png"
+    ]
+  },
+  "website_project": {
+    "hero": {
+      "prefix": "FINTECH_PRO_01",
+      "status": "قيد التشغيل",
+      "labels": {
+        "client": "المشروع",
+        "role": "النطاق",
+        "year": "السنة",
+        "core": "التركيز"
+      },
+      "defaults": {
+        "year": "2025"
+      },
+      "cta": {
+        "live_preview": "دخول تطابق"
+      },
+      "system_config": {
+        "label": "// تدفق النظام",
+        "status": "نفاذ:",
+        "status_val": "متصل",
+        "latency": "الاستجابة:",
+        "latency_val": "14ms",
+        "render": "النوع:",
+        "render_val": "تقنية مالية"
+       }
+    },
+    "additionalLinks": [
+      {
+        "label": "بوابة الشركات",
+        "url": "https://tatabq.sa/companies/",
+        "authTooltip": {
+          "label": "بيانات الدخول التجريبية",
+          "emailLabel": "الهوية",
+          "email": "123456789",
+          "passwordLabel": "الباسورد",
+          "password": "123456789"
+        }
+      }
+    ],
+    "strategy": {
+      "methodology": "هندسة الأنظمة",
+      "title": "تأمين التدفق المالي",
+      "desc": "سد الفجوة بين التدقيق التقليدي والكفاءة الرقمية.",
+      "steps": [
+        {
+          "title": "نواة الهوية",
+          "desc": "الاستفادة من البنية التحتية الوطنية لثقة مطلقة."
+        },
+        {
+          "title": "محرك الوثائق",
+          "desc": "أتمتة إنشاء المطابقات الموثقة."
+        },
+        {
+          "title": "تدفق مرن",
+          "desc": "تحسين التعامل مع آلاف طلبات المطابقة المتزامنة."
+        }
+      ]
+    },
+    "experience": {
+      "label": "واجهة المنصة",
+      "title": "مركز المؤسسات الموثوق",
+      "res_label": "السعة: آمنة",
+      "scale_label": "النطاق: مؤسسي",
+      "default_url": "tatabq.sa",
+      "scrolling_preview": "تجربة المنصة"
+    },
+    "features": {
+      "title": "وحدات المنصة",
+      "specs_cta": "مواصفات النظام"
+    },
+    "design_system": {
+      "typography": {
+        "label": "// الهوية المؤسسية",
+        "type_desc": "سانز نظيف / IBM Arabic",
+        "quote": "تُبنى الثقة من خلال الوضوح والاتساق الموثق.",
+        "specimen_label": "نظام واجهة المالية"
+      },
+      "colors": {
+        "label": "// لوحة الألوان",
+        "palette_prefix": "أخضر-تطابق"
+      },
+      "components": {
+        "label": "// العناصر الأساسية",
+        "submit_btn": "طابق",
+        "cancel_btn": "إعادة تعيين"
+      }
+    },
+    "tech_stack": {
+      "title": "بنية النظام"
+    },
+    "compatibility": {
+      "title": "وصول آمن من كل مكان",
+      "desc": "الوصول إلى نظام المطابقة الموثق من أي جهاز مع بروتوكولات أمان محسنة تضمن بقاء بياناتك المالية خاصة وآمنة.",
+      "metrics": [
+        {"label": "سرعة المزامنة", "value": "سريع"},
+        {"label": "الأمان", "value": "AES-256"},
+        {"label": "الموثوقية", "value": "99.9%"}
+      ]
+    },
+    "impact": {
+      "title": "تأثير السوق"
+    },
+    "gallery": {
+      "title": "عرض النظام",
+      "subtitle": "فهرس الواجهات",
+      "fullscreen": "عرض كامل",
+      "fig_prefix": "طلب.",
+      "render_label": "عرض_حي_للنظام"
+    }
+  }
+}

@@ -1,0 +1,80 @@
+{
+  "seo": {
+    "title": "Content Marketing Strategies for B2B SaaS Growth | Data Pulse",
+    "description": "Actionable content marketing tactics for B2B SaaS revenue growth.",
+    "keywords": "content marketing, B2B SaaS, lead generation"
+  },
+  "hero": {
+    "dispatch_prefix": "DISPATCH: ",
+    "read_label": "MIN READ",
+    "label_left": "EST. 2024",
+    "label_right_prefix": "HASH: ",
+    "scroll_label": "SCROLL DOWN"
+  },
+  "meta_ticker": {
+    "integrity_label": "INTEGRITY",
+    "integrity_value": "VERIFIED",
+    "source_label": "SOURCE",
+    "node_prefix": "NODE // ",
+    "node_suffix": " // SYSTEM",
+    "download_button": "SAVE DISPATCH"
+  },
+  "sidebar": {
+    "index_label": "INDEX",
+    "node_prefix": "NODE_",
+    "quote": "In B2B, content is not just info—it is an insurance policy for the buyer's reputation."
+  },
+  "content": {
+    "section1_title": "The Trust Bridge",
+    "section1_p1": "Complexity in B2B SaaS requires high-trust content that solves enterprise-level problems before a demo even starts.",
+    "section1_p2": "The funnel has evolved into an",
+    "section1_strong": "educational journey.",
+    "section1_p2_cont": " Help your customers succeed, and they will help you grow.",
+    "callout_label": "MARKETING CORE",
+    "callout_text": "Repurposing technical whitepapers into digestible multi-channel insights.",
+    "section2_title": "Content Authority",
+    "section2_p1": "Building deep authority in specific niches is more valuable than broad generic coverage."
+  },
+  "related": {
+    "title_line1": "KEEP",
+    "title_line2": "EXPLORING",
+    "subtitle": "Related marketing insights.",
+    "view_archive": "VIEW ALL",
+    "access_label": "READ"
+  },
+  "article": {
+    "id": "9",
+    "uid": "MARK-2024-09",
+    "category": "marketing",
+    "title": "B2B",
+    "title_accent": "Marketing.",
+    "subtitle": "Content Marketing Strategies for B2B SaaS Growth",
+    "lead": "Actionable content marketing tactics for B2B SaaS.",
+    "author": {
+      "name": "Rachel Green",
+      "role": "Content Strategist",
+      "image": "https://i.pravatar.cc/150?img=40",
+      "id": "DP-ATH-09"
+    },
+    "meta": {
+      "date": "MAR 20, 2024",
+      "readTime": "11",
+      "hash": "0x11b12ea9",
+      "security": "Public Dispatch"
+    }
+  },
+  "index": [
+    {
+      "id": "infrastructure-trap",
+      "label": "The Trust Bridge"
+    },
+    {
+      "id": "architectural-core",
+      "label": "MARKETING CORE"
+    },
+    {
+      "id": "logic-kernels",
+      "label": "Content Authority"
+    }
+  ]
+}

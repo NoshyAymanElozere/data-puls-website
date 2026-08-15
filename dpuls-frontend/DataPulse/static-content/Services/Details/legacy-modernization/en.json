@@ -1,0 +1,266 @@
+{
+  "hero_tag": "Legacy Revitalization",
+  "breadcrumbs": {
+    "services": "Services",
+    "sys_id": "SYS-ID"
+  },
+  "hero": {
+    "badges": [
+      {
+        "value": "Zero",
+        "label": "Data Loss"
+      },
+      {
+        "value": "Cloud",
+        "label": "Native"
+      },
+      {
+        "value": "Modern",
+        "label": "Architectures"
+      }
+    ]
+  },
+  "overview_title": "Breathing New Life into Old Code.",
+  "overview_desc_1": "We transform outdated, monolithic applications into modern, scalable, and secure cloud-native platforms. Our modernization strategies ensure your business logic is preserved while your infrastructure is future-proofed.",
+  "overview_desc_2": "Eliminating technical debt allows your team to innovate faster, reduces maintenance costs, and improves overall system security and performance.",
+  "overview": {
+    "problem": {
+      "title": "Stagnant Legacy",
+      "desc": "Brittle systems that are expensive to maintain, impossible to scale, and vulnerable to modern security threats."
+    },
+    "solution": {
+      "title": "Strategic Evolution",
+      "desc": "Incremental refactoring and replatforming that moves your core assets to modern stacks without interrupting business operations."
+    }
+  },
+  "capabilities": {
+    "label": "RENEWAL SUITE"
+  },
+  "features_title": "Modernization Framework",
+  "details": {
+    "benefits": [
+      {
+        "title": "Cloud Replatforming",
+        "desc": "Moving on-premise monolithic applications to flexible, cost-effective cloud environments."
+      },
+      {
+        "title": "Microservices Breakout",
+        "desc": "Decomposing giant codebases into small, independent services for easier maintenance and deployment."
+      },
+      {
+        "title": "Database Migration",
+        "desc": "Migrating legacy data stores to modern, high-performance relational or NoSQL databases with zero corruption."
+      },
+      {
+        "title": "Frontend Refresh",
+        "desc": "Replacing outdated web interfaces with modern, responsive, and high-performance React or Next.js frontends."
+      },
+      {
+        "title": "Security Hardening",
+        "desc": "Integrating modern identity management and encryption protocols into legacy business logic layers."
+      },
+      {
+        "title": "CI/CD Implementation",
+        "desc": "Automating manual deployment processes to reduce human error and increase release frequency."
+      }
+    ],
+    "features": [
+      "Monolith Decomposition",
+      "Cloud Migration",
+      "Code Refactoring",
+      "Data Transformation",
+      "UX/UI Modernization",
+      "API Wrapping"
+    ],
+    "process": [
+      {
+        "title": "Technical Debt Audit",
+        "desc": "Analyzing existing codebase for vulnerabilities, bottlenecks, and obsolete dependencies."
+      },
+      {
+        "title": "Strangler Pattern",
+        "desc": "Implementing new features in modern stacks while slowly replacing old modules over time."
+      },
+      {
+        "title": "Data Migration",
+        "desc": "Scripting and validating the transfer of critical business data to new schemas."
+      },
+      {
+        "title": "Phased Cutover",
+        "desc": "Seamless switching from the old system to the new platform with minimal downtime."
+      }
+    ]
+  },
+  "process_title": "Modernization Journey",
+  "build": {
+    "code_snippet": "const migrateRecord = async (legacyDoc) => {\n  const validated = await transformer.normalize(legacyDoc);\n  await cloudDb.insert(validated);\n  await auditLog.markMigrated(legacyDoc.id);\n};",
+    "card_title": "Migration Logic",
+    "card_desc": "Batch Scripting + Validation"
+  },
+  "what_we_build_title": "Digital Transformation",
+  "what_we_build_subtitle": "Escaping the trap of legacy technology.",
+  "philosophy_title": "Modernization Philosophy",
+  "philosophy_subtitle": "Stability through evolution.",
+  "philosophy_items": [
+    {
+      "title": "Risk Mitigation",
+      "desc": "Always maintain business continuity during technical transitions."
+    },
+    {
+      "title": "Incremental Change",
+      "desc": "Small, validated steps are better than one high-risk 'big bang' launch."
+    },
+    {
+      "title": "Preserve Logic",
+      "desc": "Ensure decades of institutional knowledge encoded in code is never lost."
+    },
+    {
+      "title": "Scale Ready",
+      "desc": "Every new module must be built for 10x growth."
+    }
+  ],
+  "tech_stack_title": "Transition Stack",
+  "tech_stack_subtitle": "Bridges between old and new.",
+  "tech_stack_groups": [
+    {
+      "name": "Legacy Sources",
+      "items": [
+        "PHP 5",
+        "ASP.NET",
+        "Java 8",
+        "MySQL 5.x",
+        "Cobol"
+      ]
+    },
+    {
+      "name": "Modern Targets",
+      "items": [
+        "Next.js",
+        "Node.js",
+        "Golang",
+        "PostgreSQL",
+        "Docker"
+      ]
+    },
+    {
+      "name": "Cloud",
+      "items": [
+        "AWS",
+        "Azure",
+        "Kubernetes",
+        "Serverless"
+      ]
+    },
+    {
+      "name": "Integration",
+      "items": [
+        "Kafka",
+        "RabbitMQ",
+        "gRPC",
+        "GraphQL"
+      ]
+    }
+  ],
+  "quality_title": "Regression Integrity",
+  "quality_desc": "Ensuring new code behaves exactly like the old code, only better.",
+  "quality": {
+    "secure": {
+      "title": "Zero Vulnerability",
+      "desc": "Patching security holes inherited from legacy frameworks."
+    },
+    "qa": {
+      "title": "Side-by-Side Testing",
+      "desc": "Running old and new systems in parallel to verify data parity."
+    },
+    "terminal": {
+      "run": "migration-check --verify-parity",
+      "init": "Scanning legacy buckets...",
+      "deps": "Normalizing data formats...",
+      "encrypt": "Running hashing verification...",
+      "pen": "Testing identity sync...",
+      "complete": "Parity 100% Valid.",
+      "status_label": "Legacy Status:",
+      "status_value": "RETIRED"
+    }
+  },
+  "use_cases_title": "Modernization Cases",
+  "use_cases_items": [
+    {
+      "industry": "Enterprises",
+      "title": "Monolith to Microservices",
+      "desc": "Breaking down a 10-year old ERP into agile services."
+    },
+    {
+      "industry": "Foundations",
+      "title": "UI Revitalization",
+      "desc": "Updating 90s-era web portals for modern browsers and mobile."
+    }
+  ],
+  "engagement_title": "Partner Models",
+  "engagement_models": [
+    {
+      "title": "Technical Audit",
+      "desc": "Deep dive into your codebase with a modernization roadmap."
+    },
+    {
+      "title": "Modular Refactoring",
+      "desc": "Replacing expensive legacy modules with modern alternatives."
+    }
+  ],
+  "why_us": {
+    "title": "Why Modernize with Data Pulse?",
+    "desc": "We understand the past and are focused on your future.",
+    "list": [
+      "Expert Migration Squads",
+      "Bespoke Strangler Strategies",
+      "Zero Downtime Deployment"
+    ],
+    "stats": [
+      {
+        "value": "100%",
+        "label": "Data Integrity"
+      },
+      {
+        "value": "-40%",
+        "label": "OpEx Reduction"
+      }
+    ]
+  },
+  "related": {
+    "title": "Related Services",
+    "view_all": "View All",
+    "learn_more": "Learn More"
+  },
+  "services": {
+    "web": {
+      "title": "Custom Web Development",
+      "desc": "Scalable, high-performance web applications built with React, Node.js, and modern architectures."
+    },
+    "mobile": {
+      "title": "Mobile App Development",
+      "desc": "Native and cross-platform mobile solutions."
+    },
+    "saas": {
+      "title": "SaaS Product Engineering",
+      "desc": "Full-cycle SaaS development from MVP to scale."
+    },
+    "erp": {
+      "title": "Enterprise ERP Solutions",
+      "desc": "Comprehensive resource planning systems."
+    },
+    "api": {
+      "title": "API Development",
+      "desc": "Robust API architectures connecting disparate systems."
+    },
+    "legacy": {
+      "title": "Legacy Modernization",
+      "desc": "Transforming outdated software into modern apps."
+    }
+  },
+  "related_services_title": "Explore More",
+  "seo": {
+    "title": "Legacy Modernization | Custom Software Development | Data Pulse",
+    "description": "High-performance Legacy Modernization services. We build scalable, secure, and modern digital products for enterprises.",
+    "keywords": "legacy modernization, software, data pulse, software development"
+  }
+}

@@ -1,0 +1,80 @@
+{
+  "seo": {
+    "title": "Making Data-Driven Product Decisions: A Framework | Data Pulse",
+    "description": "How to leverage analytics and user research to make confident product decisions.",
+    "keywords": "data-driven, product management, analytics, user research"
+  },
+  "hero": {
+    "dispatch_prefix": "DISPATCH: ",
+    "read_label": "MIN READ",
+    "label_left": "EST. 2024",
+    "label_right_prefix": "HASH: ",
+    "scroll_label": "SCROLL DOWN"
+  },
+  "meta_ticker": {
+    "integrity_label": "INTEGRITY",
+    "integrity_value": "VERIFIED",
+    "source_label": "SOURCE",
+    "node_prefix": "NODE // ",
+    "node_suffix": " // SYSTEM",
+    "download_button": "SAVE DISPATCH"
+  },
+  "sidebar": {
+    "index_label": "INDEX",
+    "node_prefix": "NODE_",
+    "quote": "Data is a compass, not a map."
+  },
+  "content": {
+    "section1_title": "The Interpretation Gap",
+    "section1_p1": "Collecting data is easy; interpreting it in a way that leads to a competitive advantage is the real challenge.",
+    "section1_p2": "Decisions should be backed by",
+    "section1_strong": "triangulated evidence.",
+    "section1_p2_cont": " Combine quantitative logs with qualitative user interviews.",
+    "callout_label": "PRODUCT CORE",
+    "callout_text": "Building a culture of experimentation where failing fast is rewarded.",
+    "section2_title": "The Power of Why",
+    "section2_p1": "Analytics tell you *what* happened; research tells you *why* it happened."
+  },
+  "related": {
+    "title_line1": "KEEP",
+    "title_line2": "EXPLORING",
+    "subtitle": "Related product insights.",
+    "view_archive": "VIEW ALL",
+    "access_label": "READ"
+  },
+  "article": {
+    "id": "10",
+    "uid": "PROD-2024-10",
+    "category": "product",
+    "title": "Data",
+    "title_accent": "Intelligence.",
+    "subtitle": "Making Data-Driven Product Decisions: A Framework",
+    "lead": "Leverage analytics and user research for product decisions.",
+    "author": {
+      "name": "Tom Anderson",
+      "role": "Head of Product",
+      "image": "https://i.pravatar.cc/150?img=39",
+      "id": "DP-ATH-10"
+    },
+    "meta": {
+      "date": "MAR 28, 2024",
+      "readTime": "13",
+      "hash": "0x00b12eb0",
+      "security": "Public Dispatch"
+    }
+  },
+  "index": [
+    {
+      "id": "infrastructure-trap",
+      "label": "The Interpretation Gap"
+    },
+    {
+      "id": "architectural-core",
+      "label": "PRODUCT CORE"
+    },
+    {
+      "id": "logic-kernels",
+      "label": "The Power of Why"
+    }
+  ]
+}

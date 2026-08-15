@@ -1,0 +1,80 @@
+{
+  "seo": {
+    "title": "بناء تطبيقات بدون خادم فعالة من حيث التكلفة على AWS | داتا بلس",
+    "description": "تعلم كيفية تصميم التطبيقات بدون خادم على AWS Lambda و DynamoDB.",
+    "keywords": "بدون خادم، AWS، سحابة، تحسين التكلفة"
+  },
+  "hero": {
+    "dispatch_prefix": "إرسال: ",
+    "read_label": "دقائق للقراءة",
+    "label_left": "تأسست 2024",
+    "label_right_prefix": "تشفير: ",
+    "scroll_label": "مرر للأسفل"
+  },
+  "meta_ticker": {
+    "integrity_label": "النزاهة",
+    "integrity_value": "تم التحقق",
+    "source_label": "المصدر",
+    "node_prefix": "عقدة // ",
+    "node_suffix": " // نظام",
+    "download_button": "حفظ المقال"
+  },
+  "sidebar": {
+    "index_label": "الفهرس",
+    "node_prefix": "عقدة_",
+    "quote": "بدون خادم لا يعني عدم وجود خوادم؛ بل يعني عدم وجود خوادم خاملة."
+  },
+  "content": {
+    "section1_title": "تكلفة الخمول",
+    "section1_p1": "تقوم البنية التحتية التقليدية بمحاسبتك على وقت التشغيل؛ بينما تحاسبك التطبيقات بدون خادم على التنفيذ. يتطلب هذا التحول نموذجاً عقلياً معمارياً جديداً.",
+    "section1_p2": "النجاح في التطبيقات بدون خادم يعتمد على",
+    "section1_strong": "التصميم المدفوع بالأحداث.",
+    "section1_p2_cont": " قم بتشغيل المنطق فقط عند الحاجة لتقليل الهدر.",
+    "callout_label": "سحابة سيادية",
+    "callout_text": "استخدام طبقات Lambda لمشاركة المنطق عبر مئات الوظائف الصغيرة.",
+    "section2_title": "استراتيجية DynamoDB",
+    "section2_p1": "تضمن أنماط تصميم الجدول الواحد أداءً عالياً وزمن وصول منخفض حتى في النطاقات الكبيرة جداً."
+  },
+  "related": {
+    "title_line1": "واصل",
+    "title_line2": "الاستكشاف",
+    "subtitle": "رؤى سحابية ذات صلة.",
+    "view_archive": "عرض الكل",
+    "access_label": "قراءة"
+  },
+  "article": {
+    "id": "8",
+    "uid": "CLOUD-2024-08",
+    "category": "cloud",
+    "title": "AWS",
+    "title_accent": "بدون خادم.",
+    "subtitle": "بناء تطبيقات بدون خادم فعالة من حيث التكلفة على AWS",
+    "lead": "تصميم التطبيقات بدون خادم على AWS Lambda.",
+    "author": {
+      "name": "جيمس ويلسون",
+      "role": "مهندس سحابي",
+      "image": "https://i.pravatar.cc/150?img=41",
+      "id": "DP-ATH-08"
+    },
+    "meta": {
+      "date": "12 مارس 2024",
+      "readTime": "14",
+      "hash": "0x22c12ea8",
+      "security": "إرسال عام"
+    }
+  },
+  "index": [
+    {
+      "id": "infrastructure-trap",
+      "label": "تكلفة الخمول"
+    },
+    {
+      "id": "architectural-core",
+      "label": "سحابة سيادية"
+    },
+    {
+      "id": "logic-kernels",
+      "label": "استراتيجية DynamoDB"
+    }
+  ]
+}

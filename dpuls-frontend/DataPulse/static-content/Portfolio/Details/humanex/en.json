@@ -1,0 +1,207 @@
+{
+  "seo": {
+    "title": "Humanex | Enterprise Human Capital Management System",
+    "description": "Humanex is a comprehensive HCM platform designed to automate HR processes, from recruitment to performance tracking and payroll.",
+    "keywords": "humanex, hr system, hcm platform, employee management, recruitment software, performance tracking"
+  },
+  "project": {
+    "id": "humanex",
+    "title": "Humanex",
+    "client": "Humanex Corp",
+    "year": "2025",
+    "role": "HCM Software Architecture",
+    "image": "/assets/images/projects/systems/hr-system/1.png",
+    "strategyImage": "/assets/images/projects/systems/hr-system/2.png",
+    "experienceImage": "/assets/images/projects/systems/hr-system/1.png",
+    "featuresImage": "/assets/images/projects/systems/hr-system/4.png",
+    "designImage": "/assets/images/projects/systems/hr-system/5.png",
+    "deviceLarge": "/assets/images/projects/systems/hr-system/1.png",
+    "deviceSmall": "/assets/images/projects/systems/hr-system/2.png",
+    "liveUrl": "https://front.kazamiza.com/humanex/",
+    "shortDesc": "A complete enterprise solution for HR lifecycle automation and employee experience optimization.",
+    "tags": ["HCM", "Enterprise", "Automation"],
+    "overview": {
+      "about": "Humanex is a next-generation HR system built for scaling enterprises. It simplifies the complexity of human capital management by providing a centralized platform for employee records, performance evaluations, and automated payroll processing.",
+      "goal": "To digitize the entire HR lifecycle, reducing administrative overhead and improving data-driven decision making for HR leaders.",
+      "audience": "HR departments, enterprise founders, and people managers."
+    },
+    "challenge": {
+      "description": "Integrating diverse HR modules like attendance tracking, benefits management, and recruitment workflows into a single, intuitive interface was the primary challenge. We also focused heavily on data privacy and role-based access control.",
+      "points": [
+        "Complex multi-tenant architecture",
+        "Granular security and access levels",
+        "Dynamic report generation for HR audits"
+      ]
+    },
+    "solution": {
+      "description": "We architected a scalable multi-tenant platform with a powerful dashboard for HR administrators and a simplified portal for employees. The UI was designed to make complex data entry feel effortless.",
+      "approach": "Employee-centric design with powerful backend automation."
+    },
+    "features": [
+      {
+        "title": "Smart Recruitment",
+        "desc": "Automated applicant tracking system with integrated video interview capabilities.",
+        "icon": "fa-user-plus"
+      },
+      {
+        "title": "Performance Tracking",
+        "desc": "Periodic evaluation modules with 360-degree feedback loops.",
+        "icon": "fa-chart-pie"
+      },
+      {
+        "title": "Payroll Engine",
+        "desc": "Localized tax compliance and automated salary disbursement system.",
+        "icon": "fa-money-bill-transfer"
+      },
+      {
+        "title": "Pulse Surveys",
+        "desc": "Integrated employee engagement tools for real-time sentiment analysis.",
+        "icon": "fa-heart-pulse"
+      }
+    ],
+    "design": {
+      "philosophy": "Human-Centric. Focus on soft elevation, clear hierarchy, and empathetic user flows that reduce friction in daily tasks.",
+      "colors": ["#f8fafc", "#4f46e5", "#1e1b4b", "#64748b"],
+      "typography": "Inter & Outfit"
+    },
+    "techStack": [
+      "Next.js",
+      "TypeScript",
+      "Prisma",
+      "PostgreSQL",
+      "Tailwind CSS",
+      "Chart.js"
+    ],
+    "results": {
+      "impact": "Reduced HR administrative tasks by 40% and improved employee onboarding satisfaction by 60%.",
+      "metrics": [
+        {"label": "Time Saved", "value": "20h/week"},
+        {"label": "Data Accuracy", "value": "100%"},
+        {"label": "Emp Satisfaction", "value": "4.5/5"}
+      ]
+    },
+    "gallery": [
+      "/assets/images/projects/systems/hr-system/1.png",
+      "/assets/images/projects/systems/hr-system/3.png",
+      "/assets/images/projects/systems/hr-system/4.png",
+      "/assets/images/projects/systems/hr-system/5.png",
+      "/assets/images/projects/systems/hr-system/6.png",
+      "/assets/images/projects/systems/hr-system/7.png",
+      "/assets/images/projects/systems/hr-system/8.png",
+      "/assets/images/projects/systems/hr-system/9.png",
+      "/assets/images/projects/systems/hr-system/10.png",
+      "/assets/images/projects/systems/hr-system/11.png",
+      "/assets/images/projects/systems/hr-system/12.png",
+      "/assets/images/projects/systems/hr-system/13.png",
+      "/assets/images/projects/systems/hr-system/14.png",
+      "/assets/images/projects/systems/hr-system/15.png",
+      "/assets/images/projects/systems/hr-system/16.png",
+      "/assets/images/projects/systems/hr-system/17.png",
+      "/assets/images/projects/systems/hr-system/18.png",
+      "/assets/images/projects/systems/hr-system/19.png",
+      "/assets/images/projects/systems/hr-system/20.png"
+    ]
+  },
+  "website_project": {
+    "hero": {
+      "prefix": "HCM_SYSTEM_01",
+      "status": "Operational",
+      "labels": {
+        "client": "Project",
+        "role": "Scope",
+        "year": "Year",
+        "core": "Focus"
+      },
+      "defaults": {
+        "year": "2025"
+      },
+      "cta": {
+        "live_preview": "Launch System"
+      },
+      "system_config": {
+        "label": "// System Stream",
+        "status": "Agents:",
+        "status_val": "Online",
+        "latency": "Response:",
+        "latency_val": "18ms",
+        "render": "Type:",
+        "render_val": "Enterprise"
+      }
+    },
+    "authTooltip": {
+      "label": "Demo Credentials",
+      "email": "admin@info.com",
+      "password": "123456789"
+    },
+    "strategy": {
+      "methodology": "Systems Engineering",
+      "title": "Optimizing Internal Flow",
+      "desc": "Creating a digital backbone for complex physical operations.",
+      "steps": [
+        {
+          "title": "Geofencing",
+          "desc": "Implementing precise area-based tracking and alerts."
+        },
+        {
+          "title": "CRM Context",
+          "desc": "Linking shipping data directly to customer profiles."
+        },
+        {
+          "title": "BI Dashboard",
+          "desc": "Real-time visualization of company-wide performance."
+        }
+      ]
+    },
+    "experience": {
+      "label": "Command Portal",
+      "title": "Enterprise Dashboard",
+      "res_label": "RES: High Capacity",
+      "scale_label": "SCALE: Enterprise",
+      "default_url": "humanex.datapulse.ai",
+      "scrolling_preview": "System Experience"
+    },
+    "features": {
+      "title": "System Modules",
+      "specs_cta": "System Specs"
+    },
+    "design_system": {
+      "typography": {
+        "label": "// Functional UI",
+        "type_desc": "Clean Sans / Data Mono",
+        "quote": "Clarity is the ultimate goal of enterprise design.",
+        "specimen_label": "Operational Interface System"
+      },
+      "colors": {
+        "label": "// System Palette",
+        "palette_prefix": "Enterprise-Blue"
+      },
+      "components": {
+        "label": "// Core UI Components",
+        "submit_btn": "Update",
+        "cancel_btn": "Reset"
+      }
+    },
+    "tech_stack": {
+      "title": "System Architecture"
+    },
+    "compatibility": {
+      "title": "Cross-Platform Sync",
+      "desc": "Flawless synchronization between the driver mobile apps and the central administration dashboard with offline data persistence.",
+      "metrics": [
+        {"label": "Sync Speed", "score": "Fast"},
+        {"label": "Connectivity", "score": "High"},
+        {"label": "Data Integrity", "score": "99.9%"}
+      ]
+    },
+    "impact": {
+      "title": "Business Performance"
+    },
+    "gallery": {
+      "title": "System Gallery",
+      "subtitle": "Interface Index",
+      "fullscreen": "Full View",
+      "fig_prefix": "SCR.",
+      "render_label": "LIVE_SYSTEM_VIEW"
+    }
+  }
+}

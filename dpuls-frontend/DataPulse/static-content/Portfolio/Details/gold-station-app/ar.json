@@ -1,0 +1,218 @@
+{
+  "seo": {
+    "title": "تطبيق جولد ستيشن | تجربة متميزة لتداول الذهب عبر الجوال",
+    "description": "يقدم تطبيق جولد ستيشن طريقة سلسة وآمنة وفاخرة لشراء وبيع وتتبع استثمارات الذهب أثناء التنقل.",
+    "keywords": "تطبيق ذهب, تداول معادن ثمينة, تجارة إلكترونية عبر الجوال, تطبيق استثمار ذهب"
+  },
+  "project": {
+    "id": "gold-station-app",
+    "title": "تطبيق جولد ستيشن",
+    "client": "شركة جولد ستيشن",
+    "year": "2025",
+    "role": "تطوير تطبيق جوال",
+    "image": "/assets/images/projects/app/gold-station/1.png",
+    "experienceImage": "/assets/images/projects/app/gold-station/3.png",
+    "liveUrl": "#",
+    "shortDesc": "تطبيق جوال عالي الأداء لتداول الذهب في الوقت الفعلي وتسوق المجوهرات الفاخرة.",
+    "tags": ["Flutter", "تقنية مالية", "تجارة فاخرة"],
+    "overview": {
+      "about": "تطبيق جولد ستيشن هو رفيق جوال متميز لمنظومة التجارة الإلكترونية للعلامة التجارية. يوفر للمستخدمين وصولاً فورياً إلى أسعار سوق الذهب الحية، وإدارة المحفظة الآمنة، وواجهة تسوق عالية الدقة للمجوهرات والسبائك.",
+      "goal": "توفير تجربة جوال آمنة وسهلة لمستثمري المعادن الثمينة والمتسوقين الباحثين عن الفخامة.",
+      "audience": "المستثمرون الأفراد، المتسوقون عبر الجوال، ومديرو المحافظ."
+    },
+    "challenge": {
+      "description": "كان التحدي هو الحفاظ على الجمالية الفاخرة مع تقديم تحديثات بيانات السوق بسرعة البرق وضمان الأمان البيومتري للمعاملات عالية القيمة.",
+      "points": [
+        "مزامنة أسعار السوق في أقل من ثانية",
+        "دمج الأمان البيومتري (FaceID / TouchID)",
+        "تقديم أصول عالية الدقة محسنة لشاشات الجوال"
+      ]
+    },
+    "solution": {
+      "description": "قمنا ببناء التطبيق باستخدام Flutter للأداء عبر المنصات، مع دمج محرك أسعار يعتمد على WebSocket لضمان دقة البيانات الحية.",
+      "approach": "تطوير يركز على الجوال، محسن للأداء، ومرتكز على الأمان."
+    },
+    "features": [
+      {
+        "title": "المصادقة البيومترية",
+        "desc": "تسجيل دخول آمن والتحقق من المعاملات باستخدام القياسات الحيوية الأصلية للجوال.",
+        "icon": "fa-fingerprint"
+      },
+      {
+        "title": "تنبيهات الأسعار الحية",
+        "desc": "إشعارات فورية لتقلبات أسعار الذهب وضربات السوق.",
+        "icon": "fa-bell"
+      },
+      {
+        "title": "محفظة الذهب الرقمية",
+        "desc": "تتبع ممتلكاتك من الذهب المادي والشهادات الرقمية في الوقت الفعلي.",
+        "icon": "fa-wallet"
+      },
+      {
+        "title": "شراء بنقرة واحدة",
+        "desc": "عملية دفع مبسطة للاستحواذ السريع على سبائك الذهب.",
+        "icon": "fa-bolt"
+      }
+    ],
+    "design": {
+      "philosophy": "الوضع الداكن الفاخر. التركيز على المرئيات عالية التباين التي تجعل منتجات الذهب تبرز مع ضمان وضوح مخططات البيانات.",
+      "colors": ["#020617", "#D4AF37", "#FFFFFF", "#0F172A"],
+      "typography": "Outfit & IBM Plex Sans"
+    },
+    "techStack": ["Flutter", "Dart", "Firebase", "Socket.io", "Redis"],
+    "results": {
+      "impact": "تجاوز 50 ألف عملية تحميل في الربع الأول بمتوسط قيمة معاملة 2,400 دولار.",
+      "metrics": [
+        {"label": "تقييم التطبيق", "value": "4.9 / 5"},
+        {"label": "الحجم الشهري", "value": "1.2 مليون دولار"},
+        {"label": "الاحتفاظ بالمستخدمين", "value": "78%"}
+      ]
+    },
+    "gallery": [
+      "/assets/images/projects/app/gold-station/1.png",
+      "/assets/images/projects/app/gold-station/2.png",
+      "/assets/images/projects/app/gold-station/4.png",
+      "/assets/images/projects/app/gold-station/5.png",
+      "/assets/images/projects/app/gold-station/6.png",
+      "/assets/images/projects/app/gold-station/7.png",
+      "/assets/images/projects/app/gold-station/8.png",
+      "/assets/images/projects/app/gold-station/9.png",
+      "/assets/images/projects/app/gold-station/10.png",
+      "/assets/images/projects/app/gold-station/11.png",
+      "/assets/images/projects/app/gold-station/12.png",
+      "/assets/images/projects/app/gold-station/13.png",
+      "/assets/images/projects/app/gold-station/14.png",
+      "/assets/images/projects/app/gold-station/15.png",
+      "/assets/images/projects/app/gold-station/16.png",
+      "/assets/images/projects/app/gold-station/17.png"
+    ]
+  },
+  "mobile_project": {
+    "hero": {
+      "prefix": "GS_MOBILE_V1",
+      "live_status": "متاح في المتاجر",
+      "labels": {
+        "client": "العميل",
+        "role": "الدور",
+        "year": "السنة",
+        "platform": "المنصة"
+      },
+      "defaults": {
+        "client": "جولد ستيشن",
+        "role": "حلول الجوال",
+        "year": "2025",
+        "platform": "iOS و Android"
+      },
+      "buttons": {
+        "app_store": "آب ستور",
+        "app_store_sub": "حمل من",
+        "google_play": "جوجل بلاي",
+        "google_play_sub": "احصل عليه من",
+        "tooltip": "قريباً"
+      },
+      "config": {
+        "label": "// مواصفات الجوال",
+        "sync": "مزامنة السعر:",
+        "sync_val": "0.5 ثانية",
+        "biometrics": "الأمان:",
+        "biometrics_val": "مفعل",
+        "storage": "الخزنة:",
+        "storage_val": "متزامنة"
+      }
+    },
+    "pain_points": {
+      "title": "عوائق الجوال.",
+      "quote": "يجب أن يكون الاستثمار في الذهب سهلاً مثل التحقق من رسائلك.",
+      "audit_label": "App_Audit:",
+      "issue_prefix": "UX_",
+      "impact_label": "الاحتفاظ بالمستخدمين",
+      "metric_label": "مستوى الثقة",
+      "defaults": [
+        "تحديثات أسعار غير موثوقة على الشبكات الخلوية الضعيفة.",
+        "خطوات تحقق مرهقة للمشتريات الكبيرة.",
+        "واجهة مستخدم مزدحمة بالكثير من البيانات المالية على الشاشات الصغيرة.",
+        "نقص الإشعارات الفورية لانخفاض الأسعار."
+      ]
+    },
+    "strategy": {
+      "methodology": "التميز في الجوال",
+      "title": "خارطة طريق التطبيق",
+      "desc": "صياغة رحلة خالية من الاحتكاك من اكتشاف الذهب إلى التخزين الآمن.",
+      "phase_prefix": "مرحلة",
+      "phases": [
+        {
+          "title": "النواة البيومترية",
+          "desc": "تحصين التطبيق بمصادقة آمنة أصلية."
+        },
+        {
+          "title": "مزامنة فورية",
+          "desc": "تنفيذ تحديثات أسعار WebSocket منخفضة النطاق الترددي."
+        },
+        {
+          "title": "عرض الثروة",
+          "desc": "تصميم لوحة تحكم المحفظة لرؤية واضحة للأصول."
+        },
+        {
+          "title": "شراء مباشر",
+          "desc": "تحسين عملية الدفع لتجربة 'الذهب في نقرة'."
+        }
+      ]
+    },
+    "experience": {
+      "title": "تنقل سلس"
+    },
+    "features": {
+      "title": "وحدات أصلية",
+      "specs_cta": "مواصفات التطبيق"
+    },
+    "design": {
+      "typography": {
+        "label": "// خطوط الجوال",
+        "type_label": "Outfit / Sans",
+        "quote": "الوضوح هو المفتاح للقرارات المالية.",
+        "specimen_label": "دليل خطوط الجوال"
+      },
+      "colors": {
+        "label": "// لوحة التطبيق",
+        "palette_prefix": "جولد-جوال"
+      },
+      "components": {
+        "label": "// الواجهة الأساسية",
+        "action_btn": "شراء الذهب",
+        "cancel_btn": "رجوع"
+      }
+    },
+    "tech_stack": {
+      "title": "البنية التقنية",
+      "defaults": ["Flutter", "Dart", "WebSocket", "Secure Storage", "Push SDK"]
+    },
+    "compatibility": {
+      "label": "سلامة المتجر الشامل",
+      "title": "أداء الدرجة الأصلية",
+      "desc": "يوفر التطبيق تجربة متسقة بسرعة 60 إطاراً في الثانية عبر أجهزة iPhone المتميزة وأجهزة Android متوسطة المدى، مما يضمن لمعان الذهب على كل دقة شاشة.",
+      "image_1": "/assets/images/projects/app/gold-station/1.png",
+      "image_2": "/assets/images/projects/app/gold-station/4.png",
+      "metrics": [
+        {"label": "أداء iOS", "score": "99%"},
+        {"label": "وقت تشغيل أندرويد", "score": "سلس"},
+        {"label": "تحميل الأصول", "score": "محسن"}
+      ]
+    },
+    "impact": {
+      "title": "تأثير السوق",
+      "default_impact": "أصبح تطبيق جولد ستيشن منصة تداول الذهب الرائدة في منطقته خلال أشهر من إطلاقه.",
+      "defaults": [
+        {"label": "المستخدمون", "value": "50 ألف+"},
+        {"label": "تقييم الثقة", "value": "A+"},
+        {"label": "الدعم", "value": "24/7"}
+      ]
+    },
+    "gallery": {
+      "title": "فهرس الواجهة",
+      "subtitle": "شاشات التطبيق",
+      "fullscreen": "عرض كبير",
+      "fig_prefix": "تطبيق.",
+      "render_label": "شاشة_جوال"
+    }
+  }
+}

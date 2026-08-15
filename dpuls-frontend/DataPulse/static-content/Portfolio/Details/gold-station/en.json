@@ -1,0 +1,210 @@
+{
+  "seo": {
+    "title": "Gold Station | Luxury E-commerce for Gold & Diamonds",
+    "description": "Gold Station is a premium e-commerce platform specializing in high-end jewelry, gold bullion, and certified diamonds with real-time market pricing.",
+    "keywords": "gold station, jewelry e-commerce, buy gold online, diamond shop, luxury jewelry, gold pricing"
+  },
+  "project": {
+    "id": "gold-station",
+    "title": "Gold Station",
+    "client": "Gold Station Co.",
+    "year": "2025",
+    "role": "Full Stack E-commerce Development",
+    "image": "/assets/images/projects/website/gold-station/1.png",
+    "strategyImage": "/assets/images/projects/website/gold-station/2.png",
+    "experienceImage": "/assets/images/projects/website/gold-station/5.png",
+    "featuresImage": "/assets/images/projects/website/gold-station/3.png",
+    "designImage": "/assets/images/projects/website/gold-station/5.png",
+    "deviceLarge": "/assets/images/projects/website/gold-station/1.png",
+    "deviceSmall": "/assets/images/projects/website/gold-station/2.png",
+    "liveUrl": "https://front.kazamiza.com/gold-station/",
+    "shortDesc": "A premium multi-platform e-commerce solution for the luxury jewelry and gold market, featuring live price synchronization.",
+    "tags": ["E-commerce", "FinTech", "Luxury Design"],
+    "overview": {
+      "about": "Gold Station is a state-of-the-art e-commerce ecosystem designed for the high-end jewelry market. It combines a sophisticated shopping experience with real-time financial data, allowing users to buy gold and diamonds at current global market rates with absolute security.",
+      "goal": "To provide a secure, transparent, and luxurious digital shopping experience for gold and diamond investors and jewelry enthusiasts.",
+      "audience": "Jewelry collectors, gold investors, luxury shoppers, and diamond seekers."
+    },
+    "challenge": {
+      "description": "The primary challenge was integrating a live global gold price API to update product pricing every minute, ensuring accuracy and trust. Additionally, the UI needed to convey absolute luxury and security.",
+      "points": [
+        "Real-time gold price synchronization",
+        "High-value transaction security",
+        "Immersive high-resolution visual display"
+      ]
+    },
+    "solution": {
+      "description": "We developed a custom pricing engine that calculates jewelry costs based on live metal weights and diamond certifications. The UI utilizes a 'Midnight & Gold' aesthetic to mirror the physical store's premium feel.",
+      "approach": "Luxury-first design combined with high-performance real-time data processing."
+    },
+    "features": [
+      {
+        "title": "Live Price Ticker",
+        "desc": "Real-time global market rates for 18k, 21k, and 24k gold bullion.",
+        "icon": "fa-chart-line"
+      },
+      {
+        "title": "Diamond Lab Certs",
+        "desc": "Digital GIA/IGI certificates integrated directly into product pages.",
+        "icon": "fa-gem"
+      },
+      {
+        "title": "Secure Vault Pay",
+        "desc": "Multi-encrypted payment gateway for multi-thousand dollar transactions.",
+        "icon": "fa-shield-halved"
+      },
+      {
+        "title": "Custom Jeweler",
+        "desc": "Interactive 3D configurator for building custom diamond rings.",
+        "icon": "fa-screwdriver-wrench"
+      }
+    ],
+    "design": {
+      "philosophy": "Elegance and Authority. Using high-contrast dark themes with golden accents to emphasize product value and brand heritage.",
+      "colors": ["#000000", "#D4AF37", "#FFFFFF", "#1A1A1A"],
+      "typography": "Playfair Display & Inter"
+    },
+    "techStack": [
+      "Next.js",
+      "TypeScript",
+      "Node.js",
+      "PostgreSQL",
+      "Tailwind CSS",
+      "Three.js"
+    ],
+    "results": {
+      "impact": "Achieved $1.5M in sales within the first month of launch with a 4.8/5 customer satisfaction rating.",
+      "metrics": [
+        {"label": "Conversion Rate", "value": "3.5%"},
+        {"label": "Avg. Order Value", "value": "$1,200"},
+        {"label": "System Uptime", "value": "99.99%"}
+      ]
+    },
+    "gallery": [
+      "/assets/images/projects/website/gold-station/1.png",
+      "/assets/images/projects/website/gold-station/4.png",
+      "/assets/images/projects/website/gold-station/5.png",
+      "/assets/images/projects/website/gold-station/6.png",
+      "/assets/images/projects/website/gold-station/7.png",
+      "/assets/images/projects/website/gold-station/8.png",
+      "/assets/images/projects/website/gold-station/9.png",
+      "/assets/images/projects/website/gold-station/10.png",
+      "/assets/images/projects/website/gold-station/11.png",
+      "/assets/images/projects/website/gold-station/12.png",
+      "/assets/images/projects/website/gold-station/13.png",
+      "/assets/images/projects/website/gold-station/14.png",
+      "/assets/images/projects/website/gold-station/15.png",
+      "/assets/images/projects/website/gold-station/16.png",
+      "/assets/images/projects/website/gold-station/17.png",
+      "/assets/images/projects/website/gold-station/18.png"
+    ]
+  },
+  "website_project": {
+    "hero": {
+      "prefix": "LUXURY_RETAIL_01",
+      "status": "Premium",
+      "labels": {
+        "client": "Brand",
+        "role": "Focus",
+        "year": "Year",
+        "core": "Niche"
+      },
+      "defaults": {
+        "year": "2025"
+      },
+      "cta": {
+        "live_preview": "Enter Boutique"
+      },
+      "system_config": {
+        "label": "// Exchange Link",
+        "status": "Market:",
+        "status_val": "Open",
+        "latency": "Sync:",
+        "latency_val": "1m",
+        "render": "Boutique:",
+        "render_val": "Elite"
+      }
+    },
+    "additionalLinks": [
+      {
+        "label": "Providers Portal",
+        "url": "https://front.kazamiza.com/gold-station/providers/",
+        "authTooltip": {
+          "label": "Demo Credentials",
+          "email": "admin@info.com",
+          "password": "123456789"
+        }
+      }
+    ],
+    "strategy": {
+      "methodology": "Prestige E-commerce",
+      "title": "Redefining Jewelry Retail",
+      "desc": "Melding the heritage of gold smithing with the speed of modern digital commerce.",
+      "steps": [
+        {
+          "title": "Trust Architecture",
+          "desc": "Building transparency through live market data."
+        },
+        {
+          "title": "Visual Storytelling",
+          "desc": "High-fidelity macro photography and 3D modeling."
+        },
+        {
+          "title": "Seamless Checkout",
+          "desc": "Optimized for high-value transactional confidence."
+        }
+      ]
+    },
+    "experience": {
+      "label": "Boutique UI",
+      "title": "The Digital Showroom",
+      "res_label": "RES: High Fidelity",
+      "scale_label": "SCALE: Luxury-Fit",
+      "default_url": "goldstation.datapulse.ai",
+      "scrolling_preview": "Boutique Experience"
+    },
+    "features": {
+      "title": "E-commerce Modules",
+      "specs_cta": "Platform Specs"
+    },
+    "design_system": {
+      "typography": {
+        "label": "// Brand Identity",
+        "type_desc": "Serif Luxury / Sans Sans",
+        "quote": "Gold is the standard; our design must be the benchmark.",
+        "specimen_label": "Luxury Typography Grid"
+      },
+      "colors": {
+        "label": "// Palette",
+        "palette_prefix": "Golden-Standard"
+      },
+      "components": {
+        "label": "// UI Elements",
+        "submit_btn": "Purchase",
+        "cancel_btn": "Close"
+      }
+    },
+    "tech_stack": {
+      "title": "Merchant Core"
+    },
+    "compatibility": {
+      "title": "Boutique Anywhere",
+      "desc": "A flawless experience across high-resolution Retina displays and mobile devices, ensuring the gold glimmers on every screen.",
+      "metrics": [
+        {"label": "Visual Quality", "score": "High"},
+        {"label": "Trust Factor", "score": "AAA"},
+        {"label": "Encryption", "score": "AES"}
+      ]
+    },
+    "impact": {
+      "title": "Market Performance"
+    },
+    "gallery": {
+      "title": "Collection Showcase",
+      "subtitle": "Boutique Views",
+      "fullscreen": "Full View",
+      "fig_prefix": "ITEM.",
+      "render_label": "BOUTIQUE_SCREEN"
+    }
+  }
+}

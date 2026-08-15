@@ -1,0 +1,108 @@
+{
+  "hero": {
+    "badge": "تميز معرض الأعمال",
+    "title_line1": "نبض",
+    "title_line2": "رقمي مبتكر",
+    "subtitle": "نحن نصمم حلولاً رقمية عالية الأداء تدفع النمو وتتوسع مع احتياجات عملك.",
+    "stats": {
+      "projects_label": "مشاريع عالمية",
+      "projects_value": "120+",
+      "quality_label": "جودة التصميم",
+      "quality_value": "99%",
+      "uptime_label": "وقت التشغيل",
+      "uptime_value": "99.9%"
+    }
+  },
+  "portfolio": {
+    "badge": "أعمالنا",
+    "title": "معرض الأعمال",
+    "subtitle": "مجموعة من أفضل منتجاتنا الرقمية وحلول المؤسسات.",
+    "categories": {},
+    "no_projects": "لم يتم العثور على مشاريع في هذه الفئة."
+  },
+  "categories": [
+    {
+      "id": "all",
+      "label": "جميع المشاريع"
+    },
+    {
+      "id": "web",
+      "label": "أنظمة الويب"
+    },
+    {
+      "id": "mobile",
+      "label": "تطبيقات الجوال"
+    },
+
+    {
+      "id": "software",
+      "label": "برمجيات المؤسسات"
+    }
+  ],
+  "projects": [
+    {
+      "id": "11",
+      "slug": "rawad-gate",
+      "title": "بوابة الرواد",
+      "shortDescription": "منصة تتبع اللوجستيات وإدارة الشحنات لتبسيط عمليات التسليم.",
+      "categoryId": "web",
+      "coverImage": "/assets/images/projects/website/rawad-gate/9.png",
+      "logo": "/assets/projects/logos/rawad.svg"
+    },
+    {
+      "id": "12",
+      "slug": "motaqaed",
+      "title": "متقاعد",
+      "shortDescription": "جسر خدمات متخصص يربط المتقاعدين بنظام بيئي منسق من المزودين والمزايا الاجتماعية.",
+      "categoryId": "web",
+      "coverImage": "/assets/images/projects/website/motaqaed/4.png",
+      "logo": "/assets/projects/logos/motaqaed.svg"
+    },
+    {
+      "id": "13",
+      "slug": "gold-station",
+      "title": "جولد ستيشن",
+      "shortDescription": "حل تجارة إلكترونية متميز لسوق المجوهرات والذهب، يتميز بمزامنة الأسعار الحية.",
+      "categoryId": "web",
+      "coverImage": "/assets/images/projects/website/gold-station/4.png",
+      "logo": "/assets/projects/logos/gold-station.svg"
+    },
+    {
+      "id": "14",
+      "slug": "gold-station-app",
+      "title": "تطبيق جولد ستيشن",
+      "shortDescription": "يقدم تطبيق جولد ستيشن للجوال طريقة سلسة وآمنة وفاخرة لشراء وبيع وتتبع استثمارات الذهب أثناء التنقل.",
+      "categoryId": "mobile",
+      "coverImage": "/assets/images/projects/app/gold-station/cover.png",
+      "logo": "/assets/images/projects/app/gold-station/logo-dark.png"
+    },
+    {
+      "id": "15",
+      "slug": "prometer",
+      "title": "بروميتر",
+      "shortDescription": "نظام بيئي مؤسسي لتتبع القوى العاملة والخدمات اللوجستية وإدارة علاقات العملاء المتكاملة.",
+      "categoryId": "software",
+      "coverImage": "/assets/images/projects/systems/prometer/3.png",
+      "logo": "/assets/projects/logos/prometer.png"
+    },
+    {
+      "id": "16",
+      "slug": "humanex",
+      "title": "Humanex",
+      "shortDescription": "نظام شامل لإدارة رأس المال البشري (HCM) لأتمتة دورة حياة الموارد البشرية بالكامل.",
+      "categoryId": "software",
+      "coverImage": "/assets/images/projects/systems/hr-system/3.png",
+      "logo": "/assets/projects/logos/humanex.png"
+    },
+
+    {
+      "id": "18",
+      "slug": "dream-fitness",
+      "title": "حلم الرشاقة",
+      "shortDescription": "تطبيق شامل للياقة البدنية والتغذية مصمم لمساعدتك على تحقيق أهدافك الصحية من خلال خطط وجبات وتمارين مخصصة.",
+      "categoryId": "mobile",
+      "coverImage": "/assets/images/projects/app/dream-fitness/cover.png",
+      "logo": "/assets/images/projects/app/dream-fitness/logo-dark.png"
+    }
+  ]
+}

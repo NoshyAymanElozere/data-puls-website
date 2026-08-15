@@ -1,0 +1,225 @@
+{
+  "hero_tag": "ROI & Precision",
+  "services": {
+    "marketing": {
+      "ads": {
+        "title": "Performance Marketing",
+        "desc": "Aggressive, data-driven growth through paid acquisition. We bypass vanity metrics to deliver bottom-line revenue and scalable customer acquisition."
+      }
+    }
+  },
+  "hero": {
+    "quote": "In performance marketing, the only metric that matters is the one that lives on your balance sheet."
+  },
+  "overview": {
+    "title": "Growth, Quantified.",
+    "desc_1": "Performance marketing is a science of arbitrage. We identify where your customers are underpriced and over-indexed, then we deploy capital with surgical precision. No blind spending. No 'brand awareness' smoke and mirrors—just measurable, scalable ROI.",
+    "desc_2": "Our team of media buyers, data analysts, and copywriters work in an agile loop, constantly testing, pruning, and scaling campaigns across the global digital landscape to ensure every dollar works as hard as a team of ten.",
+    "focus_area_label": "Financial Priority",
+    "focus_area_title": "Maximized LTV:CAC"
+  },
+  "philosophy": {
+    "title": "Our Performance Logic",
+    "desc": "Scale is a byproduct of mathematical discipline and creative iteration.",
+    "benefits": [
+      {
+        "title": "Full-Funnel Attribution",
+        "desc": "Deep visibility into the touchpoints that actually drive conversion, eliminating wasted spend on low-impact channels."
+      },
+      {
+        "title": "Predictive Bidding",
+        "desc": "Leveraging algorithmic bidding strategies to secure the most valuable impressions at the lowest possible cost."
+      },
+      {
+        "title": "Creative as Targeting",
+        "desc": "Developing 'magnetic' creative that self-selects your ideal customers, reducing reliance on platform algorithms alone."
+      }
+    ]
+  },
+  "journey": {
+    "title": "The Conversion path",
+    "steps": [
+      {
+        "stage": "Hook",
+        "intent": "In-Feed Attention",
+        "action": "Stops scrolling to watch an 'Problem/Solution' ad"
+      },
+      {
+        "stage": "Validate",
+        "intent": "Social Proof",
+        "action": "Clicks to a high-converting, personalized landing page"
+      },
+      {
+        "stage": "Convert",
+        "intent": "Immediate Transaction",
+        "action": "Completes the purchase or lead form"
+      },
+      {
+        "stage": "Retain",
+        "intent": "Brand Loyalty",
+        "action": "Receives a post-purchase upsell offer"
+      }
+    ]
+  },
+  "channels": {
+    "title": "Capture Ecosystem",
+    "desc": "Dominating the high-intent and high-attention platforms.",
+    "groups": [
+      {
+        "category": "Search & Intent",
+        "items": [
+          "Google Ads (Search/PMAX)",
+          "Bing Ads for B2B",
+          "Amazon Advertising",
+          "App Store Optimization (ASA)"
+        ]
+      },
+      {
+        "category": "Social Commerce",
+        "items": [
+          "Meta Ads Manager",
+          "TikTok Ads for Business",
+          "LinkedIn Professional Ads",
+          "Pinterest Performance Ads"
+        ]
+      },
+      {
+        "category": "Programmatic",
+        "items": [
+          "Demand Side Platforms (DSP)",
+          "Native Advertising (Taboola/Outbrain)",
+          "Connected TV (CTV) Ads",
+          "Direct Response Video"
+        ]
+      }
+    ]
+  },
+  "voice": {
+    "label": "Tonal Presence",
+    "title": "Direct, Urgent, & Persuasive",
+    "desc_1": "Our copy is written for one purpose: action. We use psychological triggers, clear value propositions, and undeniable social proof to move the user from 'maybe' to 'now'.",
+    "desc_2": "Everything is tested. We don't guess what people want; we let the data tell us which headlines, hooks, and CTA's drive the most revenue.",
+    "tags": [
+      "Direct-Response",
+      "Efficient",
+      "Results-Led"
+    ],
+    "quote": "Great advertising doesn't just inform; it <span>compels</span> action.",
+    "metrics": [
+      {
+        "label": "Conversion Rate",
+        "value": "12.5%"
+      },
+      {
+        "label": "Retention Rate",
+        "value": "45%"
+      },
+      {
+        "label": "ROAS Average",
+        "value": "5.2x"
+      }
+    ]
+  },
+  "performance": {
+    "title": "Growth Accountability",
+    "kpis": [
+      {
+        "value": "512%",
+        "label": "Average ROAS",
+        "context": "Across all sectors"
+      },
+      {
+        "value": "-35%",
+        "label": "CPA Reduction",
+        "context": "In first 90 days"
+      },
+      {
+        "value": "+180%",
+        "label": "Lead Velocity",
+        "context": "Top of Funnel"
+      }
+    ]
+  },
+  "growth": {
+    "title": "Agile Tuning Loop",
+    "desc": "Testing. Scaling. Winning.",
+    "steps": [
+      "Alpha Test",
+      "Signal Audit",
+      "Beta Scaling",
+      "Max Budget"
+    ]
+  },
+  "collaboration": {
+    "title": "Revenue Alignment",
+    "desc": "We treat your budget like our own capital, prioritizing efficiency over pure volume.",
+    "features": [
+      "Daily Spend Audit",
+      "Profit-Sharing Models",
+      "Live Media Dashboards"
+    ],
+    "cadence": [
+      {
+        "freq": "Daily",
+        "event": "Bid Optimization"
+      },
+      {
+        "freq": "Weekly",
+        "event": "Creative Refresh"
+      }
+    ]
+  },
+  "governance": {
+    "title": "Brand Safety & Ethics",
+    "desc": "Scaling aggressively while maintaining 100% brand safety and data privacy compliance.",
+    "tags": [
+      "Safe-List Only",
+      "CCPA/GDPR Compliant",
+      "Privacy-First Tracking"
+    ]
+  },
+  "cases": {
+    "title": "Performance Wins",
+    "items": [
+      {
+        "title": "E-Commerce Scale",
+        "desc": "Grew a niche apparel brand from $100k to $1.5M monthly revenue in 12 months with a consistent 6x ROAS."
+      },
+      {
+        "title": "B2B Lead Gen",
+        "desc": "Reduced CPL for a cybersecurity firm by 55% while increasing MQL-to-SQL conversion by 20%."
+      },
+      {
+        "title": "App Launch",
+        "desc": "Acquired 250,000 active users in 60 days with a day-30 retention rate of 18% through cross-platform TikTok/Meta tactics."
+      }
+    ]
+  },
+  "related": {
+    "title": "Related Services",
+    "learn_more": "Explore Service",
+    "view_all": "View All Services",
+    "items": [
+      {
+        "slug": "seo-visibility",
+        "title": "SEO & Visibility",
+        "icon": "search"
+      },
+      {
+        "slug": "content-strategy",
+        "title": "Content Strategy",
+        "icon": "pen-nib"
+      },
+      {
+        "slug": "brand-identity",
+        "title": "Brand Identity",
+        "icon": "palette"
+      }
+    ]
+  },
+  "seo": {
+    "title": "Performance Marketing | Growth & Performance Marketing | Data Pulse",
+    "description": "Drive ROI with our Performance Marketing strategies. Data-driven marketing to scale your digital presence.",
+    "keywords": "performance marketing, marketing, data pulse, software development"
+  }
+}

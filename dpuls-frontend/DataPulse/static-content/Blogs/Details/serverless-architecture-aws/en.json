@@ -1,0 +1,80 @@
+{
+  "seo": {
+    "title": "Building Cost-Effective Serverless Apps on AWS | Data Pulse",
+    "description": "Learn how to architect serverless applications on AWS Lambda and DynamoDB.",
+    "keywords": "serverless, AWS, cloud, cost optimization"
+  },
+  "hero": {
+    "dispatch_prefix": "DISPATCH: ",
+    "read_label": "MIN READ",
+    "label_left": "EST. 2024",
+    "label_right_prefix": "HASH: ",
+    "scroll_label": "SCROLL DOWN"
+  },
+  "meta_ticker": {
+    "integrity_label": "INTEGRITY",
+    "integrity_value": "VERIFIED",
+    "source_label": "SOURCE",
+    "node_prefix": "NODE // ",
+    "node_suffix": " // SYSTEM",
+    "download_button": "SAVE DISPATCH"
+  },
+  "sidebar": {
+    "index_label": "INDEX",
+    "node_prefix": "NODE_",
+    "quote": "Serverless is not about no servers; it is about no idle servers."
+  },
+  "content": {
+    "section1_title": "The Idle Cost",
+    "section1_p1": "Traditional infrastructure charges you for uptime; serverless charges you for execution. This shift requires a new architectural mental model.",
+    "section1_p2": "Success in serverless depends on",
+    "section1_strong": "event-driven design.",
+    "section1_p2_cont": " Trigger logic only when needed to minimize waste.",
+    "callout_label": "CLOUD NATIVE",
+    "callout_text": "Using Lambda layers to share logic across hundreds of micro-functions.",
+    "section2_title": "DynamoDB Strategy",
+    "section2_p1": "Single-table design patterns ensure high performance and low latency even at massive scale."
+  },
+  "related": {
+    "title_line1": "KEEP",
+    "title_line2": "EXPLORING",
+    "subtitle": "Related cloud insights.",
+    "view_archive": "VIEW ALL",
+    "access_label": "READ"
+  },
+  "article": {
+    "id": "8",
+    "uid": "CLOUD-2024-08",
+    "category": "cloud",
+    "title": "AWS",
+    "title_accent": "Serverless.",
+    "subtitle": "Building Cost-Effective Serverless Apps on AWS",
+    "lead": "Architecting serverless applications on AWS Lambda.",
+    "author": {
+      "name": "James Wilson",
+      "role": "Cloud Architect",
+      "image": "https://i.pravatar.cc/150?img=41",
+      "id": "DP-ATH-08"
+    },
+    "meta": {
+      "date": "MAR 12, 2024",
+      "readTime": "14",
+      "hash": "0x22c12ea8",
+      "security": "Public Dispatch"
+    }
+  },
+  "index": [
+    {
+      "id": "infrastructure-trap",
+      "label": "The Idle Cost"
+    },
+    {
+      "id": "architectural-core",
+      "label": "CLOUD NATIVE"
+    },
+    {
+      "id": "logic-kernels",
+      "label": "DynamoDB Strategy"
+    }
+  ]
+}

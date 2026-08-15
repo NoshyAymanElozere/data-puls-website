@@ -1,0 +1,220 @@
+{
+  "seo": {
+    "title": "حلم الرشاقة | تطبيق التمارين والتغذية المخصصة",
+    "description": "حقق أهداف لياقتك البدنية مع حلم الرشاقة، مدربك الشخصي وأخصائي التغذية في جيبك.",
+    "keywords": "تطبيق لياقة, بناء عضلات, فقدان وزن, وجبات صحية, خطط تمارين"
+  },
+  "project": {
+    "id": "dream-fitness",
+    "title": "حلم الرشاقة",
+    "client": "مركز حلم الرشاقة",
+    "year": "2025",
+    "role": "تطوير تطبيق الهاتف",
+    "image": "/assets/images/projects/app/dream-fitness/1.png",
+    "strategyImage": "/assets/images/projects/app/dream-fitness/2.png",
+    "experienceImage": "/assets/images/projects/app/dream-fitness/3.png",
+    "featuresImage": "/assets/images/projects/app/dream-fitness/4.png",
+    "designImage": "/assets/images/projects/app/dream-fitness/5.png",
+    "deviceLarge": "/assets/images/projects/app/dream-fitness/1.png",
+    "deviceSmall": "/assets/images/projects/app/dream-fitness/2.png",
+    "liveUrl": "#",
+    "shortDesc": "رفيقك اليومي لحياة أكثر صحة وقوة.",
+    "tags": ["صحة", "لياقة", "تغذية"],
+    "overview": {
+      "about": "حلم الرشاقة هو نظام بيئي للعافية يركز على الهاتف المحمول ويسد الفجوة بين التدريب الخبير والحياة اليومية. يوفر للمستخدمين خطط وجبات محسوبة رياضياً بناءً على بياناتهم البيولوجية وروتين تمارين تدريجي يتكيف مع زيادة قوتهم.",
+      "goal": "إتاحة التدريب الرياضي عالي المستوى للجميع من خلال توفير أداة ميسورة التكلفة وعلمية وسهلة الوصول.",
+      "audience": "عشاق اللياقة البدنية، الأفراد الذين يتطلعون لفقدان الوزن، وأي شخص يسعى لنمط حياة أكثر صحة."
+    },
+    "challenge": {
+      "description": "كان التحدي الرئيسي هو إنشاء خوارزمية تغذية يمكنها التعامل مع آلاف من مجموعات الوجبات مع الحفاظ على بساطة الواجهة. كما احتجنا إلى طريقة سلسة لتتبع التطور التدريجي في التمارين.",
+      "points": [
+        "حساب ديناميكي للمغذيات الكبرى",
+        "تطور تدريجي متكيف للتمارين",
+        "واجهة مستخدم عالية التفاعل لبناء العادات"
+      ]
+    },
+    "solution": {
+      "description": "قمنا ببناء خوارزمية مخصصة للتغذية ومكتبة فيديو شاملة للتمارين. يتميز التطبيق بمتتبع 'منحنى القوة' ونظام 'تبديل الوجبات' لمنع الملل الغذائي.",
+      "approach": "تتبع صحي تفاعلي مدمج مع طرق تدريب مدعومة علمياً."
+    },
+    "features": [
+      {
+        "title": "تمارين مخصصة",
+        "desc": "خطط تدريب متطورة تتكيف مع مستويات أدائك.",
+        "icon": "fa-dumbbell"
+      },
+      {
+        "title": "تغذية ذكية",
+        "desc": "خطط وجبات يتم إنشاؤها بناءً على متطلباتك الدقيقة من السعرات والمغذيات.",
+        "icon": "fa-bowl-food"
+      },
+      {
+        "title": "متتبع التقدم",
+        "desc": "تحليلات مرئية لقياسات الجسم والوزن وزيادة القوة.",
+        "icon": "fa-chart-area"
+      },
+      {
+        "title": "تدريب فيديو",
+        "desc": "عروض توضيحية عالية الدقة للتمارين لضمان الأداء الصحيح.",
+        "icon": "fa-video"
+      }
+    ],
+    "design": {
+      "philosophy": "منشط ومركز. استخدام ألوان نابضة بالحياة عالية التباين لإثارة التحفيز والوضوح.",
+      "colors": ["#10b981", "#0f172a", "#f59e0b", "#ffffff"],
+      "typography": "Outfit & IBM Plex Sans"
+    },
+    "techStack": ["Flutter", "Firebase", "Node.js", "Google Fit API", "HealthKit"],
+    "results": {
+      "impact": "ساعد المستخدمين على فقدان إجمالي 50,000 كجم وحقق تقييم 4.9/5 في المتجرين.",
+      "metrics": [
+        {"label": "مستخدمون نشطون", "value": "25 ألف"},
+        {"label": "معدل الاستبقاء", "value": "85%"},
+        {"label": "تحقيق الأهداف", "value": "92%"}
+      ]
+    },
+    "gallery": [
+      "/assets/images/projects/app/dream-fitness/1.png",
+      "/assets/images/projects/app/dream-fitness/2.png",
+      "/assets/images/projects/app/dream-fitness/3.png",
+      "/assets/images/projects/app/dream-fitness/4.png",
+      "/assets/images/projects/app/dream-fitness/5.png",
+      "/assets/images/projects/app/dream-fitness/6.png",
+      "/assets/images/projects/app/dream-fitness/7.png",
+      "/assets/images/projects/app/dream-fitness/8.png",
+      "/assets/images/projects/app/dream-fitness/9.png",
+      "/assets/images/projects/app/dream-fitness/10.png",
+      "/assets/images/projects/app/dream-fitness/11.png",
+      "/assets/images/projects/app/dream-fitness/12.png",
+      "/assets/images/projects/app/dream-fitness/13.png"
+    ]
+  },
+  "mobile_project": {
+    "hero": {
+      "prefix": "DF_MOBILE_V2",
+      "live_status": "متوفر في المتاجر",
+      "labels": {
+        "client": "العميل",
+        "role": "الدور",
+        "year": "السنة",
+        "platform": "المنصة"
+      },
+      "defaults": {
+        "client": "حلم الرشاقة",
+        "role": "حلول العافية",
+        "year": "2025",
+        "platform": "iOS و أندرويد"
+      },
+      "buttons": {
+        "app_store": "متجر التطبيقات",
+        "app_store_sub": "حمل من",
+        "google_play": "جوجل بلاي",
+        "google_play_sub": "احصل عليه من",
+        "tooltip": "قريباً"
+      },
+      "config": {
+        "label": "// مواصفات الجوال",
+        "sync": "مزامنة الصحة:",
+        "sync_val": "فوري",
+        "biometrics": "الدقة:",
+        "biometrics_val": "98%",
+        "storage": "البيانات:",
+        "storage_val": "مشفرة"
+      }
+    },
+    "pain_points": {
+      "title": "فجوات العافية.",
+      "quote": "النجاح هو مجموع الجهود الصغيرة، المتكررة يوماً بعد يوم.",
+      "audit_label": "App_Audit:",
+      "issue_prefix": "HEALTH_",
+      "impact_label": "استبقاء العادات",
+      "metric_label": "حيوية_المستخدم",
+      "defaults": [
+        "خطط وجبات عامة تتجاهل معدلات الاستقلاب الفردية.",
+        "روتين تمارين ثابت يؤدي إلى توقف التقدم.",
+        "بيانات غذائية مربكة بدون خطوات عمل واضحة.",
+        "نقص التكامل مع الأجهزة القابلة للارتداء لحساب الحرق بدقة."
+      ]
+    },
+    "strategy": {
+      "methodology": "عادات صحية",
+      "title": "خارطة طريق النمو",
+      "desc": "تحويل البيانات البيولوجية المعقدة إلى إجراءات يومية بسيطة.",
+      "phase_prefix": "مرحلة",
+      "phases": [
+        {
+          "title": "تخطيط حيوي",
+          "desc": "تحليل الملفات الاستقلابية ومعايير الأهداف."
+        },
+        {
+          "title": "محرك متكيف",
+          "desc": "بناء خوارزميات التدرج في الأحمال للتمارين."
+        },
+        {
+          "title": "مركز التغذية",
+          "desc": "تنفيذ محرك تبادل الوجبات والسعرات الحرارية الديناميكي."
+        },
+        {
+          "title": "مزامنة الساعات",
+          "desc": "الاتصال مع HealthKit و Google Fit."
+        }
+      ]
+    },
+    "experience": {
+      "title": "عافية مرنة"
+    },
+    "features": {
+      "title": "وحدات التطبيق",
+      "specs_cta": "مواصفات التطبيق"
+    },
+    "design": {
+      "typography": {
+        "label": "// خطوط الجوال",
+        "type_label": "Outfit / Sans",
+        "quote": "التحفيز يبدأ بالوضوح البصري.",
+        "specimen_label": "دليل خطوط العافية"
+      },
+      "colors": {
+        "label": "// لوحة الألوان",
+        "palette_prefix": "لياقة-حيوية"
+      },
+      "components": {
+        "label": "// الواجهة الأساسية",
+        "action_btn": "ابدأ الآن",
+        "cancel_btn": "رجوع"
+      }
+    },
+    "tech_stack": {
+      "title": "بنية التقنية",
+      "defaults": ["Flutter", "Node.js", "Firebase", "HealthKit", "Google Fit"]
+    },
+    "compatibility": {
+      "label": "تكامل المتاجر",
+      "title": "أداء من الدرجة الأولى",
+      "desc": "محسن لأحدث موديلات آيفون وأندرويد، مع مزامنة مزدوجة لساعات آبل وأجهزة أندرويد لتعقب معدل ضربات القلب في الوقت المباشر.",
+      "image_1": "/assets/images/projects/app/dream-fitness/1.png",
+      "image_2": "/assets/images/projects/app/dream-fitness/4.png",
+      "metrics": [
+        {"label": "مزامنة الساعات", "score": "فوري"},
+        {"label": "الأداء", "score": "99"},
+        {"label": "خالٍ من المشاكل", "score": "99.9%"}
+      ]
+    },
+    "impact": {
+      "title": "أهداف التحول",
+      "default_impact": "ساعد حلم الرشاقة آلاف المستخدمين على تحقيق أهدافهم البدنية من خلال التتبع العلمي.",
+      "defaults": [
+        {"label": "المستخدمون النشطون", "value": "25 ألف+"},
+        {"label": "الوزن المفقود", "value": "50 ألف كجم"},
+        {"label": "الدعم", "value": "24/7"}
+      ]
+    },
+    "gallery": {
+      "title": "فهرس الواجهات",
+      "subtitle": "شاشات التطبيق",
+      "fullscreen": "عرض كبير",
+      "fig_prefix": "شاشة.",
+      "render_label": "ريندر_الجوال"
+    }
+  }
+}

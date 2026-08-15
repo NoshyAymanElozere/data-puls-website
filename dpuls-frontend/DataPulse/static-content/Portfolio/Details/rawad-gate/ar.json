@@ -1,0 +1,205 @@
+{
+  "seo": {
+    "title": "بوابة رواد | منصة الخدمات اللوجستية وتتبع الشحنات",
+    "description": "بوابة رواد هي منصة شاملة لإدارة الخدمات اللوجستية وسلاسل التوريد مصممة خصيصاً لتتبع الشحنات والتسليم في الوقت الفعلي.",
+    "keywords": "بوابة رواد, تتبع لوجستي, إدارة شحنات, سلاسل التوريد, تتبع التوصيل"
+  },
+  "project": {
+    "id": "rawad-gate",
+    "title": "بوابة رواد",
+    "client": "رواد الدولية",
+    "year": "2025",
+    "role": "تطوير أنظمة مخصصة",
+    "image": "/assets/images/projects/website/rawad-gate/7.png",
+    "strategyImage": "/assets/images/projects/website/rawad-gate/1.png",
+    "experienceImage": "/assets/images/projects/website/rawad-gate/2.png",
+    "featuresImage": "/assets/images/projects/website/rawad-gate/3.png",
+    "designImage": "/assets/images/projects/website/rawad-gate/4.png",
+    "deviceLarge": "/assets/images/projects/website/rawad-gate/5.png",
+    "deviceSmall": "/assets/images/projects/website/rawad-gate/6.png",
+    "liveUrl": "https://rawadgate.com/",
+    "shortDesc": "منصة تتبع لوجستي وإدارة شحنات لتبسيط عمليات التوصيل.",
+    "tags": ["تطوير متكامل", "نظام تتبع", "لوجستيات"],
+    "overview": {
+      "about": "بوابة رواد هي منظومة رقمية متطورة هندست لقطاع اللوجستيات. تعمل كمركز مركزي لإدارة عمليات التوصيل، وتتبع الشحنات عبر نظام تحديد المواقع (GPS)، وتوفير شفافية في الوقت الفعلي لأصحاب المصلحة عبر سلسلة التوريد.",
+      "goal": "توفير حل قوي وقابل للتوسع لشركات اللوجستيات لإدارة سير عمل الشحنات المعقدة وتقديم تقديرات دقيقة للتسليم للعملاء.",
+      "audience": "شركات اللوجستيات، مديرو المستودعات، موظفو التوصيل، والعملاء الذين يتتبعون شحناتهم."
+    },
+    "challenge": {
+      "description": "كان التحدي الرئيسي هو دمج تدفقات بيانات متعددة من ناقلين مختلفين مع الحفاظ على تجربة مستخدم سريعة الاستجابة. بالإضافة إلى ذلك، تطلب توفير تحديثات دقيقة في الوقت الفعلي لآلاف الشحنات المتزامنة أداءً عالياً.",
+      "points": [
+        "مزامنة الشحنات في الوقت الفعلي",
+        "تصور البيانات على نطاق واسع",
+        "إدارة أدوار المستخدمين المتعددة"
+      ]
+    },
+    "solution": {
+      "description": "قمنا بتطوير محرك تتبع عالي التردد ولوحة تحكم ويب حديثة. يستخدم النظام تحديثات في الوقت الفعلي وقاعدة بيانات محسنة للتعامل مع الملايين من أحداث التتبع.",
+      "approach": "بناء خط بيانات مركزي لمعلومات التتبع وإنشاء واجهة بديهية لكل من الموظفين والعملاء."
+    },
+    "features": [
+      {
+        "title": "تتبع فوري",
+        "desc": "تتبع GPS حي وتحديثات الحالة لكل شحنة.",
+        "icon": "fa-location-dot"
+      },
+      {
+        "title": "تكامل الناقلين",
+        "desc": "مزامنة تلقائية مع كبار الناقلين الدوليين والمحليين.",
+        "icon": "fa-truck-fast"
+      },
+      {
+        "title": "لوحة التحليلات",
+        "desc": "ذكاء أعمال شامل لأداء عمليات التوصيل.",
+        "icon": "fa-chart-pie"
+      },
+      {
+        "title": "التوثيق الإلكتروني",
+        "desc": "أتمتة بوالص الشحن الرقمية وإثباتات التسليم.",
+        "icon": "fa-file-invoice"
+      }
+    ],
+    "design": {
+      "philosophy": "نظيف، احترافي، ومركز على البيانات. التركيز على وضوح المعلومات وسهولة التنقل.",
+      "colors": ["#0b1021", "#4361ee", "#4cc9f0", "#f8f9fa"],
+      "typography": "Inter & IBM Plex Sans"
+    },
+    "techStack": [
+      "React",
+      "TypeScript",
+      "Node.js",
+      "WebSocket",
+      "PostgreSQL",
+      "Tailwind CSS"
+    ],
+    "results": {
+      "impact": "زيادة دقة التسليم بنسبة 25٪ وتقليل استفسارات دعم العملاء بنسبة 40٪.",
+      "metrics": [
+        {"label": "دقة التتبع", "value": "99.2%"},
+        {"label": "نمو المستخدمين", "value": "150%"},
+        {"label": "سرعة العملية", "value": "2x"}
+      ]
+    },
+    "gallery": [
+      "/assets/images/projects/website/rawad-gate/1.png",
+      "/assets/images/projects/website/rawad-gate/2.png",
+      "/assets/images/projects/website/rawad-gate/3.png",
+      "/assets/images/projects/website/rawad-gate/4.png",
+      "/assets/images/projects/website/rawad-gate/5.png",
+      "/assets/images/projects/website/rawad-gate/7.png",
+      "/assets/images/projects/website/rawad-gate/9.png",
+      "/assets/images/projects/website/rawad-gate/11.png",
+      "/assets/images/projects/website/rawad-gate/12.png",
+      "/assets/images/projects/website/rawad-gate/13.png",
+      "/assets/images/projects/website/rawad-gate/14.png"
+    ]
+  },
+  "website_project": {
+    "hero": {
+      "prefix": "LOGISTICS_PRO_01",
+      "status": "قيد التشغيل",
+      "labels": {
+        "client": "العميل",
+        "role": "الدور",
+        "year": "السنة",
+        "core": "الجوهر"
+      },
+      "defaults": {
+        "year": "2025"
+      },
+      "cta": {
+        "live_preview": "دخول البوابة"
+      },
+      "system_config": {
+        "label": "// تكوين النظام",
+        "status": "الخدمة:",
+        "status_val": "نشط",
+        "latency": "المزامنة:",
+        "latency_val": "فوري",
+        "render": "النوع:",
+        "render_val": "مؤسسي"
+      }
+    },
+    "additionalLinks": [
+      {
+        "label": "البوابة الشخصية",
+        "url": "https://rawadgate.com/personal/",
+        "authTooltip": {
+          "label": "بيانات دخول العميل",
+          "email": "client@client.com",
+          "password": "123456789"
+        }
+      }
+    ],
+    "strategy": {
+      "methodology": "اللوجستيات الرقمية",
+      "title": "التنفيذ الاستراتيجي",
+      "desc": "هندسة جسر سلس بين البضائع المادية والبيانات الرقمية.",
+      "steps": [
+        {
+          "title": "رسم سير العمل",
+          "desc": "تحليل تسلسلات التسليم المعقدة."
+        },
+        {
+          "title": "خط البيانات",
+          "desc": "إنشاء تدفقات تتبع في الوقت الفعلي."
+        },
+        {
+          "title": "نطاق عالمي",
+          "desc": "التحسين للوجستيات متعددة المناطق."
+        }
+      ]
+    },
+    "experience": {
+      "label": "الواجهة",
+      "title": "مركز لوجستي سلس",
+      "res_label": "الدقة: 2K متكيف",
+      "scale_label": "النطاق: محسن",
+      "default_url": "rawadgate.datapulse.ai",
+      "scrolling_preview": "نظرة عامة على المنصة"
+    },
+    "features": {
+      "title": "وحدات اللوجستيات",
+      "specs_cta": "مواصفات النظام"
+    },
+    "design_system": {
+      "typography": {
+        "label": "// الخطوط",
+        "type_desc": "واجهة أساسية / بيانات مونو",
+        "quote": "الدقة في الخطوط تؤدي إلى الدقة في العمليات.",
+        "specimen_label": "نموذج خط تشغيلي"
+      },
+      "colors": {
+        "label": "// لوحة الألوان",
+        "palette_prefix": "أساسي"
+      },
+      "components": {
+        "label": "// عناصر الواجهة",
+        "submit_btn": "تحديث",
+        "cancel_btn": "إعادة تعيين"
+      }
+    },
+    "tech_stack": {
+      "title": "بنية النظام"
+    },
+    "compatibility": {
+      "title": "توصيل عبر أجهزة متعددة",
+      "desc": "متجاوب بالكامل عبر أجهزة الكمبيوتر المكتبية والأجهزة اللوحية وأجهزة التسليم المحمولة. محسن لبيئات النطاق الترددي المنخفض لضمان بقاء الوكلاء الميدانيين على اتصال.",
+      "metrics": [
+        {"label": "النطاق الترددي", "score": "محسن"},
+        {"label": "الاستجابة", "score": "100"},
+        {"label": "الموثوقية", "score": "99.9"}
+      ]
+    },
+    "impact": {
+      "title": "الأداء التشغيلي"
+    },
+    "gallery": {
+      "title": "معرض المنصة",
+      "subtitle": "فهرس الواجهات",
+      "fullscreen": "عرض كامل",
+      "fig_prefix": "صورة.",
+      "render_label": "لقطة_شاشة_النظام"
+    }
+  }
+}

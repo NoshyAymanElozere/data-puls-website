@@ -1,0 +1,254 @@
+{
+  "hero_tag": "Linguistic Intelligence",
+  "hero_badges": [
+    "Semantic Analysis",
+    "Multilingual Support",
+    "Transformer Models",
+    "Context Awareness"
+  ],
+  "overview_title": "Conversing with Information.",
+  "overview_desc_1": "We build AI systems that understand, interpret, and generate human language with nuance and context. From intelligent virtual assistants to massive sentiment analysis engines, we bridge the gap between human communication and digital logic.",
+  "overview_desc_2": "Our NLP solutions leverage the latest Transformer architectures to extract meaning from complex documents, automate customer support, and provide real-time translation at scale.",
+  "labels": {
+    "designed_for": "Designed For",
+    "solves": "Solves",
+    "architecture": "Architecture",
+    "core_functions": "Core Functions",
+    "related_capabilities": "Related Intelligence Capabilities",
+    "explore_module": "Explore Module",
+    "process_title": "Development Lifecycle"
+  },
+  "overview_cards": {
+    "designed_for_text": "Customer-centric organizations and data-heavy enterprises handling unstructured text.",
+    "solves_text": "Communication bottlenecks, data silos in documents, and manual support overhead.",
+    "architecture_text": "Transformer-based LLMs / Semantic Vector Search"
+  },
+  "capability_generic_desc": "Advanced linguistic models optimized for semantic understanding, intent recognition, and natural language generation.",
+  "features_title": "Linguistic Capabilities",
+  "details": {
+    "features": [
+      "Custom Intent Recognition",
+      "Named Entity Recognition (NER)",
+      "Sentiment & Tone Analysis",
+      "Multilingual Translation Hub",
+      "Semantic Document Search",
+      "Voice-to-Text Integration"
+    ],
+    "benefits": [
+      {
+        "title": "Natural Interaction",
+        "desc": "Enable users to interact with your services using their own words."
+      },
+      {
+        "title": "Unstructured Insight",
+        "desc": "Extract actionable data from emails, social media, and legal contracts."
+      },
+      {
+        "title": "Global Reach",
+        "desc": "Break language barriers with high-fidelity automated localization."
+      }
+    ]
+  },
+  "automation": {
+    "title": "Applied NLP Scenarios",
+    "scenarios": [
+      {
+        "title": "Customer Support",
+        "before": "High Wait Times / Human-only",
+        "after": "Instant AI Response (24/7)",
+        "impact": "85% Deflection"
+      },
+      {
+        "title": "Contract Analysis",
+        "before": "Weeks of Legal Review",
+        "after": "Seconds for AI Extraction",
+        "impact": "90% Efficiency"
+      },
+      {
+        "title": "Sentiment Monitoring",
+        "before": "Reactive PR Management",
+        "after": "Real-time Alarm System",
+        "impact": "Proactive Brand"
+      }
+    ]
+  },
+  "philosophy_title": "NLP Logic",
+  "philosophy_subtitle": "Language is data. Context is key. Understanding is the goal.",
+  "models_logic": [
+    {
+      "title": "Transformer Models",
+      "desc": "State-of-the-art architectures optimized for long-range context and relationship mapping."
+    },
+    {
+      "title": "Vector Embeddings",
+      "desc": "Converting text into mathematical vectors for high-speed semantic similarity search."
+    },
+    {
+      "title": "Knowledge Graphs",
+      "desc": "Structuring extracted entities into relational maps for deep intelligence retrieval."
+    },
+    {
+      "title": "Zero-Shot Learning",
+      "desc": "Implementing models that can handle new linguistic tasks with minimal specific training."
+    }
+  ],
+  "tech_stack_title": "Linguistic Stack",
+  "data_strategy": [
+    {
+      "step": "01",
+      "title": "Corpus Curation",
+      "desc": "Gathering and cleaning domain-specific text data for fine-tuning."
+    },
+    {
+      "step": "02",
+      "title": "Tokenization",
+      "desc": "Deconstructing language into manageable units for model intake."
+    },
+    {
+      "step": "03",
+      "title": "Model Fine-Tuning",
+      "desc": "Adapting base models to your specific vocabulary and tone of voice."
+    },
+    {
+      "step": "04",
+      "title": "Prompt Engineering",
+      "desc": "Optimizing interaction patterns for maximum accuracy and safety."
+    }
+  ],
+  "hitl": {
+    "title": "Semantic Safeguards",
+    "desc": "Language can be ambiguous. Our NLP systems flag low-confidence intents for human verification, ensuring that critical communications are always accurate and on-brand.",
+    "metrics": {
+      "confidence_score": {
+        "label": "Intent Accuracy",
+        "value": "95%",
+        "sub": "In Production Context"
+      }
+    },
+    "features": [
+      "Ambiguity Detection Loops",
+      "Agent-Assist Dashboards",
+      "Language Safety Filters"
+    ]
+  },
+  "responsible": {
+    "title": "Linguistic Ethics",
+    "desc": "We ensure that our language models are fair, unbiased, and respect user privacy at every interaction.",
+    "items": [
+      {
+        "title": "Bias Mitigation",
+        "desc": "Auditing training data to remove harmful stereotypes and linguistic biases."
+      },
+      {
+        "title": "PII Scrubbing",
+        "desc": "Automated removal of personally identifiable information from training sets."
+      },
+      {
+        "title": "Toxicity Filters",
+        "desc": "Real-time monitoring to prevent the generation of harmful or offensive content."
+      }
+    ]
+  },
+  "integration": {
+    "title": "Omnichannel Fluidity",
+    "desc": "Deploy your language intelligence across web, mobile, WhatsApp, and internal documentation portals.",
+    "labels": {
+      "your_data": "Unstructured Text",
+      "actionable_output": "Extracted Intent"
+    }
+  },
+  "process_title": "Linguistic Roadmap",
+  "development_lifecycle": [
+    {
+      "step": "Scope",
+      "desc": "Mapping intent taxonomies and language requirements."
+    },
+    {
+      "step": "Train",
+      "desc": "Fine-tuning LLMs on proprietary knowledge bases."
+    },
+    {
+      "step": "Test",
+      "desc": "Rigorous 'red-teaming' for safety and accuracy."
+    },
+    {
+      "step": "Deploy",
+      "desc": "Scaling across global communication channels."
+    }
+  ],
+  "outcomes": [
+    {
+      "label": "Language Support",
+      "value": "40+",
+      "desc": "Global languages support"
+    },
+    {
+      "label": "Response Rate",
+      "value": "100%",
+      "desc": "Instantaneous understanding"
+    },
+    {
+      "label": "Customer CSAT",
+      "value": "+25%",
+      "desc": "Increase in support satisfaction"
+    }
+  ],
+  "related": {
+    "title": "Related Intelligence Capabilities",
+    "learn_more": "Explore Module",
+    "items": [
+      {
+        "slug": "generative-ai",
+        "title": "Generative AI",
+        "icon": "magic"
+      },
+      {
+        "slug": "process-automation",
+        "title": "Process Automation",
+        "icon": "robot"
+      },
+      {
+        "slug": "predictive-analytics",
+        "title": "Predictive Analytics",
+        "icon": "chart-line"
+      }
+    ]
+  },
+  "breadcrumbs": {
+    "services": "Services",
+    "sys_id": "SYS-ID"
+  },
+  "services": {
+    "ai": {
+      "ml": {
+        "title": "Machine Learning Solutions",
+        "desc": "Custom algorithms that predict trends, optimize operations, and unlock hidden value in your data."
+      },
+      "rpa": {
+        "title": "Process Automation (RPA)",
+        "desc": "Robotic Process Automation to streamline repetitive workflows and reduce operational costs."
+      },
+      "nlp": {
+        "title": "Natural Language AI",
+        "desc": "Chatbots and semantic analysis tools that understand and interact with human language."
+      },
+      "vision": {
+        "title": "Computer Vision",
+        "desc": "Advanced image and video analysis systems for quality control, surveillance, and automated recognition."
+      },
+      "predictive": {
+        "title": "Predictive Analytics",
+        "desc": "Forecasting models that utilize historical data to predict future trends and behaviors."
+      },
+      "genai": {
+        "title": "Generative AI Solutions",
+        "desc": "Custom LLMs and generative models for content creation, code generation, and complex problem solving."
+      }
+    }
+  },
+  "seo": {
+    "title": "Natural Language AI | AI & Automation Solutions | Data Pulse",
+    "description": "Transform your business with Natural Language AI . We leverage advanced AI models and automation to drive efficiency.",
+    "keywords": "natural language ai, ai, data pulse, software development"
+  }
+}

@@ -1,0 +1,218 @@
+{
+  "seo": {
+    "title": "Gold Station App | Premium Gold Trading Mobile Experience",
+    "description": "The Gold Station mobile app offers a seamless, secure, and luxurious way to buy, sell, and track gold investments on the go.",
+    "keywords": "gold app, precious metals trading, mobile e-commerce, gold investment app"
+  },
+  "project": {
+    "id": "gold-station-app",
+    "title": "Gold Station App",
+    "client": "Gold Station Co.",
+    "year": "2025",
+    "role": "Mobile App Development",
+    "image": "/assets/images/projects/app/gold-station/1.png",
+    "experienceImage": "/assets/images/projects/app/gold-station/3.png",
+    "liveUrl": "#",
+    "shortDesc": "A high-performance mobile application for real-time gold trading and luxury jewelry shopping.",
+    "tags": ["Flutter", "FinTech", "Luxury Commerce"],
+    "overview": {
+      "about": "The Gold Station App is a premium mobile companion to the brand's e-commerce ecosystem. It provides users with instant access to live gold market rates, secure wallet management, and a high-fidelity shopping interface for jewelry and bullion.",
+      "goal": "To provide a highly secure and intuitive mobile-first experience for precious metal investors and luxury shoppers.",
+      "audience": "Individual investors, mobile shoppers, and portfolio managers."
+    },
+    "challenge": {
+      "description": "The challenge was to maintain a luxury aesthetic while delivering lightning-fast market data updates and ensuring biometric-level security for high-value transactions.",
+      "points": [
+        "Sub-second market price synchronization",
+        "Biometric security integration (FaceID/TouchID)",
+        "Optimized high-resolution asset delivery for mobile screens"
+      ]
+    },
+    "solution": {
+      "description": "We built the app using Flutter for cross-platform performance, integrated with a WebSocket-based price engine to ensure live data accuracy.",
+      "approach": "Mobile-first, performance-optimized, and security-centric development."
+    },
+    "features": [
+      {
+        "title": "Biometric Auth",
+        "desc": "Secure login and transaction verification using native mobile biometrics.",
+        "icon": "fa-fingerprint"
+      },
+      {
+        "title": "Live Price Alerts",
+        "desc": "Push notifications for market hits and gold price fluctuations.",
+        "icon": "fa-bell"
+      },
+      {
+        "title": "Digital Gold Wallet",
+        "desc": "Track your physical gold holdings and digital certificates in real-time.",
+        "icon": "fa-wallet"
+      },
+      {
+        "title": "One-Tap Buy",
+        "desc": "Streamlined checkout for fast gold bullion acquisition.",
+        "icon": "fa-bolt"
+      }
+    ],
+    "design": {
+      "philosophy": "Dark Mode Luxury. Focused on high-contrast visuals that make the gold products pop while ensuring readable data charts.",
+      "colors": ["#020617", "#D4AF37", "#FFFFFF", "#0F172A"],
+      "typography": "Outfit & IBM Plex Sans"
+    },
+    "techStack": ["Flutter", "Dart", "Firebase", "Socket.io", "Redis"],
+    "results": {
+      "impact": "Exceeded 50k downloads in the first quarter with an average transaction value of $2,400.",
+      "metrics": [
+        {"label": "App Rating", "value": "4.9/5"},
+        {"label": "Monthly Volume", "value": "$1.2M"},
+        {"label": "Retention", "value": "78%"}
+      ]
+    },
+    "gallery": [
+      "/assets/images/projects/app/gold-station/1.png",
+      "/assets/images/projects/app/gold-station/2.png",
+      "/assets/images/projects/app/gold-station/4.png",
+      "/assets/images/projects/app/gold-station/5.png",
+      "/assets/images/projects/app/gold-station/6.png",
+      "/assets/images/projects/app/gold-station/7.png",
+      "/assets/images/projects/app/gold-station/8.png",
+      "/assets/images/projects/app/gold-station/9.png",
+      "/assets/images/projects/app/gold-station/10.png",
+      "/assets/images/projects/app/gold-station/11.png",
+      "/assets/images/projects/app/gold-station/12.png",
+      "/assets/images/projects/app/gold-station/13.png",
+      "/assets/images/projects/app/gold-station/14.png",
+      "/assets/images/projects/app/gold-station/15.png",
+      "/assets/images/projects/app/gold-station/16.png",
+      "/assets/images/projects/app/gold-station/17.png"
+    ]
+  },
+  "mobile_project": {
+    "hero": {
+      "prefix": "GS_MOBILE_V1",
+      "live_status": "Live on Stores",
+      "labels": {
+        "client": "Client",
+        "role": "Role",
+        "year": "Year",
+        "platform": "Platform"
+      },
+      "defaults": {
+        "client": "Gold Station",
+        "role": "Mobile Solution",
+        "year": "2025",
+        "platform": "iOS & Android"
+      },
+      "buttons": {
+        "app_store": "App Store",
+        "app_store_sub": "Download on the",
+        "google_play": "Google Play",
+        "google_play_sub": "Get it on",
+        "tooltip": "Coming Soon"
+      },
+      "config": {
+        "label": "// Mobile Spec",
+        "sync": "Price Sync:",
+        "sync_val": "0.5s",
+        "biometrics": "Security:",
+        "biometrics_val": "Enabled",
+        "storage": "Vault:",
+        "storage_val": "Synced"
+      }
+    },
+    "pain_points": {
+      "title": "Mobile Friction.",
+      "quote": "Investing in gold should be as intuitive as checking your messages.",
+      "audit_label": "App_Audit:",
+      "issue_prefix": "UX_",
+      "impact_label": "Mobile Retention",
+      "metric_label": "Trust_Level",
+      "defaults": [
+        "Unreliable price updates on weak cellular networks.",
+        "Cumbersome verification steps for large purchases.",
+        "UI cluttered with too much financial data on small screens.",
+        "Lack of instant notifications for price drops."
+      ]
+    },
+    "strategy": {
+      "methodology": "Mobile Excellence",
+      "title": "The App Roadmap",
+      "desc": "Crafting a frictionless journey from gold discovery to secure vaulting.",
+      "phase_prefix": "Sprint",
+      "phases": [
+        {
+          "title": "Biometric Core",
+          "desc": "Hardening the app with native secure-enclave authentication."
+        },
+        {
+          "title": "Live-Edge Sync",
+          "desc": "Implementing low-bandwidth WebSocket price updates."
+        },
+        {
+          "title": "Wealth View",
+          "desc": "Designing the portfolio dashboard for clear asset visibility."
+        },
+        {
+          "title": "Direct Buy",
+          "desc": "Optimizing the checkout for the 'Gold in a Tap' experience."
+        }
+      ]
+    },
+    "experience": {
+      "title": "Sleek Mobility"
+    },
+    "features": {
+      "title": "Native Modules",
+      "specs_cta": "App Specs"
+    },
+    "design": {
+      "typography": {
+        "label": "// Mobile Type",
+        "type_label": "Outfit / Sans",
+        "quote": "Clarity is key for financial decisions.",
+        "specimen_label": "Mobile Font Guide"
+      },
+      "colors": {
+        "label": "// App Palette",
+        "palette_prefix": "Gold-Mobile"
+      },
+      "components": {
+        "label": "// Core UI",
+        "action_btn": "Buy Gold",
+        "cancel_btn": "Back"
+      }
+    },
+    "tech_stack": {
+      "title": "Tech Architecture",
+      "defaults": ["Flutter", "Dart", "WebSocket", "Secure Storage", "Push SDK"]
+    },
+    "compatibility": {
+      "label": "Omni-Store Integrity",
+      "title": "Native-Grade Performance",
+      "desc": "The app delivers a consistent 60fps experience across both premium iPhone and mid-range Android devices, ensuring the gold sparkles on every screen resolution.",
+      "image_1": "/assets/images/projects/app/gold-station/1.png",
+      "image_2": "/assets/images/projects/app/gold-station/4.png",
+      "metrics": [
+        {"label": "iOS Perf", "score": "99%"},
+        {"label": "Android Runtime", "score": "Smooth"},
+        {"label": "Asset Load", "score": "Optimized"}
+      ]
+    },
+    "impact": {
+      "title": "Market Impact",
+      "default_impact": "Gold Station App has become the leading gold trading platform in its region within months of launch.",
+      "defaults": [
+        {"label": "Users", "value": "50k+"},
+        {"label": "Trust Rating", "value": "A+"},
+        {"label": "Support", "value": "24/7"}
+      ]
+    },
+    "gallery": {
+      "title": "Interface Index",
+      "subtitle": "App Screens",
+      "fullscreen": "View Large",
+      "fig_prefix": "APP.",
+      "render_label": "MOBILE_SCREEN"
+    }
+  }
+}

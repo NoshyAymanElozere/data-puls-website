@@ -1,0 +1,436 @@
+{
+    "info": {
+        "_postman_id": "84826b5d-3746-4cb8-bcd9-6eb3f92ba486",
+        "name": "Data Puls API",
+        "description": "Postman Collection for Data Puls Website API endpoints (User registration, login, profiles & bilingual blog post management by slug or ID)",
+        "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+    },
+    "item": [
+        {
+            "name": "Users",
+            "item": [
+                {
+                    "name": "Register User/Admin",
+                    "request": {
+                        "method": "POST",
+                        "header": [
+                            {
+                                "key": "Content-Type",
+                                "value": "application/json"
+                            }
+                        ],
+                        "body": {
+                            "mode": "raw",
+                            "raw": "{\n  \"name\": \"Test User\",\n  \"email\": \"test@datapuls.com\",\n  \"password\": \"password123\",\n  \"role\": \"admin\"\n}"
+                        },
+                        "url": {
+                            "raw": "{{BASE_URL}}/api/users/register",
+                            "host": [
+                                "{{BASE_URL}}"
+                            ],
+                            "path": [
+                                "api",
+                                "users",
+                                "register"
+                            ]
+                        }
+                    },
+                    "response": []
+                },
+                {
+                    "name": "Login User/Admin",
+                    "request": {
+                        "method": "POST",
+                        "header": [
+                            {
+                                "key": "Content-Type",
+                                "value": "application/json"
+                            }
+                        ],
+                        "body": {
+                            "mode": "raw",
+                            "raw": "{\n  \"email\": \"test@datapuls.com\",\n  \"password\": \"password123\"\n}"
+                        },
+                        "url": {
+                            "raw": "{{BASE_URL}}/api/users/login",
+                            "host": [
+                                "{{BASE_URL}}"
+                            ],
+                            "path": [
+                                "api",
+                                "users",
+                                "login"
+                            ]
+                        }
+                    },
+                    "response": []
+                },
+                {
+                    "name": "Get User Profile",
+                    "request": {
+                        "auth": {
+                            "type": "bearer",
+                            "bearer": [
+                                {
+                                    "key": "token",
+                                    "value": "{{AUTH_TOKEN}}",
+                                    "type": "string"
+                                }
+                            ]
+                        },
+                        "method": "GET",
+                        "header": [],
+                        "url": {
+                            "raw": "{{BASE_URL}}/api/users/profile",
+                            "host": [
+                                "{{BASE_URL}}"
+                            ],
+                            "path": [
+                                "api",
+                                "users",
+                                "profile"
+                            ]
+                        }
+                    },
+                    "response": []
+                }
+            ]
+        },
+        {
+            "name": "Blogs",
+            "item": [
+                {
+                    "name": "Get All Blogs",
+                    "request": {
+                        "method": "GET",
+                        "header": [
+                            {
+                                "key": "Accept-Language",
+                                "value": "ar",
+                                "description": "Set to 'ar' for Arabic translation, 'en' for English, or leave unchecked/remove to get standard raw database payloads",
+                                "disabled": true
+                            }
+                        ],
+                        "url": {
+                            "raw": "{{BASE_URL}}/api/blogs",
+                            "host": [
+                                "{{BASE_URL}}"
+                            ],
+                            "path": [
+                                "api",
+                                "blogs"
+                            ]
+                        }
+                    },
+                    "response": []
+                },
+                {
+                    "name": "Get Blog by Slug or ID",
+                    "request": {
+                        "method": "GET",
+                        "header": [
+                            {
+                                "key": "Accept-Language",
+                                "value": "en",
+                                "description": "Set to 'ar' for Arabic translation, 'en' for English, or leave unchecked/remove to get standard raw database payloads",
+                                "disabled": true
+                            }
+                        ],
+                        "url": {
+                            "raw": "{{BASE_URL}}/api/blogs/:slug",
+                            "host": [
+                                "{{BASE_URL}}"
+                            ],
+                            "path": [
+                                "api",
+                                "blogs",
+                                ":slug"
+                            ],
+                            "variable": [
+                                {
+                                    "key": "slug",
+                                    "value": "ai-future-development",
+                                    "description": "The unique URL slug or MongoDB database document ObjectId (_id) of the blog post"
+                                }
+                            ]
+                        }
+                    },
+                    "response": []
+                },
+                {
+                    "name": "Create Blog",
+                    "request": {
+                        "method": "POST",
+                        "header": [
+                            {
+                                "key": "Content-Type",
+                                "value": "application/json"
+                            }
+                        ],
+                        "body": {
+                            "mode": "raw",
+                            "raw": "{\n  \"slug\": \"ai-future-development\",\n  \"publishedAt\": \"2026-08-15\",\n  \"coverImage\": \"https://images.unsplash.com/photo-1620712943543-bcc4688e7485?q=80&w=1600&auto=format&fit=crop\",\n  \"authorAvatarUrl\": \"https://i.pravatar.cc/150?img=11\",\n  \"title_ar\": \"مستقبل الذكاء الاصطناعي في عام 2026\",\n  \"title_en\": \"The Future of AI in 2026\",\n  \"subtitle\": \"نظرة متعمقة على التطورات المتوقعة في مجال الذكاء الاصطناعي وكيف ستغير حياتنا اليومية والمهنية.\",\n  \"subtitleEn\": \"A deep dive into expected advancements in artificial intelligence and how they will shape our lives.\",\n  \"category\": \"الذكاء الاصطناعي\",\n  \"categoryEn\": \"Artificial Intelligence\",\n  \"name_ar\": \"فريق داتا بولس\",\n  \"name_en\": \"Data Pulse Team\",\n  \"readTime\": \"5 دقائق للقراءة\",\n  \"readTimeEn\": \"5 min read\",\n  \"sections\": [\n    {\n      \"type\": \"header\",\n      \"text\": \"مقدمة عن الذكاء الاصطناعي\"\n    },\n    {\n      \"type\": \"paragraph\",\n      \"text\": \"يشهد العالم تسارعاً كبيراً في تقنيات الذكاء الاصطناعي...\"\n    },\n    {\n      \"type\": \"quote_card\",\n      \"text\": \"الذكاء الاصطناعي ليس مجرد أداة إضافية، بل هو تحول جوهري في كيفية تفاعلنا مع التكنولوجيا.\"\n    }\n  ],\n  \"sectionsEn\": [\n    {\n      \"type\": \"header\",\n      \"text\": \"Introduction to AI Development\"\n    },\n    {\n      \"type\": \"paragraph\",\n      \"text\": \"The world is witnessing a dramatic acceleration in artificial intelligence technologies...\"\n    },\n    {\n      \"type\": \"quote_card\",\n      \"text\": \"AI is not just a tool; it is a fundamental shift in how we interact with technology.\"\n    }\n  ]\n}"
+                        },
+                        "url": {
+                            "raw": "{{BASE_URL}}/api/blogs",
+                            "host": [
+                                "{{BASE_URL}}"
+                            ],
+                            "path": [
+                                "api",
+                                "blogs"
+                            ]
+                        }
+                    },
+                    "response": []
+                },
+                {
+                    "name": "Upload Blog Image",
+                    "request": {
+                        "method": "POST",
+                        "header": [],
+                        "body": {
+                            "mode": "formdata",
+                            "formdata": [
+                                {
+                                    "key": "image",
+                                    "type": "file",
+                                    "src": []
+                                }
+                            ]
+                        },
+                        "url": {
+                            "raw": "{{BASE_URL}}/api/blogs/upload",
+                            "host": [
+                                "{{BASE_URL}}"
+                            ],
+                            "path": [
+                                "api",
+                                "blogs",
+                                "upload"
+                            ]
+                        }
+                    },
+                    "response": []
+                },
+                {
+                    "name": "Update Blog by ID or Slug",
+                    "request": {
+                        "method": "PUT",
+                        "header": [
+                            {
+                                "key": "Content-Type",
+                                "value": "application/json"
+                            }
+                        ],
+                        "body": {
+                            "mode": "raw",
+                            "raw": "{\n  \"slug\": \"ai-future-development-updated\",\n  \"publishedAt\": \"2026-08-15\",\n  \"coverImage\": \"https://images.unsplash.com/photo-1620712943543-bcc4688e7485?q=80&w=1600&auto=format&fit=crop\",\n  \"authorAvatarUrl\": \"https://i.pravatar.cc/150?img=11\",\n  \"title_ar\": \"مستقبل الذكاء الاصطناعي في عام 2026 (محدث)\",\n  \"title_en\": \"The Future of AI in 2026 (Updated)\",\n  \"subtitle\": \"نظرة متعمقة على التطورات المتوقعة في مجال الذكاء الاصطناعي وكيف ستغير حياتنا اليومية والمهنية.\",\n  \"subtitleEn\": \"A deep dive into expected advancements in artificial intelligence and how they will shape our lives.\",\n  \"category\": \"الذكاء الاصطناعي\",\n  \"categoryEn\": \"Artificial Intelligence\",\n  \"name_ar\": \"فريق داتا بولس\",\n  \"name_en\": \"Data Pulse Team\",\n  \"readTime\": \"5 دقائق للقراءة\",\n  \"readTimeEn\": \"5 min read\",\n  \"sections\": [\n    {\n      \"type\": \"header\",\n      \"text\": \"مقدمة عن الذكاء الاصطناعي (محدثة)\"\n    },\n    {\n      \"type\": \"paragraph\",\n      \"text\": \"يشهد العالم تسارعاً كبيراً في تقنيات الذكاء الاصطناعي...\"\n    }\n  ],\n  \"sectionsEn\": [\n    {\n      \"type\": \"header\",\n      \"text\": \"Introduction to AI Development (Updated)\"\n    },\n    {\n      \"type\": \"paragraph\",\n      \"text\": \"The world is witnessing a dramatic acceleration in artificial intelligence technologies...\"\n    }\n  ]\n}"
+                        },
+                        "url": {
+                            "raw": "{{BASE_URL}}/api/blogs/:id",
+                            "host": [
+                                "{{BASE_URL}}"
+                            ],
+                            "path": [
+                                "api",
+                                "blogs",
+                                ":id"
+                            ],
+                            "variable": [
+                                {
+                                    "key": "id",
+                                    "value": "ai-future-development",
+                                    "description": "The unique URL slug OR MongoDB database document ObjectId (_id) of the blog post to update"
+                                }
+                            ]
+                        }
+                    },
+                    "response": []
+                },
+                {
+                    "name": "Delete Blog by ID or Slug",
+                    "request": {
+                        "method": "DELETE",
+                        "header": [],
+                        "url": {
+                            "raw": "{{BASE_URL}}/api/blogs/:id",
+                            "host": [
+                                "{{BASE_URL}}"
+                            ],
+                            "path": [
+                                "api",
+                                "blogs",
+                                ":id"
+                            ],
+                            "variable": [
+                                {
+                                    "key": "id",
+                                    "value": "ai-future-development",
+                                    "description": "The unique URL slug OR MongoDB database document ObjectId (_id) of the blog post to delete"
+                                }
+                            ]
+                        }
+                    },
+                    "response": []
+                }
+            ]
+        },
+        {
+            "name": "Departments",
+            "item": [
+                {
+                    "name": "Get All Departments",
+                    "request": {
+                        "method": "GET",
+                        "header": [
+                            {
+                                "key": "Accept-Language",
+                                "value": "ar",
+                                "description": "Get localized name based on language selection",
+                                "disabled": true
+                            }
+                        ],
+                        "url": {
+                            "raw": "{{BASE_URL}}/api/departments",
+                            "host": [
+                                "{{BASE_URL}}"
+                            ],
+                            "path": [
+                                "api",
+                                "departments"
+                            ]
+                        }
+                    },
+                    "response": []
+                },
+                {
+                    "name": "Get Department by Slug or ID",
+                    "request": {
+                        "method": "GET",
+                        "header": [],
+                        "url": {
+                            "raw": "{{BASE_URL}}/api/departments/:id",
+                            "host": [
+                                "{{BASE_URL}}"
+                            ],
+                            "path": [
+                                "api",
+                                "departments",
+                                ":id"
+                            ],
+                            "variable": [
+                                {
+                                    "key": "id",
+                                    "value": "cyber-security",
+                                    "description": "The unique slug or MongoDB ObjectId of the department"
+                                }
+                            ]
+                        }
+                    },
+                    "response": []
+                },
+                {
+                    "name": "Create Department",
+                    "request": {
+                        "method": "POST",
+                        "header": [
+                            {
+                                "key": "Content-Type",
+                                "value": "application/json"
+                            }
+                        ],
+                        "body": {
+                            "mode": "raw",
+                            "raw": "{\n  \"name_ar\": \"الأمن السيبراني\",\n  \"name_en\": \"Cyber Security\"\n}"
+                        },
+                        "url": {
+                            "raw": "{{BASE_URL}}/api/departments",
+                            "host": [
+                                "{{BASE_URL}}"
+                            ],
+                            "path": [
+                                "api",
+                                "departments"
+                            ]
+                        }
+                    },
+                    "response": []
+                },
+                {
+                    "name": "Update Department by ID or Slug",
+                    "request": {
+                        "method": "PUT",
+                        "header": [
+                            {
+                                "key": "Content-Type",
+                                "value": "application/json"
+                            }
+                        ],
+                        "body": {
+                            "mode": "raw",
+                            "raw": "{\n  \"name_ar\": \"الأمن السيبراني (محدث)\",\n  \"name_en\": \"Cyber Security (Updated)\"\n}"
+                        },
+                        "url": {
+                            "raw": "{{BASE_URL}}/api/departments/:id",
+                            "host": [
+                                "{{BASE_URL}}"
+                            ],
+                            "path": [
+                                "api",
+                                "departments",
+                                ":id"
+                            ],
+                            "variable": [
+                                {
+                                    "key": "id",
+                                    "value": "cyber-security",
+                                    "description": "The unique slug or MongoDB ObjectId of the department to update"
+                                }
+                            ]
+                        }
+                    },
+                    "response": []
+                },
+                {
+                    "name": "Delete Department by ID or Slug",
+                    "request": {
+                        "method": "DELETE",
+                        "header": [],
+                        "url": {
+                            "raw": "{{BASE_URL}}/api/departments/:id",
+                            "host": [
+                                "{{BASE_URL}}"
+                            ],
+                            "path": [
+                                "api",
+                                "departments",
+                                ":id"
+                            ],
+                            "variable": [
+                                {
+                                    "key": "id",
+                                    "value": "cyber-security",
+                                    "description": "The unique slug or MongoDB ObjectId of the department to delete"
+                                }
+                            ]
+                        }
+                    },
+                    "response": []
+                }
+            ]
+        }
+    ],
+    "variable": [
+        {
+            "key": "BASE_URL",
+            "value": "http://localhost:5000",
+            "type": "string"
+        },
+        {
+            "key": "AUTH_TOKEN",
+            "value": "your_jwt_auth_token_here",
+            "type": "string"
+        }
+    ]
+}

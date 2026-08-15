@@ -1,0 +1,222 @@
+{
+  "hero_tag": "High-Performance Reliability",
+  "hero": {
+    "status_label": "Server Health",
+    "status_value": "99.999% SLA",
+    "deployments_label": "Requests / Sec",
+    "deployments_value": "2M+",
+    "compliance_label": "Certification",
+    "compliance_value": "PCI-DSS / HIPAA"
+  },
+  "services": {
+    "cloud": {
+      "hosting": {
+        "title": "Managed Hosting",
+        "desc": "Enterprise-grade hosting solutions with managed security, automatic scaling, and 24/7 expert support for mission-critical applications."
+      }
+    }
+  },
+  "overview_title": "Hosting Redefined for Business.",
+  "overview_desc_1": "Managed hosting is about peace of mind. While generic providers offer raw space, we offer a managed ecosystem. We handle the patching, the monitoring, and the daily optimization so your engineering team can focus on shipping features, not debugging server timeouts.",
+  "overview_desc_2": "Our stack is built on top-tier NVMe storage and dedicated resources, ensuring that your application never shares 'noisy neighbor' infrastructure. We provide a bespoke environment tuned specifically for your framework's requirements.",
+  "overview_cards": [
+    {
+      "title": "White-Glove Management",
+      "desc": "24/7 engineering support with 15-minute response time for critical issues."
+    },
+    {
+      "title": "Bulletproof Security",
+      "desc": "Proactive vulnerability scanning and automated OS patching cycles."
+    },
+    {
+      "title": "Burst Capacity",
+      "desc": "Instantly handle traffic spikes during marketing events or product launches."
+    }
+  ],
+  "philosophy_title": "Performance Without Compromise",
+  "arch": {
+    "topology_label": "Managed Stack",
+    "diagram_label": "High-Availability Cluster",
+    "lb": "Intelligent Traffic Manager",
+    "https": "Unified SSL/TLS Edge",
+    "app_cluster": "Dedicated Compute",
+    "node": "V-Node",
+    "private_link": "Backplane Sync",
+    "replica_ok": "State: Healthy",
+    "db": "Managed DB Cluster"
+  },
+  "lifecycle": {
+    "title": "Hosting Lifecycle",
+    "vpc_label": "Secure Perimeter",
+    "envs": [
+      {
+        "title": "Provisioning",
+        "desc": "Automated setup of dedicated resources with pre-configured security hardening."
+      },
+      {
+        "title": "Optimization",
+        "desc": "Continuous monitoring of server loads and automated resource adjustments."
+      },
+      {
+        "title": "Maintenance",
+        "desc": "Seamless background updates of core systems without service interruption."
+      }
+    ]
+  },
+  "reliability": {
+    "title": "Guaranteed Availability",
+    "desc": "We don't just host; we guarantee performance. Our service level agreements are backed by multi-region redundancy and real-time hardware monitoring.",
+    "features": [
+      "Hardware-Level Redundancy",
+      "Proactive Resource Scaling",
+      "Global CDN Integration",
+      "Daily Off-site Backups"
+    ],
+    "metrics": [
+      {
+        "label": "Network Uptime",
+        "value": "99.999%",
+        "desc": "Guaranteed monthly availability."
+      },
+      {
+        "label": "Support Response",
+        "value": "< 10m",
+        "desc": "Average time to expert engineer."
+      }
+    ]
+  },
+  "security": {
+    "title": "Fortified Infrastructure",
+    "layers": [
+      {
+        "title": "Proactive Defense",
+        "desc": "IPS/IDS systems monitoring for suspicious traffic patterns 24/7."
+      },
+      {
+        "title": "Patch Management",
+        "desc": "Zero-day vulnerability patching within hours of disclosure."
+      },
+      {
+        "title": "Compliance Guard",
+        "desc": "Automated audits for PCI-DSS, HIPAA, and GDPR standards."
+      },
+      {
+        "title": "Physical Security",
+        "desc": "Tier-4 data centers with biometric access and redundant power."
+      }
+    ]
+  },
+  "performance": {
+    "title": "Engineered for Speed",
+    "cards": [
+      {
+        "title": "NVMe Storage",
+        "desc": "10x faster data access compared to traditional SSD architectures."
+      },
+      {
+        "title": "Global Edge",
+        "desc": "Static and dynamic content delivery via our global PoP network."
+      },
+      {
+        "title": "Query Caching",
+        "desc": "Managed Redis/Memcached layers to offload database pressure."
+      }
+    ]
+  },
+  "operations": {
+    "title": "Always-On Support",
+    "desc": "Operational excellence through a blend of automation and human expertise.",
+    "buttons": [
+      "Monitor Status",
+      "Backup Control",
+      "Security Dashboard"
+    ],
+    "logs": {
+      "filename": "host_monitor.log",
+      "l1": "Analyzing request patterns...",
+      "l2": "Traffic spike detected: Scaling up compute nodes.",
+      "l3": "Syncing persistent storage across Availability Zones.",
+      "l4": "Backup job #8822 completed successfully.",
+      "l5": "All systems nominal. Latency: 4ms."
+    }
+  },
+  "recovery": {
+    "title": "Disaster Protection",
+    "cards": [
+      {
+        "title": "1-Click Restore",
+        "desc": "Revert to any point in time in minutes, not hours."
+      },
+      {
+        "title": "Data Mirroring",
+        "desc": "Synchronous replication to geographically distant data centers."
+      },
+      {
+        "title": "Failover Testing",
+        "desc": "Monthly automated drills to ensure recovery paths are active."
+      }
+    ]
+  },
+  "cost": {
+    "title": "Transparent Scaling",
+    "desc": "Prediction-based pricing that grows only when your business needs it to.",
+    "list": [
+      "No hidden overage fees",
+      "Resource-based billing",
+      "Long-term commitment discounts",
+      "Consolidated multi-region billing"
+    ],
+    "chart": {
+      "q1": "Fixed Costs",
+      "q2": "Variable Growth",
+      "q3": "Scale Efficiency",
+      "projected": "Projected ROI",
+      "trend": "20% Savings vs Unmanaged"
+    }
+  },
+  "migration": {
+    "title": "Onboarding & Migration",
+    "desc": "Moving your application is a delicate procedure. We handle the heavy lifting.",
+    "phases": [
+      {
+        "step": "01",
+        "title": "Environment Audit"
+      },
+      {
+        "step": "02",
+        "title": "Staged Migration"
+      },
+      {
+        "step": "03",
+        "title": "Global Cutover"
+      }
+    ]
+  },
+  "related": {
+    "title": "Related Cloud Services",
+    "view_all": "View All Services",
+    "learn_more": "Explore Service",
+    "items": [
+      {
+        "slug": "cloud-infrastructure",
+        "title": "Cloud Infrastructure",
+        "icon": "server"
+      },
+      {
+        "slug": "cybersecurity",
+        "title": "Cybersecurity",
+        "icon": "shield-halved"
+      },
+      {
+        "slug": "disaster-recovery",
+        "title": "Disaster Recovery",
+        "icon": "rotate-left"
+      }
+    ]
+  },
+  "seo": {
+    "title": "Managed Hosting | Cloud Infrastructure & Security | Data Pulse",
+    "description": "Enterprise-grade Managed Hosting for modern businesses. Resilient, scalable, and secure cloud environments.",
+    "keywords": "managed hosting, cloud, data pulse, software development"
+  }
+}

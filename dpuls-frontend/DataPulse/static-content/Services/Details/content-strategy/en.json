@@ -1,0 +1,225 @@
+{
+  "hero_tag": "Narrative Mastery",
+  "services": {
+    "marketing": {
+      "content": {
+        "title": "Content Strategy",
+        "desc": "Move from content creation to content authority. We engineer narratives that educate, inspire, and drive measurable business action."
+      }
+    }
+  },
+  "hero": {
+    "quote": "In the economy of attention, high-value insight is the only currency that doesn't depreciate."
+  },
+  "overview": {
+    "title": "Stories with ROI.",
+    "desc_1": "Content without strategy is just noise. Our approach treats every piece of content as a strategic asset designed to solve a specific user problem and move them deeper into your brand's ecosystem. We don't just write; we architect influence.",
+    "desc_2": "By combining linguistic precision with data-backed intent mapping, we ensure your message cuts through the digital clutter and resonates with the decision-makers who matter most to your bottom line.",
+    "focus_area_label": "Value Priority",
+    "focus_area_title": "Defined Market Authority"
+  },
+  "philosophy": {
+    "title": "Our Content Logic",
+    "desc": "Great strategy is built on the pillars of utility, authority, and consistency.",
+    "benefits": [
+      {
+        "title": "Topic Leadership",
+        "desc": "Owning the critical conversations in your industry through deep-dive analysis and unique perspectives."
+      },
+      {
+        "title": "Multichannel Orchestration",
+        "desc": "Ensuring a unified narrative voice that adapts gracefully across social, web, email, and whitepapers."
+      },
+      {
+        "title": "SEO Symbiosis",
+        "desc": "Crafting content that fulfills both user needs and algorithmic requirements for long-term organic leverage."
+      }
+    ]
+  },
+  "journey": {
+    "title": "The Education Path",
+    "steps": [
+      {
+        "stage": "Education",
+        "intent": "Concept Understanding",
+        "action": "Reads a definitive 'What is' guide"
+      },
+      {
+        "stage": "Solution",
+        "intent": "Practical Application",
+        "action": "Downloads a 'How-to' technical template"
+      },
+      {
+        "stage": "Comparison",
+        "intent": "Framework Selection",
+        "action": "Reviews a detailed case study or whitepaper"
+      },
+      {
+        "stage": "Action",
+        "intent": "Partner Confidence",
+        "action": "Signs up for a strategic consultation"
+      }
+    ]
+  },
+  "channels": {
+    "title": "Distribution Ecosystem",
+    "desc": "Strategic placement of your brand's most valuable insights.",
+    "groups": [
+      {
+        "category": "Foundational",
+        "items": [
+          "Expert Hub/Blog",
+          "Whitepapers & E-books",
+          "Case Study Library",
+          "Research Reports"
+        ]
+      },
+      {
+        "category": "Nurturing",
+        "items": [
+          "Educational Email Series",
+          "Resource Newsletters",
+          "Video Explainer Series",
+          "Podcasting/Audio Content"
+        ]
+      },
+      {
+        "category": "Impact",
+        "items": [
+          "Social Narrative Threads",
+          "LinkedIn Pulse Articles",
+          "Digital PR Placements",
+          "Webinar Presentations"
+        ]
+      }
+    ]
+  },
+  "voice": {
+    "label": "Tonal Presence",
+    "title": "Sophisticated & Decisive",
+    "desc_1": "We avoid the fluff. Our voice is one of a senior consultant who respects the reader's time and intelligence. We provide answers, not just options.",
+    "desc_2": "Through rigorous style guides and brand voice mapping, we ensure that whether a client reads a tweet or a 40-page report, the intellect remains consistent.",
+    "tags": [
+      "Decisive",
+      "Consultative",
+      "Lucid"
+    ],
+    "quote": "Brevity is the result of <span>clarity</span>; prolixity is the result of confusion.",
+    "metrics": [
+      {
+        "label": "Time on Page",
+        "value": "4m 30s"
+      },
+      {
+        "label": "Retention",
+        "value": "65%"
+      },
+      {
+        "label": "Authority Score",
+        "value": "90/100"
+      }
+    ]
+  },
+  "performance": {
+    "title": "Intellectual Impact",
+    "kpis": [
+      {
+        "value": "85%",
+        "label": "Lead Quality",
+        "context": "Inbound Intent"
+      },
+      {
+        "value": "3.5x",
+        "label": "Sharing Velocity",
+        "context": "vs. Baseline Content"
+      },
+      {
+        "value": "+120%",
+        "label": "Brand Recall",
+        "context": "After 3 Months"
+      }
+    ]
+  },
+  "growth": {
+    "title": "Authority Feedback Loop",
+    "desc": "Research. Produce. Distribute. Refine.",
+    "steps": [
+      "Trend Research",
+      "Synthesis",
+      "Orchestration",
+      "Feedback Tune"
+    ]
+  },
+  "collaboration": {
+    "title": "Narrative Integration",
+    "desc": "We embed ourselves with your SMEs to extract and formalize your company's unique wisdom.",
+    "features": [
+      "SME Interview Cycles",
+      "Style Guide Creation",
+      "Content Performance Hubs"
+    ],
+    "cadence": [
+      {
+        "freq": "Monthly",
+        "event": "Editorial Planning"
+      },
+      {
+        "freq": "Quarterly",
+        "event": "Strategic Refresh"
+      }
+    ]
+  },
+  "governance": {
+    "title": "Creative Integrity",
+    "desc": "Ensuring all content is original, accurate, and aligned with legal and brand standards.",
+    "tags": [
+      "100% Original",
+      "Fact-Checked",
+      "Inclusive Language"
+    ]
+  },
+  "cases": {
+    "title": "Narrative Success",
+    "items": [
+      {
+        "title": "Cybersecurity Firm",
+        "desc": "Established the brand as a global authority on zero-trust architecture through a series of research reports."
+      },
+      {
+        "title": "Real Estate Platform",
+        "desc": "Increased SEO traffic by 400% through a 'Neighborhood Authority' strategy using data-heavy local guides."
+      },
+      {
+        "title": "AI Consultancy",
+        "desc": "Built a 20k-subscriber newsletter from zero in 12 months by providing high-utility technical synthesis of AI trends."
+      }
+    ]
+  },
+  "related": {
+    "title": "Related Services",
+    "learn_more": "Explore Service",
+    "view_all": "View All Services",
+    "items": [
+      {
+        "slug": "seo-visibility",
+        "title": "SEO & Visibility",
+        "icon": "search"
+      },
+      {
+        "slug": "brand-identity",
+        "title": "Brand Identity",
+        "icon": "palette"
+      },
+      {
+        "slug": "social-media",
+        "title": "Social Media",
+        "icon": "share-alt"
+      }
+    ]
+  },
+  "seo": {
+    "title": "Content Strategy | Growth & Performance Marketing | Data Pulse",
+    "description": "Drive ROI with our Content Strategy strategies. Data-driven marketing to scale your digital presence.",
+    "keywords": "content strategy, marketing, data pulse, software development"
+  }
+}

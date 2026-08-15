@@ -1,0 +1,225 @@
+{
+  "hero_tag": "Strategic Visibility",
+  "services": {
+    "marketing": {
+      "seo": {
+        "title": "Search Engine Optimization",
+        "desc": "Dominate search rankings and capture high-intent organic traffic through data-driven SEO strategies and technical excellence."
+      }
+    }
+  },
+  "hero": {
+    "quote": "Ranking #1 isn't luck; it's the result of technical precision meeting semantic relevance."
+  },
+  "overview": {
+    "title": "Found by Intent.",
+    "desc_1": "In a world of infinite noise, being found at the exact moment of need is the ultimate competitive advantage. Our SEO philosophy transcends simple keyword stuffing; we focus on topical authority and user intent mapping.",
+    "desc_2": "Whether it's localized search dominance or global enterprise ranking, we engineer your digital presence to be favored by both humans and algorithms.",
+    "focus_area_label": "KPI Priority",
+    "focus_area_title": "10x Organic Reach"
+  },
+  "philosophy": {
+    "title": "Our SEO Logic",
+    "desc": "We build architectures that search engines trust and users love.",
+    "benefits": [
+      {
+        "title": "Technical Integrity",
+        "desc": "Optimizing Core Web Vitals, site architecture, and crawlability for maximum indexation efficiency."
+      },
+      {
+        "title": "Contextual Relevance",
+        "desc": "Mapping your content to the semantic clusters that define your industry's authority."
+      },
+      {
+        "title": "Sustainable Growth",
+        "desc": "White-hat strategies that resist algorithm volatility and build long-term digital equity."
+      }
+    ]
+  },
+  "journey": {
+    "title": "The Search Journey",
+    "steps": [
+      {
+        "stage": "Awareness",
+        "intent": "Information Seeking",
+        "action": "How to optimize cloud costs?"
+      },
+      {
+        "stage": "Consideration",
+        "intent": "Solution Comparison",
+        "action": "Best AI automation platforms 2026"
+      },
+      {
+        "stage": "Decision",
+        "intent": "Vendor Selection",
+        "action": "Data Pulse SEO services pricing"
+      },
+      {
+        "stage": "Advocacy",
+        "intent": "Brand Search",
+        "action": "Data Pulse login"
+      }
+    ]
+  },
+  "channels": {
+    "title": "Platform Coverage",
+    "desc": "Dominating wherever your audience searches.",
+    "groups": [
+      {
+        "category": "Organic Search",
+        "items": [
+          "Google Search Console",
+          "Bing Webmaster Tools",
+          "Yandex/Baidu Local SEO",
+          "Featured Snippet Capture"
+        ]
+      },
+      {
+        "category": "Visual & Voice",
+        "items": [
+          "Image Search Optimization",
+          "Voice Intent Schema",
+          "Video SEO (YouTube)",
+          "Local Map Pack Mastery"
+        ]
+      },
+      {
+        "category": "Authority",
+        "items": [
+          "E-E-A-T Framework",
+          "Digital PR & Backlinks",
+          "Thought Leadership Content",
+          "Brand Mention Mining"
+        ]
+      }
+    ]
+  },
+  "voice": {
+    "label": "Tonal Presence",
+    "title": "Authoritative & Insightful",
+    "desc_1": "Our content doesn't just answer questions; it provides a definitive perspective. We position your brand as the industry standard through technical depth and crystal-clear communication.",
+    "desc_2": "Every article, whitepaper, and landing page is crafted to prove expertise, build trust, and drive meaningful action.",
+    "tags": [
+      "Scientific",
+      "Expert",
+      "Objective"
+    ],
+    "quote": "Authority is not asked for; it is <span>demonstrated</span> through superior insight.",
+    "metrics": [
+      {
+        "label": "Technical Depth",
+        "value": "95%"
+      },
+      {
+        "label": "Readability",
+        "value": "85%"
+      },
+      {
+        "label": "Intent Match",
+        "value": "98%"
+      }
+    ]
+  },
+  "performance": {
+    "title": "SEO Impact Metrics",
+    "kpis": [
+      {
+        "value": "+150%",
+        "label": "Keyword Gain",
+        "context": "Top 10 Rankings"
+      },
+      {
+        "value": "4.2x",
+        "label": "Traffic ROI",
+        "context": "LTV:CAC Ratio"
+      },
+      {
+        "value": "-40%",
+        "label": "CPA",
+        "context": "vs. Paid Search"
+      }
+    ]
+  },
+  "growth": {
+    "title": "SEO Feedback Loop",
+    "desc": "Continuous optimization based on real-time search behavior.",
+    "steps": [
+      "Audit",
+      "Strategize",
+      "Execute",
+      "Analyze"
+    ]
+  },
+  "collaboration": {
+    "title": "Strategic Partnership",
+    "desc": "We work as an extension of your technical and marketing teams.",
+    "features": [
+      "Transparent Reporting",
+      "Agile Execution",
+      "Strategy Workshops"
+    ],
+    "cadence": [
+      {
+        "freq": "Weekly",
+        "event": "Ranking Check-in"
+      },
+      {
+        "freq": "Monthly",
+        "event": "Strategy Alignment"
+      }
+    ]
+  },
+  "governance": {
+    "title": "Compliance & Integrity",
+    "desc": "Ensuring all strategies align with global search guidelines and privacy standards.",
+    "tags": [
+      "GDPR Compliant",
+      "WCAG Accessible",
+      "White-Hat Only"
+    ]
+  },
+  "cases": {
+    "title": "SEO Outcomes",
+    "items": [
+      {
+        "title": "FinTech Startup",
+        "desc": "Scaled organic traffic from 500 to 50k monthly sessions in 9 months via semantic clusters."
+      },
+      {
+        "title": "Enterprise Cloud",
+        "desc": "Reduced dependency on PPC by 30% while increasing lead quality through bottom-funnel SEO."
+      },
+      {
+        "title": "Global SaaS",
+        "desc": "Dominated multilingual search in 12 regions through localized technical SEO and local-intent mapping."
+      }
+    ]
+  },
+  "related": {
+    "title": "Related Services",
+    "learn_more": "Explore Service",
+    "view_all": "View All Services",
+    "items": [
+      {
+        "slug": "content-strategy",
+        "title": "Content Strategy",
+        "icon": "pen-nib"
+      },
+      {
+        "slug": "performance-marketing",
+        "title": "Performance Marketing",
+        "icon": "bullhorn"
+      },
+      {
+        "slug": "brand-identity",
+        "title": "Brand Identity",
+        "icon": "palette"
+      }
+    ]
+  },
+  "seo": {
+    "title": "SEO & Visibility | Growth & Performance Marketing | Data Pulse",
+    "description": "Drive ROI with our SEO & Visibility strategies. Data-driven marketing to scale your digital presence.",
+    "keywords": "seo & visibility, marketing, data pulse, software development"
+  }
+}

@@ -1,0 +1,222 @@
+{
+  "hero_tag": "Zero-Ops Execution",
+  "hero": {
+    "status_label": "Function Health",
+    "status_value": "99.99% Execution",
+    "deployments_label": "Invocations / Hr",
+    "deployments_value": "5M+",
+    "compliance_label": "Cold Start",
+    "compliance_value": "< 100ms"
+  },
+  "services": {
+    "cloud": {
+      "serverless": {
+        "title": "Serverless Architecture",
+        "desc": "Building event-driven, cost-effective applications that scale infinitely without the overhead of server management."
+      }
+    }
+  },
+  "overview_title": "Code Without the Server.",
+  "overview_desc_1": "Serverless is the logical evolution of cloud computing. It allows your business to pay only for the exact milliseconds of execution time, eliminating the cost of idle resources. We design event-driven architectures that react to data changes, user actions, and system signals in real-time.",
+  "overview_desc_2": "Our serverless solutions leverage AWS Lambda, Azure Functions, and Google Cloud Functions to build highly decoupled applications. This approach minimizes the surface area of maintenance and maximizes the velocity of feature delivery.",
+  "overview_cards": [
+    {
+      "title": "Zero Server Management",
+      "desc": "Focus entirely on business logic while the cloud provider handles the underlying infrastructure."
+    },
+    {
+      "title": "Infinite Scalability",
+      "desc": "Automatically scale from zero to millions of requests without manual intervention."
+    },
+    {
+      "title": "Granular Cost Model",
+      "desc": "Pay-per-execution billing ensures 100% resource utilization efficiency."
+    }
+  ],
+  "philosophy_title": "Event-Driven Logic",
+  "arch": {
+    "topology_label": "FaaS Architecture",
+    "diagram_label": "Event-Driven Workflow",
+    "lb": "API Gateway",
+    "https": "JSON / REST Events",
+    "app_cluster": "Serverless Function Pool",
+    "node": "Function",
+    "private_link": "Internal Event Bus",
+    "replica_ok": "Invoke: Success",
+    "db": "NoSQL DynamoDB / Cosmos"
+  },
+  "lifecycle": {
+    "title": "Serverless Lifecycle",
+    "vpc_label": "Managed Runtime Zone",
+    "envs": [
+      {
+        "title": "Triggering",
+        "desc": "Capturing events from API calls, S3 uploads, or database stream changes."
+      },
+      {
+        "title": "Execution",
+        "desc": "Rapid cold-start and execution of logic in isolated, ephemeral runtimes."
+      },
+      {
+        "title": "Settlement",
+        "desc": "Persisting state and returning responses before immediate resource teardown."
+      }
+    ]
+  },
+  "reliability": {
+    "title": "Built-in High Availability",
+    "desc": "Serverless platforms are inherently multi-AZ and fail-fast, providing a resilient environment for modern web and mobile backends.",
+    "features": [
+      "Automatic High Availability",
+      "Event-Source Integration",
+      "Dead Letter Queues (DLQ)",
+      "Strict Execution Timeouts"
+    ],
+    "metrics": [
+      {
+        "label": "Invocation Success",
+        "value": "99.99%",
+        "desc": "Successful trigger rate."
+      },
+      {
+        "label": "Avg Latency",
+        "value": "120ms",
+        "desc": "Overall end-to-to processing time."
+      }
+    ]
+  },
+  "security": {
+    "title": "Granular Function Security",
+    "layers": [
+      {
+        "title": "Function Identity",
+        "desc": "Per-function IAM roles to enforce the principle of least privilege."
+      },
+      {
+        "title": "VPC Integration",
+        "desc": "Securing serverless functions within private subnets for DB access."
+      },
+      {
+        "title": "Concurrent Limits",
+        "desc": "Preventing DDoS and cost-drain through execution throttling."
+      },
+      {
+        "title": "Event Validation",
+        "desc": "Strict schema validation at the gateway level to prevent injection."
+      }
+    ]
+  },
+  "performance": {
+    "title": "Scaling & Velocity",
+    "cards": [
+      {
+        "title": "Cold Start Warmer",
+        "desc": "Strategies to keep functions 'warm' for latency-sensitive applications."
+      },
+      {
+        "title": "Asynchronous Processing",
+        "desc": "Utilizing SQS and EventBridge to offload heavy long-running tasks."
+      },
+      {
+        "title": "Global Distribution",
+        "desc": "Deploying logic at the edge (Lambda@Edge) for extreme global performance."
+      }
+    ]
+  },
+  "operations": {
+    "title": "Observing the Invisible",
+    "desc": "Monitoring distributed execution through specialized serverless telemetry.",
+    "buttons": [
+      "X-Ray Traces",
+      "CloudWatch Logs",
+      "Usage Insights"
+    ],
+    "logs": {
+      "filename": "lambda_exec.log",
+      "l1": "START RequestId: 8822-f63a Version: $LATEST",
+      "l2": "Processing event: S3::ObjectCreated (size: 2.1MB)",
+      "l3": "Task successful. Business logic took 45ms.",
+      "l4": "END RequestId: 8822-f63a",
+      "l5": "REPORT Duration: 45.12 ms Billed Duration: 46 ms"
+    }
+  },
+  "recovery": {
+    "title": "Stateless Recovery",
+    "cards": [
+      {
+        "title": "Automatic Retries",
+        "desc": "Native platform capability to retry failed executions up to 3 times."
+      },
+      {
+        "title": "Redundancy-by-Default",
+        "desc": "Functions are automatically replicated across all regional availability zones."
+      },
+      {
+        "title": "Global Fallback",
+        "desc": "Rerouting events to alternate regions during total regional failure."
+      }
+    ]
+  },
+  "cost": {
+    "title": "Pay-as-you-Scale",
+    "desc": "Eliminating the cost of idle servers. You pay nothing when no one is using your application.",
+    "list": [
+      "Zero dollar idle cost",
+      "Free tier utilization",
+      "Billed to the millisecond",
+      "Automated cost anomaly detection"
+    ],
+    "chart": {
+      "q1": "Fixed EC2 Cost",
+      "q2": "Mixed Usage",
+      "q3": "Serverless Tipping",
+      "projected": "Pure Scalability",
+      "trend": "75% Reduction in Base Infra Bills"
+    }
+  },
+  "migration": {
+    "title": "Refactoring for Serverless",
+    "desc": "Moving from monoliths to micro-functions requires a change in mindset.",
+    "phases": [
+      {
+        "step": "01",
+        "title": "Logic Decoupling"
+      },
+      {
+        "step": "02",
+        "title": "Event Mapping"
+      },
+      {
+        "step": "03",
+        "title": "Function Orchestration"
+      }
+    ]
+  },
+  "related": {
+    "title": "Related Cloud Services",
+    "view_all": "View All Services",
+    "learn_more": "Explore Service",
+    "items": [
+      {
+        "slug": "cloud-infrastructure",
+        "title": "Cloud Infrastructure",
+        "icon": "server"
+      },
+      {
+        "slug": "devops-engineering",
+        "title": "DevOps Engineering",
+        "icon": "code-pull-request"
+      },
+      {
+        "slug": "managed-hosting",
+        "title": "Managed Hosting",
+        "icon": "hdd"
+      }
+    ]
+  },
+  "seo": {
+    "title": "Serverless Architecture | Cloud Infrastructure & Security | Data Pulse",
+    "description": "Enterprise-grade Serverless Architecture for modern businesses. Resilient, scalable, and secure cloud environments.",
+    "keywords": "serverless architecture, cloud, data pulse, software development"
+  }
+}

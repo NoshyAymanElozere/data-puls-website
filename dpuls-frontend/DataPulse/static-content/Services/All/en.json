@@ -1,0 +1,300 @@
+{
+  "listingPage": {
+    "hero": {
+      "badge": "Core Capabilities",
+      "title_line1": "Architecting",
+      "title_line2": "Digital Excellence.",
+      "scroll_label": "Explore"
+    },
+    "services_section": {
+      "badge": "Global Expertise",
+      "title": "Our Services & Expertise",
+      "subtitle": "Comprehensive technology solutions tailored to your business needs.",
+      "subtitle_extra": "We combine strategic foresight with engineering precision."
+    }
+  },
+  "categories": [
+    {
+      "id": "software",
+      "label": "Software Services"
+    },
+    {
+      "id": "ai",
+      "label": "AI & Automation"
+    },
+    {
+      "id": "marketing",
+      "label": "Marketing Services"
+    },
+    {
+      "id": "cloud",
+      "label": "Cloud & Hosting"
+    }
+  ],
+  "services": [
+    {
+      "id": "web-development",
+      "slug": "web-development",
+      "title": "Custom Web Development",
+      "titleKey": "software.web",
+      "descKey": "software.web",
+      "shortDescription": "Scalable, high-performance web applications built with React, Node.js, and modern architectures.",
+      "categoryId": "software",
+      "icon": "code",
+      "coverImage": "/assets/services/web-dev.jpg"
+    },
+    {
+      "id": "mobile-development",
+      "slug": "mobile-development",
+      "title": "Mobile App Development",
+      "titleKey": "software.mobile",
+      "descKey": "software.mobile",
+      "shortDescription": "Native and cross-platform mobile solutions for iOS and Android ensuring seamless user experiences.",
+      "categoryId": "software",
+      "icon": "mobile",
+      "coverImage": "/assets/services/mobile-dev.jpg"
+    },
+    {
+      "id": "saas-engineering",
+      "slug": "saas-engineering",
+      "title": "SaaS Product Engineering",
+      "titleKey": "software.saas",
+      "descKey": "software.saas",
+      "shortDescription": "Full-cycle SaaS development from MVP to enterprise-grade scaling and multi-tenant architectures.",
+      "categoryId": "software",
+      "icon": "cloud-upload",
+      "coverImage": "/assets/services/saas.jpg"
+    },
+    {
+      "id": "erp-solutions",
+      "slug": "erp-solutions",
+      "title": "Enterprise ERP Solutions",
+      "titleKey": "software.erp",
+      "descKey": "software.erp",
+      "shortDescription": "Comprehensive resource planning systems to streamline complex business operations and data flow.",
+      "categoryId": "software",
+      "icon": "database",
+      "coverImage": "/assets/services/erp.jpg"
+    },
+    {
+      "id": "api-integration",
+      "slug": "api-integration",
+      "title": "API Development & Integration",
+      "titleKey": "software.api",
+      "descKey": "software.api",
+      "shortDescription": "Robust API architectures connecting disparate systems for seamless data exchange and functionality.",
+      "categoryId": "software",
+      "icon": "link",
+      "coverImage": "/assets/services/api.jpg"
+    },
+    {
+      "id": "legacy-modernization",
+      "slug": "legacy-modernization",
+      "title": "Legacy Modernization",
+      "titleKey": "software.legacy",
+      "descKey": "software.legacy",
+      "shortDescription": "Transforming outdated software into modern, scalable cloud-native applications without data loss.",
+      "categoryId": "software",
+      "icon": "refresh",
+      "coverImage": "/assets/services/legacy.jpg"
+    },
+    {
+      "id": "machine-learning",
+      "slug": "machine-learning",
+      "title": "Machine Learning Solutions",
+      "titleKey": "ai.ml",
+      "descKey": "ai.ml",
+      "shortDescription": "Custom algorithms that predict trends, optimize operations, and unlock hidden value in your data.",
+      "categoryId": "ai",
+      "icon": "brain",
+      "coverImage": "/assets/services/ml.jpg"
+    },
+    {
+      "id": "process-automation",
+      "slug": "process-automation",
+      "title": "Process Automation (RPA)",
+      "titleKey": "ai.rpa",
+      "descKey": "ai.rpa",
+      "shortDescription": "Robotic Process Automation to streamline repetitive workflows and reduce operational costs.",
+      "categoryId": "ai",
+      "icon": "cogs",
+      "coverImage": "/assets/services/rpa.jpg"
+    },
+    {
+      "id": "natural-language-ai",
+      "slug": "natural-language-ai",
+      "title": "Natural Language AI",
+      "titleKey": "ai.nlp",
+      "descKey": "ai.nlp",
+      "shortDescription": "Chatbots and semantic analysis tools that understand and interact with human language.",
+      "categoryId": "ai",
+      "icon": "comments",
+      "coverImage": "/assets/services/nlp.jpg"
+    },
+    {
+      "id": "computer-vision",
+      "slug": "computer-vision",
+      "title": "Computer Vision",
+      "titleKey": "ai.vision",
+      "descKey": "ai.vision",
+      "shortDescription": "Advanced image and video analysis systems for quality control, surveillance, and automated recognition.",
+      "categoryId": "ai",
+      "icon": "eye",
+      "coverImage": "/assets/services/vision.jpg"
+    },
+    {
+      "id": "predictive-analytics",
+      "slug": "predictive-analytics",
+      "title": "Predictive Analytics",
+      "titleKey": "ai.predictive",
+      "descKey": "ai.predictive",
+      "shortDescription": "Forecasting models that utilize historical data to predict future trends and behaviors.",
+      "categoryId": "ai",
+      "icon": "chart-line",
+      "coverImage": "/assets/services/predictive.jpg"
+    },
+    {
+      "id": "generative-ai",
+      "slug": "generative-ai",
+      "title": "Generative AI Solutions",
+      "titleKey": "ai.genai",
+      "descKey": "ai.genai",
+      "shortDescription": "Custom LLMs and generative models for content creation, code generation, and complex problem solving.",
+      "categoryId": "ai",
+      "icon": "magic",
+      "coverImage": "/assets/services/genai.jpg"
+    },
+    {
+      "id": "seo-visibility",
+      "slug": "seo-visibility",
+      "title": "SEO & Visibility",
+      "titleKey": "marketing.seo",
+      "descKey": "marketing.seo",
+      "shortDescription": "Data-driven strategies to dominate search rankings and drive organic traffic to your digital assets.",
+      "categoryId": "marketing",
+      "icon": "search",
+      "coverImage": "/assets/services/seo.jpg"
+    },
+    {
+      "id": "social-media",
+      "slug": "social-media",
+      "title": "Social Media Strategy",
+      "titleKey": "marketing.social",
+      "descKey": "marketing.social",
+      "shortDescription": "Engaging content and management to build brand loyalty across all major social platforms.",
+      "categoryId": "marketing",
+      "icon": "share-alt",
+      "coverImage": "/assets/services/social.jpg"
+    },
+    {
+      "id": "performance-marketing",
+      "slug": "performance-marketing",
+      "title": "Performance Marketing",
+      "titleKey": "marketing.ads",
+      "descKey": "marketing.ads",
+      "shortDescription": "ROI-focused PPC and display advertising campaigns that convert leads into customers.",
+      "categoryId": "marketing",
+      "icon": "bullhorn",
+      "coverImage": "/assets/services/performance.jpg"
+    },
+    {
+      "id": "content-strategy",
+      "slug": "content-strategy",
+      "title": "Content Strategy",
+      "titleKey": "marketing.content",
+      "descKey": "marketing.content",
+      "shortDescription": "Strategic content creation and distribution to attract and retain a clearly defined audience.",
+      "categoryId": "marketing",
+      "icon": "pen-nib",
+      "coverImage": "/assets/services/content.jpg"
+    },
+    {
+      "id": "email-automation",
+      "slug": "email-automation",
+      "title": "Email Automation",
+      "titleKey": "marketing.email",
+      "descKey": "marketing.email",
+      "shortDescription": "Personalized email workflows that nurture leads and drive customer retention automatically.",
+      "categoryId": "marketing",
+      "icon": "envelope-open",
+      "coverImage": "/assets/services/email.jpg"
+    },
+    {
+      "id": "brand-identity",
+      "slug": "brand-identity",
+      "title": "Brand Identity Design",
+      "titleKey": "marketing.brand",
+      "descKey": "marketing.brand",
+      "shortDescription": "Creating memorable visual identities and guidelines that resonate with your target market.",
+      "categoryId": "marketing",
+      "icon": "palette",
+      "coverImage": "/assets/services/branding.jpg"
+    },
+    {
+      "id": "cloud-infrastructure",
+      "slug": "cloud-infrastructure",
+      "title": "Cloud Infrastructure",
+      "titleKey": "cloud.infra",
+      "descKey": "cloud.infra",
+      "shortDescription": "Secure, scalable cloud architectures on AWS, Azure, and Google Cloud tailored to your needs.",
+      "categoryId": "cloud",
+      "icon": "server",
+      "coverImage": "/assets/services/infrastructure.jpg"
+    },
+    {
+      "id": "managed-hosting",
+      "slug": "managed-hosting",
+      "title": "Managed Hosting",
+      "titleKey": "cloud.hosting",
+      "descKey": "cloud.hosting",
+      "shortDescription": "High-availability hosting solutions with 24/7 monitoring, backups, and enterprise security.",
+      "categoryId": "cloud",
+      "icon": "hdd",
+      "coverImage": "/assets/services/hosting.jpg"
+    },
+    {
+      "id": "cybersecurity",
+      "slug": "cybersecurity",
+      "title": "Cybersecurity",
+      "titleKey": "cloud.security",
+      "descKey": "cloud.security",
+      "shortDescription": "Comprehensive threat protection, penetration testing, and compliance audits for your digital assets.",
+      "categoryId": "cloud",
+      "icon": "shield-alt",
+      "coverImage": "/assets/services/security.jpg"
+    },
+    {
+      "id": "devops-engineering",
+      "slug": "devops-engineering",
+      "title": "DevOps Engineering",
+      "titleKey": "cloud.devops",
+      "descKey": "cloud.devops",
+      "shortDescription": "CI/CD pipelines and infrastructure as code to accelerate development and deployment cycles.",
+      "categoryId": "cloud",
+      "icon": "code-branch",
+      "coverImage": "/assets/services/devops.jpg"
+    },
+    {
+      "id": "serverless-architecture",
+      "slug": "serverless-architecture",
+      "title": "Serverless Architecture",
+      "titleKey": "cloud.serverless",
+      "descKey": "cloud.serverless",
+      "shortDescription": "Event-driven computing models that reduce operational overhead and scale instantly.",
+      "categoryId": "cloud",
+      "icon": "bolt",
+      "coverImage": "/assets/services/serverless.jpg"
+    },
+    {
+      "id": "disaster-recovery",
+      "slug": "disaster-recovery",
+      "title": "Disaster Recovery",
+      "titleKey": "cloud.recovery",
+      "descKey": "cloud.recovery",
+      "shortDescription": "Business continuity planning and replication strategies to ensure zero data loss during outages.",
+      "categoryId": "cloud",
+      "icon": "undo",
+      "coverImage": "/assets/services/recovery.jpg"
+    }
+  ]
+}

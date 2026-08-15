@@ -1,0 +1,48 @@
+{
+  "footer": {
+    "headline": {
+      "start": "مستعد",
+      "highlight": "لتوسيع",
+      "end": "رؤيتك؟",
+      "description": "نحن نهندس البنية التحتية الرقمية التي تشغل المؤسسات العالمية. دعنا نبني مستقبلك، اليوم.",
+      "cta": "ابدأ مشروعًا"
+    },
+    "brand": {
+      "description": "شركة تقنية متخصصة في تطوير الحلول الرقمية والبرمجية، نساعد الشركات على بناء وتطوير منصاتها الرقمية وتحقيق أهدافها التقنية.",
+      "newsletterPlaceholder": "لتبقى على اطلاع (أدخل البريد الإلكتروني)"
+    },
+    "sections": [
+      {
+        "title": "اكتشف",
+        "links": [
+          {"label": "الرئيسية", "href": "/"},
+          {"label": "من نحن", "href": "/about"},
+          {"label": "خدماتنا", "href": "/services"},
+          {"label": "أعمالنا", "href": "/portfolio"},
+          {"label": "وظائف", "href": "/careers"},
+          {"label": "المدونة", "href": "/blog"},
+          {"label": "تواصل معنا", "href": "/contact"},
+          {"label": "سياسة الخصوصية", "href": "/privacy"}
+        ]
+      }
+    ],
+    "contact": {
+      "title": "تواصل",
+      "email": "info@dpulse.sa",
+      "phone": "+966551958719",
+      "address": "المملكة العربية السعودية - الرياض - العليا"
+    },
+    "socials": [
+      {"icon": "twitter", "url": "#"},
+      {"icon": "linkedin", "url": "#"},
+      {"icon": "github", "url": "#"},
+      {"icon": "instagram", "url": "#"},
+      {"icon": "facebook", "url": "#"}
+    ],
+    "bottom": {
+      "copyright": "© 2026 داتا بالس.",
+      "rights": "جميع الحقوق محفوظة.",
+      "backToTop": "العودة للأعلى"
+    }
+  }
+}

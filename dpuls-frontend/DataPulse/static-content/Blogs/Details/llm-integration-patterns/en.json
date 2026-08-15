@@ -1,0 +1,80 @@
+{
+  "seo": {
+    "title": "Integrating Large Language Models into Production Apps | Data Pulse",
+    "description": "Best practices for integrating LLMs like GPT-4 into real-world applications with prompt engineering and safety.",
+    "keywords": "LLM integration, GPT-4, AI applications, prompt engineering"
+  },
+  "hero": {
+    "dispatch_prefix": "DISPATCH: ",
+    "read_label": "MIN READ",
+    "label_left": "EST. 2024",
+    "label_right_prefix": "HASH: ",
+    "scroll_label": "SCROLL DOWN"
+  },
+  "meta_ticker": {
+    "integrity_label": "INTEGRITY",
+    "integrity_value": "VERIFIED",
+    "source_label": "SOURCE",
+    "node_prefix": "NODE // ",
+    "node_suffix": " // SYSTEM",
+    "download_button": "SAVE DISPATCH"
+  },
+  "sidebar": {
+    "index_label": "INDEX",
+    "node_prefix": "NODE_",
+    "quote": "The prompt is the new source code, and context is the new memory."
+  },
+  "content": {
+    "section1_title": "The Context Window Problem",
+    "section1_p1": "As we integrate LLMs deeper into our stacks, managing context efficiently becomes the primary engineering challenge.",
+    "section1_p2": "It's not about how much data the model knows, but how much",
+    "section1_strong": "relevant context",
+    "section1_p2_cont": " it has in the moment of inference.",
+    "callout_label": "AI COGNITION",
+    "callout_text": "Moving from static prompts to dynamic RAG pipelines for real-time domain knowledge.",
+    "section2_title": "Safety & Hallucination",
+    "section2_p1": "Building robust verification layers to ensure AI outputs remain grounded in factual data and within safety guidelines."
+  },
+  "related": {
+    "title_line1": "KEEP",
+    "title_line2": "EXPLORING",
+    "subtitle": "Dive deeper into our technical archives.",
+    "view_archive": "VIEW ALL BLOGS",
+    "access_label": "READ FULL DISPATCH"
+  },
+  "article": {
+    "id": "6",
+    "uid": "AI-2024-06",
+    "category": "ai",
+    "title": "Cognitive",
+    "title_accent": "Stacks.",
+    "subtitle": "Integrating Large Language Models into Production Apps",
+    "lead": "Best practices for integrating LLMs like GPT-4 into real-world applications.",
+    "author": {
+      "name": "Lisa Wang",
+      "role": "Principal AI Engineer",
+      "image": "https://i.pravatar.cc/150?img=43",
+      "id": "DP-ATH-06"
+    },
+    "meta": {
+      "date": "FEB 25, 2024",
+      "readTime": "15",
+      "hash": "0x44f32df9",
+      "security": "Public Dispatch"
+    }
+  },
+  "index": [
+    {
+      "id": "infrastructure-trap",
+      "label": "The Context Window Problem"
+    },
+    {
+      "id": "architectural-core",
+      "label": "AI COGNITION"
+    },
+    {
+      "id": "logic-kernels",
+      "label": "Safety & Hallucination"
+    }
+  ]
+}

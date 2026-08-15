@@ -1,0 +1,254 @@
+{
+  "hero_tag": "Creative Intelligence",
+  "hero_badges": [
+    "LLM Fine-tuning",
+    "Diffusion Models",
+    "Prompt Engineering",
+    "Synthetic Data"
+  ],
+  "overview_title": "Co-Creating with AI.",
+  "overview_desc_1": "We implement state-of-the-art Generative AI solutions that empower businesses to create novel content, automate complex coding tasks, and synthesize vast amounts of information into human-like narratives. We turn AI from a tool into a creative partner.",
+  "overview_desc_2": "Our team specializes in deploying and fine-tuning Large Language Models (LLMs) and Diffusion models within private, secure enterprise environments, ensuring that your proprietary knowledge drives the output.",
+  "labels": {
+    "designed_for": "Designed For",
+    "solves": "Solves",
+    "architecture": "Architecture",
+    "core_functions": "Core Functions",
+    "related_capabilities": "Related Intelligence Capabilities",
+    "explore_module": "Explore Module",
+    "process_title": "Development Lifecycle"
+  },
+  "overview_cards": {
+    "designed_for_text": "Content creators, software engineering teams, and knowledge-intensive businesses.",
+    "solves_text": "Production bottlenecks, high-cost creative cycles, and the 'blank page' problem in development.",
+    "architecture_text": "RAG (Retrieval Augmented Generation) / Multi-Modal LLMs"
+  },
+  "capability_generic_desc": "Generative architectures optimized for high-fidelity content synthesis across text, code, and visual media.",
+  "features_title": "Generative Capabilities",
+  "details": {
+    "features": [
+      "Custom Enterprise LLMs",
+      "Retrieval Augmented Generation (RAG)",
+      "Automated Code Synthesis",
+      "Dynamic Content Engines",
+      "Synthetic Data Generation",
+      "Visual Asset Generation"
+    ],
+    "benefits": [
+      {
+        "title": "Hyper-Efficiency",
+        "desc": "Shorten production cycles from weeks to minutes with AI-assisted drafting."
+      },
+      {
+        "title": "Private Intelligence",
+        "desc": "Leverage your company's own data for generation without leaking PII."
+      },
+      {
+        "title": "Unlimited Scale",
+        "desc": "Personalize content for millions of unique users simultaneously and automatically."
+      }
+    ]
+  },
+  "automation": {
+    "title": "Applied Generative Scenarios",
+    "scenarios": [
+      {
+        "title": "Software Dev",
+        "before": "Manual Boilerplate",
+        "after": "AI-Driven Scaffolding",
+        "impact": "2x Speed"
+      },
+      {
+        "title": "Marketing Copy",
+        "before": "Slow Creative Sync",
+        "after": "Instant A/B Variants",
+        "impact": "40% CTR Lift"
+      },
+      {
+        "title": "Knowledge Base",
+        "before": "Manual Searching",
+        "after": "Natural QA Bot",
+        "impact": "Instant Insight"
+      }
+    ]
+  },
+  "philosophy_title": "Generative Logic",
+  "philosophy_subtitle": "Creation is no longer a human monopoly. It's a human-directed superpower.",
+  "models_logic": [
+    {
+      "title": "Transformer LLMs",
+      "desc": "Massive scale models (GPT-4, Claude, Llama 3) fine-tuned for specialized domain tasks."
+    },
+    {
+      "title": "Diffusion Systems",
+      "desc": "Probabilistic models for high-quality image, video, and 3D asset generation."
+    },
+    {
+      "title": "RAG Pipeline",
+      "desc": "Grounding generative outputs in real-time, verified proprietary data sources."
+    },
+    {
+      "title": "Agentic Workflows",
+      "desc": "Autonomous AI agents that can chain generative tasks to solve multi-step problems."
+    }
+  ],
+  "tech_stack_title": "Generative Stack",
+  "data_strategy": [
+    {
+      "step": "01",
+      "title": "Knowledge Extraction",
+      "desc": "Converting unstructured files into AI-readable vector databases."
+    },
+    {
+      "step": "02",
+      "title": "Prompt Orchestration",
+      "desc": "Building robust templates for consistent, high-quality generation."
+    },
+    {
+      "step": "03",
+      "title": "Alignment Tuning",
+      "desc": "Ensuring the AI follows your brand's specific tone, voice, and rules."
+    },
+    {
+      "step": "04",
+      "title": "Output Validation",
+      "desc": "Automated checking of generated content for accuracy and safety."
+    }
+  ],
+  "hitl": {
+    "title": "Co-Pilot Paradigm",
+    "desc": "We don't replace the creator; we amplify them. Our Generative AI acts as a high-speed drafting partner, with humans maintaining final editorial control over all published outputs.",
+    "metrics": {
+      "confidence_score": {
+        "label": "Hallucination Rate",
+        "value": "<0.5%",
+        "sub": "With RAG Integration"
+      }
+    },
+    "features": [
+      "Review & Refine UI",
+      "Source Citation Links",
+      "Style Consistency Checks"
+    ]
+  },
+  "responsible": {
+    "title": "Responsible Creation",
+    "desc": "We prioritize AI safety and intellectual property protection, ensuring your generated content is original and ethical.",
+    "items": [
+      {
+        "title": "IP Protection",
+        "desc": "Ensuring models are trained on licensed or proprietary data to avoid copyright risk."
+      },
+      {
+        "title": "Content Provenance",
+        "desc": "Digital watermarking for transparency in AI-generated assets."
+      },
+      {
+        "title": "Safety Sandboxing",
+        "desc": "Robust guardrails to prevent the generation of misinformation or harmful content."
+      }
+    ]
+  },
+  "integration": {
+    "title": "Seamless Synthesis",
+    "desc": "Integrate generative capabilities into CMS, IDEs, and internal communication tools like Slack and Teams.",
+    "labels": {
+      "your_data": "Domain Knowledge",
+      "actionable_output": "Generated Solution"
+    }
+  },
+  "process_title": "Creative Roadmap",
+  "development_lifecycle": [
+    {
+      "step": "Ingest",
+      "desc": "Building your private vector knowledge base."
+    },
+    {
+      "step": "Engineer",
+      "desc": "Prompt design and model selection."
+    },
+    {
+      "step": "Align",
+      "desc": "RLHF (Reinforcement Learning from Human Feedback)."
+    },
+    {
+      "step": "Deploy",
+      "desc": "Pushing into user-facing creative tools."
+    }
+  ],
+  "outcomes": [
+    {
+      "label": "Content Velocity",
+      "value": "5x",
+      "desc": "Faster time-to-market for assets"
+    },
+    {
+      "label": "Cost per Asset",
+      "value": "-70%",
+      "desc": "Reduction in production overhead"
+    },
+    {
+      "label": "Version Iteration",
+      "value": "Infinite",
+      "desc": "Automated A/B creative testing"
+    }
+  ],
+  "related": {
+    "title": "Related Intelligence Capabilities",
+    "learn_more": "Explore Module",
+    "items": [
+      {
+        "slug": "natural-language-ai",
+        "title": "Natural Language AI",
+        "icon": "comments"
+      },
+      {
+        "slug": "machine-learning",
+        "title": "Machine Learning",
+        "icon": "brain"
+      },
+      {
+        "slug": "process-automation",
+        "title": "Process Automation",
+        "icon": "robot"
+      }
+    ]
+  },
+  "breadcrumbs": {
+    "services": "Services",
+    "sys_id": "SYS-ID"
+  },
+  "services": {
+    "ai": {
+      "ml": {
+        "title": "Machine Learning Solutions",
+        "desc": "Custom algorithms that predict trends, optimize operations, and unlock hidden value in your data."
+      },
+      "rpa": {
+        "title": "Process Automation (RPA)",
+        "desc": "Robotic Process Automation to streamline repetitive workflows and reduce operational costs."
+      },
+      "nlp": {
+        "title": "Natural Language AI",
+        "desc": "Chatbots and semantic analysis tools that understand and interact with human language."
+      },
+      "vision": {
+        "title": "Computer Vision",
+        "desc": "Advanced image and video analysis systems for quality control, surveillance, and automated recognition."
+      },
+      "predictive": {
+        "title": "Predictive Analytics",
+        "desc": "Forecasting models that utilize historical data to predict future trends and behaviors."
+      },
+      "genai": {
+        "title": "Generative AI Solutions",
+        "desc": "Custom LLMs and generative models for content creation, code generation, and complex problem solving."
+      }
+    }
+  },
+  "seo": {
+    "title": "Generative AI Solutions | AI & Automation Solutions | Data Pulse",
+    "description": "Transform your business with Generative AI Solutions . We leverage advanced AI models and automation to drive efficiency.",
+    "keywords": "generative ai solutions, ai, data pulse, software development"
+  }
+}

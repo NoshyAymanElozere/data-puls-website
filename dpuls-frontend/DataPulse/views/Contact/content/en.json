@@ -1,0 +1,72 @@
+{
+  "hero": {
+    "badge": "Interface_Connection_Active",
+    "title_line1": "Connect",
+    "title_line2": "Intelligence.",
+    "subtitle": "Let's build something extraordinary together.",
+    "subtitle_extra": "We bridge the gap between technical complexity and business growth.",
+    "label_left": "Communication_Node",
+    "label_right": "Data_Pulse_Sync",
+    "scroll_label": "Initialize_Session"
+  },
+  "cta": {
+    "badge": "Ready to Deploy",
+    "title": "Ready to Start Your Business Digital Transformation?",
+    "subtitle": "Share your idea with us, and let us turn it into an integrated digital solution.",
+    "button": "Start Your Project",
+    "security": "Enterprise Grade Security",
+    "support": "24/7 Global Support"
+  },
+  "services": {
+    "title": "Our Expertise",
+    "subtitle": "Comprehensive technology solutions tailored to your business needs.",
+    "view_details": "View Details",
+    "items": {
+      "web": {
+        "title": "Web Development",
+        "desc": "High-performance web applications using modern frameworks."
+      },
+      "mobile": {
+        "title": "Mobile Apps",
+        "desc": "Native and cross-platform mobile solutions for iOS and Android."
+      },
+      "saas": {
+        "title": "SaaS Solutions",
+        "desc": "End-to-end multi-tenant software architecture and development."
+      },
+      "uiux": {
+        "title": "UI/UX Design",
+        "desc": "User-centric design creating engaging and intuitive experiences."
+      },
+      "ai": {
+        "title": "AI & Automation",
+        "desc": "Intelligent algorithms to automate workflows and derive insights."
+      },
+      "cloud": {
+        "title": "Cloud & DevOps",
+        "desc": "Scalable cloud infrastructure and automated deployment pipelines."
+      }
+    }
+  },
+  "contact": {
+    "badge": "Global Operations",
+    "title": "Our Offices.",
+    "subtitle": "Local Presence, Global Reach.",
+    "form": {
+      "name": "Full Name",
+      "email": "Email Address",
+      "subject": "Subject",
+      "message": "Message",
+      "submit": "Send Message"
+    },
+    "info": {
+      "address": "Riyadh, Saudi Arabia - Al Olaya",
+      "email": "info@dpulse.sa",
+      "phone": "+966551958719"
+    }
+  },
+  "clients": {
+    "title": "Trusted by Industry Leaders",
+    "subtitle": "Powering the technology behind world-class organizations."
+  }
+}

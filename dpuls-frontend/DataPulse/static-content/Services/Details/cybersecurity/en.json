@@ -1,0 +1,222 @@
+{
+  "hero_tag": "Resilient Digital Defense",
+  "hero": {
+    "status_label": "Shield Status",
+    "status_value": "Active Defense",
+    "deployments_label": "Threats Blocked",
+    "deployments_value": "10M+",
+    "compliance_label": "Standards",
+    "compliance_value": "GDPR / SOC2 Type II"
+  },
+  "services": {
+    "cloud": {
+      "security": {
+        "title": "Cybersecurity",
+        "desc": "Proactive 24/7 endpoint protection, threat intelligence, and zero-trust network architectures to secure your most valuable digital assets."
+      }
+    }
+  },
+  "overview_title": "Security is Not an Afterthought.",
+  "overview_desc_1": "In an era of sophisticated state-sponsored attacks and automated ransomware, 'good enough' security is failure. We implement a multi-layered, zero-trust security strategy that assumes Every identity is a potential vector. We secure the network, the application, and the human element.",
+  "overview_desc_2": "Our cybersecurity approach focuses on rapid detection and automated response. By the time a vulnerability is exploited, our systems have already isolated the threat and initiated remediation protocols, ensuring business continuity in the face of adversity.",
+  "overview_cards": [
+    {
+      "title": "Real-time Monitoring",
+      "desc": "Global Security Operations Center (SOC) monitoring your traffic for anomalies 24/7."
+    },
+    {
+      "title": "Penetration Testing",
+      "desc": "Ethical hacking simulations to identify and patch vulnerabilities before attackers do."
+    },
+    {
+      "title": "Incident Response",
+      "desc": "Battle-tested protocols for immediate containment and recovery during a breach."
+    }
+  ],
+  "philosophy_title": "Defense in Depth",
+  "arch": {
+    "topology_label": "Secure Perimeter",
+    "diagram_label": "Security Mesh Architecture",
+    "lb": "Encrypted Edge Gateway",
+    "https": "SSL/TLS Inspection",
+    "app_cluster": "Isolated Micro-Segments",
+    "node": "Secure Node",
+    "private_link": "Encrypted Tunnel",
+    "replica_ok": "Auth: Verified",
+    "db": "Encrypted Data Vault"
+  },
+  "lifecycle": {
+    "title": "Security Lifecycle",
+    "vpc_label": "Zero-Trust Zone",
+    "envs": [
+      {
+        "title": "Assessment",
+        "desc": "Continuous scanning and posture assessment of all cloud and on-prem assets."
+      },
+      {
+        "title": "Prevention",
+        "desc": "Enforcement of least-privilege policies and automated firewall orchestration."
+      },
+      {
+        "title": "Detection",
+        "desc": "Analyzing signal logs for behavioral patterns indicative of advanced threats."
+      }
+    ]
+  },
+  "reliability": {
+    "title": "Unrivaled Protection",
+    "desc": "Our defense systems are designed to resist even the most advanced persistent threats (APTs), maintaining your reputation and data integrity.",
+    "features": [
+      "AI-Driven Threat Hunting",
+      "Automated SIEM / SOAR",
+      "Immutable Audit Logs",
+      "Compliance Monitoring"
+    ],
+    "metrics": [
+      {
+        "label": "Detection Time",
+        "value": "< 2m",
+        "desc": "Average time to identify a threat."
+      },
+      {
+        "label": "Blocking Rate",
+        "value": "99.9%",
+        "desc": "Percentage of automated threat blocks."
+      }
+    ]
+  },
+  "security": {
+    "title": "The Pillars of Defense",
+    "layers": [
+      {
+        "title": "Application Security",
+        "desc": "DAST/SAST integration in CI/CD to ensure secure code deployment."
+      },
+      {
+        "title": "Network Security",
+        "desc": "Micro-segmentation and micro-perimeters for all cloud workloads."
+      },
+      {
+        "title": "Identity Protection",
+        "desc": "Multi-Factor Authentication (MFA) and behavioral biometrics."
+      },
+      {
+        "title": "Compliance Ops",
+        "desc": "Continuous regulatory alignment for global data protection laws."
+      }
+    ]
+  },
+  "performance": {
+    "title": "Security-First Speed",
+    "cards": [
+      {
+        "title": "Optimized Encryption",
+        "desc": "Hardware-accelerated crypto to ensure security without latency."
+      },
+      {
+        "title": "Edge Inspection",
+        "desc": "Scrutinizing traffic at the CDN level to offload application servers."
+      },
+      {
+        "title": "Lean Policies",
+        "desc": "Stripping unnecessary overhead from security group rules for faster routing."
+      }
+    ]
+  },
+  "operations": {
+    "title": "Security Operations (SecOps)",
+    "desc": "Operating a dynamic defense perimeter through automated orchestration and forensic depth.",
+    "buttons": [
+      "Threat Map",
+      "Compliance Report",
+      "Vulnerability List"
+    ],
+    "logs": {
+      "filename": "security_audit.log",
+      "l1": "Scanning ingress traffic for known SQLi signatures...",
+      "l2": "Unauthorized access attempt blocked from IP 192.x.x.x",
+      "l3": "Isolating affected container for forensic analysis.",
+      "l4": "Generating incident report and notifying SOC team.",
+      "l5": "System integrity verified. No data leakage detected."
+    }
+  },
+  "recovery": {
+    "title": "Resilient Recovery",
+    "cards": [
+      {
+        "title": "Clean Backups",
+        "desc": "Verifying backup integrity to ensure no malware is replicated."
+      },
+      {
+        "title": "Forensic Recovery",
+        "desc": "Identifying the root cause before restoring production services."
+      },
+      {
+        "title": "Redundant Defense",
+        "desc": "Maintaining security controls even during failover scenarios."
+      }
+    ]
+  },
+  "cost": {
+    "title": "Security ROI",
+    "desc": "The cost of a breach far exceeds the investment in protection. We optimize your spend for maximum coverage.",
+    "list": [
+      "Reducing cyber insurance premiums",
+      "Minimizing risk-related downtime",
+      "Consolidating security vendors",
+      "Automated compliance reporting"
+    ],
+    "chart": {
+      "q1": "Baseline Risk",
+      "q2": "Mitigation Spend",
+      "q3": "Residual Risk",
+      "projected": "Projected Stability",
+      "trend": "90% Risk Reduction"
+    }
+  },
+  "migration": {
+    "title": "Security Onboarding",
+    "desc": "Securing your existing environment starts with a comprehensive posture audit.",
+    "phases": [
+      {
+        "step": "01",
+        "title": "Surface Mapping"
+      },
+      {
+        "step": "02",
+        "title": "Vulnerability Pruning"
+      },
+      {
+        "step": "03",
+        "title": "Managed Protection"
+      }
+    ]
+  },
+  "related": {
+    "title": "Related Cloud Services",
+    "view_all": "View All Services",
+    "learn_more": "Explore Service",
+    "items": [
+      {
+        "slug": "cloud-infrastructure",
+        "title": "Cloud Infrastructure",
+        "icon": "server"
+      },
+      {
+        "slug": "devops-engineering",
+        "title": "DevOps Engineering",
+        "icon": "code-pull-request"
+      },
+      {
+        "slug": "disaster-recovery",
+        "title": "Disaster Recovery",
+        "icon": "rotate-left"
+      }
+    ]
+  },
+  "seo": {
+    "title": "Cybersecurity | Cloud Infrastructure & Security | Data Pulse",
+    "description": "Enterprise-grade Cybersecurity for modern businesses. Resilient, scalable, and secure cloud environments.",
+    "keywords": "cybersecurity, cloud, data pulse, software development"
+  }
+}

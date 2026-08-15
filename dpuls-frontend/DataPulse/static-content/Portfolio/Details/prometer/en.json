@@ -1,0 +1,202 @@
+{
+  "seo": {
+    "title": "Prometer | Enterprise Tracking & CRM System",
+    "description": "Prometer is an integrated enterprise solution for workforce management, shipment tracking, and customer relationship management, designed for operational excellence.",
+    "keywords": "prometer, employee tracking, shipment tracking, enterprise crm, logistics management, workforce optimization"
+  },
+  "project": {
+    "id": "prometer",
+    "title": "Prometer",
+    "client": "Prometer Solutions",
+    "year": "2025",
+    "role": "Enterprise System Architecture",
+    "image": "/assets/images/projects/systems/prometer/1.png",
+    "strategyImage": "/assets/images/projects/systems/prometer/2.png",
+    "experienceImage": "/assets/images/projects/systems/prometer/1.png",
+    "featuresImage": "/assets/images/projects/systems/prometer/4.png",
+    "designImage": "/assets/images/projects/systems/prometer/5.png",
+    "deviceLarge": "/assets/images/projects/systems/prometer/1.png",
+    "deviceSmall": "/assets/images/projects/systems/prometer/2.png",
+    "liveUrl": "https://prometer-sa.com/demo/",
+    "shortDesc": "An all-in-one enterprise ecosystem for tracking personnel, managing logistics, and streamlining customer relations.",
+    "tags": ["Enterprise", "Logistics", "CRM"],
+    "overview": {
+      "about": "Prometer is an industrial-grade enterprise platform engineered to solve complex operational challenges. It bridges the gap between field operations and administrative management by providing real-time tracking for both shipments and employees, integrated with a powerful CRM module.",
+      "goal": "To provide a unified command center for logistics companies to monitor their fleet, track employee performance, and maintain high-quality customer relationships.",
+      "audience": "Operations managers, fleet supervisors, HR departments, and customer support teams."
+    },
+    "challenge": {
+      "description": "The main technical hurdle was synchronizing high-frequency GPS data from thousands of field agents while maintaining a responsive CRM interface. We needed to ensure data integrity across multiple operational branches.",
+      "points": [
+        "High-concurrency geolocation tracking",
+        "Seamless integration of CRM with logistics data",
+        "Real-time performance analytics for personnel"
+      ]
+    },
+    "solution": {
+      "description": "We developed a modular architecture using high-performance data streams and a distributed database system. The interface was optimized for rapid data entry and clear visual monitoring of field assets.",
+      "approach": "Data-driven operational management with a focus on real-time visibility and communication."
+    },
+    "features": [
+      {
+        "title": "Personnel Tracking",
+        "desc": "Live GPS monitoring and shift management for field employees and delivery agents.",
+        "icon": "fa-user-clock"
+      },
+      {
+        "title": "Shipment Lifecycle",
+        "desc": "End-to-end tracking of goods with automated status updates and digital signatures.",
+        "icon": "fa-box-open"
+      },
+      {
+        "title": "Integrated CRM",
+        "desc": "Centralized database for client interactions, support tickets, and sales pipelines.",
+        "icon": "fa-users-gear"
+      },
+      {
+        "title": "Predictive Analytics",
+        "desc": "AI-powered insights into delivery times, workforce efficiency, and customer trends.",
+        "icon": "fa-brain"
+      }
+    ],
+    "design": {
+      "philosophy": "Functional, robust, and professional. Focus on data density without sacrificing clarity, using a high-contrast industrial palette.",
+      "colors": ["#000000", "#3b82f6", "#1e293b", "#f8f9fa"],
+      "typography": "Inter & IBM Plex Sans"
+    },
+    "techStack": [
+      "React",
+      "TypeScript",
+      "Node.js",
+      "Redis",
+      "PostgreSQL",
+      "WebSocket"
+    ],
+    "results": {
+      "impact": "Boosted operational efficiency by 35% and improved customer response times by 50% within the first six months.",
+      "metrics": [
+        {"label": "Tracking Accuracy", "value": "99.8%"},
+        {"label": "Efficiency Gain", "value": "+35%"},
+        {"label": "Uptime", "value": "99.95%"}
+      ]
+    },
+    "gallery": [
+      "/assets/images/projects/systems/prometer/1.png",
+      "/assets/images/projects/systems/prometer/3.png",
+      "/assets/images/projects/systems/prometer/4.png",
+      "/assets/images/projects/systems/prometer/5.png",
+      "/assets/images/projects/systems/prometer/6.png",
+      "/assets/images/projects/systems/prometer/7.png",
+      "/assets/images/projects/systems/prometer/8.png",
+      "/assets/images/projects/systems/prometer/9.png",
+      "/assets/images/projects/systems/prometer/10.png",
+      "/assets/images/projects/systems/prometer/11.png",
+      "/assets/images/projects/systems/prometer/12.png",
+      "/assets/images/projects/systems/prometer/13.png",
+      "/assets/images/projects/systems/prometer/14.png",
+      "/assets/images/projects/systems/prometer/15.png",
+      "/assets/images/projects/systems/prometer/16.png",
+      "/assets/images/projects/systems/prometer/17.png",
+      "/assets/images/projects/systems/prometer/18.png",
+      "/assets/images/projects/systems/prometer/19.png",
+      "/assets/images/projects/systems/prometer/20.png"
+    ]
+  },
+  "website_project": {
+    "hero": {
+      "prefix": "ENTERPRISE_SYSTEM_01",
+      "status": "Operational",
+      "labels": {
+        "client": "Project",
+        "role": "Scope",
+        "year": "Year",
+        "core": "Focus"
+      },
+      "defaults": {
+        "year": "2025"
+      },
+      "cta": {
+        "live_preview": "Launch System"
+      },
+      "system_config": {
+        "label": "// System Stream",
+        "status": "Agents:",
+        "status_val": "Online",
+        "latency": "Response:",
+        "latency_val": "24ms",
+        "render": "Type:",
+        "render_val": "Enterprise"
+      }
+    },
+    "strategy": {
+      "methodology": "Systems Engineering",
+      "title": "Optimizing Internal Flow",
+      "desc": "Creating a digital backbone for complex physical operations.",
+      "steps": [
+        {
+          "title": "Geofencing",
+          "desc": "Implementing precise area-based tracking and alerts."
+        },
+        {
+          "title": "CRM Context",
+          "desc": "Linking shipping data directly to customer profiles."
+        },
+        {
+          "title": "BI Dashboard",
+          "desc": "Real-time visualization of company-wide performance."
+        }
+      ]
+    },
+    "experience": {
+      "label": "Command Portal",
+      "title": "Enterprise Dashboard",
+      "res_label": "RES: High Capacity",
+      "scale_label": "SCALE: Enterprise",
+      "default_url": "prometer.datapulse.ai",
+      "scrolling_preview": "System Experience"
+    },
+    "features": {
+      "title": "System Modules",
+      "specs_cta": "System Specs"
+    },
+    "design_system": {
+      "typography": {
+        "label": "// Functional UI",
+        "type_desc": "Clean Sans / Data Mono",
+        "quote": "Clarity is the ultimate goal of enterprise design.",
+        "specimen_label": "Operational Interface System"
+      },
+      "colors": {
+        "label": "// System Palette",
+        "palette_prefix": "Enterprise-Blue"
+      },
+      "components": {
+        "label": "// Core UI Components",
+        "submit_btn": "Update",
+        "cancel_btn": "Reset"
+      }
+    },
+    "tech_stack": {
+      "title": "System Architecture"
+    },
+    "compatibility": {
+      "title": "Cross-Platform Sync",
+      "desc": "Flawless synchronization between the driver mobile apps and the central administration dashboard with offline data persistence.",
+      "metrics": [
+        {"label": "Sync Speed", "score": "Fast"},
+        {"label": "Connectivity", "score": "High"},
+        {"label": "Data Integrity", "score": "99.9%"}
+      ]
+    },
+    "impact": {
+      "title": "Business Performance"
+    },
+    "gallery": {
+      "title": "System Gallery",
+      "subtitle": "Interface Index",
+      "fullscreen": "Full View",
+      "fig_prefix": "SCR.",
+      "render_label": "LIVE_SYSTEM_VIEW"
+    }
+  }
+}

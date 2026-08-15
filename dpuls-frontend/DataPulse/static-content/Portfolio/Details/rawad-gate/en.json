@@ -1,0 +1,205 @@
+{
+  "seo": {
+    "title": "Rawad Gate | Logistics & Shipment Tracking Platform",
+    "description": "Rawad Gate is a comprehensive logistics and supply chain management platform specifically designed for tracking shipments and deliveries in real-time.",
+    "keywords": "rawad gate, logistics tracking, shipment management, supply chain, delivery tracking"
+  },
+  "project": {
+    "id": "rawad-gate",
+    "title": "Rawad Gate",
+    "client": "Rawad International",
+    "year": "2025",
+    "role": "Custom System Development",
+    "image": "/assets/images/projects/website/rawad-gate/7.png",
+    "strategyImage": "/assets/images/projects/website/rawad-gate/1.png",
+    "experienceImage": "/assets/images/projects/website/rawad-gate/2.png",
+    "featuresImage": "/assets/images/projects/website/rawad-gate/3.png",
+    "designImage": "/assets/images/projects/website/rawad-gate/4.png",
+    "deviceLarge": "/assets/images/projects/website/rawad-gate/5.png",
+    "deviceSmall": "/assets/images/projects/website/rawad-gate/6.png",
+    "liveUrl": "https://rawadgate.com/",
+    "shortDesc": "Logistics tracking and shipment management platform for streamlined delivery operations.",
+    "tags": ["Full Stack", "Tracking System", "Logistics"],
+    "overview": {
+      "about": "Rawad Gate is a sophisticated digital ecosystem engineered for the logistics sector. It serves as a centralized hub for managing deliveries, tracking shipments via GPS, and providing real-time transparency to stakeholders throughout the supply chain.",
+      "goal": "To provide a robust, scalable solution for logistics companies to manage complex shipment workflows and offer clients precise delivery estimations.",
+      "audience": "Logistics companies, warehouse managers, delivery personnel, and end-customers tracking their shipments."
+    },
+    "challenge": {
+      "description": "The main challenge was integrating multiple data streams from different carriers while maintaining a low-latency user experience. Additionally, providing accurate real-time updates for thousands of concurrent shipments required high performance.",
+      "points": [
+        "Real-time shipment synchronization",
+        "Large-scale data visualization",
+        "Multi-user role management"
+      ]
+    },
+    "solution": {
+      "description": "We developed a high-frequency tracking engine and a modern web dashboard. The system utilizes real-time updates and an optimized database for handling millions of tracking events.",
+      "approach": "Building a centralized data pipeline for tracking information and creating an intuitive interface for both staff and customers."
+    },
+    "features": [
+      {
+        "title": "Real-time Tracking",
+        "desc": "Live GPS tracking and status updates for every shipment.",
+        "icon": "fa-location-dot"
+      },
+      {
+        "title": "Carrier Integration",
+        "desc": "Automated syncing with major international and local carriers.",
+        "icon": "fa-truck-fast"
+      },
+      {
+        "title": "Analytics Dashboard",
+        "desc": "Comprehensive business intelligence for delivery performance.",
+        "icon": "fa-chart-pie"
+      },
+      {
+        "title": "E-Documentation",
+        "desc": "Digital bills of lading and proof of delivery automation.",
+        "icon": "fa-file-invoice"
+      }
+    ],
+    "design": {
+      "philosophy": "Clean, professional, and data-centric. Focus on clarity of information and ease of navigation.",
+      "colors": ["#0b1021", "#4361ee", "#4cc9f0", "#f8f9fa"],
+      "typography": "Inter & IBM Plex Sans"
+    },
+    "techStack": [
+      "React",
+      "TypeScript",
+      "Node.js",
+      "WebSocket",
+      "PostgreSQL",
+      "Tailwind CSS"
+    ],
+    "results": {
+      "impact": "Increased delivery accuracy by 25% and reduced customer support inquiries by 40%.",
+      "metrics": [
+        {"label": "Tracking Accuracy", "value": "99.2%"},
+        {"label": "User Growth", "value": "150%"},
+        {"label": "Process Speed", "value": "2x"}
+      ]
+    },
+    "gallery": [
+      "/assets/images/projects/website/rawad-gate/1.png",
+      "/assets/images/projects/website/rawad-gate/2.png",
+      "/assets/images/projects/website/rawad-gate/3.png",
+      "/assets/images/projects/website/rawad-gate/4.png",
+      "/assets/images/projects/website/rawad-gate/5.png",
+      "/assets/images/projects/website/rawad-gate/7.png",
+      "/assets/images/projects/website/rawad-gate/9.png",
+      "/assets/images/projects/website/rawad-gate/11.png",
+      "/assets/images/projects/website/rawad-gate/12.png",
+      "/assets/images/projects/website/rawad-gate/13.png",
+      "/assets/images/projects/website/rawad-gate/14.png"
+    ]
+  },
+  "website_project": {
+    "hero": {
+      "prefix": "LOGISTICS_PRO_01",
+      "status": "Operational",
+      "labels": {
+        "client": "Client",
+        "role": "Role",
+        "year": "Year",
+        "core": "Core"
+      },
+      "defaults": {
+        "year": "2025"
+      },
+      "cta": {
+        "live_preview": "Access Portal"
+      },
+      "system_config": {
+        "label": "// System Config",
+        "status": "Service:",
+        "status_val": "Active",
+        "latency": "Sync:",
+        "latency_val": "Live",
+        "render": "Type:",
+        "render_val": "Enterprise"
+      }
+    },
+    "additionalLinks": [
+      {
+        "label": "Personal Portal",
+        "url": "https://rawadgate.com/personal/",
+        "authTooltip": {
+          "label": "Client Credentials",
+          "email": "client@client.com",
+          "password": "123456789"
+        }
+      }
+    ],
+    "strategy": {
+      "methodology": "Digital Logistics",
+      "title": "Strategic Execution",
+      "desc": "Engineering a seamless bridge between physical goods and digital data.",
+      "steps": [
+        {
+          "title": "Workflow Mapping",
+          "desc": "Analyzing complex delivery sequences."
+        },
+        {
+          "title": "Data Pipeline",
+          "desc": "Establishing real-time tracking streams."
+        },
+        {
+          "title": "Global Scale",
+          "desc": "Optimizing for multi-regional logistics."
+        }
+      ]
+    },
+    "experience": {
+      "label": "Interface",
+      "title": "Seamless Logistics Hub",
+      "res_label": "RES: 2K Adaptive",
+      "scale_label": "SCALE: Optimized",
+      "default_url": "rawadgate.datapulse.ai",
+      "scrolling_preview": "Platform Overview"
+    },
+    "features": {
+      "title": "Logistics Modules",
+      "specs_cta": "System Specs"
+    },
+    "design_system": {
+      "typography": {
+        "label": "// Typography",
+        "type_desc": "Main UI / Mono Data",
+        "quote": "Precision in typography leads to precision in operations.",
+        "specimen_label": "Operational Font Specimen"
+      },
+      "colors": {
+        "label": "// Color Palette",
+        "palette_prefix": "Primary"
+      },
+      "components": {
+        "label": "// UI Components",
+        "submit_btn": "Update",
+        "cancel_btn": "Reset"
+      }
+    },
+    "tech_stack": {
+      "title": "System Architecture"
+    },
+    "compatibility": {
+      "title": "Multi-Device Delivery",
+      "desc": "Fully responsive across desktops, tablets, and handheld delivery devices. Optimized for low-bandwidth environments to ensure field agents stay connected.",
+      "metrics": [
+        {"label": "Bandwidth", "score": "Opt"},
+        {"label": "Responsiveness", "score": "100"},
+        {"label": "Reliability", "score": "99.9"}
+      ]
+    },
+    "impact": {
+      "title": "Operational Performance"
+    },
+    "gallery": {
+      "title": "Platform Gallery",
+      "subtitle": "Interface Index",
+      "fullscreen": "Full View",
+      "fig_prefix": "IMG.",
+      "render_label": "SYSTEM_SCREENSHOT"
+    }
+  }
+}

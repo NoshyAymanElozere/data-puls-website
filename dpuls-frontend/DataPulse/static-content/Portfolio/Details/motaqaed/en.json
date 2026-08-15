@@ -1,0 +1,198 @@
+{
+  "seo": {
+    "title": "Motaqaed | Comprehensive Platform for Retirees",
+    "description": "Motaqaed is a dedicated digital platform designed to support retired individuals by connecting them with essential services and premium providers.",
+    "keywords": "motaqaed, retirees platform, senior services, retirement support, healthcare for seniors"
+  },
+  "project": {
+    "id": "motaqaed",
+    "title": "Motaqaed",
+    "client": "Motaqaed Social Initiative",
+    "year": "2025",
+    "role": "Social Impact Platform Development",
+    "image": "/assets/images/projects/website/motaqaed/1.png",
+    "strategyImage": "/assets/images/projects/website/motaqaed/2.png",
+    "experienceImage": "/assets/images/projects/website/motaqaed/5.png",
+    "featuresImage": "/assets/images/projects/website/motaqaed/3.png",
+    "designImage": "/assets/images/projects/website/motaqaed/5.png",
+    "deviceLarge": "/assets/images/projects/website/motaqaed/1.png",
+    "deviceSmall": "/assets/images/projects/website/motaqaed/2.png",
+    "liveUrl": "https://motaqad.com/",
+    "shortDesc": "A specialized service bridge connecting retirees with a curated ecosystem of providers and social benefits.",
+    "tags": ["Full Stack", "Social Impact", "Service Marketplace"],
+    "overview": {
+      "about": "Motaqaed is a social-centric platform re-imagining life after retirement. It serves as a comprehensive hub where seniors can access healthcare, financial advisory, and leisure services specifically tailored to their needs, all provided by trusted partners.",
+      "goal": "To enhance the quality of life for retirees by simplifying access to essential services and fostering a supportive digital community.",
+      "audience": "Retired professionals, senior citizens, and service providers catering to the needs of the elderly."
+    },
+    "challenge": {
+      "description": "Designing for seniors required a unique approach to accessibility and intuitive UI. The challenge was to integrate diverse service providers into a unified, easy-to-use interface that doesn't overwhelm the user.",
+      "points": [
+        "High-accessibility interface design",
+        "Secure provider verification system",
+        "Unified service booking workflow"
+      ]
+    },
+    "solution": {
+      "description": "We built a high-accessibility web portal featuring large typography, high-contrast modes, and a simplified navigation structure. The backend includes a robust provider management system and secure payout integrations.",
+      "approach": "Human-centric design focused on the specific digital habits and needs of the retired community."
+    },
+    "features": [
+      {
+        "title": "Service Marketplace",
+        "desc": "Browse and book healthcare, legal, and lifestyle services from verified providers.",
+        "icon": "fa-hand-holding-heart"
+      },
+      {
+        "title": "Privilege Card",
+        "desc": "Digital membership card offering exclusive discounts and priority access.",
+        "icon": "fa-id-card"
+      },
+      {
+        "title": "Community Hub",
+        "desc": "Social forums and event calendars focused on senior engagement and networking.",
+        "icon": "fa-users"
+      },
+      {
+        "title": "Health Tracker",
+        "desc": "Integrated health monitoring and appointment reminders for peace of mind.",
+        "icon": "fa-heart-pulse"
+      }
+    ],
+    "design": {
+      "philosophy": "Empathic, clear, and reassuring. Focus on high readability, large touch targets, and a calming color palette.",
+      "colors": ["#0b1021", "#10b981", "#3b82f6", "#f8f9fa"],
+      "typography": "Outfit & IBM Plex Sans"
+    },
+    "techStack": [
+      "Next.js",
+      "TypeScript",
+      "Node.js",
+      "MongoDB",
+      "Tailwind CSS",
+      "Radix UI"
+    ],
+    "results": {
+      "impact": "Onboarded 500+ service providers and served over 10,000 retirees in the first quarter.",
+      "metrics": [
+        {"label": "Inclusion Score", "value": "98%"},
+        {"label": "Provider Quality", "value": "4.9/5"},
+        {"label": "Active Users", "value": "10k+"}
+      ]
+    },
+    "gallery": [
+      "/assets/images/projects/website/motaqaed/1.png",
+      "/assets/images/projects/website/motaqaed/4.png",
+      "/assets/images/projects/website/motaqaed/5.png",
+      "/assets/images/projects/website/motaqaed/6.png",
+      "/assets/images/projects/website/motaqaed/7.png",
+      "/assets/images/projects/website/motaqaed/8.png",
+      "/assets/images/projects/website/motaqaed/9.png",
+      "/assets/images/projects/website/motaqaed/10.png",
+      "/assets/images/projects/website/motaqaed/11.png"
+    ]
+  },
+  "website_project": {
+    "hero": {
+      "prefix": "SOCIAL_IMPACT_01",
+      "status": "Active",
+      "labels": {
+        "client": "Initiative",
+        "role": "Role",
+        "year": "Year",
+        "core": "Mission"
+      },
+      "defaults": {
+        "year": "2025"
+      },
+      "cta": {
+        "live_preview": "Visit Motaqaed"
+      },
+      "system_config": {
+        "label": "// Platform Status",
+        "status": "Network:",
+        "status_val": "Stable",
+        "latency": "Response:",
+        "latency_val": "Fast",
+        "render": "Impact:",
+        "render_val": "High"
+      }
+    },
+    "additionalLinks": [
+      {
+        "label": "Providers Portal",
+        "url": "https://motaqad.com/providers/"
+      }
+    ],
+    "strategy": {
+      "methodology": "Empathetic Design",
+      "title": "Community Driven",
+      "desc": "Creating a digital ecosystem that honors and serves those who have served society.",
+      "steps": [
+        {
+          "title": "User Inclusivity",
+          "desc": "Testing with actual retirees to ensure ease of use."
+        },
+        {
+          "title": "Provider Curation",
+          "desc": "Strict vetting for all listed service providers."
+        },
+        {
+          "title": "Ecosystem Build",
+          "desc": "Scaleable infrastructure for social services."
+        }
+      ]
+    },
+    "experience": {
+      "label": "User Interface",
+      "title": "Intuitive Senior Portal",
+      "res_label": "RES: Ultra-Clear",
+      "scale_label": "SCALE: Senior-Fit",
+      "default_url": "motaqaed.com",
+      "scrolling_preview": "Platform Experience"
+    },
+    "features": {
+      "title": "Motaqaed Modules",
+      "specs_cta": "Platform Specs"
+    },
+    "design_system": {
+      "typography": {
+        "label": "// Accessibility",
+        "type_desc": "Clear / High-Contrast",
+        "quote": "Design is not just what it looks like; it's how it empowers.",
+        "specimen_label": "ADA Compliant Font System"
+      },
+      "colors": {
+        "label": "// Palette",
+        "palette_prefix": "Green-Care"
+      },
+      "components": {
+        "label": "// System UI",
+        "submit_btn": "Confirm",
+        "cancel_btn": "Back"
+      }
+    },
+    "tech_stack": {
+      "title": "Social Infrastructure"
+    },
+    "compatibility": {
+      "title": "Cross-Device Access",
+      "desc": "Fully optimized for tablets (preferred by seniors) and desktops, with a simplified mobile version for on-the-go service tracking.",
+      "metrics": [
+        {"label": "Tablet Opt", "score": "High"},
+        {"label": "Contrast", "score": "AAA"},
+        {"label": "Speed", "score": "98"}
+      ]
+    },
+    "impact": {
+      "title": "Social Performance"
+    },
+    "gallery": {
+      "title": "Project Showcase",
+      "subtitle": "Platform Views",
+      "fullscreen": "Full View",
+      "fig_prefix": "IMG.",
+      "render_label": "LIVE_PORTAL"
+    }
+  }
+}

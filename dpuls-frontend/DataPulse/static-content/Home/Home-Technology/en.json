@@ -1,0 +1,51 @@
+{
+  "technologies": {
+    "badge": "Tech Stack",
+    "title": "Built with the Best",
+    "subtitle": "We use cutting-edge technologies to deliver high-performance, scalable solutions.",
+    "cards": [
+      {
+        "id": "frontend",
+        "title": "Frontend Engineering",
+        "icon": "fa-solid fa-code",
+        "description": "Crafting responsive, high-performance interfaces.",
+        "tags": ["React", "Next.js", "Vue.js", "TypeScript", "Tailwind CSS"]
+      },
+      {
+        "id": "backend",
+        "title": "Backend Systems",
+        "icon": "fa-solid fa-server",
+        "description": "Building robust, scalable server-side architectures.",
+        "tags": ["Node.js", "Python", "Go", "PostgreSQL", "Redis"]
+      },
+      {
+        "id": "mobile",
+        "title": "Mobile Solutions",
+        "icon": "fa-solid fa-mobile-screen",
+        "description": "Native and cross-platform mobile application development.",
+        "tags": ["Flutter", "React Native", "Swift", "Kotlin", "iOS & Android"]
+      },
+      {
+        "id": "cloud",
+        "title": "Cloud Infrastructure",
+        "icon": "fa-solid fa-cloud",
+        "description": "Secure cloud environments and DevOps automation.",
+        "tags": ["AWS", "Google Cloud", "Docker", "Kubernetes", "Terraform"]
+      },
+      {
+        "id": "ai",
+        "title": "AI & Intelligence",
+        "icon": "fa-solid fa-brain",
+        "description": "Machine learning models and data-driven insights.",
+        "tags": ["TensorFlow", "PyTorch", "OpenAI", "Pandas", "NLP"]
+      },
+      {
+        "id": "security",
+        "title": "Cyber Security",
+        "icon": "fa-solid fa-shield-halved",
+        "description": "Enterprise-grade security standards and encryption.",
+        "tags": ["OAuth 2.0", "JWT", "Pen Testing", "GDPR", "Encryption"]
+      }
+    ]
+  }
+}

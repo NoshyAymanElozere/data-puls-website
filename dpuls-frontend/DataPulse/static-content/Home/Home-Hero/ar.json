@@ -1,0 +1,44 @@
+{
+  "hero": {
+    "badge": "نبتكر مـسـتقبل الرقمية",
+    "staticText": "نمكّن أعمالك من خلال",
+    "typingWords": [
+      "البرمجيات المخصصة",
+      "الحلول السحابية",
+      "استراتيجيات الذكاء",
+      "تطبيقات الهواتف"
+    ],
+    "subheadline": "نصمم ونطوّر منتجات رقمية عالية الأداء تحفز النمو وتحدث طفرة في الصناعات عبر تقنياتنا المتطورة.",
+    "cta_primary": "حول فكرتك إلى واقع",
+    "cta_secondary": "استشارة مجانية",
+    "scroll": "مرر للاستكشاف",
+    "follow_us": "تواصل معنا",
+    "social_links": [
+      {
+        "name": "X",
+        "icon": "fa-brands fa-x",
+        "url": "#"
+      },
+      {
+        "name": "فيسبوك",
+        "icon": "fa-brands fa-facebook",
+        "url": "#"
+      },
+      {
+        "name": "انستغرام",
+        "icon": "fa-brands fa-instagram",
+        "url": "#"
+      },
+      {
+        "name": "لينكد إن",
+        "icon": "fa-brands fa-linkedin-in",
+        "url": "#"
+      },
+      {
+        "name": "تيك توك",
+        "icon": "fa-brands fa-tiktok",
+        "url": "#"
+      }
+    ]
+  }
+}

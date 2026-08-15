@@ -1,0 +1,222 @@
+{
+  "hero_tag": "Continuous Velocity",
+  "hero": {
+    "status_label": "Pipeline Status",
+    "status_value": "All Green",
+    "deployments_label": "Deploys / Day",
+    "deployments_value": "100+",
+    "compliance_label": "Quality Gate",
+    "compliance_value": "90% Coverage"
+  },
+  "services": {
+    "cloud": {
+      "devops": {
+        "title": "DevOps Engineering",
+        "desc": "Accelerating development cycles through robust CI/CD pipelines, infrastructure as code (IaC), and automated quality gates."
+      }
+    }
+  },
+  "overview_title": "Agility at Scale.",
+  "overview_desc_1": "DevOps is the engine that drives modern software delivery. It's the cultural and technical bridge between writing code and running it successfully. We eliminate the 'it works on my machine' syndrome by standardizing environments and automating the path to production.",
+  "overview_desc_2": "Our DevOps engineering services transform manual, error-prone processes into repeatable, programmable workflows. We focus on shortening the feedback loop, allowing your business to pivot and respond to market demands faster than your competitors.",
+  "overview_cards": [
+    {
+      "title": "Infrastructure as Code",
+      "desc": "Manage cloud resources using Terraform and Pulumi for consistency and speed."
+    },
+    {
+      "title": "GitOps Pipelines",
+      "desc": "Automate deployments directly from your repository with full audit trails."
+    },
+    {
+      "title": "Observability Stacks",
+      "desc": "Integrated Prometheus, Grafana, and ELK stacks for real-time visibility."
+    }
+  ],
+  "philosophy_title": "Automate Everything",
+  "arch": {
+    "topology_label": "CI/CD Pipeline",
+    "diagram_label": "DevOps Workflow Diagram",
+    "lb": "Traffic Splitter (Canary)",
+    "https": "API Integration Gate",
+    "app_cluster": "Ephemeral Preview Envs",
+    "node": "Runner",
+    "private_link": "Vault Secrets Transit",
+    "replica_ok": "Test: Passed",
+    "db": "Stateful Schema Migrator"
+  },
+  "lifecycle": {
+    "title": "The DevOps Lifecycle",
+    "vpc_label": "Isolated Runner VPC",
+    "envs": [
+      {
+        "title": "Integration",
+        "desc": "Continuous build and merge verification with automated security scanning."
+      },
+      {
+        "title": "Validation",
+        "desc": "Automated performance and integration testing in staging-like environments."
+      },
+      {
+        "title": "Evolution",
+        "desc": "Blue-Green and Canary deployments to ensure zero-impact rolling updates."
+      }
+    ]
+  },
+  "reliability": {
+    "title": "Precision & Consistency",
+    "desc": "We build delivery systems that are as reliable as the software they deploy, ensuring that every release is a non-event.",
+    "features": [
+      "Zero-Downtime Deployments",
+      "Automated Rollback Logic",
+      "Security-as-Code (DevSecOps)",
+      "Configuration Management"
+    ],
+    "metrics": [
+      {
+        "label": "Cycle Time",
+        "value": "< 1h",
+        "desc": "From commit to production ready."
+      },
+      {
+        "label": "MTTR",
+        "value": "< 5m",
+        "desc": "Mean time to recover from failure."
+      }
+    ]
+  },
+  "security": {
+    "title": "Shift-Left Security",
+    "layers": [
+      {
+        "title": "Secret Management",
+        "desc": "Dynamic secrets injection without ever hardcoding credentials."
+      },
+      {
+        "title": "Container Security",
+        "desc": "Automated image scanning for known CVEs before deployment."
+      },
+      {
+        "title": "Policy Enforcement",
+        "desc": "OPA and policy-as-code to prevent insecure configurations."
+      },
+      {
+        "title": "Audit Tracking",
+        "desc": "Comprehensive Git attribution for every infrastructure change."
+      }
+    ]
+  },
+  "performance": {
+    "title": "Deployment Efficiency",
+    "cards": [
+      {
+        "title": "Caching Strategies",
+        "desc": "Shared build caches to reduce pipeline execution time by up to 70%."
+      },
+      {
+        "title": "Parallel Execution",
+        "desc": "Distributed test runners to accelerate the verification process."
+      },
+      {
+        "title": "Size Optimization",
+        "desc": "Multi-stage Docker builds to ensure lean, fast-pulling images."
+      }
+    ]
+  },
+  "operations": {
+    "title": "Pipeline Observability",
+    "desc": "Full visibility into your delivery performance and system health.",
+    "buttons": [
+      "Pipeline History",
+      "Artifact Store",
+      "Rollback Center"
+    ],
+    "logs": {
+      "filename": "pipeline_run.log",
+      "l1": "GitHub webhook received: Branch 'main'.",
+      "l2": "Running security scan... No high-severity vulnerabilities found.",
+      "l3": "Building Docker image: v2.4.1 (cached layers detected).",
+      "l4": "Pushing image to ECR... Deployment to K8s starting.",
+      "l5": "Canary deployment 10%... Health checks healthy. Promoting to 100%."
+    }
+  },
+  "recovery": {
+    "title": "Release Resilience",
+    "cards": [
+      {
+        "title": "Automated Rollback",
+        "desc": "Instant revert to the previous known-good state on metric failure."
+      },
+      {
+        "title": "Stateful Migration",
+        "desc": "Safe database schema transitions with automated backup/restore gates."
+      },
+      {
+        "title": "Chaos Engineering",
+        "desc": "Injecting controlled failures to test system self-healing capability."
+      }
+    ]
+  },
+  "cost": {
+    "title": "Resource Efficiency",
+    "desc": "DevOps practices inherently optimize cloud spend by eliminating waste and over-provisioning.",
+    "list": [
+      "Auto-cleanup of preview environments",
+      "Dynamically provisioned runners",
+      "Analyzing resource usage trends",
+      "Optimized storage lifecycle policies"
+    ],
+    "chart": {
+      "q1": "Manual Ops",
+      "q2": "Scaling Automation",
+      "q3": "Optimized CI/CD",
+      "projected": "Projected Velocity",
+      "trend": "50% Reduction in Operational Overhead"
+    }
+  },
+  "migration": {
+    "title": "Transforming to DevOps",
+    "desc": "Evolving from legacy workflows to a high-velocity DevOps culture.",
+    "phases": [
+      {
+        "step": "01",
+        "title": "Standardization"
+      },
+      {
+        "step": "02",
+        "title": "Automation Pilot"
+      },
+      {
+        "step": "03",
+        "title": "CI/CD Orchestration"
+      }
+    ]
+  },
+  "related": {
+    "title": "Related Cloud Services",
+    "view_all": "View All Services",
+    "learn_more": "Explore Service",
+    "items": [
+      {
+        "slug": "cloud-infrastructure",
+        "title": "Cloud Infrastructure",
+        "icon": "server"
+      },
+      {
+        "slug": "cybersecurity",
+        "title": "Cybersecurity",
+        "icon": "shield-halved"
+      },
+      {
+        "slug": "serverless-architecture",
+        "title": "Serverless Architecture",
+        "icon": "bolt"
+      }
+    ]
+  },
+  "seo": {
+    "title": "DevOps Engineering | Cloud Infrastructure & Security | Data Pulse",
+    "description": "Enterprise-grade DevOps Engineering for modern businesses. Resilient, scalable, and secure cloud environments.",
+    "keywords": "devops engineering, cloud, data pulse, software development"
+  }
+}

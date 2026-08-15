@@ -1,0 +1,279 @@
+{
+  "hero_tag": "Mobile Engineering",
+  "breadcrumbs": {
+    "services": "Services",
+    "sys_id": "SYS-ID"
+  },
+  "hero": {
+    "badges": [
+      {
+        "value": "4.8/5",
+        "label": "Avg App Store Rating"
+      },
+      {
+        "value": "iOS/Android",
+        "label": "Native & Cross"
+      },
+      {
+        "value": "100%",
+        "label": "Performance Tuned"
+      }
+    ]
+  },
+  "overview_title": "Apps that People Love to Use.",
+  "overview_desc_1": "We design and develop mobile applications that offer seamless user experiences across all devices. From native iOS and Android apps to efficient cross-platform solutions, we ensure your mobile presence is powerful.",
+  "overview_desc_2": "Our mobile engineering team prioritizes performance, battery efficiency, and intuitive gesture-based navigation, ensuring your app feels at home on any user's device.",
+  "overview": {
+    "problem": {
+      "title": "Mobile Friction",
+      "desc": "Slow, unresponsive, or poorly designed mobile apps lead to instant uninstalls and damage brand reputation."
+    },
+    "solution": {
+      "title": "Native Quality",
+      "desc": "We build apps that leverage device capabilities fully, providing smooth 60fps animations and offline functionality."
+    }
+  },
+  "capabilities": {
+    "label": "OUR EXPERTISE"
+  },
+  "features_title": "Mobile Excellence",
+  "details": {
+    "benefits": [
+      {
+        "title": "Cross-Platform",
+        "desc": "Write once, run everywhere with React Native and Flutter without compromising quality."
+      },
+      {
+        "title": "Native Performance",
+        "desc": "Deep integration with device hardware (Camera, GPS, Sensors) for maximum capability."
+      },
+      {
+        "title": "Offline Mode",
+        "desc": "Robust local databases ensuring your app works even when the internet doesn't."
+      },
+      {
+        "title": "Secure Auth",
+        "desc": "Biometric authentication (FaceID, TouchID) integration for seamless security."
+      },
+      {
+        "title": "App Store Optimization",
+        "desc": "Built to meet strict Apple and Google guidelines for fast approval and high ranking."
+      },
+      {
+        "title": "Push Notifications",
+        "desc": "Smart notification strategies to keep users engaged without being intrusive."
+      }
+    ],
+    "features": [
+      "iOS Development (Swift)",
+      "Android Development (Kotlin)",
+      "React Native",
+      "Flutter",
+      "Wearable Apps",
+      "IoT Companion Apps"
+    ],
+    "process": [
+      {
+        "title": "UX Prototyping",
+        "desc": "Interactive wireframes to validate flows before writing a single line of code."
+      },
+      {
+        "title": "Development",
+        "desc": "Agile sprints focused on delivering testable builds every two weeks."
+      },
+      {
+        "title": "Beta Testing",
+        "desc": "TestFlight and Google Play Console distribution to gather real-world user feedback."
+      },
+      {
+        "title": "Launch & Grow",
+        "desc": "App Store submission handling and post-launch performance monitoring."
+      }
+    ]
+  },
+  "process_title": "Mobile Development Lifecycle",
+  "build": {
+    "code_snippet": "import React from 'react';\nimport { View, Text } from 'react-native';\n\nconst App = () => (\n  <View style={{ flex: 1 }}>\n    <Text>Hello Native World</Text>\n  </View>\n);",
+    "card_title": "Mobile Stack",
+    "card_desc": "React Native / Swift / Kotlin"
+  },
+  "what_we_build_title": "Experiences in Your Pocket",
+  "what_we_build_subtitle": "From consumer fitness apps to enterprise field-service tools.",
+  "philosophy_title": "Mobile Philosophy",
+  "philosophy_subtitle": "Thumb-friendly, battery-conscious, and beautiful.",
+  "philosophy_items": [
+    {
+      "title": "Gesture First",
+      "desc": "Interfaces designed for touch, not mouse clicks."
+    },
+    {
+      "title": "Performance",
+      "desc": "No jank, no lag. Smooth scrolling is a requirement, not a feature."
+    },
+    {
+      "title": "Privacy",
+      "desc": "Transparent permission requests and data handling."
+    },
+    {
+      "title": "Accessibility",
+      "desc": "Inclusive design that works for everyone."
+    }
+  ],
+  "tech_stack_title": "Mobile Toolkit",
+  "tech_stack_subtitle": "Tools for building world-class apps.",
+  "tech_stack_groups": [
+    {
+      "name": "Platforms",
+      "items": [
+        "iOS",
+        "Android",
+        "WatchOS"
+      ]
+    },
+    {
+      "name": "Frameworks",
+      "items": [
+        "React Native",
+        "Flutter",
+        "SwiftUI",
+        "Jetpack Compose"
+      ]
+    },
+    {
+      "name": "Services",
+      "items": [
+        "Firebase",
+        "Amplify",
+        "Realm",
+        "RevenueCat"
+      ]
+    },
+    {
+      "name": "CI/CD",
+      "items": [
+        "Bitrise",
+        "Fastlane",
+        "Codemagic"
+      ]
+    }
+  ],
+  "quality_title": "App Quality",
+  "quality_desc": "Ensuring 5-star experiences.",
+  "quality": {
+    "secure": {
+      "title": "Data Encryption",
+      "desc": "Secure Enclave usage for sensitive data."
+    },
+    "qa": {
+      "title": "Device Farm Testing",
+      "desc": "Automated testing across hundreds of real devices."
+    },
+    "terminal": {
+      "run": "fastlane release",
+      "init": "Bundling assets...",
+      "deps": "Signing binaries...",
+      "encrypt": "Uploading to App Store...",
+      "pen": "Waiting for review...",
+      "complete": "Release Scheduled.",
+      "status_label": "Store Status:",
+      "status_value": "SUBMITTED"
+    }
+  },
+  "use_cases_title": "Mobile Solutions",
+  "use_cases_items": [
+    {
+      "industry": "On-Demand",
+      "title": "Delivery Apps",
+      "desc": "Real-time tracking and logistics."
+    },
+    {
+      "industry": "Social",
+      "title": "Community Platforms",
+      "desc": "Media sharing and real-time chat."
+    }
+  ],
+  "engagement_title": "Engagement Models",
+  "engagement_models": [
+    {
+      "title": "End-to-End Product",
+      "desc": "From concept to App Store featured."
+    },
+    {
+      "title": "Mobile Team Extension",
+      "desc": "Add senior iOS/Android devs to your squad."
+    }
+  ],
+  "why_us": {
+    "title": "Why Mobile with Data Pulse?",
+    "desc": "We build apps that get downloaded, used, and loved.",
+    "list": [
+      "Native & Cross-Platform Experts",
+      "UI/UX Design Included",
+      "Store Submission guarantee"
+    ],
+    "stats": [
+      {
+        "value": "1M+",
+        "label": "Downloads"
+      },
+      {
+        "value": "4.9",
+        "label": "Avg Rating"
+      }
+    ]
+  },
+  "related": {
+    "title": "Related Services",
+    "view_all": "View All",
+    "learn_more": "Learn More",
+    "items": [
+      {
+        "slug": "web-development",
+        "icon": "code",
+        "title": "Custom Web Development"
+      },
+      {
+        "slug": "saas-engineering",
+        "icon": "cloud-upload",
+        "title": "SaaS Product Engineering"
+      },
+      {
+        "slug": "computer-vision",
+        "icon": "eye",
+        "title": "Computer Vision"
+      }
+    ]
+  },
+  "services": {
+    "web": {
+      "title": "Custom Web Development",
+      "desc": "Scalable, high-performance web applications built with React, Node.js, and modern architectures."
+    },
+    "mobile": {
+      "title": "Mobile App Development",
+      "desc": "Native and cross-platform mobile solutions."
+    },
+    "saas": {
+      "title": "SaaS Product Engineering",
+      "desc": "Full-cycle SaaS development from MVP to scale."
+    },
+    "erp": {
+      "title": "Enterprise ERP Solutions",
+      "desc": "Comprehensive resource planning systems."
+    },
+    "api": {
+      "title": "API Development",
+      "desc": "Robust API architectures connecting disparate systems."
+    },
+    "legacy": {
+      "title": "Legacy Modernization",
+      "desc": "Transforming outdated software into modern apps."
+    }
+  },
+  "related_services_title": "Explore More",
+  "seo": {
+    "title": "Mobile App Development | Custom Software Development | Data Pulse",
+    "description": "High-performance Mobile App Development services. We build scalable, secure, and modern digital products for enterprises.",
+    "keywords": "mobile app development, software, data pulse, software development"
+  }
+}

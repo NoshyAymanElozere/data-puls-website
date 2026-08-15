@@ -1,0 +1,254 @@
+{
+  "hero_tag": "Visual Cognition",
+  "hero_badges": [
+    "Object Detection",
+    "Real-time Stream",
+    "Neural Processing",
+    "Spatial AI"
+  ],
+  "overview_title": "Seeing Beyond Pixels.",
+  "overview_desc_1": "We engineer Computer Vision systems that translate visual data into actionable business intelligence. From high-speed manufacturing quality control to intelligent urban surveillance, we provide machines with the power to see and understand the physical world.",
+  "overview_desc_2": "Our solutions use deep Convolutional Neural Networks (CNNs) to perform classification, segmentation, and tracking at speeds that exceed human capability, operating 24/7 without fatigue.",
+  "labels": {
+    "designed_for": "Designed For",
+    "solves": "Solves",
+    "architecture": "Architecture",
+    "core_functions": "Core Functions",
+    "related_capabilities": "Related Intelligence Capabilities",
+    "explore_module": "Explore Module",
+    "process_title": "Development Lifecycle"
+  },
+  "overview_cards": {
+    "designed_for_text": "Industrial manufacturers, logistics hubs, and security-focused enterprises.",
+    "solves_text": "Visual inspection bottlenecks, safety monitoring at scale, and automated inventory tracking.",
+    "architecture_text": "Edge-Inference / GPU-Accelerated Pipelines"
+  },
+  "capability_generic_desc": "High-fidelity visual processing models optimized for accuracy in varied lighting, scale, and environmental conditions.",
+  "features_title": "Visual Analysis Capabilities",
+  "details": {
+    "features": [
+      "Real-time Object Detection",
+      "Semantic Segmentation",
+      "Biometric Recognition",
+      "Anomalous Event Detection",
+      "3D Spatial Reconstruction",
+      "OCR & Document Digitization"
+    ],
+    "benefits": [
+      {
+        "title": "Precision",
+        "desc": "Identify defects or patterns invisible to the human eye."
+      },
+      {
+        "title": "24/7 Surveillance",
+        "desc": "Automate security and monitoring without lapses in attention."
+      },
+      {
+        "title": "Operational Speed",
+        "desc": "Process visual streams in milliseconds for real-time reactivity."
+      }
+    ]
+  },
+  "automation": {
+    "title": "Applied Vision Scenarios",
+    "scenarios": [
+      {
+        "title": "Quality Control",
+        "before": "Manual Sampling (5%)",
+        "after": "100% Visual Audit",
+        "impact": "Zero Defects"
+      },
+      {
+        "title": "Traffic Management",
+        "before": "Reactive Dispatch",
+        "after": "AI Demand Flow",
+        "impact": "25% Flow Lift"
+      },
+      {
+        "title": "Logistics Sorting",
+        "before": "Manual Scanning",
+        "after": "Motion Recognition",
+        "impact": "5x Throughput"
+      }
+    ]
+  },
+  "philosophy_title": "Vision Logic",
+  "philosophy_subtitle": "Pixels are points of light. We turn them into points of value.",
+  "models_logic": [
+    {
+      "title": "CNN Architectures",
+      "desc": "Customized Convolutional Neural Networks for hierarchical feature extraction."
+    },
+    {
+      "title": "Pose Estimation",
+      "desc": "Tracking human and mechanical movement patterns in 3D space."
+    },
+    {
+      "title": "Edge Inference",
+      "desc": "Deploying models directly onto cameras for ultra-low latency without cloud lag."
+    },
+    {
+      "title": "Generative Pre-training",
+      "desc": "Using synthetic data to train models for rare but critical visual events."
+    }
+  ],
+  "tech_stack_title": "Visual Compute Stack",
+  "data_strategy": [
+    {
+      "step": "01",
+      "title": "Image Annotation",
+      "desc": "High-precision labeling of training sets with bounding boxes and masks."
+    },
+    {
+      "step": "02",
+      "title": "Augmentation",
+      "desc": "Generating variations of data (lighting, noise) to ensure model robustness."
+    },
+    {
+      "step": "03",
+      "title": "Hyper-training",
+      "desc": "GPU-intensive training cycles to optimize mAP (Mean Average Precision)."
+    },
+    {
+      "step": "04",
+      "title": "Optimization",
+      "desc": "Pruning and quantizing models for deployment on limited hardware."
+    }
+  ],
+  "hitl": {
+    "title": "Visual Verification",
+    "desc": "Vision AI filters thousands of hours of video. When a high-risk or low-confidence event is detected, it is instantly escalated to a human operator for final validation.",
+    "metrics": {
+      "confidence_score": {
+        "label": "Detection Recall",
+        "value": "99.5%",
+        "sub": "Minimizing False Negatives"
+      }
+    },
+    "features": [
+      "Alert Escalation UI",
+      "Event Playback Confirmation",
+      "False Positive Tuning"
+    ]
+  },
+  "responsible": {
+    "title": "Ethical Sights",
+    "desc": "We build vision systems that respect privacy, avoid bias, and comply with international surveillance regulations.",
+    "items": [
+      {
+        "title": "Privacy by Design",
+        "desc": "Real-time face blurring and PII removal at the edge."
+      },
+      {
+        "title": "Algorithmic Fairness",
+        "desc": "Ensuring consistent recognition accuracy across all demographics."
+      },
+      {
+        "title": "Data Sovereignty",
+        "desc": "Local processing to ensure sensitive visual data never leaves the premises."
+      }
+    ]
+  },
+  "integration": {
+    "title": "Physical World Connectivity",
+    "desc": "Integrate visual intelligence with CCTV networks, IoT sensors, and industrial PLC systems.",
+    "labels": {
+      "your_data": "Video Input",
+      "actionable_output": "Spatial Insight"
+    }
+  },
+  "process_title": "Vision Roadmap",
+  "development_lifecycle": [
+    {
+      "step": "Acquire",
+      "desc": "Optical system setup and data collection."
+    },
+    {
+      "step": "Annotate",
+      "desc": "Gold-standard data labeling."
+    },
+    {
+      "step": "Model",
+      "desc": "Custom vision model architecture build."
+    },
+    {
+      "step": "Stream",
+      "desc": "Real-time production deployment."
+    }
+  ],
+  "outcomes": [
+    {
+      "label": "Defect Capture",
+      "value": "10x",
+      "desc": "Higher capture rate vs human"
+    },
+    {
+      "label": "Monitoring Span",
+      "value": "100%",
+      "desc": "Continuous coverage"
+    },
+    {
+      "label": "Latency",
+      "value": "<30ms",
+      "desc": "Real-time reaction speed"
+    }
+  ],
+  "related": {
+    "title": "Related Intelligence Capabilities",
+    "learn_more": "Explore Module",
+    "items": [
+      {
+        "slug": "machine-learning",
+        "title": "Machine Learning",
+        "icon": "brain"
+      },
+      {
+        "slug": "process-automation",
+        "title": "Process Automation",
+        "icon": "robot"
+      },
+      {
+        "slug": "predictive-analytics",
+        "title": "Predictive Analytics",
+        "icon": "chart-line"
+      }
+    ]
+  },
+  "breadcrumbs": {
+    "services": "Services",
+    "sys_id": "SYS-ID"
+  },
+  "services": {
+    "ai": {
+      "ml": {
+        "title": "Machine Learning Solutions",
+        "desc": "Custom algorithms that predict trends, optimize operations, and unlock hidden value in your data."
+      },
+      "rpa": {
+        "title": "Process Automation (RPA)",
+        "desc": "Robotic Process Automation to streamline repetitive workflows and reduce operational costs."
+      },
+      "nlp": {
+        "title": "Natural Language AI",
+        "desc": "Chatbots and semantic analysis tools that understand and interact with human language."
+      },
+      "vision": {
+        "title": "Computer Vision",
+        "desc": "Advanced image and video analysis systems for quality control, surveillance, and automated recognition."
+      },
+      "predictive": {
+        "title": "Predictive Analytics",
+        "desc": "Forecasting models that utilize historical data to predict future trends and behaviors."
+      },
+      "genai": {
+        "title": "Generative AI Solutions",
+        "desc": "Custom LLMs and generative models for content creation, code generation, and complex problem solving."
+      }
+    }
+  },
+  "seo": {
+    "title": "Computer Vision | AI & Automation Solutions | Data Pulse",
+    "description": "Transform your business with Computer Vision . We leverage advanced AI models and automation to drive efficiency.",
+    "keywords": "computer vision, ai, data pulse, software development"
+  }
+}
