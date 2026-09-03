@@ -1,0 +1,28 @@
+---
+description: Feature folder structure and how to add new domains
+alwaysApply: true
+---
+
+# Project Structure
+
+```
+src/
+├── app/           App.tsx, main.tsx, global CSS
+├── features/      Domain modules
+│   └── users/     Primary CRUD template — copy this for new resources
+│       ├── api/   TanStack Query hooks (useUsersList, mutations)
+│       └── pages/ List page, form modal, ColumnDefs, validationSchema
+└── shared/
+    ├── components/  UI primitives + GenericDataGrid
+    ├── hooks/       useTableState, useTheme, useDisclosure
+    ├── services/    axios, echo, queryClient
+    ├── i18n/        en.ts + ar.ts
+    └── layouts/     Layout, Sidebar, Header
+```
+
+## Adding a feature
+
+1. Copy `src/features/users/` structure
+2. Add API hooks calling Laravel resource routes
+3. Wire route in `App.tsx` and nav in `Sidebar.tsx`
+4. Add i18n keys to **both** `en.ts` and `ar.ts`

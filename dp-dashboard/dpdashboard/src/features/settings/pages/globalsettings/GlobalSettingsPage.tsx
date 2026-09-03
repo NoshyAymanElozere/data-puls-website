@@ -1,62 +1,80 @@
 import React from 'react'
-import { Save, Building2, Percent, Loader2 } from 'lucide-react'
-import { FormProvider } from 'react-hook-form'
+import { Mail, Save, Loader2, Globe } from 'lucide-react'
+import { FormProvider, Controller } from 'react-hook-form'
 import { useTranslation } from 'react-i18next'
 import { z } from 'zod'
 import { useZodForm } from '@/shared/components/form-fields'
 import { Card, CardHeader, CardTitle, CardContent } from '@/shared/components/card'
 import { Button } from '@/shared/components/button'
 import { BaseInputField } from '@/shared/components/base-input-field'
-import { useGlobalSettings, useUpdateGlobalSettings } from '../../api/useGlobalSettings'
+import { ImageUpload } from '@/shared/components/image-upload'
+import {
+  useAppSettingsGroup,
+  useAppSettingsContact,
+  useUpdateAppSettingsGeneral,
+  useUpdateAppSettingsContact,
+  mapGeneralSettingsToForm,
+  mapContactSettingsToForm,
+} from '../../api/useAppSettings'
 
-const schema = z.object({
-  site_name: z.string().min(1, 'requiredField'),
-  commercial_register: z.string().min(1, 'requiredField'),
-  tax_number: z.string().min(1, 'requiredField'),
-  hotel_commission: z.string().min(1, 'requiredField'),
-  flight_commission: z.string().min(1, 'requiredField'),
+const generalSchema = z.object({
+  nameEn: z.string().min(1, 'requiredField'),
+  nameAr: z.string().min(1, 'requiredField'),
+  default_locale: z.string().min(1, 'requiredField'),
+  logo: z.any().optional(),
 })
+
+const contactSchema = z.object({
+  phone: z.string().optional(),
+  whatsapp: z.string().optional(),
+  email: z.string().email('invalidEmail').optional().or(z.literal('')),
+  facebook: z.string().optional(),
+  x: z.string().optional(),
+  instagram: z.string().optional(),
+  telegram: z.string().optional(),
+  youtube: z.string().optional(),
+})
+
+const emptyGeneralForm = mapGeneralSettingsToForm(null)
+const emptyContactForm = mapContactSettingsToForm(null)
 
 export default function GlobalSettingsPage() {
   const { t, i18n } = useTranslation()
   const isRtl = i18n.language === 'ar'
 
-  const { data: settings, isLoading } = useGlobalSettings()
-  const saveMutation = useUpdateGlobalSettings()
+  const {
+    data: generalSettings,
+    isLoading: generalLoading,
+    isError: generalError,
+  } = useAppSettingsGroup('general')
+  const {
+    data: contactSettings,
+    isLoading: contactLoading,
+    isError: contactError,
+  } = useAppSettingsContact()
+  const saveGeneral = useUpdateAppSettingsGeneral()
+  const saveContact = useUpdateAppSettingsContact()
 
-  const methods = useZodForm(schema, {
-    site_name: '',
-    commercial_register: '',
-    tax_number: '',
-    hotel_commission: '',
-    flight_commission: '',
-  })
+  const generalMethods = useZodForm(generalSchema, emptyGeneralForm)
+  const contactMethods = useZodForm(contactSchema, emptyContactForm)
 
   React.useEffect(() => {
-    if (settings) {
-      methods.reset({
-        site_name: settings.site_name || '',
-        commercial_register: settings.commercial_register || '',
-        tax_number: settings.tax_number || '',
-        hotel_commission: settings.hotel_commission || '0',
-        flight_commission: settings.flight_commission || '0',
-      })
+    if (generalSettings) {
+      generalMethods.reset(mapGeneralSettingsToForm(generalSettings))
     }
-  }, [settings, methods.reset])
+  }, [generalSettings, generalMethods.reset])
 
-  const onSubmit = (formData: any) => {
-    saveMutation.mutate({
-      site_name: formData.site_name,
-      commercial_register: formData.commercial_register,
-      tax_number: formData.tax_number,
-      hotel_commission: formData.hotel_commission,
-      flight_commission: formData.flight_commission,
-    })
-  }
+  React.useEffect(() => {
+    if (contactSettings) {
+      contactMethods.reset(mapContactSettingsToForm(contactSettings))
+    }
+  }, [contactSettings, contactMethods.reset])
+
+  const isLoading = generalLoading || contactLoading
 
   if (isLoading) {
     return (
-      <Card className="border-border/60 shadow-sm rounded-2xl p-6 bg-white">
+      <Card className="border-border/60 shadow-sm rounded-2xl p-6">
         <div className="flex justify-center items-center py-16">
           <Loader2 className="h-8 w-8 animate-spin text-main" />
         </div>
@@ -65,74 +83,111 @@ export default function GlobalSettingsPage() {
   }
 
   return (
-    <Card className="border-border/60 shadow-sm rounded-2xl overflow-hidden bg-white">
-      <CardHeader className="border-b border-gray-50 px-6 py-5">
-        <CardTitle className="text-lg font-bold text-gray-800">
-          {t('globalSettings') || 'Global Settings'}
-        </CardTitle>
-      </CardHeader>
-      <CardContent className="p-6">
-        <FormProvider {...methods}>
-          <form onSubmit={methods.handleSubmit(onSubmit)} className="space-y-8" dir={isRtl ? 'rtl' : 'ltr'}>
+    <div className="space-y-6" dir={isRtl ? 'rtl' : 'ltr'}>
+      {(generalError || contactError) && (
+        <Card className="border-destructive/40 bg-destructive/5 rounded-2xl p-4">
+          <p className="text-sm text-destructive">
+            {t('settingsLoadError') || 'Some settings could not be loaded. Check your permissions or try again.'}
+          </p>
+        </Card>
+      )}
 
-            {/* General Settings */}
-            <div className="bg-gray-50/50 p-6 rounded-2xl border border-gray-100 space-y-4">
-              <h3 className="text-sm font-bold text-gray-700 uppercase tracking-wider flex items-center gap-2">
-                <Building2 className="h-4 w-4 text-main" />
-                {t('generalSettings') || 'General Settings'}
-              </h3>
-              <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-                <BaseInputField
-                  name="site_name"
-                  label={isRtl ? 'اسم الموقع / الشركة' : 'Company / Site Name'}
-                  required
-                />
-                <BaseInputField
-                  name="commercial_register"
-                  label={isRtl ? 'السجل التجاري' : 'Commercial Register'}
-                  required
-                />
-                <BaseInputField
-                  name="tax_number"
-                  label={isRtl ? 'الرقم الضريبي' : 'Tax Number / VAT'}
-                  required
-                />
-              </div>
-            </div>
-
-            {/* Commissions Settings */}
-            <div className="bg-gray-50/50 p-6 rounded-2xl border border-gray-100 space-y-4">
-              <h3 className="text-sm font-bold text-gray-700 uppercase tracking-wider flex items-center gap-2">
-                <Percent className="h-4 w-4 text-main" />
-                {t('commissionsSettings') || 'Commissions Settings'}
-              </h3>
+      <Card className="border-border/60 shadow-sm rounded-2xl overflow-hidden">
+        <CardHeader className="border-b border-border/40 px-6 py-5">
+          <CardTitle className="text-lg font-bold">{t('generalSettings') || 'General Settings'}</CardTitle>
+        </CardHeader>
+        <CardContent className="p-6">
+          <FormProvider {...generalMethods}>
+            <form
+              key={generalSettings ? `general-${generalSettings.default_locale}` : 'general-empty'}
+              onSubmit={generalMethods.handleSubmit((formData) => saveGeneral.mutate(formData))}
+              className="space-y-6"
+            >
               <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                <BaseInputField
-                  name="hotel_commission"
-                  type="number"
-                  label={isRtl ? 'عمولة الفنادق (%)' : 'Hotel Commission (%)'}
-                  required
-                />
-                <BaseInputField
-                  name="flight_commission"
-                  type="number"
-                  label={isRtl ? 'عمولة الطيران (%)' : 'Flight Commission (%)'}
-                  required
-                />
+                <BaseInputField name="nameAr" label={t('arabicName') || 'Arabic Name'} required />
+                <BaseInputField name="nameEn" label={t('englishName') || 'English Name'} required />
+                <div className="space-y-2">
+                  <label className="text-xs font-bold text-gray-500 uppercase tracking-wider block">
+                    {t('defaultLocale') || 'Default Locale'}
+                  </label>
+                  <Controller
+                    name="default_locale"
+                    control={generalMethods.control}
+                    render={({ field }) => (
+                      <select
+                        {...field}
+                        className="w-full h-10 px-3 rounded-xl border border-border/60 bg-card text-sm outline-none focus:border-primary/50"
+                      >
+                        <option value="en">English</option>
+                        <option value="ar">العربية</option>
+                      </select>
+                    )}
+                  />
+                </div>
+                <div className="md:col-span-2">
+                  <ImageUpload
+                    name="logo"
+                    label={t('appLogo') || 'App Logo'}
+                    currentImageUrl={generalSettings?.logo_url || undefined}
+                    aspectRatio="h-28 w-44"
+                  />
+                </div>
               </div>
-            </div>
+              <div className="flex justify-end">
+                <Button
+                  type="submit"
+                  loading={saveGeneral.isPending}
+                  disabled={!generalSettings}
+                  className="px-6 h-10 rounded-xl"
+                >
+                  <Save className="mr-2 h-4 w-4" />
+                  {t('saveChanges') || 'Save Changes'}
+                </Button>
+              </div>
+            </form>
+          </FormProvider>
+        </CardContent>
+      </Card>
 
-            {/* Save Button */}
-            <div className="pt-2 flex justify-end">
-              <Button type="submit" loading={saveMutation.isPending} className="px-6 h-10 rounded-xl">
-                <Save className="mr-2 h-4 w-4" />
-                {t('saveChanges') || 'Save Changes'}
-              </Button>
-            </div>
-
-          </form>
-        </FormProvider>
-      </CardContent>
-    </Card>
+      <Card className="border-border/60 shadow-sm rounded-2xl overflow-hidden">
+        <CardHeader className="border-b border-border/40 px-6 py-5">
+          <CardTitle className="text-lg font-bold flex items-center gap-2">
+            <Mail className="h-4 w-4 text-main" />
+            {t('contactSettings') || 'Contact Settings'}
+          </CardTitle>
+        </CardHeader>
+        <CardContent className="p-6">
+          <FormProvider {...contactMethods}>
+            <form
+              key={contactSettings ? 'contact-loaded' : 'contact-empty'}
+              onSubmit={contactMethods.handleSubmit((formData) => saveContact.mutate(formData))}
+              className="space-y-6"
+            >
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <BaseInputField name="phone" label={t('contactPhone') || 'Phone'} />
+                <BaseInputField name="whatsapp" label={t('whatsapp') || 'WhatsApp'} />
+                <BaseInputField name="email" label={t('contactEmail') || 'Email'} />
+                <BaseInputField name="facebook" label={t('facebook') || 'Facebook'} />
+                <BaseInputField name="x" label={t('x') || 'X (Twitter)'} />
+                <BaseInputField name="instagram" label={t('instagram') || 'Instagram'} />
+                <BaseInputField name="telegram" label={t('telegram') || 'Telegram'} />
+                <BaseInputField name="youtube" label={t('youtube') || 'YouTube'} />
+              </div>
+              <div className="flex justify-end">
+                <Button
+                  type="submit"
+                  loading={saveContact.isPending}
+                  disabled={!contactSettings}
+                  className="px-6 h-10 rounded-xl"
+                >
+                  <Globe className="mr-2 h-4 w-4" />
+                  {t('saveChanges') || 'Save Changes'}
+                </Button>
+              </div>
+            </form>
+          </FormProvider>
+        </CardContent>
+      </Card>
+    </div>
   )
 }

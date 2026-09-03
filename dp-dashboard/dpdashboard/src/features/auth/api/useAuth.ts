@@ -1,28 +1,25 @@
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query'
 import { useNavigate } from 'react-router-dom'
 import toast from 'react-hot-toast'
-import api from '@/shared/services/axios'
-import { setCookie, getCookie, eraseCookie } from '@/shared/utils/cookies'
+import api, { getErrorMessage } from '@/shared/services/axios'
+import type { Admin, ChangePasswordPayload } from '@/shared/types/admin'
+import { AUTH_TOKEN_KEY, eraseCookie, getCookie, setCookie } from '@/shared/utils/cookies'
+import { applyValidationErrors } from '@/shared/utils/form-errors'
+import { disconnectEcho } from '@/shared/services/echo'
+import type { UseFormSetError } from 'react-hook-form'
 
-export interface Admin {
-  id: number
-  name: string
-  email: string
-  phone: string
-}
-
-export interface LoginResponse {
+interface LoginResponse {
   success: boolean
   message: string
   data: {
     admin: Admin
     token: string
+    token_type: string
   }
 }
 
-export interface ProfileResponse {
-  success: boolean
-  message: string
+interface ProfileResponse {
+  success?: boolean
   data: Admin
 }
 
@@ -31,33 +28,33 @@ export function useLogin() {
   const queryClient = useQueryClient()
 
   return useMutation({
-    mutationFn: async (credentials: Record<string, string>) => {
-      const response = await api.post<LoginResponse>('/users/login', credentials)
+    mutationFn: async (credentials: { email: string; password: string }) => {
+      const response = await api.post<LoginResponse>('/login', credentials)
       return response.data
     },
     onSuccess: (data) => {
-      setCookie('dpulse-token', data.token ?? data.data?.token)
-      queryClient.setQueryData(['admin-profile'], data.user ?? data.data?.admin)
+      setCookie(AUTH_TOKEN_KEY, data.data.token)
+      queryClient.setQueryData(['auth-user'], data.data.admin)
       toast.success(data.message || 'Logged in successfully.')
       navigate('/')
     },
-    onError: (error: any) => {
-      const msg = error?.response?.data?.message || 'Invalid credentials.'
-      toast.error(msg)
-    }
+    onError: (error) => {
+      toast.error(getErrorMessage(error, 'Invalid credentials.'))
+    },
   })
 }
 
 export function useProfile() {
-  const token = getCookie('dpulse-token')
+  const token = getCookie(AUTH_TOKEN_KEY)
+
   return useQuery({
-    queryKey: ['admin-profile'],
+    queryKey: ['auth-user'],
     queryFn: async () => {
-      const response = await api.get<any>('/users/profile')
+      const response = await api.get<ProfileResponse>('/me')
       return response.data.data
     },
     enabled: !!token,
-    retry: false
+    retry: false,
   })
 }
 
@@ -67,21 +64,40 @@ export function useLogout() {
 
   return useMutation({
     mutationFn: async () => {
-      const response = await api.post<{ success: boolean; message: string }>('/users/logout')
+      const response = await api.post<{ success: boolean; message: string }>('/logout')
       return response.data
     },
     onSuccess: (data) => {
-      eraseCookie('dpulse-token')
+      eraseCookie(AUTH_TOKEN_KEY)
+      disconnectEcho()
       queryClient.clear()
       toast.success(data.message || 'Logged out successfully.')
       navigate('/login')
     },
     onError: () => {
-      // Even if API logout fails, clear local session
-      eraseCookie('dpulse-token')
+      eraseCookie(AUTH_TOKEN_KEY)
+      disconnectEcho()
       queryClient.clear()
       toast.success('Logged out successfully.')
       navigate('/login')
-    }
+    },
   })
 }
+
+export function useChangePassword(setError?: UseFormSetError<ChangePasswordPayload>) {
+  return useMutation({
+    mutationFn: async (payload: ChangePasswordPayload) => {
+      const response = await api.patch<{ success: boolean; message: string }>('/me/password', payload)
+      return response.data
+    },
+    onSuccess: (data) => {
+      toast.success(data.message || 'Password changed successfully.')
+    },
+    onError: (error) => {
+      if (setError && applyValidationErrors(error, setError)) return
+      toast.error(getErrorMessage(error, 'Failed to change password.'))
+    },
+  })
+}
+
+export type { Admin }

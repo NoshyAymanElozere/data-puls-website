@@ -1,7 +1,8 @@
 import type { Control, FieldValues, Path } from 'react-hook-form'
 import { useTranslation } from 'react-i18next'
 import { ControlledSearchableSelect } from '@/shared/components/form-fields'
-import { useAllCities } from '@/features/settings/api/useCities'
+import { useActiveCities } from '@/features/settings/api/useCities'
+import { getLocalizedValue } from '@/shared/utils/localized-value'
 
 interface CitySelectProps<T extends FieldValues> {
   name?: Path<T>
@@ -18,20 +19,15 @@ export function CitySelect<T extends FieldValues>({
   disabled,
   required = true,
   label,
-  countryId
+  countryId,
 }: CitySelectProps<T>) {
   const { i18n, t } = useTranslation()
-  const { data: cities = [] } = useAllCities()
+  const { data: cities = [] } = useActiveCities(countryId)
 
-  let filteredCities = cities
-  if (countryId) {
-    filteredCities = cities.filter((c: any) => String(c.country_id) === String(countryId))
-  }
-
-  const options = filteredCities.map((c: any) => {
-    const nameVal = c.translations?.find((trans: any) => trans.language_id === (i18n.language === 'ar' ? 2 : 1))?.name || c.name || ''
-    return { value: String(c.id), label: nameVal }
-  })
+  const options = cities.map((c) => ({
+    value: String(c.id),
+    label: getLocalizedValue(c.name, i18n.language) || String(c.id),
+  }))
 
   return (
     <ControlledSearchableSelect

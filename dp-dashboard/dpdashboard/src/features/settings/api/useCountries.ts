@@ -1,126 +1,176 @@
-import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query'
-import api from '@/shared/services/axios'
+import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query'
 import toast from 'react-hot-toast'
+import api, { getErrorMessage } from '@/shared/services/axios'
+import type { LaravelPaginatedResponse, SuccessResponse, Translatable } from '@/shared/types/laravel'
+import { appendTranslatable, createPutFormData } from '@/shared/utils/form-data'
+import { getLocalizedValue } from '@/shared/utils/localized-value'
+import { buildQueryParams } from '@/shared/utils/query-params'
+import { applyValidationErrors } from '@/shared/utils/form-errors'
+import type { UseFormSetError } from 'react-hook-form'
 
-export interface CountryTranslation {
-  id?: number
-  language_id: number
-  name: string
+export interface CountryCity {
+  id: number
+  name: string | Translatable
+  country_id: number
+  is_active: boolean
 }
 
 export interface Country {
   id: number
-  code: string
-  name: string
+  name: string | Translatable
+  iso_code: string
+  currency_code: string
+  phone_code: string
   is_active: boolean
-  image_url?: string
-  translations?: CountryTranslation[]
+  cities?: CountryCity[]
+  created_at?: string
+  updated_at?: string
 }
 
-export function useCountriesList(page = 1, search = '') {
+export interface CountryFormData {
+  nameEn: string
+  nameAr: string
+  iso_code: string
+  currency_code: string
+  phone_code: string
+  is_active: boolean
+}
+
+function toCountryFormData(payload: CountryFormData, isUpdate = false): FormData {
+  const formData = createPutFormData({
+    iso_code: payload.iso_code,
+    currency_code: payload.currency_code,
+    phone_code: payload.phone_code,
+    is_active: payload.is_active,
+  })
+
+  if (!isUpdate) {
+    formData.delete('_method')
+  }
+
+  appendTranslatable(formData, 'name', { en: payload.nameEn, ar: payload.nameAr })
+  return formData
+}
+
+export function useCountriesList(page = 1, search = '', isActive = '') {
   return useQuery({
-    queryKey: ['countries-list', page, search],
+    queryKey: ['countries-list', page, search, isActive],
     queryFn: async () => {
-      const response = await api.get(`/admin/countries?page=${page}&search=${search}`)
+      const params = buildQueryParams({ page, search, is_active: isActive })
+      const response = await api.get<LaravelPaginatedResponse<Country>>(`/countries?${params}`)
+      return response.data
+    },
+  })
+}
+
+export function useActiveCountries() {
+  return useQuery({
+    queryKey: ['countries-active'],
+    queryFn: async () => {
+      const params = new URLSearchParams({ is_active: 'true', per_page: '100' })
+      const response = await api.get<LaravelPaginatedResponse<Country>>(`/countries?${params}`)
       return response.data.data
-    }
+    },
   })
 }
 
+/** @deprecated Use useActiveCountries */
 export function useAllCountries() {
-  return useQuery({
-    queryKey: ['all-countries'],
-    queryFn: async () => {
-      const response = await api.get('/admin/countries?per_page=1000')
-      return response.data.data.data as Country[]
-    }
-  })
+  return useActiveCountries()
 }
 
 export function useCountry(id: number | null) {
   return useQuery({
     queryKey: ['country', id],
     queryFn: async () => {
-      const response = await api.get(`/admin/countries/${id}`)
-      return response.data.data as Country
+      const response = await api.get<SuccessResponse<Country>>(`/countries/${id}`)
+      return response.data.data
     },
-    enabled: !!id
+    enabled: !!id,
   })
 }
 
-export function useCreateCountry() {
+export function useCreateCountry(setError?: UseFormSetError<CountryFormData>) {
   const qc = useQueryClient()
+
   return useMutation({
-    mutationFn: async (formData: FormData) => {
-      const response = await api.post('/admin/countries', formData, {
-        headers: { 'Content-Type': 'multipart/form-data' }
-      })
+    mutationFn: async (payload: CountryFormData) => {
+      const response = await api.post<SuccessResponse<Country>>('/countries', toCountryFormData(payload))
       return response.data
     },
     onSuccess: (res) => {
       qc.invalidateQueries({ queryKey: ['countries-list'] })
-      qc.invalidateQueries({ queryKey: ['all-countries'] })
+      qc.invalidateQueries({ queryKey: ['countries-active'] })
       toast.success(res.message || 'Country created successfully.')
     },
-    onError: (err: any) => {
-      toast.error(err?.response?.data?.message || 'Failed to create country.')
-    }
+    onError: (error) => {
+      if (setError && applyValidationErrors(error, setError)) return
+      toast.error(getErrorMessage(error, 'Failed to create country.'))
+    },
   })
 }
 
-export function useUpdateCountry() {
+export function useUpdateCountry(setError?: UseFormSetError<CountryFormData>) {
   const qc = useQueryClient()
+
   return useMutation({
-    mutationFn: async ({ id, formData }: { id: number; formData: FormData }) => {
-      const response = await api.post(`/admin/countries/${id}`, formData, {
-        headers: { 'Content-Type': 'multipart/form-data' }
-      })
+    mutationFn: async ({ id, payload }: { id: number; payload: CountryFormData }) => {
+      const response = await api.post<SuccessResponse<Country>>(
+        `/countries/${id}`,
+        toCountryFormData(payload, true)
+      )
       return response.data
     },
-    onSuccess: (res) => {
+    onSuccess: (res, variables) => {
       qc.invalidateQueries({ queryKey: ['countries-list'] })
-      qc.invalidateQueries({ queryKey: ['all-countries'] })
-      qc.invalidateQueries({ queryKey: ['country'] })
+      qc.invalidateQueries({ queryKey: ['countries-active'] })
+      qc.invalidateQueries({ queryKey: ['country', variables.id] })
       toast.success(res.message || 'Country updated successfully.')
     },
-    onError: (err: any) => {
-      toast.error(err?.response?.data?.message || 'Failed to update country.')
-    }
+    onError: (error) => {
+      if (setError && applyValidationErrors(error, setError)) return
+      toast.error(getErrorMessage(error, 'Failed to update country.'))
+    },
   })
 }
 
 export function useToggleCountryStatus() {
   const qc = useQueryClient()
+
   return useMutation({
     mutationFn: async (id: number) => {
-      const response = await api.patch(`/admin/countries/${id}/toggle`)
+      const response = await api.patch<SuccessResponse<Country>>(`/countries/${id}/status`)
       return response.data
     },
     onSuccess: (res) => {
       qc.invalidateQueries({ queryKey: ['countries-list'] })
-      qc.invalidateQueries({ queryKey: ['all-countries'] })
+      qc.invalidateQueries({ queryKey: ['countries-active'] })
       toast.success(res.message || 'Country status updated successfully.')
     },
-    onError: (err: any) => {
-      toast.error(err?.response?.data?.message || 'Failed to toggle country status.')
-    }
+    onError: (error) => {
+      toast.error(getErrorMessage(error, 'Failed to toggle country status.'))
+    },
   })
 }
 
 export function useDeleteCountry() {
   const qc = useQueryClient()
+
   return useMutation({
     mutationFn: async (id: number) => {
-      const response = await api.delete(`/admin/countries/${id}`)
-      return response.data
+      await api.delete(`/countries/${id}`)
     },
-    onSuccess: (res) => {
+    onSuccess: () => {
       qc.invalidateQueries({ queryKey: ['countries-list'] })
-      qc.invalidateQueries({ queryKey: ['all-countries'] })
-      toast.success(res.message || 'Country deleted successfully.')
+      qc.invalidateQueries({ queryKey: ['countries-active'] })
+      toast.success('Country deleted successfully.')
     },
-    onError: (err: any) => {
-      toast.error(err?.response?.data?.message || 'Failed to delete country.')
-    }
+    onError: (error) => {
+      toast.error(getErrorMessage(error, 'Failed to delete country.'))
+    },
   })
+}
+
+export function getCountryName(name: string | Translatable, lang = 'en'): string {
+  return getLocalizedValue(name, lang)
 }

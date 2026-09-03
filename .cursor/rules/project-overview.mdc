@@ -1,0 +1,32 @@
+---
+description: Dashboard-only repo layout, stack, and Laravel integration overview
+alwaysApply: true
+---
+
+# Project Overview
+
+This repo is a **base admin dashboard** frontend. The app lives at `dp-dashboard/dpdashboard/`.
+
+## Stack
+
+- React 18 + TypeScript + Vite
+- React Router v6, TanStack Query v5, Axios
+- React Hook Form + Zod, react-hot-toast
+- Tailwind + Radix/shadcn-style components, AG Grid via `GenericDataGrid`
+- i18next (en/ar, RTL)
+- Laravel Sanctum Bearer auth + Laravel Reverb (Echo) for notifications
+
+## Backend contract
+
+External Laravel API. Env: `VITE_API_URL`, `VITE_REVERB_*`.
+
+- Auth: `POST /login`, `GET /user`, `POST /logout` (under `VITE_API_URL` which ends with `/admin`)
+- CRUD: REST relative paths (`/users`, …) → full URL `.../admin/users`
+- Validation: `422 { message, errors: { field: [msgs] } }`
+- Notifications: `GET /notifications` + private channel `App.Models.User.{id}`
+
+## Features to keep
+
+`auth`, `dashboard`, `users` (CRUD template), `settings` (generic), `reports`, `notifications`.
+
+Do not reintroduce travel/blog/analytics/help modules or sibling backend/marketing projects.

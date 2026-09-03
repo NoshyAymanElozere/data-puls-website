@@ -119,7 +119,7 @@ const Progress = React.forwardRef<React.ElementRef<typeof ProgressPrimitive.Root
   ({ className, value, showLabel, color = 'default', ...props }, ref) => {
     const colorClass = {
       default: 'bg-primary',
-      success: 'bg-emerald-500',
+      success: 'bg-success',
       warning: 'bg-amber-500',
       destructive: 'bg-destructive',
     }[color]

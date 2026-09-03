@@ -55,7 +55,7 @@ export function StatCard({
 
   const isPositive = (change ?? 0) >= 0
   const isGood = trend === 'up-good' ? isPositive : !isPositive
-  const changeColor = isGood ? 'text-emerald-600 dark:text-emerald-400' : 'text-red-500'
+  const changeColor = isGood ? 'text-success' : 'text-action'
   const TrendIcon = isPositive ? TrendingUp : change === 0 ? Minus : TrendingDown
 
   return (

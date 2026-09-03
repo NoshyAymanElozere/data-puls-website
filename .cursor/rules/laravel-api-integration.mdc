@@ -1,0 +1,60 @@
+---
+description: Laravel Sanctum API client, pagination, and validation error handling
+globs: dp-dashboard/dpdashboard/src/shared/services/**,dp-dashboard/dpdashboard/src/features/**/api/**
+alwaysApply: false
+---
+
+# Laravel API Integration
+
+Use the shared Axios instance from `@/shared/services/axios` only.
+
+## Auth header
+
+Token stored in cookie `auth_token`. Interceptor attaches `Authorization: Bearer {token}`.
+
+## Response shapes
+
+```ts
+// Single resource
+{ data: T, message?: string }
+
+// Paginated list
+{ data: T[], links: [...], meta: { current_page, last_page, links, total, ... } }
+
+// Validation error (422)
+{ message: string, errors: { email: ['Already taken.'] } }
+```
+
+## Query hooks pattern
+
+Use `buildQueryParams()` from `@/shared/utils/query-params` for list filters — it omits empty optional params (e.g. no `search=` when search is blank).
+
+```ts
+export function useUsersList(page, search, sortBy, sortOrder) {
+  return useQuery({
+    queryKey: ['users-list', page, search, sortBy, sortOrder],
+    queryFn: async () => {
+      const params = buildQueryParams({ page, search, sort_by: sortBy, sort_order: sortOrder })
+      const response = await api.get<LaravelPaginatedResponse<User>>(`/users?${params}`)
+      return response.data
+    },
+  })
+}
+```
+
+## Form validation errors
+
+Use `applyValidationErrors(error, setError)` from `@/shared/utils/form-errors` in mutation `onError`.
+
+## Endpoint naming
+
+`VITE_API_URL` ends with `/admin`. Hooks use relative paths:
+
+- Auth: `/login`, `/me`, `/logout`, `/me/password`
+- Settings: `/app-settings/{group}`
+- CMS: `/pages`, `/page-sections`
+- Contact: `/contact-subjects`, `/contact-messages`
+- Countries: `/countries` (FormData, `PATCH /countries/{id}/status`)
+- Cities: `/cities` (FormData, `PATCH /cities/{id}/status`)
+- Onboardings: `/onboardings` (FormData, `PATCH /onboardings/{id}/status`)
+- Legacy: `/users`, `/settings`, `/notifications`

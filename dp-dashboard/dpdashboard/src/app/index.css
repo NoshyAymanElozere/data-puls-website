@@ -6,74 +6,79 @@
 
 @layer base {
   :root {
-    --background: 0 0% 100%;
-    --foreground: 224 71.4% 4.1%;
+    --background: 44 56% 96%;
+    --foreground: 257 29% 19%;
     --card: 0 0% 100%;
-    --card-foreground: 224 71.4% 4.1%;
+    --card-foreground: 257 29% 19%;
     --popover: 0 0% 100%;
-    --popover-foreground: 224 71.4% 4.1%;
-    --primary: 229 84% 60%;
-    --primary-foreground: 210 20% 98%;
-    --secondary: 220 14.3% 95.9%;
-    --secondary-foreground: 220.9 39.3% 11%;
-    --muted: 220 14.3% 95.9%;
-    --muted-foreground: 220 8.9% 46.1%;
-    --accent: 220 14.3% 95.9%;
-    --accent-foreground: 220.9 39.3% 11%;
+    --popover-foreground: 257 29% 19%;
+    --primary: 257 29% 42%;
+    --primary-foreground: 0 0% 100%;
+    --secondary: 24 71% 51%;
+    --secondary-foreground: 0 0% 100%;
+    --muted: 44 30% 93%;
+    --muted-foreground: 257 15% 42%;
+    --accent: 257 25% 94%;
+    --accent-foreground: 257 29% 19%;
     --destructive: 0 84.2% 60.2%;
-    --destructive-foreground: 210 20% 98%;
-    --border: 220 13% 91%;
-    --input: 220 13% 91%;
-    --ring: 229 84% 60%;
+    --destructive-foreground: 0 0% 100%;
+    --border: 44 22% 88%;
+    --input: 44 22% 88%;
+    --ring: 257 29% 42%;
     --radius: 0.625rem;
-    --sidebar: 220 14% 94%;
-    --sidebar-foreground: 224 71.4% 4.1%;
-    --sidebar-border: 220 13% 89%;
-    --sidebar-accent: 221 83% 97%;
-    --sidebar-accent-foreground: 221 83% 40%;
-    --sidebar-ring: 221 83% 53%;
-    --chart-1: 221 83% 53%;
-    --chart-2: 160 60% 45%;
-    --chart-3: 30 80% 55%;
-    --chart-4: 280 65% 60%;
-    --chart-5: 340 75% 55%;
-    --main-color: #4361ee;
+    --sidebar: 44 56% 96%;
+    --sidebar-foreground: 257 29% 19%;
+    --sidebar-border: 44 22% 88%;
+    --sidebar-accent: 257 25% 94%;
+    --sidebar-accent-foreground: 257 29% 42%;
+    --sidebar-ring: 257 29% 42%;
+    --chart-1: 257 29% 42%;
+    --chart-2: 24 71% 51%;
+    --chart-3: 257 29% 58%;
+    --chart-4: 24 71% 62%;
+    --chart-5: 44 40% 72%;
+    --main-color: #5B4B8A;
+    --brand-secondary: #DD6C26;
     --main-gradient: linear-gradient(135deg, var(--gradient-start) 0%, var(--gradient-end) 100%);
-    --gradient-start: #192652;
-    --gradient-end: #4361ee;
+    --gradient-start: #5B4B8A;
+    --gradient-end: #DD6C26;
   }
 
   .dark {
-    --background: 222 47% 7%;
-    --foreground: 210 20% 98%;
-    --card: 222 47% 9%;
-    --card-foreground: 210 20% 98%;
-    --popover: 222 47% 9%;
-    --popover-foreground: 210 20% 98%;
-    --primary: 229 85% 70%;
-    --primary-foreground: 222 47% 7%;
-    --secondary: 217 32% 17%;
-    --secondary-foreground: 210 20% 98%;
-    --muted: 217 32% 15%;
-    --muted-foreground: 215 20% 55%;
-    --accent: 217 32% 17%;
-    --accent-foreground: 210 20% 98%;
+    --background: 257 29% 11%;
+    --foreground: 44 56% 96%;
+    --card: 257 29% 14%;
+    --card-foreground: 44 56% 96%;
+    --popover: 257 29% 14%;
+    --popover-foreground: 44 56% 96%;
+    --primary: 257 35% 68%;
+    --primary-foreground: 257 29% 12%;
+    --secondary: 24 71% 55%;
+    --secondary-foreground: 0 0% 100%;
+    --muted: 257 22% 18%;
+    --muted-foreground: 257 15% 68%;
+    --accent: 257 22% 20%;
+    --accent-foreground: 44 56% 96%;
     --destructive: 0 62.8% 50%;
-    --destructive-foreground: 210 20% 98%;
-    --border: 217 32% 17%;
-    --input: 217 32% 17%;
-    --ring: 229 85% 70%;
-    --sidebar: 222 47% 6%;
-    --sidebar-foreground: 210 20% 98%;
-    --sidebar-border: 217 32% 17%;
-    --sidebar-accent: 217 32% 14%;
-    --sidebar-accent-foreground: 217 91% 70%;
-    --sidebar-ring: 217 91% 60%;
-    --chart-1: 217 91% 60%;
-    --chart-2: 160 60% 45%;
-    --chart-3: 30 80% 55%;
-    --chart-4: 280 65% 60%;
-    --chart-5: 340 75% 55%;
+    --destructive-foreground: 0 0% 100%;
+    --border: 257 20% 22%;
+    --input: 257 20% 22%;
+    --ring: 257 35% 68%;
+    --sidebar: 257 29% 9%;
+    --sidebar-foreground: 44 56% 96%;
+    --sidebar-border: 257 20% 20%;
+    --sidebar-accent: 257 22% 16%;
+    --sidebar-accent-foreground: 257 35% 72%;
+    --sidebar-ring: 257 35% 68%;
+    --chart-1: 257 35% 68%;
+    --chart-2: 24 71% 58%;
+    --chart-3: 257 29% 52%;
+    --chart-4: 24 65% 48%;
+    --chart-5: 44 30% 55%;
+    --main-color: #8B7BB5;
+    --brand-secondary: #E8874A;
+    --gradient-start: #29223F;
+    --gradient-end: #DD6C26;
   }
 }
 
@@ -161,8 +166,8 @@
 }
 
 .ck-editor:focus-within {
-  border-color: #4361ee !important;
-  box-shadow: 0 0 0 2px rgba(67, 97, 238, 0.15) !important;
+  border-color: var(--main-color) !important;
+  box-shadow: 0 0 0 2px color-mix(in srgb, var(--main-color) 18%, transparent) !important;
 }
 
 .ck.ck-editor__top .ck-toolbar {
@@ -194,8 +199,8 @@
 }
 
 .ck.ck-toolbar .ck-button.ck-on {
-  background: rgba(67, 97, 238, 0.1) !important;
-  color: #4361ee !important;
+  background: color-mix(in srgb, var(--main-color) 12%, transparent) !important;
+  color: var(--main-color) !important;
 }
 
 /* Remove AG Grid Cell Focus Border */

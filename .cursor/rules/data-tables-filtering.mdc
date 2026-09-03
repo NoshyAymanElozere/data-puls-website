@@ -1,0 +1,48 @@
+---
+description: GenericDataGrid, useTableState, filtering, sorting, pagination
+globs: dp-dashboard/dpdashboard/src/shared/components/GenericDataGrid.tsx,dp-dashboard/dpdashboard/src/shared/hooks/useTableState.ts,dp-dashboard/dpdashboard/src/features/**/pages/*Page.tsx
+alwaysApply: false
+---
+
+# Data Tables & Filtering
+
+## GenericDataGrid
+
+AG Grid wrapper with column visibility toggle, sort/filter per column, RTL, and pagination.
+
+### Server-side (Laravel paginated lists)
+
+```tsx
+const { data, isLoading } = useUsersList(page, search, sortBy, sortOrder)
+
+<GenericDataGrid
+  rowData={data?.data ?? []}
+  isServerSide
+  currentPage={page}
+  totalPages={data?.meta?.last_page ?? 1}
+  onPageChange={setPage}
+  paginationLinks={data?.meta?.links}
+  loading={isLoading}
+/>
+```
+
+### Client-side (small static datasets)
+
+Omit `isServerSide`; grid paginates locally with page-size selector.
+
+## useTableState
+
+Use for list pages needing page + search + sort together:
+
+```ts
+const table = useTableState({ sortBy: 'created_at', sortOrder: 'desc' })
+// table.page, table.search, table.setSearch, table.setPage, table.sortBy, table.setSort
+```
+
+## Search
+
+Use `SearchInput`; reset page to 1 when search changes.
+
+## Status filter
+
+Use `StatusDropdown` in forms/grids for active/inactive toggles.

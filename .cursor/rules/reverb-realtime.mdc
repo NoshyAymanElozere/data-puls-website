@@ -1,0 +1,36 @@
+---
+description: Laravel Echo + Reverb real-time channel setup
+globs: dp-dashboard/dpdashboard/src/shared/services/echo.ts,dp-dashboard/dpdashboard/src/features/notifications/**
+alwaysApply: false
+---
+
+# Reverb Real-time
+
+## Client
+
+`src/shared/services/echo.ts` — singleton Echo instance with `broadcaster: 'reverb'`.
+
+Env vars: `VITE_REVERB_APP_KEY`, `VITE_REVERB_HOST`, `VITE_REVERB_PORT`, `VITE_REVERB_SCHEME`.
+
+## Auth
+
+Private channels authenticate via `POST /broadcasting/auth` with Sanctum Bearer token.
+
+## Subscribe pattern
+
+```ts
+const echo = getEcho()
+echo.private(`App.Models.User.${userId}`).notification((payload) => {
+  // update ['notifications'] query cache
+})
+```
+
+## Cleanup
+
+Call `disconnectEcho()` on logout. Unsubscribe in `useEffect` cleanup.
+
+## Laravel backend requirements
+
+- `BROADCAST_CONNECTION=reverb`
+- Notifications implement `ShouldBroadcast` / `toBroadcast`
+- Channel auth in `routes/channels.php` for `App.Models.User.{id}`

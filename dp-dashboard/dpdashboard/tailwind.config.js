@@ -70,6 +70,13 @@ export default {
           start: 'var(--gradient-start)',
           end: 'var(--gradient-end)',
         },
+        brand: {
+          purple: '#5B4B8A',
+          orange: '#DD6C26',
+          cream: '#FAF7EE',
+          surface: '#FFFFFF',
+          text: '#29223F',
+        },
       },
       backgroundImage: {
         'main-gradient': 'var(--main-gradient)',

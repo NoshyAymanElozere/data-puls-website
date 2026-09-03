@@ -6,12 +6,14 @@ import { TooltipProvider } from '@/shared/components/misc'
 import { cn } from '@/shared/utils/utils'
 import { useTranslation } from 'react-i18next'
 import { useTheme } from '@/shared/hooks/useTheme'
+import { useLocaleQueryInvalidation } from '@/shared/hooks/useLocaleQueryInvalidation'
 
 export function Layout() {
   const [sidebarCollapsed, setSidebarCollapsed] = useState(false)
   const [mobileOpen, setMobileOpen] = useState(false)
   const { i18n } = useTranslation()
   useTheme() // Invoked to sync the html class and data-attributes on mount/update
+  useLocaleQueryInvalidation()
 
   useEffect(() => {
     const dir = i18n.language === 'ar' ? 'rtl' : 'ltr'

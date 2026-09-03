@@ -1,8 +1,11 @@
-import React from 'react'
 import { useTranslation } from 'react-i18next'
+import { Link } from 'react-router-dom'
 import ModalStatus from '@/shared/components/modal-status'
+import { Avatar } from '@/shared/components/misc'
 import { cn } from '@/shared/utils/utils'
-import { useSupportMessageDetails } from '../../api/useSupport'
+import { resolveMediaUrl } from '@/shared/utils/media-url'
+import { useContactMessageDetails } from '@/features/contact/api/useContactMessages'
+import { getSubjectName } from '@/features/contact/api/useContactSubjects'
 
 interface SupportViewModalProps {
   open: boolean
@@ -10,81 +13,81 @@ interface SupportViewModalProps {
   messageId: number | null
 }
 
-export function SupportViewModal({
-  open,
-  onOpenChange,
-  messageId
-}: SupportViewModalProps) {
+function DetailField({ label, children }: { label: string; children: React.ReactNode }) {
+  return (
+    <div>
+      <label className="text-xs font-bold text-gray-500 uppercase tracking-wider block mb-1.5">{label}</label>
+      <div className="w-full min-h-11 px-4 py-2.5 rounded-xl border border-border/40 bg-muted/20 flex items-center justify-start font-semibold text-foreground text-sm">
+        {children}
+      </div>
+    </div>
+  )
+}
+
+export function SupportViewModal({ open, onOpenChange, messageId }: SupportViewModalProps) {
   const { t, i18n } = useTranslation()
-  const { data: item, isLoading } = useSupportMessageDetails(messageId)
+  const { data: item, isLoading } = useContactMessageDetails(messageId)
   const isRtl = i18n.language === 'ar'
 
   return (
     <ModalStatus
       open={open}
       onOpenChange={onOpenChange}
-      title={t('supportMessages') || 'Message Details'}
+      title={t('contactMessages') || 'Message Details'}
       cancelLabel={t('close') || 'Close'}
       onCancelButtonClick={() => onOpenChange(false)}
       size="lg"
       loading={isLoading}
     >
       {item && (
-        <div className={cn("space-y-4", isRtl ? "text-right" : "text-left")} dir={isRtl ? 'rtl' : 'ltr'}>
+        <div className={cn('space-y-4', isRtl ? 'text-right' : 'text-left')} dir={isRtl ? 'rtl' : 'ltr'}>
+          {item.user && (
+            <div className="flex items-center gap-3 pb-2 border-b border-border/40">
+              <Avatar
+                src={resolveMediaUrl(item.user.avatar_url)}
+                name={item.user.email}
+                size="md"
+                className="h-12 w-12"
+              />
+              <div className="min-w-0">
+                <p className="text-sm font-bold text-foreground truncate">{item.user.email}</p>
+                <p className="text-xs text-muted-foreground truncate" dir="ltr">
+                  {item.user.phone || '—'}
+                </p>
+              </div>
+            </div>
+          )}
+
           <div className="grid grid-cols-2 gap-4">
-            <div>
-              <label className="text-xs font-bold text-gray-500 uppercase tracking-wider block mb-1.5">
-                {t('arabicName') || 'Name'}
-              </label>
-              <div className="w-full h-11 px-4 rounded-xl border border-border/40 bg-muted/20 flex items-center justify-start font-semibold text-foreground text-sm">
-                {item.name}
-              </div>
-            </div>
-            <div>
-              <label className="text-xs font-bold text-gray-500 uppercase tracking-wider block mb-1.5">
-                {t('email') || 'Email'}
-              </label>
-              <div className="w-full h-11 px-4 rounded-xl border border-border/40 bg-muted/20 flex items-center justify-start font-semibold text-foreground text-sm">
-                {item.email}
-              </div>
-            </div>
+            <DetailField label={t('email')}>
+              {item.user?.email ? (
+                <Link to="/users" className="text-primary hover:underline truncate">
+                  {item.user.email}
+                </Link>
+              ) : (
+                '-'
+              )}
+            </DetailField>
+            <DetailField label={t('contactPhone')}>
+              <span dir="ltr">{item.user?.phone || '-'}</span>
+            </DetailField>
+            <DetailField label={t('subject')}>
+              {getSubjectName(item.subject?.name ?? '', i18n.language) || '-'}
+            </DetailField>
+            <DetailField label={t('status')}>
+              {item.subject?.is_active == null
+                ? '-'
+                : item.subject.is_active
+                  ? t('active')
+                  : t('inactive')}
+            </DetailField>
+            <DetailField label={t('createdAt')}>{item.created_at || '-'}</DetailField>
+            <DetailField label={t('updatedAt')}>{item.updated_at || '-'}</DetailField>
           </div>
-          <div className="grid grid-cols-2 gap-4">
-            <div>
-              <label className="text-xs font-bold text-gray-500 uppercase tracking-wider block mb-1.5">
-                {t('phoneCode') || 'Phone'}
-              </label>
-              <div className="w-full h-11 px-4 rounded-xl border border-border/40 bg-muted/20 flex items-center justify-start font-semibold text-foreground text-sm">
-                {item.phone}
-              </div>
-            </div>
-            <div>
-              <label className="text-xs font-bold text-gray-500 uppercase tracking-wider block mb-1.5">
-                {t('status') || 'Status'}
-              </label>
-              <div className="h-11 flex items-center justify-start">
-                <span className={`inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-bold ${
-                  item.status === 'read'
-                    ? 'bg-emerald-500/10 text-emerald-500 border border-emerald-500/10'
-                    : 'bg-amber-500/10 text-amber-500 border border-amber-500/10'
-                }`}>
-                  <span className={`h-1.5 w-1.5 rounded-full ${item.status === 'read' ? 'bg-emerald-500' : 'bg-amber-500'}`} />
-                  {item.status === 'read' ? t('read') || 'Read' : t('unread') || 'Unread'}
-                </span>
-              </div>
-            </div>
-          </div>
+
           <div>
             <label className="text-xs font-bold text-gray-500 uppercase tracking-wider block mb-1.5">
-              {t('subject') || 'Subject'}
-            </label>
-            <div className="w-full h-11 px-4 rounded-xl border border-border/40 bg-muted/20 flex items-center justify-start font-semibold text-foreground text-sm">
-              {item.subject}
-            </div>
-          </div>
-          <div>
-            <label className="text-xs font-bold text-gray-500 uppercase tracking-wider block mb-1.5">
-              {t('message') || 'Message'}
+              {t('message')}
             </label>
             <div className="w-full p-4 rounded-xl border border-border/40 bg-muted/20 font-semibold text-foreground text-sm min-h-[120px] whitespace-pre-wrap leading-relaxed text-start">
               {item.message}

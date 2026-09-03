@@ -4,130 +4,156 @@ import { useZodForm } from '@/shared/components/form-fields'
 import { GenericDataGrid } from '@/shared/components/GenericDataGrid'
 import { SearchInput } from '@/shared/components/input'
 import ModalStatus from '@/shared/components/modal-status'
+import { useTableState } from '@/shared/hooks/useTableState'
+import { useProfile } from '@/features/auth/api/useAuth'
+import { hasPermission } from '@/shared/utils/permissions'
 import { Plus } from 'lucide-react'
 import { useState } from 'react'
 import { FormProvider } from 'react-hook-form'
 import { useTranslation } from 'react-i18next'
+import type { Country } from '../../api/useCountries'
+import { useToggleCityStatus } from '../../api/useCities'
 import {
   useCountriesList,
+  useCountry,
   useCreateCountry,
   useDeleteCountry,
   useToggleCountryStatus,
-  useUpdateCountry
+  useUpdateCountry,
 } from '../../api/useCountries'
 import { getCountriesColumnDefs } from './ColumnDefs'
 import { CountriesFormModal } from './CountriesFormModal'
-import { getInitialValues, schema } from './validationSchema'
+import { createSchema, getInitialValues, updateSchema, type CountriesFormValues } from './validationSchema'
 
 export default function CountriesPage() {
-  const { t } = useTranslation()
-  const [search, setSearch] = useState('')
-  const [page, setPage] = useState(1)
+  const { t, i18n } = useTranslation()
   const label = t('countries') || 'Countries'
+  const table = useTableState()
+  const { data: admin } = useProfile()
+
+  const canCreate = hasPermission(admin, 'countries.create')
+  const canUpdate = hasPermission(admin, 'countries.update')
+  const canDelete = hasPermission(admin, 'countries.delete')
+  const canToggleCity = hasPermission(admin, 'cities.update')
 
   const [isModalOpen, setIsModalOpen] = useState(false)
-  const [editingItem, setEditingItem] = useState<any | null>(null)
-  const [deletingItem, setDeletingItem] = useState<any | null>(null)
+  const [editingItem, setEditingItem] = useState<Country | null>(null)
+  const [deletingItem, setDeletingItem] = useState<Country | null>(null)
   const [isViewOnly, setIsViewOnly] = useState(false)
+  const [statusFilter, setStatusFilter] = useState('')
 
+  const schema = editingItem ? updateSchema : createSchema
   const methods = useZodForm(schema, getInitialValues(editingItem))
 
-  const { data: paginatedData, isLoading } = useCountriesList(page, search)
-  const items = paginatedData?.data || []
+  const { data: countryDetail, isLoading: countryDetailLoading } = useCountry(editingItem?.id ?? null)
 
-  const createMutation = useCreateCountry()
-  const updateMutation = useUpdateCountry()
+  const { data: paginatedData, isLoading } = useCountriesList(table.page, table.search, statusFilter)
+  const items = paginatedData?.data ?? []
+
+  const createMutation = useCreateCountry(methods.setError)
+  const updateMutation = useUpdateCountry(methods.setError)
   const deleteMutation = useDeleteCountry()
   const toggleMutation = useToggleCountryStatus()
+  const toggleCityMutation = useToggleCityStatus()
 
-  const handleSave = (formData: any) => {
-    const data = new FormData()
-    data.append('code', formData.code)
-    data.append('phone_code', formData.phone_code)
-    data.append('is_active', formData.is_active ? '1' : '0')
-    if (formData.image && formData.image[0]) {
-      data.append('image', formData.image[0])
-    }
-    data.append('translations[0][language_id]', '1')
-    data.append('translations[0][name]', formData.nameEn)
-    data.append('translations[1][language_id]', '2')
-    data.append('translations[1][name]', formData.nameAr)
-
-    if (editingItem) {
-      data.append('_method', 'PUT')
+  const handleSave = (formData: CountriesFormValues) => {
+    if (editingItem?.id) {
       updateMutation.mutate(
-        { id: editingItem.id, formData: data },
+        { id: editingItem.id, payload: formData },
         {
           onSuccess: () => {
             setIsModalOpen(false)
             setEditingItem(null)
-          }
+          },
         }
       )
     } else {
-      createMutation.mutate(data, {
-        onSuccess: () => {
-          setIsModalOpen(false)
-        }
+      createMutation.mutate(formData, {
+        onSuccess: () => setIsModalOpen(false),
       })
     }
   }
 
   const columnDefs = getCountriesColumnDefs({
     t,
+    lang: i18n.language,
     toggleMutation,
     setEditingItem,
     setIsModalOpen,
     setDeletingItem,
-    setIsViewOnly
+    setIsViewOnly,
+    canUpdate,
+    canDelete,
   })
 
   return (
     <FormProvider {...methods}>
-
       <Card className="border-border/60 shadow-sm rounded-2xl overflow-hidden bg-card">
         <CardHeader className="flex flex-row items-center justify-between pb-4 border-b border-border/40 px-6 py-5">
           <CardTitle className="text-lg font-bold text-foreground">{label}</CardTitle>
-          <Button onClick={() => { setEditingItem(null); setIsViewOnly(false); setIsModalOpen(true); }} className="h-9 px-4 rounded-xl">
-            <Plus className="mr-2 h-4 w-4" /> {t('add') || 'Add New'}
-          </Button>
+          {canCreate && (
+            <Button
+              onClick={() => {
+                setEditingItem(null)
+                setIsViewOnly(false)
+                setIsModalOpen(true)
+              }}
+              className="h-9 px-4 rounded-xl"
+            >
+              <Plus className="mr-2 h-4 w-4" /> {t('add') || 'Add New'}
+            </Button>
+          )}
         </CardHeader>
         <CardContent className="p-6 space-y-4">
-          <div className="flex max-w-sm">
-            <SearchInput
-              placeholder={`${t('search') || 'Search'} ${label}...`}
-              value={search}
+          <div className="flex flex-col sm:flex-row gap-3 max-w-xl">
+            <div className="flex-1">
+              <SearchInput
+                placeholder={`${t('search') || 'Search'} ${label}...`}
+                value={table.search}
+                onChange={(e) => table.setSearch(e.target.value)}
+              />
+            </div>
+            <select
+              value={statusFilter}
               onChange={(e) => {
-                setSearch(e.target.value)
-                setPage(1)
+                setStatusFilter(e.target.value)
+                table.setPage(1)
               }}
-            />
+              className="w-full sm:w-40 h-10 px-3 rounded-xl border border-border/60 bg-card text-xs font-bold"
+            >
+              <option value="">{t('status') || 'Status'}</option>
+              <option value="true">{t('active') || 'Active'}</option>
+              <option value="false">{t('inactive') || 'Inactive'}</option>
+            </select>
           </div>
 
-          <GenericDataGrid 
-            rowData={items} 
-            columnDefs={columnDefs} 
+          <GenericDataGrid
+            rowData={items}
+            columnDefs={columnDefs}
             rowHeight={50}
             headerHeight={50}
-            loading={isLoading} 
+            loading={isLoading}
             onViewRow={(data) => {
-              setEditingItem(data)
+              setEditingItem(data as Country)
               setIsViewOnly(true)
               setIsModalOpen(true)
             }}
             isServerSide
-            currentPage={page}
-            totalPages={paginatedData?.meta?.last_page || paginatedData?.last_page || 1}
-            onPageChange={setPage}
-            paginationLinks={paginatedData?.meta?.links || paginatedData?.links}
+            currentPage={table.page}
+            totalPages={paginatedData?.meta?.last_page ?? 1}
+            onPageChange={table.setPage}
+            paginationLinks={paginatedData?.meta?.links ?? paginatedData?.links}
           />
-
         </CardContent>
 
         <CountriesFormModal
           open={isModalOpen}
           onOpenChange={setIsModalOpen}
           editingItem={editingItem}
+          detail={countryDetail}
+          detailLoading={countryDetailLoading}
+          toggleCityMutation={toggleCityMutation}
+          canToggleCity={canToggleCity}
           onSave={handleSave}
           loading={createMutation.isPending || updateMutation.isPending}
           label={label}
@@ -138,13 +164,13 @@ export default function CountriesPage() {
           open={!!deletingItem}
           onOpenChange={(v) => !v && setDeletingItem(null)}
           title={`${t('delete') || 'Delete'} ${label}`}
-          description={t('deleteConfirmation') || "Are you sure you want to delete this item? This action cannot be undone."}
+          description={t('deleteConfirmation') || 'Are you sure you want to delete this item? This action cannot be undone.'}
           agreeLabel={t('delete') || 'Delete'}
           cancelLabel={t('cancel') || 'Cancel'}
           onAgreeButtonClick={() => {
-            if (deletingItem) {
+            if (deletingItem?.id) {
               deleteMutation.mutate(deletingItem.id, {
-                onSuccess: () => setDeletingItem(null)
+                onSuccess: () => setDeletingItem(null),
               })
             }
           }}

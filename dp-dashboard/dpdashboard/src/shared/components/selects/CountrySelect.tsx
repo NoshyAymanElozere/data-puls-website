@@ -1,7 +1,11 @@
+import { useMemo } from 'react'
 import type { Control, FieldValues, Path } from 'react-hook-form'
+import { useWatch } from 'react-hook-form'
 import { useTranslation } from 'react-i18next'
 import { ControlledSearchableSelect } from '@/shared/components/form-fields'
-import { useAllCountries } from '@/features/settings/api/useCountries'
+import { useActiveCountries } from '@/features/settings/api/useCountries'
+import { getLocalizedValue } from '@/shared/utils/localized-value'
+import type { Translatable } from '@/shared/types/laravel'
 
 interface CountrySelectProps<T extends FieldValues> {
   name?: Path<T>
@@ -9,6 +13,8 @@ interface CountrySelectProps<T extends FieldValues> {
   disabled?: boolean
   required?: boolean
   label?: string
+  /** Ensures the current country appears even if inactive (not in active-only list). */
+  ensureOption?: { id: number; name: string | Translatable } | null
 }
 
 export function CountrySelect<T extends FieldValues>({
@@ -16,18 +22,36 @@ export function CountrySelect<T extends FieldValues>({
   control,
   disabled,
   required = true,
-  label
+  label,
+  ensureOption,
 }: CountrySelectProps<T>) {
   const { i18n, t } = useTranslation()
-  const { data: countries = [] } = useAllCountries()
+  const { data: countries = [] } = useActiveCountries()
+  const selectedId = useWatch({ control, name })
 
-  const options = countries.map((c: any) => {
-    const nameVal = c.translations?.find((trans: any) => trans.language_id === (i18n.language === 'ar' ? 2 : 1))?.name || c.name || ''
-    return { value: String(c.id), label: nameVal }
-  })
+  const options = useMemo(() => {
+    const base = countries.map((c) => ({
+      value: String(c.id),
+      label: getLocalizedValue(c.name, i18n.language) || String(c.id),
+    }))
+
+    if (!ensureOption?.id) return base
+
+    const value = String(ensureOption.id)
+    if (base.some((o) => o.value === value)) return base
+
+    return [
+      {
+        value,
+        label: getLocalizedValue(ensureOption.name, i18n.language) || value,
+      },
+      ...base,
+    ]
+  }, [countries, ensureOption, i18n.language])
 
   return (
     <ControlledSearchableSelect
+      key={`country-${String(selectedId)}-${options.length}`}
       name={name}
       control={control}
       label={label !== undefined ? label : `${t('country') || 'Country'} ${required ? '*' : ''}`}

@@ -1,0 +1,28 @@
+---
+description: Shared UI component conventions (shadcn/Radix + composites)
+globs: dp-dashboard/dpdashboard/src/shared/components/**
+alwaysApply: false
+---
+
+# Components
+
+## Naming
+
+- **kebab-case** for shadcn primitives: `button.tsx`, `card.tsx`, `input.tsx`
+- **PascalCase** for composites: `GenericDataGrid.tsx`, `StatusDropdown.tsx`, `DateRangePicker.tsx`
+
+## When to add to shared/
+
+Add reusable UI with no domain logic. Entity selects (`CountrySelect`) live in `shared/components/selects/`.
+
+## Button
+
+Use `variant` + `size` from CVA. Pass `loading` for async actions.
+
+## Forms
+
+Use `BaseInputField` inside `FormProvider`. Do not bind inputs manually when a base field exists.
+
+## Modals
+
+Use `ModalStatus` for confirm/delete and form modals. Pass `type="delete"` for destructive confirms.

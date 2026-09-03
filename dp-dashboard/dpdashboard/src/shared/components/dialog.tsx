@@ -163,7 +163,7 @@ function ConfirmDialog({
               'inline-flex h-9 items-center justify-center rounded-md px-4 text-sm font-medium text-white transition-colors disabled:opacity-50',
               variant === 'destructive'
                 ? 'bg-destructive hover:bg-destructive/90'
-                : 'bg-primary hover:bg-primary/90'
+                : 'bg-secondary hover:bg-secondary/90'
             )}
           >
             {loading ? 'Loading…' : confirmLabel}

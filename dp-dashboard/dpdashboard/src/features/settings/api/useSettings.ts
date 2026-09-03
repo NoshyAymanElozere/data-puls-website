@@ -1,19 +1,14 @@
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query'
-import api from '@/shared/services/axios'
+import api, { getErrorMessage } from '@/shared/services/axios'
 import toast from 'react-hot-toast'
 
 export function useSettings() {
   return useQuery({
-    queryKey: ['system-settings'],
+    queryKey: ['app-settings'],
     queryFn: async () => {
-      const response = await api.get('/admin/settings')
-      const list = response.data.data?.data || response.data.data || []
-      const settingsMap = list.reduce((acc: Record<string, string>, item: any) => {
-        acc[item.key] = item.value
-        return acc
-      }, {})
-      return settingsMap
-    }
+      const response = await api.get<{ data: Record<string, string> }>('/settings')
+      return response.data.data
+    },
   })
 }
 
@@ -21,15 +16,16 @@ export function useUpdateSettings() {
   const qc = useQueryClient()
   return useMutation({
     mutationFn: async (settings: Record<string, string>) => {
-      const response = await api.post('/admin/settings', { settings })
+      const response = await api.put('/settings', settings)
       return response.data
     },
     onSuccess: (res) => {
-      qc.invalidateQueries({ queryKey: ['system-settings'] })
+      qc.invalidateQueries({ queryKey: ['app-settings'] })
+      qc.invalidateQueries({ queryKey: ['global-settings'] })
       toast.success(res.message || 'Settings updated successfully.')
     },
-    onError: (err: any) => {
-      toast.error(err?.response?.data?.message || 'Failed to update settings.')
-    }
+    onError: (error) => {
+      toast.error(getErrorMessage(error, 'Failed to update settings.'))
+    },
   })
 }

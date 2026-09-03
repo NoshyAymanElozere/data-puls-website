@@ -1,12 +1,18 @@
 import React from 'react'
 import ReactDOM from 'react-dom/client'
-import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
+import { QueryClientProvider } from '@tanstack/react-query'
 import { Toaster } from 'react-hot-toast'
 import App from './App'
 import './index.css'
 import '@/shared/i18n/i18n'
+import { queryClient } from '@/shared/services/queryClient'
+import { fetchPublicAppBranding } from '@/features/settings/api/useAppSettings'
 
-const queryClient = new QueryClient()
+queryClient.prefetchQuery({
+  queryKey: ['app-branding-public'],
+  queryFn: fetchPublicAppBranding,
+  staleTime: 5 * 60 * 1000,
+})
 
 ReactDOM.createRoot(document.getElementById('root')!).render(
   <React.StrictMode>

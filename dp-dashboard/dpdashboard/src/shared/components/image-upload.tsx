@@ -42,10 +42,9 @@ export function ImageUpload({
         }, [currentImageUrl, value])
 
         const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-          const files = e.target.files
-          if (files && files[0]) {
-            const file = files[0]
-            onChange(files) // Update react-hook-form value
+          const file = e.target.files?.[0]
+          if (file) {
+            onChange(file)
             const reader = new FileReader()
             reader.onloadend = () => {
               setPreview(reader.result as string)

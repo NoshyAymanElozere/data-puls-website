@@ -1,133 +1,111 @@
 import { Button } from '@/shared/components/button'
-import { StatusDropdown } from '@/shared/components/StatusDropdown'
-import { ColDef } from 'ag-grid-community'
-import { Pencil, Trash2, Eye } from 'lucide-react'
+import { StatusToggle } from '@/shared/components/StatusToggle'
+import { localizedNameColumnDef } from '@/shared/utils/localized-value'
+import type { ColDef } from 'ag-grid-community'
+import { Eye, Pencil, Trash2 } from 'lucide-react'
 
 interface ColumnDefsProps {
-    t: (key: string) => string
-    toggleMutation: any
-    setEditingItem: (item: any) => void
-    setIsModalOpen: (open: boolean) => void
-    setDeletingItem: (item: any) => void
-    setIsViewOnly: (view: boolean) => void
+  t: (key: string) => string
+  lang: string
+  toggleMutation: { mutateAsync: (id: number) => Promise<unknown> }
+  setEditingItem: (item: unknown) => void
+  setIsModalOpen: (open: boolean) => void
+  setDeletingItem: (item: unknown) => void
+  setIsViewOnly: (view: boolean) => void
+  canUpdate?: boolean
+  canDelete?: boolean
 }
 
 export function getCountriesColumnDefs({
-    t,
-    toggleMutation,
-    setEditingItem,
-    setIsModalOpen,
-    setDeletingItem,
-    setIsViewOnly
+  t,
+  lang,
+  toggleMutation,
+  setEditingItem,
+  setIsModalOpen,
+  setDeletingItem,
+  setIsViewOnly,
+  canUpdate = true,
+  canDelete = true,
 }: ColumnDefsProps): ColDef[] {
-    return [
-        {
-            headerName: t('arabicName') || 'Arabic Name',
-            valueGetter: (params) => {
-                return params.data?.translations?.find((trans: any) => trans.language_id === 2)?.name || ''
-            },
-           filter:false,
-            flex: 1
-        },
-        {
-            headerName: t('englishName') || 'English Name',
-            valueGetter: (params) => {
-                return params.data?.translations?.find((trans: any) => trans.language_id === 1)?.name || params.data?.name || ''
-            },
-           filter:false,
-            flex: 1
-        },
-        {
-            headerName: t('code') || 'Code',
-            field: 'code',
-           filter:false,
-            width: 100
-        },
-        {
-            headerName: t('phoneCode') || 'Phone Code',
-            field: 'phone_code',
-           filter:false,
-            width: 120
-        },
-        {
-            headerName: t('status') || 'Status',
-            field: 'is_active',
-            filter: 'agSetColumnFilter',
-            filterParams: {
-                valueFormatter: (params: any) => (params.value ? t('active') || 'Active' : t('inactive') || 'Inactive')
-            },
-            width: 150,
-            cellRenderer: (params: any) => {
-                const item = params.data
-                if (!item) return null
-                return (
-                    <StatusDropdown
-                        value={item.is_active}
-                        onChange={() => toggleMutation.mutateAsync(item.id)}
-                    />
-                )
-            }
-        },
-        {
-            headerName: t('flagImage') || 'Flag Image',
-            field: 'image_url',
-            filter: false,
-            width: 130,
-            cellRenderer: (params: any) => {
-                const item = params.data
-                const imageUrl = item?.image_url || item?.image?.file_path
-                if (!imageUrl) return <span className="text-gray-300 text-xs">-</span>
-                return (
-                    <img
-                        src={imageUrl}
-                        alt="flag"
-                        className="h-10 w-16 object-cover rounded border border-gray-100 mt-1"
-                    />
-                )
-            }
-        },
-        {
-            headerName: t('actions') || 'Actions',
-            filter: false,
-            width: 150,
-            cellClass: 'flex items-center justify-start h-full',
-            cellRenderer: (params: any) => {
-                const item = params.data
-                if (!item) return null
-                return (
-                    <div className="flex items-center justify-start gap-1.5">
-                        <Button
-                            variant="ghost"
-                            size="icon-sm"
-                            onClick={() => {
-                                setEditingItem(item)
-                                setIsViewOnly(true)
-                                setIsModalOpen(true)
-                            }}
-                        >
-                            <Eye className="h-4 w-4 text-blue-500" />
-                        </Button>
-                        <Button
-                            variant="ghost"
-                            size="icon-sm"
-                            onClick={() => {
-                                setEditingItem(item)
-                                setIsViewOnly(false)
-                                setIsModalOpen(true)
-                            }}
-                        >
-                            <Pencil className="h-4 w-4 text-gray-500" />
-                        </Button>
-                        <Button
-                            variant="ghost"
-                            size="icon-sm"
-                            onClick={() => setDeletingItem(item)}
-                        >
-                            <Trash2 className="h-4 w-4 text-rose-500" />
-                        </Button>
-                    </div>
-                )
-            }
-        }
-    ]
+  return [
+    localizedNameColumnDef(t, lang),
+    {
+      headerName: t('isoCode') || 'ISO Code',
+      field: 'iso_code',
+      filter: false,
+      width: 100,
+    },
+    {
+      headerName: t('currencyCode') || 'Currency',
+      field: 'currency_code',
+      filter: false,
+      width: 100,
+    },
+    {
+      headerName: t('phoneCode') || 'Phone Code',
+      field: 'phone_code',
+      filter: false,
+      width: 120,
+    },
+    {
+      headerName: t('status') || 'Status',
+      field: 'is_active',
+      filter: false,
+      width: 150,
+      cellRenderer: (params: { data?: { id: number; is_active: boolean } }) => {
+        const item = params.data
+        if (!item) return null
+        return (
+          <StatusToggle
+            value={item.is_active}
+            onChange={() => toggleMutation.mutateAsync(item.id)}
+            disabled={!canUpdate}
+          />
+        )
+      },
+    },
+    {
+      headerName: t('actions') || 'Actions',
+      filter: false,
+      width: 150,
+      cellClass: 'flex items-center justify-start h-full',
+      cellRenderer: (params: { data?: Record<string, unknown> }) => {
+        const item = params.data
+        if (!item) return null
+        return (
+          <div className="flex items-center justify-start gap-1.5">
+            <Button
+              variant="ghost"
+              size="icon-sm"
+              onClick={() => {
+                setEditingItem(item)
+                setIsViewOnly(true)
+                setIsModalOpen(true)
+              }}
+            >
+              <Eye className="h-4 w-4 text-blue-500" />
+            </Button>
+            {canUpdate && (
+              <Button
+                variant="ghost"
+                size="icon-sm"
+                onClick={() => {
+                  setEditingItem(item)
+                  setIsViewOnly(false)
+                  setIsModalOpen(true)
+                }}
+              >
+                <Pencil className="h-4 w-4 text-gray-500" />
+              </Button>
+            )}
+            {canDelete && (
+              <Button variant="ghost" size="icon-sm" onClick={() => setDeletingItem(item)}>
+                <Trash2 className="h-4 w-4 text-rose-500" />
+              </Button>
+            )}
+          </div>
+        )
+      },
+    },
+  ]
 }

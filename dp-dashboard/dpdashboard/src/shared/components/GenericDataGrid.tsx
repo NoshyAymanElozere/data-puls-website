@@ -12,51 +12,51 @@ ModuleRegistry.registerModules([AllCommunityModule])
 const customTheme = themeQuartz
   .withParams({
     browserColorScheme: 'light',
-    accentColor: '#7266F0',
+    accentColor: '#5B4B8A',
     backgroundColor: '#FFFFFF',
-    foregroundColor: '#1a1f36',
-    borderColor: '#e4e7ec',
+    foregroundColor: '#29223F',
+    borderColor: '#E8E4D9',
     borderRadius: 10,
-    headerBackgroundColor: '#f8f9fc',
-    headerTextColor: '#64748b',
+    headerBackgroundColor: '#FAF7EE',
+    headerTextColor: '#6B6380',
     headerFontWeight: 600,
     headerFontSize: 13,
     fontSize: 14,
-    rowBorder: { color: '#f1f3f9', width: 1, style: 'solid' },
+    rowBorder: { color: '#F0EDE4', width: 1, style: 'solid' },
     columnBorder: false,
-    rowHoverColor: 'rgba(114, 102, 240, 0.04)',
-    selectedRowBackgroundColor: 'rgba(114, 102, 240, 0.08)',
-    rangeSelectionBackgroundColor: 'rgba(114, 102, 240, 0.12)',
+    rowHoverColor: 'rgba(91, 75, 138, 0.05)',
+    selectedRowBackgroundColor: 'rgba(91, 75, 138, 0.09)',
+    rangeSelectionBackgroundColor: 'rgba(91, 75, 138, 0.12)',
     cellHorizontalPadding: 16,
-    headerColumnResizeHandleColor: '#7266F0',
+    headerColumnResizeHandleColor: '#5B4B8A',
     fontFamily: "'IBM Plex Sans Arabic', sans-serif",
     wrapperBorderRadius: 12,
     spacing: 6,
-    oddRowBackgroundColor: '#fafafd',
+    oddRowBackgroundColor: '#FDFCF8',
   }, 'light')
   .withParams({
     browserColorScheme: 'dark',
-    accentColor: '#9b8afb',
-    backgroundColor: '#0f1629',
-    foregroundColor: '#e2e8f0',
-    borderColor: '#1e2a4a',
+    accentColor: '#8B7BB5',
+    backgroundColor: '#1A1628',
+    foregroundColor: '#FAF7EE',
+    borderColor: '#2E2840',
     borderRadius: 10,
-    headerBackgroundColor: '#131b32',
-    headerTextColor: '#7c8db5',
+    headerBackgroundColor: '#151222',
+    headerTextColor: '#A39BB5',
     headerFontWeight: 600,
     headerFontSize: 13,
     fontSize: 14,
-    rowBorder: { color: '#1a2440', width: 1, style: 'solid' },
+    rowBorder: { color: '#252038', width: 1, style: 'solid' },
     columnBorder: false,
-    rowHoverColor: 'rgba(155, 138, 251, 0.06)',
-    selectedRowBackgroundColor: 'rgba(155, 138, 251, 0.1)',
-    rangeSelectionBackgroundColor: 'rgba(155, 138, 251, 0.15)',
+    rowHoverColor: 'rgba(139, 123, 181, 0.08)',
+    selectedRowBackgroundColor: 'rgba(139, 123, 181, 0.12)',
+    rangeSelectionBackgroundColor: 'rgba(139, 123, 181, 0.16)',
     cellHorizontalPadding: 16,
-    headerColumnResizeHandleColor: '#9b8afb',
+    headerColumnResizeHandleColor: '#8B7BB5',
     fontFamily: "'IBM Plex Sans Arabic', sans-serif",
     wrapperBorderRadius: 12,
     spacing: 6,
-    oddRowBackgroundColor: '#111a30',
+    oddRowBackgroundColor: '#1E1A2E',
   }, 'dark')
 
 const CustomLoadingOverlay = () => {
@@ -103,6 +103,7 @@ export function GenericDataGrid<TData = any>({
 }: GenericDataGridProps<TData>) {
   const { i18n } = useTranslation()
   const isRtl = i18n.language === 'ar'
+  const gridInstanceKey = `${i18n.language}-${isRtl ? 'rtl' : 'ltr'}`
 
   const [gridApi, setGridApi] = React.useState<any>(null)
   const [columns, setColumns] = React.useState<any[]>([])
@@ -117,6 +118,11 @@ export function GenericDataGrid<TData = any>({
   React.useEffect(() => {
     setLocalPage(1)
   }, [rowData])
+
+  React.useEffect(() => {
+    if (!gridApi) return
+    gridApi.setGridOption('enableRtl', isRtl)
+  }, [gridApi, isRtl, i18n.language])
 
   const displayRowData = React.useMemo(() => {
     if (isServerSide || !rowData) return rowData
@@ -258,7 +264,7 @@ export function GenericDataGrid<TData = any>({
                       type="checkbox"
                       checked={col.visible}
                       onChange={() => toggleColumn(col.id)}
-                      className="accent-[#7266F0] h-4 w-4 rounded-md border-border/60 cursor-pointer"
+                      className="accent-[#5B4B8A] h-4 w-4 rounded-md border-border/60 cursor-pointer"
                     />
                     <span>{col.name}</span>
                   </label>
@@ -269,8 +275,9 @@ export function GenericDataGrid<TData = any>({
         </div>
       </div>
 
-      <div className="w-full animate-fade-in" style={{ height }}>
+      <div className="w-full animate-fade-in" style={{ height }} dir={isRtl ? 'rtl' : 'ltr'}>
         <AgGridReact
+          key={gridInstanceKey}
           theme={customTheme}
           rowData={displayRowData}
           columnDefs={columnDefs}

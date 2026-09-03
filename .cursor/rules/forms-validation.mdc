@@ -1,0 +1,37 @@
+---
+description: React Hook Form + Zod + Laravel 422 validation mapping
+globs: dp-dashboard/dpdashboard/**/validationSchema.tsx,dp-dashboard/dpdashboard/src/shared/components/base-*.tsx,dp-dashboard/dpdashboard/src/shared/components/form-fields.tsx
+alwaysApply: false
+---
+
+# Forms & Validation
+
+## Setup
+
+```tsx
+const methods = useZodForm(schema, defaultValues)
+// wrap in <FormProvider {...methods}>
+```
+
+Schema files live beside pages: `validationSchema.tsx`.
+
+## Fields
+
+- Text: `BaseInputField` with `name` matching Zod key
+- Status: `Controller` + `StatusDropdown`
+- Entity pickers: `CountrySelect`, `CitySelect`
+
+## Laravel 422 errors
+
+Pass `methods.setError` to mutation hooks or handle in `onError`:
+
+```ts
+onError: (error) => {
+  if (applyValidationErrors(error, setError)) return
+  toast.error(getErrorMessage(error))
+}
+```
+
+## i18n in schemas
+
+Use message keys like `'requiredField'`, `'invalidEmail'` — resolved by Zod + i18n in forms.

@@ -1,28 +1,42 @@
 import { z } from 'zod'
+import type { Country } from '../../api/useCountries'
 
 export const schema = z.object({
   nameAr: z.string().min(1, 'requiredField'),
   nameEn: z.string().min(1, 'requiredField'),
-  code: z.string().min(1, 'requiredField'),
-  phone_code: z.string().min(1, 'requiredField'),
+  iso_code: z.string().min(1, 'requiredField').max(3, 'maxLength'),
+  currency_code: z.string().min(1, 'requiredField').max(3, 'maxLength'),
+  phone_code: z.string().min(1, 'requiredField').max(10, 'maxLength'),
   is_active: z.boolean(),
-  image: z.any().optional()
 })
 
 export type CountriesFormValues = z.infer<typeof schema>
 
-export const getInitialValues = (editingItem: any | null) => {
+export const createSchema = schema
+export const updateSchema = schema
+
+export function getInitialValues(editingItem?: Partial<Country> | null): CountriesFormValues {
   if (!editingItem) {
-    return { nameAr: '', nameEn: '', code: '', phone_code: '', is_active: true, image: null }
+    return {
+      nameAr: '',
+      nameEn: '',
+      iso_code: '',
+      currency_code: '',
+      phone_code: '',
+      is_active: true,
+    }
   }
-  const nameAr = editingItem.translations?.find((t: any) => t.language_id === 2)?.name || ''
-  const nameEn = editingItem.translations?.find((t: any) => t.language_id === 1)?.name || editingItem.name || ''
+
+  const name = editingItem.name
+  const nameEn = typeof name === 'string' ? name : name?.en || ''
+  const nameAr = typeof name === 'string' ? name : name?.ar || ''
+
   return {
     nameAr,
     nameEn,
-    code: editingItem.code || '',
+    iso_code: editingItem.iso_code || '',
+    currency_code: editingItem.currency_code || '',
     phone_code: editingItem.phone_code || '',
     is_active: editingItem.is_active ?? true,
-    image: null
   }
 }

@@ -1,0 +1,34 @@
+---
+description: Routing, route guards, and Sanctum token flow
+globs: dp-dashboard/dpdashboard/src/app/**,dp-dashboard/dpdashboard/src/features/auth/**,dp-dashboard/dpdashboard/src/shared/components/RouteGuards.tsx
+alwaysApply: false
+---
+
+# Routing & Auth
+
+## Router
+
+React Router v6 in `App.tsx`. Layout wraps protected routes.
+
+```
+/login              PublicRoute → Login
+/                   ProtectedRoute → Layout → Dashboard
+/users              UsersPage
+/reports            Reports
+/settings/*         Settings nested routes
+```
+
+## Guards
+
+- `ProtectedRoute`: redirects to `/login` if no `auth_token` cookie
+- `PublicRoute`: redirects to `/` if token exists
+
+## Token lifecycle
+
+1. Login → `POST /login` (base includes `/admin`) → store token in `auth_token` cookie
+2. Axios interceptor attaches Bearer header
+3. Logout → `POST /logout` → erase cookie, disconnect Echo, clear Query cache
+
+## 401 handling
+
+Axios interceptor clears cookie and shows toast. Consider navigating to `/login` in a future enhancement.

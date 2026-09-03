@@ -1,0 +1,30 @@
+---
+description: TanStack Query conventions and query keys
+globs: dp-dashboard/dpdashboard/src/**/*.tsx,dp-dashboard/dpdashboard/src/**/*.ts
+alwaysApply: false
+---
+
+# State & Data Fetching
+
+## Server state
+
+All API data via TanStack Query. Use configured `queryClient` from `@/shared/services/queryClient`.
+
+## Query keys
+
+- Lists: `['users-list', page, search, sortBy, sortOrder]`
+- Detail: `['user', id]`
+- Auth: `['auth-user']`
+- Settings: `['global-settings']`, `['countries-list', ...]`
+
+## Mutations
+
+- `onSuccess`: invalidate related queries + `toast.success`
+- `onError`: map 422 to form or `toast.error(getErrorMessage(error))`
+- `retry: 0` for mutations (configured globally)
+
+## Do not
+
+- Create duplicate axios instances
+- Use raw `fetch()` for API calls
+- Store server data in useState when Query can hold it

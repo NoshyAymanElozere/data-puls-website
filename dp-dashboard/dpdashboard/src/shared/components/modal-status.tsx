@@ -108,7 +108,7 @@ export function ModalStatus({
               type="button"
               onClick={onAgreeButtonClick}
               disabled={loading}
-              className="inline-flex h-10 items-center justify-center rounded-xl bg-main px-4 text-sm font-semibold text-white hover:opacity-90 transition-colors disabled:opacity-50"
+              className="inline-flex h-10 items-center justify-center rounded-xl bg-secondary px-4 text-sm font-semibold text-secondary-foreground hover:bg-secondary/90 transition-colors disabled:opacity-50"
             >
               {loading ? (isRtl ? 'جاري المعالجة...' : 'Processing...') : agreeLabel}
             </button>

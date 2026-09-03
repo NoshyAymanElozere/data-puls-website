@@ -1,0 +1,26 @@
+---
+description: Tailwind theme tokens, dark mode, and i18n/RTL
+globs: dp-dashboard/dpdashboard/src/**/*.tsx,dp-dashboard/dpdashboard/src/shared/i18n/**
+alwaysApply: false
+---
+
+# Styling & i18n
+
+## Styling
+
+- Tailwind + CSS variables in `index.css` (`--primary`, `--main`, etc.)
+- Use `cn()` from `@/shared/utils/utils` for conditional classes
+- Dark mode via `useTheme` hook (class on `documentElement`)
+
+## i18n
+
+- Libraries: i18next + react-i18next
+- Locales: `shared/i18n/locales/en.ts` and `ar.ts` — **always update both**
+- Language stored in `localStorage.lang`; sent as `Accept-Language` header
+- RTL: set `dir={isRtl ? 'rtl' : 'ltr'}` on page containers; AG Grid uses `enableRtl`
+
+## Keys
+
+Use camelCase keys matching nav labels: `dashboard`, `users`, `globalSettings`.
+
+Never hardcode user-facing strings in components when a translation key exists.

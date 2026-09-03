@@ -1,0 +1,27 @@
+---
+description: react-hot-toast usage and notification bell with Reverb
+globs: dp-dashboard/dpdashboard/src/**/*.tsx,dp-dashboard/dpdashboard/src/**/*.ts
+alwaysApply: false
+---
+
+# Notifications & Toasts
+
+## Toasts (react-hot-toast)
+
+- Provider in `main.tsx`: `<Toaster position="top-right" />`
+- Trigger in mutation `onSuccess`/`onError` or axios interceptor (401/403/422/5xx)
+- Do not add a second toast library
+
+## Notification bell
+
+Data from `useNotifications()` in `features/notifications/api/`:
+
+- Initial load: `GET /notifications` (base URL includes `/admin`)
+- Live updates: Laravel Echo private channel `App.Models.User.{id}`
+- Mark read: `POST /notifications/{id}/read`, `POST /notifications/read-all`
+
+New broadcast events prepend to TanStack Query cache and may show a toast.
+
+## Inline alerts
+
+Use `alert.tsx` for persistent page-level messages, not transient feedback.

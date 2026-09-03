@@ -1,9 +1,8 @@
 <IfModule mod_rewrite.c>
   RewriteEngine On
-  RewriteBase /dpulse/
+  RewriteBase /hirz/
   RewriteRule ^index\.html$ - [L]
   RewriteCond %{REQUEST_FILENAME} !-f
   RewriteCond %{REQUEST_FILENAME} !-d
-  RewriteCond %{REQUEST_FILENAME} !-l
-  RewriteRule . /dpulse/index.html [L]
+  RewriteRule . /hirz/index.html [L]
 </IfModule>

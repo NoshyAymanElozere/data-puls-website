@@ -24,6 +24,10 @@ import {
 
   Settings,
 
+  ShieldCheck,
+
+  Smartphone,
+
   Users,
 
 } from 'lucide-react'
@@ -48,6 +52,10 @@ const navItems = [
   { label: 'subscriptionPackages', href: '/subscription-packages', icon: Package },
 
   { label: 'categories', href: '/categories', icon: FolderTree },
+
+  { label: 'onboardings', href: '/onboardings', icon: Smartphone },
+
+  { label: 'warrantyPeriods', href: '/warranty-periods', icon: ShieldCheck },
 
   // { label: 'reports', href: '/reports', icon: BarChart3 },
 

@@ -20,22 +20,21 @@ export function StatusDropdown({ value, onChange, usePortal = true }: StatusDrop
   const isRtl = i18n.language === 'ar'
 
   const [localValue, setLocalValue] = useState(value)
-  const [isPending, setIsPending] = useState(false)
   const [isOpen, setIsOpen] = useState(false)
   const [coords, setCoords] = useState({ top: 0, left: 0, width: 0 })
 
   const containerRef = useRef<HTMLDivElement>(null)
   const buttonRef = useRef<HTMLButtonElement>(null)
   const dropdownRef = useRef<HTMLDivElement>(null)
+  const isPendingRef = useRef(false)
+  const lastSyncedValueRef = useRef(value)
 
-  // Sync server value changes (e.g. after refetch) only when it actually differs
-  const committedValueRef = useRef(value)
   useEffect(() => {
-    if (value !== committedValueRef.current && !isPending) {
-      setLocalValue(value)
-      committedValueRef.current = value
-    }
-  }, [value, isPending])
+    if (isPendingRef.current) return
+    if (value === lastSyncedValueRef.current) return
+    lastSyncedValueRef.current = value
+    setLocalValue(value)
+  }, [value])
 
   // Close dropdown on outside click; calculate portal coords when opening
   useEffect(() => {
@@ -56,39 +55,36 @@ export function StatusDropdown({ value, onChange, usePortal = true }: StatusDrop
 
   const handleSelect = useCallback(async (newValue: boolean) => {
     setIsOpen(false)
-    // No-op if user selects the already-active status
-    if (newValue === committedValueRef.current) return
+    if (isPendingRef.current || newValue === lastSyncedValueRef.current) return
+
+    const previous = lastSyncedValueRef.current
+    lastSyncedValueRef.current = newValue
     setLocalValue(newValue)
-    setIsPending(true)
+    isPendingRef.current = true
+
     try {
       await onChange(newValue)
-      committedValueRef.current = newValue
     } catch {
-      // Rollback on failure
-      setLocalValue(committedValueRef.current)
+      lastSyncedValueRef.current = previous
+      setLocalValue(previous)
     } finally {
-      setIsPending(false)
+      isPendingRef.current = false
     }
   }, [onChange])
 
-  // Skeleton while loading
-  if (isPending) {
-    return <div className="h-[26px] w-[75px] bg-gray-100 dark:bg-zinc-800/60 animate-pulse rounded-full" />
-  }
-
   const colorCls = localValue
-    ? 'bg-emerald-500/10 text-emerald-500 border-emerald-500/20 hover:bg-emerald-500/15'
-    : 'bg-rose-500/10 text-rose-500 border-rose-500/20 hover:bg-rose-500/15'
+    ? 'bg-success/10 text-success border-success/20 hover:bg-success/15'
+    : 'bg-muted text-muted-foreground border-border hover:bg-muted/80'
 
   const dropdownMenu = (
     <>
       <button
         type="button"
         onClick={() => handleSelect(true)}
-        className="flex items-center justify-between w-full px-2.5 py-1.5 rounded-lg hover:bg-emerald-500/5 hover:text-emerald-500 text-left text-xs font-semibold text-foreground/90 transition-colors cursor-pointer"
+        className="flex items-center justify-between w-full px-2.5 py-1.5 rounded-lg hover:bg-success/5 hover:text-success text-left text-xs font-semibold text-foreground/90 transition-colors cursor-pointer"
       >
         <div className="flex items-center gap-2">
-          <span className="h-1.5 w-1.5 rounded-full bg-emerald-500" />
+          <span className="h-1.5 w-1.5 rounded-full bg-success" />
           <span>{t('active') || 'Active'}</span>
         </div>
         {localValue && <Check className="h-3 w-3" />}
@@ -130,7 +126,7 @@ export function StatusDropdown({ value, onChange, usePortal = true }: StatusDrop
         onClick={(e) => { e.stopPropagation(); setIsOpen((o) => !o) }}
         className={`flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-bold transition-all duration-200 cursor-pointer border ${colorCls}`}
       >
-        <span className={`h-1.5 w-1.5 rounded-full ${localValue ? 'bg-emerald-500' : 'bg-rose-500'}`} />
+        <span className={`h-1.5 w-1.5 rounded-full ${localValue ? 'bg-success' : 'bg-muted-foreground'}`} />
         <span>{localValue ? t('active') || 'Active' : t('inactive') || 'Inactive'}</span>
         <ChevronDown className={`h-3 w-3 opacity-60 transition-transform duration-200 ${isOpen ? 'rotate-180' : ''}`} />
       </button>

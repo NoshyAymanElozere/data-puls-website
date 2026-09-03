@@ -1,90 +1,82 @@
 import { Button } from '@/shared/components/button'
-import { ColDef } from 'ag-grid-community'
-import { Pencil, Trash2, Eye } from 'lucide-react'
+import type { ColDef } from 'ag-grid-community'
+import { Eye, Trash2 } from 'lucide-react'
+import { Link } from 'react-router-dom'
+import { getLocalizedValue } from '@/shared/utils/localized-value'
 
 interface ColumnDefsProps {
   t: (key: string) => string
-  setViewingItem: (item: any) => void
-  setDeletingItem: (item: any) => void
+  lang: string
+  setViewingItem: (item: unknown) => void
+  setDeletingItem: (item: unknown) => void
+  canDelete?: boolean
 }
 
 export function getSupportColumnDefs({
   t,
+  lang,
   setViewingItem,
-  setDeletingItem
+  setDeletingItem,
+  canDelete = true,
 }: ColumnDefsProps): ColDef[] {
   return [
     {
-      headerName: t('arabicName') || 'Name',
-      field: 'name',
-      filter:false,
-      flex: 1
-    },
-    {
       headerName: t('email') || 'Email',
-      field: 'email',
-      filter:false,
-      flex: 1
+      field: 'user.email',
+      filter: false,
+      flex: 1,
+      cellRenderer: (params: { data?: { user?: { id: number; email: string } } }) => {
+        const user = params.data?.user
+        if (!user?.email) return '-'
+        return (
+          <Link to={`/users/${user.id}`} className="text-primary hover:underline text-sm">
+            {user.email}
+          </Link>
+        )
+      },
     },
     {
-      headerName: t('phoneCode') || 'Phone',
-      field: 'phone',
-      filter:false,
-      width: 140
+      headerName: t('contactPhone') || 'Phone',
+      field: 'user.phone',
+      filter: false,
+      width: 140,
+      valueGetter: (params) => params.data?.user?.phone || '-',
     },
     {
       headerName: t('subject') || 'Subject',
-      field: 'subject',
-      filter:false,
-      flex: 1.5
+      field: 'subject.name',
+      filter: false,
+      flex: 1.5,
+      valueGetter: (params) => getLocalizedValue(params.data?.subject?.name, lang) || '-',
     },
     {
-      headerName: t('status') || 'Status',
-      field: 'status',
-      filter: 'agSetColumnFilter',
-      width: 130,
-      cellRenderer: (params: any) => {
-        const val = params.value
-        const isRead = val === 'read'
-        return (
-          <span className={`inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-xs font-bold ${
-            isRead
-              ? 'bg-emerald-500/10 text-emerald-500 border border-emerald-500/10'
-              : 'bg-amber-500/10 text-amber-500 border border-amber-500/10'
-          }`}>
-            <span className={`h-1.5 w-1.5 rounded-full ${isRead ? 'bg-emerald-500' : 'bg-amber-500'}`} />
-            {isRead ? t('read') || 'Read' : t('unread') || 'Unread'}
-          </span>
-        )
-      }
+      headerName: t('createdAt') || 'Created',
+      field: 'created_at',
+      filter: false,
+      width: 200,
+      valueFormatter: (params) => params.value || '-',
     },
     {
       headerName: t('actions') || 'Actions',
       filter: false,
       width: 120,
       cellClass: 'flex items-center justify-start h-full',
-      cellRenderer: (params: any) => {
+      cellRenderer: (params: { data?: Record<string, unknown> }) => {
         const item = params.data
         if (!item) return null
         return (
           <div className="flex items-center justify-start gap-1.5">
-            <Button
-              variant="ghost"
-              size="icon-sm"
-              onClick={() => setViewingItem(item)}
-            >
+            <Button variant="ghost" size="icon-sm" onClick={() => setViewingItem(item)}>
               <Eye className="h-4 w-4 text-blue-500" />
             </Button>
-            <Button
-              variant="ghost"
-              size="icon-sm"
-              onClick={() => setDeletingItem(item)}
-            >
-              <Trash2 className="h-4 w-4 text-rose-500" />
-            </Button>
+            {canDelete && (
+              <Button variant="ghost" size="icon-sm" onClick={() => setDeletingItem(item)}>
+                <Trash2 className="h-4 w-4 text-rose-500" />
+              </Button>
+            )}
           </div>
         )
-      }
-    }
+      },
+    },
   ]
 }

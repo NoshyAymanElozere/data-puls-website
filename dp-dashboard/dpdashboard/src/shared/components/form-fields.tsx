@@ -250,7 +250,7 @@ export function ControlledSearchableSelect<T extends FieldValues>({
                 control: (baseStyles, state) => ({
                   ...baseStyles,
                   borderRadius: '0.75rem',
-                  borderColor: fieldState.error ? '#ef4444' : state.isFocused ? '#3b82f6' : '#cbd5e1',
+                  borderColor: fieldState.error ? '#ef4444' : state.isFocused ? '#5B4B8A' : '#E8E4D9',
                   boxShadow: 'none',
                   '&:hover': {
                     borderColor: fieldState.error ? '#ef4444' : '#94a3b8',
@@ -315,7 +315,7 @@ export function ControlledMultiSelect<T extends FieldValues>({
                 control: (baseStyles, state) => ({
                   ...baseStyles,
                   borderRadius: '0.75rem',
-                  borderColor: fieldState.error ? '#ef4444' : state.isFocused ? '#3b82f6' : '#cbd5e1',
+                  borderColor: fieldState.error ? '#ef4444' : state.isFocused ? '#5B4B8A' : '#E8E4D9',
                   boxShadow: 'none',
                   '&:hover': {
                     borderColor: fieldState.error ? '#ef4444' : '#94a3b8',
