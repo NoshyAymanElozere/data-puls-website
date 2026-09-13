@@ -8,57 +8,35 @@ import React, { useEffect, useState } from 'react'
 
 import {
 
-  // BarChart3,
-
+  BarChart3,
   ChevronDown,
-
   ChevronLeft,
-
   ChevronRight,
-
   FolderTree,
-
   LayoutDashboard,
-
   Package,
-
   Settings,
-
   ShieldCheck,
-
   Smartphone,
-
   Users,
-
+  HeartHandshake,
 } from 'lucide-react'
 
 import { useTranslation } from 'react-i18next'
-
 import { NavLink, useLocation } from 'react-router-dom'
-
 import { useProfile } from '@/features/auth/api/useAuth'
-
 import { AppLogo } from '@/shared/components/AppLogo'
 import { settingLinks } from '@/shared/layouts/SidebarLinks'
 
-
-
 const navItems = [
-
   { label: 'dashboard', href: '/', icon: LayoutDashboard },
-
+  { label: 'reports', href: '/reports', icon: BarChart3 },
   { label: 'users', href: '/users', icon: Users },
-
+  { label: 'familyRelations', href: '/family-relations', icon: HeartHandshake },
   { label: 'subscriptionPackages', href: '/subscription-packages', icon: Package },
-
   { label: 'categories', href: '/categories', icon: FolderTree },
-
   { label: 'onboardings', href: '/onboardings', icon: Smartphone },
-
   { label: 'warrantyPeriods', href: '/warranty-periods', icon: ShieldCheck },
-
-  // { label: 'reports', href: '/reports', icon: BarChart3 },
-
 ]
 
 

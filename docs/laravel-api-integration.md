@@ -36,6 +36,7 @@ Login returns `data.admin` with `permissions[]`. Profile uses `GET /me`.
 | Contact messages | `GET/DELETE /contact-messages` |
 | Countries | `GET/POST/PUT/DELETE /countries`, `PATCH /countries/{id}/status` — FormData `name[en/ar]`, `iso_code`, `currency_code`, `phone_code` |
 | Cities | `GET/POST/PUT/DELETE /cities`, `PATCH /cities/{id}/status` — FormData `name[en/ar]`, `country_id` |
+| Dashboard & Reports | `GET /dashboard/stats`, `GET /dashboard/analytics`, `GET /reports/summary`, `GET /reports/financial-growth`, `GET /reports/category-share`, etc. |
 
 See [`api/`](../api/) for full request/response contracts.
 

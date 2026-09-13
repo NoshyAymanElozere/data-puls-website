@@ -24,6 +24,7 @@ import CategoryEditPage from '@/features/categories/pages/CategoryEditPage'
 import SubcategoriesPage from '@/features/categories/pages/SubcategoriesPage'
 import OnboardingsPage from '@/features/onboardings/pages/OnboardingsPage'
 import WarrantyPeriodsPage from '@/features/warranty-periods/pages/WarrantyPeriodsPage'
+import FamilyRelationsPage from '@/features/family-relations/pages/FamilyRelationsPage'
 
 const Placeholder = ({ title }: { title: string }) => (
   <div className="flex flex-col items-center justify-center h-[60vh] space-y-4">
@@ -45,6 +46,7 @@ function App() {
           <Route path="/" element={<Layout />}>
             <Route index element={<Dashboard />} />
             <Route path="users" element={<UsersPage />} />
+            <Route path="family-relations" element={<FamilyRelationsPage />} />
             <Route path="reports" element={<Reports />} />
             <Route path="subscription-packages" element={<SubscriptionPackagesPage />} />
             <Route path="subscription-packages/:id" element={<SubscriptionPackageEditPage />} />

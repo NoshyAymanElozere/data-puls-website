@@ -2,11 +2,20 @@ import { Badge, type BadgeProps } from '@/shared/components/badge'
 import { Card, CardContent, CardHeader, CardTitle } from '@/shared/components/card'
 import { GenericDataGrid } from '@/shared/components/GenericDataGrid'
 import type { ColDef } from 'ag-grid-community'
-import { useMemo } from 'react'
+import { useMemo, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import type { SubscriptionStatus } from '@/features/subscription-packages/api/useSubscriptionPackages'
 import type { UserDetail, UserSubscription } from '../api/useUsers'
 import { getLocalizedValue } from '@/shared/utils/localized-value'
+
+export function isUnpaidSubscription(item: UserSubscription): boolean {
+  return (
+    item.status === 'pending_payment' ||
+    (item as unknown as { status?: string }).status === 'unpaid' ||
+    (item as unknown as { payment_status?: string }).payment_status === 'unpaid' ||
+    (item as unknown as { is_paid?: boolean }).is_paid === false
+  )
+}
 
 function getSubscriptionStatusVariant(status: SubscriptionStatus): BadgeProps['variant'] {
   switch (status) {
@@ -51,8 +60,20 @@ interface UserSubscriptionsPanelProps {
 
 export function UserSubscriptionsPanel({ user }: UserSubscriptionsPanelProps) {
   const { t, i18n } = useTranslation()
-  const active = user.active_subscription
-  const history = user.subscriptions ?? []
+  const [showUnpaid, setShowUnpaid] = useState(false)
+
+  const active = user.active_subscription && !isUnpaidSubscription(user.active_subscription) ? user.active_subscription : null
+  const allSubscriptions = user.subscriptions ?? []
+
+  const unpaidCount = useMemo(
+    () => allSubscriptions.filter(isUnpaidSubscription).length,
+    [allSubscriptions]
+  )
+
+  const history = useMemo(() => {
+    if (showUnpaid) return allSubscriptions
+    return allSubscriptions.filter((item) => !isUnpaidSubscription(item))
+  }, [allSubscriptions, showUnpaid])
 
   const columnDefs = useMemo<ColDef<UserSubscription>[]>(
     () => [
@@ -184,11 +205,31 @@ export function UserSubscriptionsPanel({ user }: UserSubscriptionsPanelProps) {
       ) : null}
 
       <div>
-        <p className="text-xs font-bold text-muted-foreground uppercase tracking-wider mb-2">
-          {t('subscriptionHistory')}
-        </p>
+        <div className="flex items-center justify-between gap-3 mb-2.5">
+          <p className="text-xs font-bold text-muted-foreground uppercase tracking-wider">
+            {t('subscriptionHistory')}
+          </p>
+
+          {unpaidCount > 0 && (
+            <label className="flex items-center gap-2 text-xs font-bold text-muted-foreground cursor-pointer select-none hover:text-foreground transition-colors">
+              <input
+                type="checkbox"
+                checked={showUnpaid}
+                onChange={(e) => setShowUnpaid(e.target.checked)}
+                className="h-3.5 w-3.5 rounded border-border text-main focus:ring-main cursor-pointer"
+              />
+              <span>{t('showUnpaidSubscriptions')}</span>
+              <span className="text-[10px] font-bold px-1.5 py-0.5 rounded-md bg-muted text-muted-foreground border border-border/50">
+                {unpaidCount}
+              </span>
+            </label>
+          )}
+        </div>
+
         {history.length === 0 ? (
-          <p className="text-sm text-muted-foreground py-4 text-center">{t('noSubscriptions')}</p>
+          <div className="rounded-xl border border-border/60 bg-muted/10 p-6 text-center">
+            <p className="text-sm font-semibold text-muted-foreground">{t('noSubscriptions')}</p>
+          </div>
         ) : (
           <GenericDataGrid
             rowData={history}

@@ -45,6 +45,7 @@ export default function SubcategoriesPage() {
   const [deletingItem, setDeletingItem] = useState<Category | null>(null)
   const [isViewOnly, setIsViewOnly] = useState(false)
   const [statusFilter, setStatusFilter] = useState('')
+  const [defaultFilter, setDefaultFilter] = useState('')
 
   const { data: parentCategory, isLoading: parentLoading } = useCategory(
     Number.isNaN(parentId) ? null : parentId
@@ -57,7 +58,8 @@ export default function SubcategoriesPage() {
     table.page,
     table.search,
     statusFilter,
-    Number.isNaN(parentId) ? undefined : parentId
+    Number.isNaN(parentId) ? undefined : parentId,
+    defaultFilter
   )
   const items = paginatedData?.data ?? []
 
@@ -151,7 +153,7 @@ export default function SubcategoriesPage() {
             )}
           </CardHeader>
           <CardContent className="p-6 space-y-4">
-            <div className="flex flex-col sm:flex-row gap-3 max-w-xl">
+            <div className="flex flex-col sm:flex-row gap-3 max-w-2xl">
               <div className="flex-1">
                 <SearchInput
                   placeholder={`${t('search')} ${label}...`}
@@ -160,12 +162,24 @@ export default function SubcategoriesPage() {
                 />
               </div>
               <select
+                value={defaultFilter}
+                onChange={(e) => {
+                  setDefaultFilter(e.target.value)
+                  table.setPage(1)
+                }}
+                className="w-full sm:w-44 h-10 px-3 rounded-xl border border-border/60 bg-card text-xs font-bold"
+              >
+                <option value="">{t('allTypes')}</option>
+                <option value="true">{t('systemDefault')}</option>
+                <option value="false">{t('userCustom')}</option>
+              </select>
+              <select
                 value={statusFilter}
                 onChange={(e) => {
                   setStatusFilter(e.target.value)
                   table.setPage(1)
                 }}
-                className="w-full sm:w-40 h-10 px-3 rounded-xl border border-border/60 bg-card text-xs font-bold"
+                className="w-full sm:w-36 h-10 px-3 rounded-xl border border-border/60 bg-card text-xs font-bold"
               >
                 <option value="">{t('status')}</option>
                 <option value="true">{t('active')}</option>

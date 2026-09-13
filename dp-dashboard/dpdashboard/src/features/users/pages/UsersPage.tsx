@@ -212,6 +212,20 @@ export default function UsersPage() {
           loading={createMutation.isPending || updateMutation.isPending}
           label={label}
           isViewOnly={isViewOnly}
+          onSelectUser={(userId) => {
+            setEditingItem({
+              id: userId,
+              email: '',
+              phone: '',
+              gender: null,
+              age: null,
+              status: 'active',
+              is_subscribed: false,
+              created_at: '',
+            })
+            setIsViewOnly(true)
+            setIsModalOpen(true)
+          }}
         />
 
         <ModalStatus

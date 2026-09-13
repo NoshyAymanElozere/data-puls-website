@@ -8,7 +8,10 @@ import type { UseFormSetError } from 'react-hook-form'
 import type { UserFormValues } from '../pages/validationSchema'
 import type { UserSubscription } from '../types/subscriptions'
 
+import type { AccountOwnerInfo, FamilyMemberPermissions, FamilyRelationBasic } from '../types/family'
+
 export type { UserSubscription, UserSubscriptionPackage } from '../types/subscriptions'
+export type { AccountOwnerInfo, FamilyMemberPermissions, FamilyRelationBasic } from '../types/family'
 
 export type UserStatus = 'active' | 'suspended'
 export type UserGender = 'male' | 'female'
@@ -16,6 +19,7 @@ export type PreferredLanguage = 'ar' | 'en'
 
 export interface UserListItem {
   id: number
+  name?: string | null
   email: string
   phone: string
   gender: UserGender | null
@@ -26,6 +30,7 @@ export interface UserListItem {
 }
 
 export interface UserDetail extends UserListItem {
+  name?: string | null
   avatar_url: string
   birth_date: string | null
   gender_label: string | null
@@ -35,6 +40,13 @@ export interface UserDetail extends UserListItem {
   phone_verified_at: string | null
   last_login_at: string | null
   updated_at: string
+  invoices_count?: number
+  family_members_count?: number
+  account_owner_id?: number | null
+  account_owner?: AccountOwnerInfo | null
+  family_relation_id?: number | null
+  family_relation?: FamilyRelationBasic | null
+  permissions?: FamilyMemberPermissions | null
   active_subscription: UserSubscription | null
   subscriptions: UserSubscription[]
 }

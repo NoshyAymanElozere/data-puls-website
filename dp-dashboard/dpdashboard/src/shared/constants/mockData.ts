@@ -106,9 +106,8 @@ export const mockRevenueData: RevenueData[] = [
 ]
 
 export const mockCategoryData = [
-  { name: 'Luxury Packages', value: 42, color: '#3b82f6' },
-  { name: 'Beach Resorts', value: 25, color: '#10b981' },
-  { name: 'Historical Tours', value: 15, color: '#f59e0b' },
-  { name: 'Adventure Safari', value: 11, color: '#8b5cf6' },
-  { name: 'City Sightseeing', value: 7, color: '#ef4444' },
+  { name: 'Electronics', value: 42, color: '#3b82f6' },
+  { name: 'Home Appliances', value: 28, color: '#10b981' },
+  { name: 'Furniture', value: 18, color: '#f59e0b' },
+  { name: 'Vehicles & Parts', value: 12, color: '#8b5cf6' },
 ]

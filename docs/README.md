@@ -22,6 +22,7 @@ pnpm dev
 | [architecture.md](./architecture.md) | Repo structure & stack |
 | [laravel-api-integration.md](./laravel-api-integration.md) | API contract for your Laravel backend |
 | [api/TEMPLATE.md](./api/TEMPLATE.md) | **Format spec for per-resource API docs** (hand to backend team) |
+| [api/dashboard-and-reports.md](./api/dashboard-and-reports.md) | **Backend API specification for Dashboard & Reports** |
 | [authentication.md](./authentication.md) | Sanctum Bearer login flow |
 | [components.md](./components.md) | Shared UI library |
 | [data-tables-and-filtering.md](./data-tables-and-filtering.md) | GenericDataGrid, pagination, search |
