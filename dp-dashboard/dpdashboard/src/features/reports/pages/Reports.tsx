@@ -12,16 +12,11 @@ import {
   Line,
   Legend,
   Cell,
-  PieChart as RechartsPie,
-  Pie,
 } from 'recharts'
 import { Badge } from '@/shared/components/badge'
 import {
   TrendingUp,
-  DollarSign,
-  Store,
   Download,
-  Calendar,
   Filter,
   RefreshCw,
   Loader2,
@@ -31,11 +26,7 @@ import {
   CreditCard,
   Users as UsersIcon,
   PieChart as PieChartIcon,
-  Search,
   Award,
-  Smartphone,
-  ChevronRight,
-  ArrowUpRight,
   Sparkles,
 } from 'lucide-react'
 import { formatCurrency, cn } from '@/shared/utils/utils'
@@ -48,13 +39,12 @@ import {
   useWarrantiesReport,
   useSubscriptionsReport,
   useUsersReport,
-  useMerchantsReport,
   useExportReport,
   type ReportExportFormat,
   type ReportExportModule,
 } from '../api/useReports'
 
-type ReportTab = 'overview' | 'invoices' | 'warranties' | 'subscriptions' | 'users' | 'merchants'
+type ReportTab = 'overview' | 'invoices' | 'warranties' | 'subscriptions' | 'users'
 
 const COLORS = ['#2563eb', '#10b981', '#f59e0b', '#8b5cf6', '#ec4899', '#06b6d4', '#64748b']
 
@@ -71,9 +61,6 @@ export default function Reports() {
   const [financialPeriod, setFinancialPeriod] = useState<'monthly' | 'quarterly'>('monthly')
   const [dateFrom, setDateFrom] = useState<string>('')
   const [dateTo, setDateTo] = useState<string>('')
-
-  // Merchant search state
-  const [merchantSearch, setMerchantSearch] = useState<string>('')
 
   // Export Modal state
   const [isExportOpen, setIsExportOpen] = useState(false)
@@ -136,16 +123,6 @@ export default function Reports() {
     date_to: dateTo || undefined,
   })
 
-  const {
-    data: merchantsReport,
-    isLoading: isMerchantsLoading,
-    refetch: refetchMerchants,
-  } = useMerchantsReport({
-    date_from: dateFrom || undefined,
-    date_to: dateTo || undefined,
-    search: merchantSearch || undefined,
-  })
-
   const exportMutation = useExportReport()
 
   const handleRefreshAll = () => {
@@ -161,8 +138,6 @@ export default function Reports() {
       refetchSubscriptions()
     } else if (activeTab === 'users') {
       refetchUsers()
-    } else if (activeTab === 'merchants') {
-      refetchMerchants()
     }
   }
 
@@ -226,7 +201,6 @@ export default function Reports() {
     { id: 'warranties', label: t('tabWarranties'), icon: ShieldCheck },
     { id: 'subscriptions', label: t('tabSubscriptions'), icon: CreditCard },
     { id: 'users', label: t('tabUsers'), icon: UsersIcon },
-    { id: 'merchants', label: t('tabMerchants'), icon: Store },
   ]
 
   return (
@@ -1212,139 +1186,6 @@ export default function Reports() {
         </div>
       )}
 
-      {/* Tab 6: Merchants Leaderboard */}
-      {activeTab === 'merchants' && (
-        <div className="space-y-6">
-          {/* Merchants Summary Cards */}
-          <div className="grid grid-cols-2 sm:grid-cols-4 gap-4">
-            <Card className="border border-gray-100 rounded-2xl shadow-xs bg-white p-4">
-              <p className="text-xs text-gray-400 font-bold uppercase">{t('totalMerchants', 'Total Merchants')}</p>
-              <h4 className="text-xl font-black text-gray-900 mt-1">
-                {merchantsReport?.summary?.total_unique_merchants ?? 142}
-              </h4>
-            </Card>
-            <Card className="border border-gray-100 rounded-2xl shadow-xs bg-white p-4">
-              <p className="text-xs text-gray-400 font-bold uppercase">{t('salesVolume')}</p>
-              <h4 className="text-xl font-black text-emerald-600 mt-1">
-                {merchantsReport?.summary?.total_sales_volume
-                  ? formatCurrency(merchantsReport.summary.total_sales_volume)
-                  : '723,000.00 SAR'}
-              </h4>
-            </Card>
-            <Card className="border border-gray-100 rounded-2xl shadow-xs bg-white p-4">
-              <p className="text-xs text-gray-400 font-bold uppercase">{t('topMerchant')}</p>
-              <h4 className="text-xl font-black text-purple-600 mt-1 truncate">
-                {merchantsReport?.summary?.top_merchant_name || 'Jarir Bookstore'}
-              </h4>
-            </Card>
-            <Card className="border border-gray-100 rounded-2xl shadow-xs bg-white p-4">
-              <p className="text-xs text-gray-400 font-bold uppercase">{t('averagePerMerchant', 'Avg. Per Merchant')}</p>
-              <h4 className="text-xl font-black text-blue-600 mt-1">
-                {merchantsReport?.summary?.average_sales_per_merchant
-                  ? formatCurrency(merchantsReport.summary.average_sales_per_merchant)
-                  : '5,091.55 SAR'}
-              </h4>
-            </Card>
-          </div>
-
-          {/* Search Bar for Merchants */}
-          <div className="flex items-center gap-3">
-            <div className="relative flex-1 max-w-sm">
-              <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-gray-400" />
-              <input
-                type="text"
-                value={merchantSearch}
-                onChange={(e) => setMerchantSearch(e.target.value)}
-                placeholder={t('searchStorePlaceholder')}
-                className="w-full h-10 pl-9 pr-4 rounded-xl border border-gray-200 text-xs bg-white focus:outline-none focus:ring-1 focus:ring-main"
-              />
-            </div>
-          </div>
-
-          {/* Merchants Table */}
-          <Card className="border border-gray-100 rounded-2xl shadow-xs bg-white overflow-hidden">
-            <CardContent className="p-0">
-              <div className="overflow-x-auto">
-                <table className="w-full text-left text-xs">
-                  <thead className="bg-gray-50/50">
-                    <tr className="border-b border-gray-100 text-gray-400 font-bold uppercase">
-                      <th className="py-3 px-4 text-start">{t('storeName')}</th>
-                      <th className="py-3 px-4 text-end">{t('salesVolume')}</th>
-                      <th className="py-3 px-4 text-end">{t('invoicesCount')}</th>
-                      <th className="py-3 px-4 text-end">{t('averageAmount')}</th>
-                      <th className="py-3 px-4 text-end">{t('uniqueCustomers')}</th>
-                      <th className="py-3 px-4 text-end">{t('warrantiesCount')}</th>
-                      <th className="py-3 px-4 text-end">{t('marketShare')}</th>
-                    </tr>
-                  </thead>
-                  <tbody className="divide-y divide-gray-100">
-                    {isMerchantsLoading ? (
-                      <tr>
-                        <td colSpan={7} className="py-8 text-center text-gray-400">
-                          <Loader2 className="h-5 w-5 animate-spin mx-auto text-main" />
-                        </td>
-                      </tr>
-                    ) : (
-                      (
-                        merchantsReport?.merchants || [
-                          {
-                            store_name: 'Jarir Bookstore',
-                            total_sales: 154000,
-                            invoices_count: 210,
-                            average_invoice_value: 733.33,
-                            unique_customers: 182,
-                            warranties_count: 145,
-                            market_share_percentage: 21.3,
-                          },
-                          {
-                            store_name: 'Extra Electronics',
-                            total_sales: 128000,
-                            invoices_count: 140,
-                            average_invoice_value: 914.29,
-                            unique_customers: 115,
-                            warranties_count: 130,
-                            market_share_percentage: 17.7,
-                          },
-                          {
-                            store_name: 'Apple Store',
-                            total_sales: 98000,
-                            invoices_count: 85,
-                            average_invoice_value: 1152.94,
-                            unique_customers: 72,
-                            warranties_count: 80,
-                            market_share_percentage: 13.5,
-                          },
-                        ]
-                      ).map((store, i) => (
-                        <tr key={i} className="hover:bg-gray-50/50 transition-colors">
-                          <td className="py-3.5 px-4 font-bold text-gray-900 text-start">{store.store_name}</td>
-                          <td className="py-3.5 px-4 text-end font-semibold text-gray-900">
-                            {formatCurrency(store.total_sales)}
-                          </td>
-                          <td className="py-3.5 px-4 text-end text-gray-600">{store.invoices_count}</td>
-                          <td className="py-3.5 px-4 text-end text-gray-600">
-                            {formatCurrency(store.average_invoice_value)}
-                          </td>
-                          <td className="py-3.5 px-4 text-end text-gray-600">{store.unique_customers}</td>
-                          <td className="py-3.5 px-4 text-end text-blue-600 font-semibold">
-                            {store.warranties_count}
-                          </td>
-                          <td className="py-3.5 px-4 text-end">
-                            <Badge variant="outline" className="text-xs font-bold text-main border-main/20">
-                              {store.market_share_percentage}%
-                            </Badge>
-                          </td>
-                        </tr>
-                      ))
-                    )}
-                  </tbody>
-                </table>
-              </div>
-            </CardContent>
-          </Card>
-        </div>
-      )}
-
       {/* Export Report Modal */}
       {isExportOpen && (
         <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/40 backdrop-blur-xs p-4 animate-fade-in">
@@ -1405,7 +1246,6 @@ export default function Reports() {
                   <option value="warranties">{t('warrantiesModule')}</option>
                   <option value="subscriptions">{t('subscriptionsModule')}</option>
                   <option value="users">{t('usersModule')}</option>
-                  <option value="merchants">{t('merchantsModule')}</option>
                   <option value="financial">{t('financialModule')}</option>
                   <option value="categories">{t('categoriesModule')}</option>
                 </select>
