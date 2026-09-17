@@ -1,5 +1,6 @@
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query'
 import toast from 'react-hot-toast'
+import i18n from '@/shared/i18n/i18n'
 import api, { getErrorMessage } from '@/shared/services/axios'
 import type { SuccessResponse, Translatable } from '@/shared/types/laravel'
 import { appendTranslatable, createPutFormData } from '@/shared/utils/form-data'
@@ -97,11 +98,11 @@ export function useUpdatePage(setError?: UseFormSetError<PageFormData>) {
     onSuccess: (res, variables) => {
       qc.invalidateQueries({ queryKey: ['pages-list'] })
       qc.invalidateQueries({ queryKey: ['page', variables.id] })
-      toast.success(res.message || 'Page updated successfully.')
+      toast.success(res.message || i18n.t('pageUpdated'))
     },
     onError: (error) => {
       if (setError && applyValidationErrors(error, setError)) return
-      toast.error(getErrorMessage(error, 'Failed to update page.'))
+      toast.error(getErrorMessage(error, i18n.t('pageUpdateFailed')))
     },
   })
 }

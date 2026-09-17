@@ -6,11 +6,28 @@ const languageSchema = z.enum(['ar', 'en']).nullable().optional()
 const statusSchema = z.enum(['active', 'suspended'])
 
 export const schema = z.object({
+  name: z.string().max(255, 'maxLength').nullable().optional(),
   email: z.string().min(1, 'requiredField').email('invalidEmail'),
   phone: z.string().min(1, 'requiredField'),
   password: z.string().optional(),
   password_confirmation: z.string().optional(),
-  birth_date: z.string().nullable().optional(),
+  date_of_birth: z
+    .string()
+    .nullable()
+    .optional()
+    .refine(
+      (val) => {
+        if (!val) return true
+        const d = new Date(val)
+        if (isNaN(d.getTime())) return false
+        const today = new Date()
+        today.setHours(23, 59, 59, 999)
+        return d <= today
+      },
+      {
+        message: 'birthDateCannotBeFuture',
+      }
+    ),
   gender: genderSchema,
   preferred_language: languageSchema,
   status: statusSchema,
@@ -19,12 +36,16 @@ export const schema = z.object({
 export type UserFormValues = z.infer<typeof schema>
 
 export function getInitialValues(editingItem?: Partial<UserDetail> | null): UserFormValues {
+  const rawName = editingItem?.name
+  const nameStr = typeof rawName === 'string' ? rawName : ''
+
   return {
+    name: nameStr,
     email: editingItem?.email ?? '',
     phone: editingItem?.phone ?? '',
     password: '',
     password_confirmation: '',
-    birth_date: editingItem?.birth_date ?? '',
+    date_of_birth: editingItem?.date_of_birth ?? '',
     gender: (editingItem?.gender as UserGender | null | undefined) ?? null,
     preferred_language: (editingItem?.preferred_language as PreferredLanguage | null | undefined) ?? null,
     status: (editingItem?.status as UserStatus | undefined) ?? 'active',

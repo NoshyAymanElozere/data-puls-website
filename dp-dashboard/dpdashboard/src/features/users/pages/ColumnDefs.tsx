@@ -28,10 +28,19 @@ export function getUsersColumnDefs({
 }: ColumnDefsProps): ColDef[] {
   return [
     {
+      headerName: t('name'),
+      field: 'name',
+      filter: false,
+      flex: 1,
+      minWidth: 150,
+      valueFormatter: (params) => params.value || '-',
+    },
+    {
       headerName: t('email'),
       field: 'email',
       filter: false,
       flex: 1,
+      minWidth: 180,
     },
     {
       headerName: t('phone'),

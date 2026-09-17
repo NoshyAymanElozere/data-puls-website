@@ -18,8 +18,16 @@ export function UserStatusToggle({ value, onChange, disabled = false }: UserStat
   const lastSyncedRef = useRef(isActive)
 
   useEffect(() => {
+    // Props caught up with the optimistic value — clear pending and stay put
+    if (isActive === lastSyncedRef.current) {
+      isPendingRef.current = false
+      setLocalActive(isActive)
+      return
+    }
+
+    // Still waiting for cache/server to reflect the toggle — don't flash back
     if (isPendingRef.current) return
-    if (isActive === lastSyncedRef.current) return
+
     lastSyncedRef.current = isActive
     setLocalActive(isActive)
   }, [isActive])
@@ -36,10 +44,11 @@ export function UserStatusToggle({ value, onChange, disabled = false }: UserStat
 
       try {
         await onChange(nextStatus)
+        // Pending stays until the value prop matches (see effect) so a stale
+        // list row cannot flash the old status after the request settles.
       } catch {
         lastSyncedRef.current = previous
         setLocalActive(previous)
-      } finally {
         isPendingRef.current = false
       }
     },
@@ -47,7 +56,7 @@ export function UserStatusToggle({ value, onChange, disabled = false }: UserStat
   )
 
   return (
-    <div className="flex items-center gap-2.5 h-full" onClick={(e) => e.stopPropagation()}>
+    <div className="flex items-center gap-2 h-full" onClick={(e) => e.stopPropagation()}>
       <Switch
         checked={localActive}
         onCheckedChange={handleChange}

@@ -17,9 +17,13 @@ import {
   Package,
   Settings,
   ShieldCheck,
+  ShieldAlert,
   Smartphone,
   Users,
   HeartHandshake,
+  BellRing,
+  ScrollText,
+  Send,
 } from 'lucide-react'
 
 import { useTranslation } from 'react-i18next'
@@ -37,6 +41,10 @@ const navItems = [
   { label: 'categories', href: '/categories', icon: FolderTree },
   { label: 'onboardings', href: '/onboardings', icon: Smartphone },
   { label: 'warrantyPeriods', href: '/warranty-periods', icon: ShieldCheck },
+  { label: 'expiringWarranties', href: '/expiring-warranties', icon: ShieldAlert },
+  { label: 'sendNotification', href: '/send-notification', icon: Send },
+  { label: 'notificationLogs', href: '/notification-logs', icon: ScrollText },
+  { label: 'notificationSettings', href: '/notification-settings', icon: BellRing },
 ]
 
 
@@ -203,7 +211,7 @@ export function Sidebar({ collapsed, onCollapse }: SidebarProps) {
 
               <p className="truncate text-xs font-semibold text-gray-800 dark:text-gray-200">{adminName}</p>
 
-              <p className="truncate text-[10px] text-gray-400 dark:text-zinc-500 font-semibold">Administrator</p>
+              <p className="truncate text-[10px] text-gray-400 dark:text-zinc-500 font-semibold">{t('administrator')}</p>
 
             </div>
 

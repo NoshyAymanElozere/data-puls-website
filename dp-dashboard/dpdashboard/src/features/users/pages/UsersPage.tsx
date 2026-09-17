@@ -215,6 +215,7 @@ export default function UsersPage() {
           onSelectUser={(userId) => {
             setEditingItem({
               id: userId,
+              name: null,
               email: '',
               phone: '',
               gender: null,
@@ -232,7 +233,11 @@ export default function UsersPage() {
           open={!!deletingItem}
           onOpenChange={(v) => !v && setDeletingItem(null)}
           title={`${t('delete')} ${label}`}
-          description={t('deleteConfirmation')}
+          description={
+            deletingItem?.name
+              ? `${t('deleteConfirmation')} (${deletingItem.name})`
+              : t('deleteConfirmation')
+          }
           agreeLabel={t('delete')}
           cancelLabel={t('cancel')}
           onAgreeButtonClick={() => {

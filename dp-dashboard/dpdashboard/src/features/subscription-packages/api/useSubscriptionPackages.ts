@@ -1,5 +1,6 @@
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query'
 import toast from 'react-hot-toast'
+import i18n from '@/shared/i18n/i18n'
 import api, { getErrorMessage } from '@/shared/services/axios'
 import type { LaravelPaginatedResponse, SuccessResponse, Translatable } from '@/shared/types/laravel'
 import {
@@ -70,6 +71,7 @@ export interface SubscriptionPackageFormValues {
   descriptionEn?: string
   descriptionAr?: string
   maximum_family_members: number
+  maximum_invoices?: number | null
   sort_order: number
   is_active: boolean
   monthly_price: number
@@ -99,6 +101,7 @@ export interface SubscriptionPackage {
   name: string | Translatable
   description?: string | Translatable
   maximum_family_members: number
+  maximum_invoices: number | null
   sort_order: number
   is_active: boolean
   subscribers_count?: number
@@ -112,6 +115,12 @@ export interface SubscriptionPackage {
 function toSubscriptionPackageFormData(payload: SubscriptionPackageFormValues, isUpdate = false): FormData {
   const formData = createPutFormData({
     maximum_family_members: payload.maximum_family_members,
+    maximum_invoices:
+      payload.maximum_invoices === null ||
+      payload.maximum_invoices === undefined ||
+      (payload.maximum_invoices as unknown) === ''
+        ? ''
+        : payload.maximum_invoices,
     sort_order: payload.sort_order,
     is_active: payload.is_active,
   })
@@ -208,11 +217,11 @@ export function useCreateSubscriptionPackage(setError?: UseFormSetError<Subscrip
     },
     onSuccess: (res) => {
       qc.invalidateQueries({ queryKey: ['subscription-packages-list'] })
-      toast.success(res.message || 'Subscription package created successfully.')
+      toast.success(res.message || i18n.t('packageCreated'))
     },
     onError: (error) => {
       if (setError && applyValidationErrors(error, setError)) return
-      toast.error(getErrorMessage(error, 'Failed to create subscription package.'))
+      toast.error(getErrorMessage(error, i18n.t('packageCreateFailed')))
     },
   })
 }
@@ -231,11 +240,11 @@ export function useUpdateSubscriptionPackage(setError?: UseFormSetError<Subscrip
     onSuccess: (res, variables) => {
       qc.invalidateQueries({ queryKey: ['subscription-packages-list'] })
       qc.invalidateQueries({ queryKey: ['subscription-package', variables.id] })
-      toast.success(res.message || 'Subscription package updated successfully.')
+      toast.success(res.message || i18n.t('packageUpdated'))
     },
     onError: (error) => {
       if (setError && applyValidationErrors(error, setError)) return
-      toast.error(getErrorMessage(error, 'Failed to update subscription package.'))
+      toast.error(getErrorMessage(error, i18n.t('packageUpdateFailed')))
     },
   })
 }
@@ -249,10 +258,10 @@ export function useDeleteSubscriptionPackage() {
     },
     onSuccess: () => {
       qc.invalidateQueries({ queryKey: ['subscription-packages-list'] })
-      toast.success('Subscription package deleted successfully.')
+      toast.success(i18n.t('packageDeleted'))
     },
     onError: (error) => {
-      toast.error(getErrorMessage(error, 'Failed to delete subscription package.'))
+      toast.error(getErrorMessage(error, i18n.t('packageDeleteFailed')))
     },
   })
 }
@@ -269,10 +278,10 @@ export function useToggleSubscriptionPackageStatus() {
     },
     onSuccess: (res) => {
       qc.invalidateQueries({ queryKey: ['subscription-packages-list'] })
-      toast.success(res.message || 'Status updated successfully.')
+      toast.success(res.message || i18n.t('statusUpdated'))
     },
     onError: (error) => {
-      toast.error(getErrorMessage(error, 'Failed to update status.'))
+      toast.error(getErrorMessage(error, i18n.t('statusUpdateFailed')))
     },
   })
 }

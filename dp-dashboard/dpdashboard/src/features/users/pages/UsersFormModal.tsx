@@ -5,6 +5,7 @@ import {
   Calendar,
   CreditCard,
   FileText,
+  FolderTree,
   Globe,
   Mail,
   Package,
@@ -23,6 +24,7 @@ import { resolveMediaUrl } from '@/shared/utils/media-url'
 import { UserSubscriptionsPanel, isUnpaidSubscription } from '../components/UserSubscriptionsPanel'
 import { UserInvoicesPanel } from '../components/UserInvoicesPanel'
 import { UserFamilyMembersPanel } from '../components/UserFamilyMembersPanel'
+import { UserCategoriesPanel } from '../components/UserCategoriesPanel'
 import type { UserDetail, UserListItem } from '../api/useUsers'
 import { getInitialValues } from './validationSchema'
 
@@ -86,6 +88,7 @@ export function UsersFormModal({
 
   const invoicesCount = source?.invoices_count ?? 0
   const familyMembersCount = source?.family_members_count ?? 0
+  const categoriesCount = source?.categories_count ?? 0
   const subscriptionsCount =
     detail?.subscriptions?.filter((s) => !isUnpaidSubscription(s)).length ?? 0
 
@@ -116,7 +119,7 @@ export function UsersFormModal({
                 <div className="relative">
                   <Avatar
                     src={resolveMediaUrl(source.avatar_url)}
-                    alt={source.email}
+                    alt={source.name || source.email}
                     className="h-16 w-16 rounded-2xl border-2 border-main/30 shadow-sm"
                   />
                   <span
@@ -164,7 +167,7 @@ export function UsersFormModal({
 
             {/* Navigation Tabs */}
             <Tabs value={activeTab} onValueChange={setActiveTab} className="w-full">
-              <TabsList className="grid grid-cols-4 w-full h-11 bg-muted/60 p-1 rounded-xl">
+              <TabsList className="grid grid-cols-5 w-full h-11 bg-muted/60 p-1 rounded-xl">
                 {/* 1. Overview Tab */}
                 <TabsTrigger
                   value="overview"
@@ -180,7 +183,7 @@ export function UsersFormModal({
                   className="rounded-lg text-xs font-bold gap-1.5 data-[state=active]:bg-card data-[state=active]:text-foreground data-[state=active]:shadow-xs transition-all"
                 >
                   <Receipt className="h-3.5 w-3.5" />
-                  <span>{t('invoices')}</span>
+                  <span className="hidden sm:inline">{t('invoices')}</span>
                   {invoicesCount > 0 && (
                     <Badge className="h-4.5 px-1.5 text-[10px] bg-main/15 text-main font-black rounded-md border border-main/20">
                       {invoicesCount}
@@ -194,7 +197,7 @@ export function UsersFormModal({
                   className="rounded-lg text-xs font-bold gap-1.5 data-[state=active]:bg-card data-[state=active]:text-foreground data-[state=active]:shadow-xs transition-all"
                 >
                   <Users2 className="h-3.5 w-3.5" />
-                  <span>{t('familyMembers')}</span>
+                  <span className="hidden sm:inline">{t('familyMembers')}</span>
                   {familyMembersCount > 0 && (
                     <Badge className="h-4.5 px-1.5 text-[10px] bg-main/15 text-main font-black rounded-md border border-main/20">
                       {familyMembersCount}
@@ -202,7 +205,21 @@ export function UsersFormModal({
                   )}
                 </TabsTrigger>
 
-                {/* 4. Subscriptions Tab */}
+                {/* 4. Added Categories Tab */}
+                <TabsTrigger
+                  value="categories"
+                  className="rounded-lg text-xs font-bold gap-1.5 data-[state=active]:bg-card data-[state=active]:text-foreground data-[state=active]:shadow-xs transition-all"
+                >
+                  <FolderTree className="h-3.5 w-3.5" />
+                  <span className="hidden sm:inline">{t('addedCategories')}</span>
+                  {categoriesCount > 0 && (
+                    <Badge className="h-4.5 px-1.5 text-[10px] bg-main/15 text-main font-black rounded-md border border-main/20">
+                      {categoriesCount}
+                    </Badge>
+                  )}
+                </TabsTrigger>
+
+                {/* 5. Subscriptions Tab */}
                 <TabsTrigger
                   value="subscriptions"
                   className="rounded-lg text-xs font-bold gap-1.5 data-[state=active]:bg-card data-[state=active]:text-foreground data-[state=active]:shadow-xs transition-all"
@@ -220,9 +237,10 @@ export function UsersFormModal({
               {/* Tab 1: Overview & Profile Content */}
               <TabsContent value="overview" className="mt-4 space-y-4">
                 <div className="grid grid-cols-2 md:grid-cols-3 gap-3">
+                  <DetailField label={t('name')} value={source.name} icon={UserIcon} />
                   <DetailField label={t('gender')} value={source.gender_label ?? source.gender} icon={UserIcon} />
                   <DetailField label={t('age')} value={source.age ? `${source.age} ${t('year')}` : '-'} icon={Calendar} />
-                  <DetailField label={t('birthDate')} value={source.birth_date} icon={Calendar} />
+                  <DetailField label={t('birthDate')} value={source.date_of_birth} icon={Calendar} />
                   <DetailField label={t('preferredLanguage')} value={source.preferred_language ? t(source.preferred_language === 'ar' ? 'arabic' : 'english') : '-'} icon={Globe} />
                   <DetailField label={t('registeredAt')} value={source.created_at} icon={Calendar} />
                   <DetailField label={t('registrationCompletedAt')} value={source.registration_completed_at} icon={Calendar} />
@@ -249,7 +267,12 @@ export function UsersFormModal({
                 <UserFamilyMembersPanel user={source} onSelectUser={onSelectUser} />
               </TabsContent>
 
-              {/* Tab 4: Subscriptions Content */}
+              {/* Tab 4: Added Categories Content */}
+              <TabsContent value="categories" className="mt-4">
+                <UserCategoriesPanel userId={source.id} />
+              </TabsContent>
+
+              {/* Tab 5: Subscriptions Content */}
               <TabsContent value="subscriptions" className="mt-4">
                 {detail ? (
                   <UserSubscriptionsPanel user={detail} />
@@ -266,6 +289,7 @@ export function UsersFormModal({
         {/* Edit / Create Form (when !isViewOnly) */}
         {!isViewOnly && (
           <>
+            <BaseInputField name="name" label={t('name')} placeholder={t('name')} />
             <BaseInputField name="email" label={t('email')} type="email" required />
             <BaseInputField name="phone" label={t('phone')} required dir="ltr" />
             <BaseInputField
@@ -280,7 +304,13 @@ export function UsersFormModal({
               type="password"
               required={!editingItem}
             />
-            <BaseInputField name="birth_date" label={t('birthDate')} type="date" dir="ltr" />
+            <BaseInputField
+              name="date_of_birth"
+              label={t('birthDate')}
+              type="date"
+              dir="ltr"
+              disableFuture
+            />
             <div className="grid grid-cols-2 gap-4">
               <div className="flex flex-col gap-1.5">
                 <label className="text-xs font-bold text-muted-foreground uppercase tracking-wider">

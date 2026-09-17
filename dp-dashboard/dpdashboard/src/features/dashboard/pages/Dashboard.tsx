@@ -21,6 +21,7 @@ import {
   useDashboardAnalytics,
   useDashboardProgressGauge,
   useExportDashboardSummary,
+  useDashboardMenuCounts,
   type DashboardPeriod,
   type DashboardAnalyticsPeriod,
 } from '../api/useDashboard'
@@ -39,6 +40,8 @@ export default function Dashboard() {
   const { data: stats, isLoading: isStatsLoading } = useDashboardStats(statsPeriod)
   const { data: analytics, isLoading: isAnalyticsLoading } = useDashboardAnalytics(analyticsPeriod)
   const { data: progressGauge, isLoading: isGaugeLoading } = useDashboardProgressGauge()
+  const menuCounts = useDashboardMenuCounts(stats)
+  const isMenuCountsLoading = menuCounts.isLoading || (isStatsLoading && !stats)
   const exportMutation = useExportDashboardSummary()
 
   return (
@@ -46,10 +49,10 @@ export default function Dashboard() {
       {/* Title & Top Action Bar */}
       <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
         <div>
-          <h1 className="text-3xl font-extrabold tracking-tight text-[#111827]">
+          <h1 className="text-3xl font-extrabold tracking-tight text-[#111827] dark:text-white">
             {t('dashboard')}
           </h1>
-          <p className="text-sm text-gray-500 mt-1">{t('dashboardSubtitle')}</p>
+          <p className="text-sm text-gray-500 dark:text-gray-400 mt-1">{t('dashboardSubtitle')}</p>
         </div>
 
         <div className="flex flex-wrap items-center gap-3">
@@ -90,7 +93,7 @@ export default function Dashboard() {
       {/* KPI Cards Grid */}
       <div className="grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-4">
         {/* Total Invoices */}
-        <div className="bg-main text-white rounded-2xl p-5 shadow-sm flex flex-col justify-between h-36">
+        <div className="bg-main text-white rounded-2xl p-5 shadow-sm flex flex-col justify-between min-h-[9.5rem]">
           <div className="flex justify-between items-start">
             <span className="text-sm font-semibold opacity-90">{t('totalInvoices')}</span>
             <div className="h-8 w-8 rounded-full bg-white/20 flex items-center justify-center">
@@ -105,9 +108,9 @@ export default function Dashboard() {
                 {stats?.total_invoices?.total?.toLocaleString() ?? 0}
               </h2>
             )}
-            <div className="flex items-center gap-1.5 mt-2.5">
+            <div className="flex items-center gap-1.5 mt-2.5 min-w-0">
               {stats?.total_invoices?.change_percentage !== undefined && (
-                <span className="flex h-5 items-center justify-center gap-0.5 rounded-md bg-white/20 px-2 text-[10px] font-bold text-white">
+                <span className="flex-shrink-0 flex h-5 items-center justify-center gap-0.5 rounded-md bg-white/20 px-2 text-[10px] font-bold text-white">
                   {stats.total_invoices.change_direction === 'decrease' ? (
                     <ArrowDownRight className="h-3 w-3" />
                   ) : (
@@ -117,7 +120,10 @@ export default function Dashboard() {
                   {stats.total_invoices.change_percentage}%
                 </span>
               )}
-              <span className="text-[10px] opacity-80 font-medium truncate">
+              <span
+                className="text-[10px] opacity-80 font-medium truncate"
+                title={translateMetricText(stats?.total_invoices?.subtitle, t, isRtl, 'increaseFromLastMonth')}
+              >
                 {translateMetricText(stats?.total_invoices?.subtitle, t, isRtl, 'increaseFromLastMonth')}
               </span>
             </div>
@@ -125,7 +131,7 @@ export default function Dashboard() {
         </div>
 
         {/* Active Warranties */}
-        <div className="bg-white border border-gray-100 rounded-2xl p-5 shadow-xs flex flex-col justify-between h-36">
+        <div className="bg-white border border-gray-100 rounded-2xl p-5 shadow-xs flex flex-col justify-between min-h-[9.5rem]">
           <div className="flex justify-between items-start">
             <span className="text-sm font-semibold text-gray-500">{t('activeWarranties')}</span>
             <div className="h-8 w-8 rounded-full bg-emerald-50 flex items-center justify-center">
@@ -140,11 +146,19 @@ export default function Dashboard() {
                 {stats?.active_warranties?.total?.toLocaleString() ?? 0}
               </h2>
             )}
-            <div className="flex items-center gap-1.5 mt-2.5">
-              <span className="flex h-5 items-center justify-center rounded-md bg-emerald-50 px-2 text-[10px] font-bold text-emerald-700 border border-emerald-100">
+            <div className="flex items-center gap-1.5 mt-2.5 min-w-0">
+              <span className="flex-shrink-0 flex h-5 items-center justify-center rounded-md bg-emerald-50 px-2 text-[10px] font-bold text-emerald-700 border border-emerald-100">
                 {translateMetricText(stats?.active_warranties?.status, t, isRtl, 'active')}
               </span>
-              <span className="text-[10px] text-gray-400 font-semibold truncate">
+              <span
+                className="text-[10px] text-gray-400 font-semibold truncate"
+                title={
+                  translateMetricText(stats?.active_warranties?.subtitle, t, isRtl) ||
+                  (stats?.active_warranties?.expiring_soon_count !== undefined
+                    ? `${stats.active_warranties.expiring_soon_count} ${t('expiringWithin30Days')}`
+                    : '')
+                }
+              >
                 {translateMetricText(stats?.active_warranties?.subtitle, t, isRtl) ||
                   (stats?.active_warranties?.expiring_soon_count !== undefined
                     ? `${stats.active_warranties.expiring_soon_count} ${t('expiringWithin30Days')}`
@@ -155,7 +169,7 @@ export default function Dashboard() {
         </div>
 
         {/* Total Spending */}
-        <div className="bg-white border border-gray-100 rounded-2xl p-5 shadow-xs flex flex-col justify-between h-36">
+        <div className="bg-white border border-gray-100 rounded-2xl p-5 shadow-xs flex flex-col justify-between min-h-[9.5rem]">
           <div className="flex justify-between items-start">
             <span className="text-sm font-semibold text-gray-500">{t('totalSpending')}</span>
             <div className="h-8 w-8 rounded-full bg-indigo-50 flex items-center justify-center">
@@ -166,15 +180,20 @@ export default function Dashboard() {
             {isStatsLoading ? (
               <div className="h-9 w-32 bg-gray-100 rounded animate-pulse" />
             ) : (
-              <h2 className="text-2xl sm:text-3xl font-extrabold text-[#111827] tracking-tight">
-                {stats?.total_spending?.formatted
-                  ? `${stats.total_spending.formatted} SAR`
-                  : `${(stats?.total_spending?.total ?? 0).toLocaleString()} SAR`}
-              </h2>
+              <div className="flex items-baseline gap-1.5 flex-wrap">
+                <h2 className="text-2xl xl:text-3xl font-extrabold text-[#111827] tracking-tight">
+                  {stats?.total_spending?.formatted
+                    ? stats.total_spending.formatted
+                    : (stats?.total_spending?.total ?? 0).toLocaleString()}
+                </h2>
+                <span className="text-xs font-bold text-gray-400">
+                  {isRtl ? 'ر.س' : 'SAR'}
+                </span>
+              </div>
             )}
-            <div className="flex items-center gap-1.5 mt-2.5">
+            <div className="flex items-center gap-1.5 mt-2.5 min-w-0">
               {stats?.total_spending?.change_percentage !== undefined && (
-                <span className="flex h-5 items-center justify-center gap-0.5 rounded-md bg-green-50 px-2 text-[10px] font-bold text-emerald-700 border border-emerald-100">
+                <span className="flex-shrink-0 flex h-5 items-center justify-center gap-0.5 rounded-md bg-green-50 px-2 text-[10px] font-bold text-emerald-700 border border-emerald-100">
                   {stats.total_spending.change_direction === 'decrease' ? (
                     <ArrowDownRight className="h-3 w-3" />
                   ) : (
@@ -184,15 +203,18 @@ export default function Dashboard() {
                   {stats.total_spending.change_percentage}%
                 </span>
               )}
-              <span className="text-[10px] text-gray-400 font-semibold truncate">
-                {translateMetricText(stats?.total_spending?.subtitle, t, isRtl, 'increaseInSpendingFromLastMonth')}
+              <span
+                className="text-[10px] text-gray-400 font-semibold truncate"
+                title={translateMetricText(stats?.total_spending?.subtitle, t, isRtl, 'increaseFromLastMonth')}
+              >
+                {translateMetricText(stats?.total_spending?.subtitle, t, isRtl, 'increaseFromLastMonth')}
               </span>
             </div>
           </div>
         </div>
 
         {/* Active Users */}
-        <div className="bg-white border border-gray-100 rounded-2xl p-5 shadow-xs flex flex-col justify-between h-36">
+        <div className="bg-white border border-gray-100 rounded-2xl p-5 shadow-xs flex flex-col justify-between min-h-[9.5rem]">
           <div className="flex justify-between items-start">
             <span className="text-sm font-semibold text-gray-500">{t('activeUsers')}</span>
             <div className="h-8 w-8 rounded-full bg-blue-50 flex items-center justify-center">
@@ -207,9 +229,9 @@ export default function Dashboard() {
                 {stats?.active_users?.total?.toLocaleString() ?? 0}
               </h2>
             )}
-            <div className="flex items-center gap-1.5 mt-2.5">
+            <div className="flex items-center gap-1.5 mt-2.5 min-w-0">
               {stats?.active_users?.change_percentage !== undefined && (
-                <span className="flex h-5 items-center justify-center gap-0.5 rounded-md bg-blue-50 px-2 text-[10px] font-bold text-blue-700 border border-blue-100">
+                <span className="flex-shrink-0 flex h-5 items-center justify-center gap-0.5 rounded-md bg-blue-50 px-2 text-[10px] font-bold text-blue-700 border border-blue-100">
                   {stats.active_users.change_direction === 'decrease' ? (
                     <ArrowDownRight className="h-3 w-3" />
                   ) : (
@@ -219,7 +241,10 @@ export default function Dashboard() {
                   {stats.active_users.change_percentage}%
                 </span>
               )}
-              <span className="text-[10px] text-gray-400 font-semibold truncate">
+              <span
+                className="text-[10px] text-gray-400 font-semibold truncate"
+                title={translateMetricText(stats?.active_users?.subtitle, t, isRtl, 'increaseFromLastMonth')}
+              >
                 {translateMetricText(stats?.active_users?.subtitle, t, isRtl, 'increaseFromLastMonth')}
               </span>
             </div>
@@ -239,64 +264,126 @@ export default function Dashboard() {
             isLoading={isAnalyticsLoading}
           />
 
-          {/* Quick Domain Management Shortcuts */}
+          {/* Quick Domain Management Shortcuts with Live Counts */}
           <Card className="border border-gray-100 rounded-2xl shadow-xs bg-white">
-            <div className="p-6 pb-3 border-b border-gray-50">
-              <h3 className="font-bold text-[#111827] text-base">
-                {t('menu')}
-              </h3>
-              <p className="text-xs text-gray-400 mt-0.5">
-                {t('dashboardSubtitle')}
-              </p>
+            <div className="p-6 pb-4 border-b border-gray-50 flex items-center justify-between">
+              <div>
+                <h3 className="font-bold text-[#111827] text-base">
+                  {t('menu')}
+                </h3>
+                <p className="text-xs text-gray-400 mt-0.5">
+                  {t('dashboardMenuSubtitle')}
+                </p>
+              </div>
             </div>
             <CardContent className="p-6">
               <div className="grid grid-cols-2 sm:grid-cols-4 gap-4">
+                {/* Users */}
                 <Link
                   to="/users"
-                  className="flex flex-col items-center justify-center p-4 rounded-xl border border-gray-100 bg-gray-50/50 hover:bg-main/5 hover:border-main/20 hover:text-main transition-all group"
+                  className="relative flex flex-col justify-between p-4 rounded-xl border border-gray-100/90 bg-white hover:border-blue-200 hover:shadow-md hover:-translate-y-0.5 transition-all duration-200 group"
                 >
-                  <div className="h-10 w-10 rounded-xl bg-blue-50 text-blue-600 flex items-center justify-center mb-2 group-hover:scale-105 transition-transform">
-                    <Users className="h-5 w-5" />
+                  <div className="flex items-center justify-between mb-3 w-full">
+                    <div className="h-10 w-10 rounded-xl bg-blue-50 border border-blue-100/60 text-blue-600 flex items-center justify-center group-hover:scale-105 group-hover:bg-blue-600 group-hover:text-white transition-all">
+                      <Users className="h-5 w-5" />
+                    </div>
+                    <span className="opacity-0 group-hover:opacity-100 transition-opacity text-blue-600">
+                      <ArrowUpRight className="h-4 w-4" />
+                    </span>
                   </div>
-                  <span className="text-xs font-bold text-gray-700 group-hover:text-main text-center">
-                    {t('users')}
-                  </span>
+                  <div>
+                    {isMenuCountsLoading ? (
+                      <div className="h-7 w-14 bg-gray-100 rounded animate-pulse mb-1" />
+                    ) : (
+                      <div className="text-2xl font-extrabold text-[#111827] tracking-tight group-hover:text-blue-600 transition-colors">
+                        {menuCounts.users.toLocaleString()}
+                      </div>
+                    )}
+                    <span className="text-xs font-semibold text-gray-500 block mt-0.5">
+                      {t('users')}
+                    </span>
+                  </div>
                 </Link>
 
+                {/* Warranty Periods */}
                 <Link
                   to="/warranty-periods"
-                  className="flex flex-col items-center justify-center p-4 rounded-xl border border-gray-100 bg-gray-50/50 hover:bg-main/5 hover:border-main/20 hover:text-main transition-all group"
+                  className="relative flex flex-col justify-between p-4 rounded-xl border border-gray-100/90 bg-white hover:border-amber-200 hover:shadow-md hover:-translate-y-0.5 transition-all duration-200 group"
                 >
-                  <div className="h-10 w-10 rounded-xl bg-amber-50 text-amber-600 flex items-center justify-center mb-2 group-hover:scale-105 transition-transform">
-                    <ShieldAlert className="h-5 w-5" />
+                  <div className="flex items-center justify-between mb-3 w-full">
+                    <div className="h-10 w-10 rounded-xl bg-amber-50 border border-amber-100/60 text-amber-600 flex items-center justify-center group-hover:scale-105 group-hover:bg-amber-600 group-hover:text-white transition-all">
+                      <ShieldAlert className="h-5 w-5" />
+                    </div>
+                    <span className="opacity-0 group-hover:opacity-100 transition-opacity text-amber-600">
+                      <ArrowUpRight className="h-4 w-4" />
+                    </span>
                   </div>
-                  <span className="text-xs font-bold text-gray-700 group-hover:text-main text-center">
-                    {t('warrantyPeriods')}
-                  </span>
+                  <div>
+                    {isMenuCountsLoading ? (
+                      <div className="h-7 w-14 bg-gray-100 rounded animate-pulse mb-1" />
+                    ) : (
+                      <div className="text-2xl font-extrabold text-[#111827] tracking-tight group-hover:text-amber-600 transition-colors">
+                        {menuCounts.warrantyPeriods.toLocaleString()}
+                      </div>
+                    )}
+                    <span className="text-xs font-semibold text-gray-500 block mt-0.5">
+                      {t('warrantyPeriods')}
+                    </span>
+                  </div>
                 </Link>
 
+                {/* Categories */}
                 <Link
                   to="/categories"
-                  className="flex flex-col items-center justify-center p-4 rounded-xl border border-gray-100 bg-gray-50/50 hover:bg-main/5 hover:border-main/20 hover:text-main transition-all group"
+                  className="relative flex flex-col justify-between p-4 rounded-xl border border-gray-100/90 bg-white hover:border-emerald-200 hover:shadow-md hover:-translate-y-0.5 transition-all duration-200 group"
                 >
-                  <div className="h-10 w-10 rounded-xl bg-emerald-50 text-emerald-600 flex items-center justify-center mb-2 group-hover:scale-105 transition-transform">
-                    <FolderTree className="h-5 w-5" />
+                  <div className="flex items-center justify-between mb-3 w-full">
+                    <div className="h-10 w-10 rounded-xl bg-emerald-50 border border-emerald-100/60 text-emerald-600 flex items-center justify-center group-hover:scale-105 group-hover:bg-emerald-600 group-hover:text-white transition-all">
+                      <FolderTree className="h-5 w-5" />
+                    </div>
+                    <span className="opacity-0 group-hover:opacity-100 transition-opacity text-emerald-600">
+                      <ArrowUpRight className="h-4 w-4" />
+                    </span>
                   </div>
-                  <span className="text-xs font-bold text-gray-700 group-hover:text-main text-center">
-                    {t('categories')}
-                  </span>
+                  <div>
+                    {isMenuCountsLoading ? (
+                      <div className="h-7 w-14 bg-gray-100 rounded animate-pulse mb-1" />
+                    ) : (
+                      <div className="text-2xl font-extrabold text-[#111827] tracking-tight group-hover:text-emerald-600 transition-colors">
+                        {menuCounts.categories.toLocaleString()}
+                      </div>
+                    )}
+                    <span className="text-xs font-semibold text-gray-500 block mt-0.5">
+                      {t('categories')}
+                    </span>
+                  </div>
                 </Link>
 
+                {/* Reports */}
                 <Link
                   to="/reports"
-                  className="flex flex-col items-center justify-center p-4 rounded-xl border border-gray-100 bg-gray-50/50 hover:bg-main/5 hover:border-main/20 hover:text-main transition-all group"
+                  className="relative flex flex-col justify-between p-4 rounded-xl border border-gray-100/90 bg-white hover:border-purple-200 hover:shadow-md hover:-translate-y-0.5 transition-all duration-200 group"
                 >
-                  <div className="h-10 w-10 rounded-xl bg-purple-50 text-purple-600 flex items-center justify-center mb-2 group-hover:scale-105 transition-transform">
-                    <FileSpreadsheet className="h-5 w-5" />
+                  <div className="flex items-center justify-between mb-3 w-full">
+                    <div className="h-10 w-10 rounded-xl bg-purple-50 border border-purple-100/60 text-purple-600 flex items-center justify-center group-hover:scale-105 group-hover:bg-purple-600 group-hover:text-white transition-all">
+                      <FileSpreadsheet className="h-5 w-5" />
+                    </div>
+                    <span className="opacity-0 group-hover:opacity-100 transition-opacity text-purple-600">
+                      <ArrowUpRight className="h-4 w-4" />
+                    </span>
                   </div>
-                  <span className="text-xs font-bold text-gray-700 group-hover:text-main text-center">
-                    {t('reports')}
-                  </span>
+                  <div>
+                    {isMenuCountsLoading ? (
+                      <div className="h-7 w-14 bg-gray-100 rounded animate-pulse mb-1" />
+                    ) : (
+                      <div className="text-2xl font-extrabold text-[#111827] tracking-tight group-hover:text-purple-600 transition-colors">
+                        {menuCounts.reports.toLocaleString()}
+                      </div>
+                    )}
+                    <span className="text-xs font-semibold text-gray-500 block mt-0.5">
+                      {t('reports')}
+                    </span>
+                  </div>
                 </Link>
               </div>
             </CardContent>

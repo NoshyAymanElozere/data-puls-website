@@ -101,6 +101,7 @@ export default function FamilyRelationsPage() {
 
   const columnDefs = getFamilyRelationsColumnDefs({
     t,
+    isRtl,
     onView: handleView,
     onEdit: handleEdit,
     onDelete: handleDeletePrompt,

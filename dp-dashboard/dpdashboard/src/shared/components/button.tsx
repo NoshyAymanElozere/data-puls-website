@@ -1,6 +1,7 @@
 import * as React from 'react'
 import { Slot } from '@radix-ui/react-slot'
 import { cva, type VariantProps } from 'class-variance-authority'
+import i18n from '@/shared/i18n/i18n'
 import { cn } from '@/shared/utils/utils'
 
 const buttonVariants = cva(
@@ -71,8 +72,8 @@ const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
                 d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4z"
               />
             </svg>
-            <span className="sr-only">Loading...</span>
-            {typeof document !== 'undefined' && document.documentElement.dir === 'rtl' ? 'جاري التحميل...' : 'Loading...'}
+            <span className="sr-only">{i18n.isInitialized ? i18n.t('loading') : 'Loading...'}</span>
+            {i18n.isInitialized ? i18n.t('loading') : 'Loading...'}
           </>
         ) : (
           children

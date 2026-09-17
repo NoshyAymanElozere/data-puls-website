@@ -10,6 +10,7 @@ export interface UserSubscriptionPackage {
   name: string
   description?: string | null
   maximum_family_members: number
+  maximum_invoices?: number | null
   is_active: boolean
   sort_order: number
   prices?: SubscriptionPackagePrice[]

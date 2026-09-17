@@ -1,5 +1,6 @@
 import axios, { type AxiosError } from 'axios'
 import toast from 'react-hot-toast'
+import i18n from '@/shared/i18n/i18n'
 import { AUTH_TOKEN_KEY, eraseCookie, getCookie } from '@/shared/utils/cookies'
 import { getAdminApiBaseUrl } from '@/shared/utils/public-api-url'
 
@@ -18,9 +19,11 @@ export function getValidationErrors(error: unknown): LaravelValidationErrors | n
   return axiosError?.response?.data?.errors ?? null
 }
 
-export function getErrorMessage(error: unknown, fallback = 'Something went wrong'): string {
+export function getErrorMessage(error: unknown, fallback?: string): string {
+  const defaultFallback = i18n.isInitialized ? i18n.t('somethingWentWrong') : 'Something went wrong.'
+  const resolvedFallback = fallback ?? defaultFallback
   const axiosError = error as AxiosError<{ message?: string }>
-  return axiosError?.response?.data?.message ?? axiosError?.message ?? fallback
+  return axiosError?.response?.data?.message ?? axiosError?.message ?? resolvedFallback
 }
 
 api.interceptors.request.use(
@@ -49,12 +52,12 @@ api.interceptors.response.use(
     if (status === 401) {
       eraseCookie(AUTH_TOKEN_KEY)
       if (error?.config?.url && !String(error.config.url).includes('/login')) {
-        toast.error('Session expired. Please log in again.')
+        toast.error(i18n.t('sessionExpired'))
       }
     } else if (status === 403) {
-      toast.error('You do not have permission to perform this action.')
+      toast.error(i18n.t('noActionPermission'))
     } else if (status >= 500) {
-      toast.error('Server error. Please try again later.')
+      toast.error(i18n.t('serverError'))
     } else if (status === 422) {
       toast.error(message)
     }

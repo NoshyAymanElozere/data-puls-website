@@ -81,7 +81,7 @@ export function Header({ onMenuClick }: HeaderProps) {
           </Button>
         )}
         <AppLogo className="h-8 max-w-[7rem] object-contain md:hidden" />
-        <h1 className="text-base font-semibold">{title}</h1>
+        <h1 className="text-base font-semibold text-foreground dark:text-white">{title}</h1>
       </div>
 
       <div className="flex items-center gap-2">

@@ -1,5 +1,6 @@
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query'
 import toast from 'react-hot-toast'
+import i18n from '@/shared/i18n/i18n'
 import api, { getErrorMessage } from '@/shared/services/axios'
 import type { SuccessResponse } from '@/shared/types/laravel'
 import type { FamilyMemberItem, FamilyMemberPermissions } from '../types/family'
@@ -37,10 +38,10 @@ export function useUpdateFamilyMemberPermissions(ownerId: number | null | undefi
     },
     onSuccess: (res) => {
       qc.invalidateQueries({ queryKey: ['user-family-members', ownerId] })
-      toast.success(res.message || 'Permissions updated successfully.')
+      toast.success(res.message || i18n.t('permissionsUpdated'))
     },
     onError: (error) => {
-      toast.error(getErrorMessage(error, 'Failed to update permissions.'))
+      toast.error(getErrorMessage(error, i18n.t('permissionsUpdateFailed')))
     },
   })
 }
@@ -64,10 +65,10 @@ export function useUpdateFamilyMemberRelation(ownerId: number | null | undefined
     },
     onSuccess: (res) => {
       qc.invalidateQueries({ queryKey: ['user-family-members', ownerId] })
-      toast.success(res.message || 'Relation updated successfully.')
+      toast.success(res.message || i18n.t('relationUpdated'))
     },
     onError: (error) => {
-      toast.error(getErrorMessage(error, 'Failed to update relation.'))
+      toast.error(getErrorMessage(error, i18n.t('relationUpdateFailed')))
     },
   })
 }
@@ -85,10 +86,10 @@ export function useUnlinkFamilyMember(ownerId: number | null | undefined) {
     onSuccess: (res) => {
       qc.invalidateQueries({ queryKey: ['user-family-members', ownerId] })
       qc.invalidateQueries({ queryKey: ['user', ownerId] })
-      toast.success(res?.message || 'Family member unlinked successfully.')
+      toast.success(res?.message || i18n.t('familyMemberUnlinked'))
     },
     onError: (error) => {
-      toast.error(getErrorMessage(error, 'Failed to unlink family member.'))
+      toast.error(getErrorMessage(error, i18n.t('familyMemberUnlinkFailed')))
     },
   })
 }

@@ -1,6 +1,7 @@
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query'
 import { useNavigate } from 'react-router-dom'
 import toast from 'react-hot-toast'
+import i18n from '@/shared/i18n/i18n'
 import api, { getErrorMessage } from '@/shared/services/axios'
 import type { Admin, ChangePasswordPayload } from '@/shared/types/admin'
 import { AUTH_TOKEN_KEY, eraseCookie, getCookie, setCookie } from '@/shared/utils/cookies'
@@ -35,11 +36,11 @@ export function useLogin() {
     onSuccess: (data) => {
       setCookie(AUTH_TOKEN_KEY, data.data.token)
       queryClient.setQueryData(['auth-user'], data.data.admin)
-      toast.success(data.message || 'Logged in successfully.')
+      toast.success(data.message || i18n.t('loggedInSuccessfully'))
       navigate('/')
     },
     onError: (error) => {
-      toast.error(getErrorMessage(error, 'Invalid credentials.'))
+      toast.error(getErrorMessage(error, i18n.t('invalidCredentials')))
     },
   })
 }
@@ -71,14 +72,14 @@ export function useLogout() {
       eraseCookie(AUTH_TOKEN_KEY)
       disconnectEcho()
       queryClient.clear()
-      toast.success(data.message || 'Logged out successfully.')
+      toast.success(data.message || i18n.t('loggedOutSuccessfully'))
       navigate('/login')
     },
     onError: () => {
       eraseCookie(AUTH_TOKEN_KEY)
       disconnectEcho()
       queryClient.clear()
-      toast.success('Logged out successfully.')
+      toast.success(i18n.t('loggedOutSuccessfully'))
       navigate('/login')
     },
   })
@@ -91,11 +92,11 @@ export function useChangePassword(setError?: UseFormSetError<ChangePasswordPaylo
       return response.data
     },
     onSuccess: (data) => {
-      toast.success(data.message || 'Password changed successfully.')
+      toast.success(data.message || i18n.t('passwordChangedSuccess'))
     },
     onError: (error) => {
       if (setError && applyValidationErrors(error, setError)) return
-      toast.error(getErrorMessage(error, 'Failed to change password.'))
+      toast.error(getErrorMessage(error, i18n.t('passwordChangeFailed')))
     },
   })
 }

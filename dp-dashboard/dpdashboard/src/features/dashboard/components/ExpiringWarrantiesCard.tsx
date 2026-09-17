@@ -34,7 +34,7 @@ export function ExpiringWarrantiesCard({ onViewAll }: ExpiringWarrantiesCardProp
         </div>
 
         <button
-          onClick={() => (onViewAll ? onViewAll() : navigate('/warranty-periods'))}
+          onClick={() => (onViewAll ? onViewAll() : navigate('/expiring-warranties'))}
           className="flex items-center gap-1 text-[11px] font-bold text-main hover:opacity-80 transition-opacity"
         >
           {t('view')} {isRtl ? <ArrowLeft className="h-3 w-3" /> : <ArrowRight className="h-3 w-3" />}
@@ -56,11 +56,13 @@ export function ExpiringWarrantiesCard({ onViewAll }: ExpiringWarrantiesCardProp
         ) : (
           <div className="space-y-3">
             {warranties.slice(0, 5).map((item: ExpiringWarranty) => {
-              const isUrgent = item.days_remaining <= 15
+              const roundedDays = Math.max(0, Math.ceil(Number(item.days_remaining) || 0))
+              const isUrgent = roundedDays <= 15
               return (
                 <div
                   key={item.id}
-                  className="flex items-center justify-between p-3 rounded-xl border border-gray-50 bg-gray-50/40 hover:bg-gray-50 transition-colors"
+                  onClick={() => navigate('/expiring-warranties')}
+                  className="flex items-center justify-between p-3 rounded-xl border border-gray-50 bg-gray-50/40 hover:bg-gray-100/70 cursor-pointer transition-colors"
                 >
                   <div className="flex items-center gap-3 min-w-0">
                     <div
@@ -100,7 +102,7 @@ export function ExpiringWarrantiesCard({ onViewAll }: ExpiringWarrantiesCardProp
                           : 'bg-amber-50 text-amber-700 border-amber-200'
                       }`}
                     >
-                      {item.days_remaining} {t('daysRemaining')}
+                      {roundedDays} {t('daysRemaining')}
                     </Badge>
                     <span className="text-[10px] text-gray-400 mt-1">
                       {item.formatted_due_date || item.due_date}

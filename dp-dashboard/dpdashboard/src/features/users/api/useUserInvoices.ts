@@ -1,5 +1,6 @@
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query'
 import toast from 'react-hot-toast'
+import i18n from '@/shared/i18n/i18n'
 import api, { getErrorMessage } from '@/shared/services/axios'
 import type { LaravelPaginatedResponse, SuccessResponse } from '@/shared/types/laravel'
 import { buildQueryParams } from '@/shared/utils/query-params'
@@ -38,13 +39,14 @@ export function useUserInvoiceDetail(
   return useQuery({
     queryKey: ['user-invoice-detail', userId, invoiceId],
     queryFn: async () => {
-      if (!userId || !invoiceId) return null
-      const response = await api.get<SuccessResponse<InvoiceDetail>>(
-        `/users/${userId}/invoices/${invoiceId}`
-      )
+      if (!invoiceId) return null
+      const url = userId
+        ? `/users/${userId}/invoices/${invoiceId}`
+        : `/invoices/${invoiceId}`
+      const response = await api.get<SuccessResponse<InvoiceDetail>>(url)
       return response.data.data
     },
-    enabled: !!userId && !!invoiceId,
+    enabled: !!invoiceId,
   })
 }
 
@@ -61,10 +63,10 @@ export function useDeleteUserInvoice(userId: number | null | undefined) {
     onSuccess: (res) => {
       qc.invalidateQueries({ queryKey: ['user-invoices', userId] })
       qc.invalidateQueries({ queryKey: ['user', userId] })
-      toast.success(res?.message || 'Invoice deleted successfully.')
+      toast.success(res?.message || i18n.t('invoiceDeleted'))
     },
     onError: (error) => {
-      toast.error(getErrorMessage(error, 'Failed to delete invoice.'))
+      toast.error(getErrorMessage(error, i18n.t('invoiceDeleteFailed')))
     },
   })
 }

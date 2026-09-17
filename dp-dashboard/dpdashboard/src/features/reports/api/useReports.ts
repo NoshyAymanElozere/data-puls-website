@@ -1,5 +1,6 @@
 import { useMutation, useQuery } from '@tanstack/react-query'
 import toast from 'react-hot-toast'
+import i18n from '@/shared/i18n/i18n'
 import api, { getErrorMessage } from '@/shared/services/axios'
 import type { SuccessResponse } from '@/shared/types/laravel'
 import { buildQueryParams } from '@/shared/utils/query-params'
@@ -494,10 +495,14 @@ export function useExportReport() {
       return data
     },
     onSuccess: (data) => {
-      toast.success(`Report "${data.filename}" generated successfully (${data.records_count} records).`)
+      if (data?.filename) {
+        toast.success(i18n.t('reportGeneratedSuccess', { filename: data.filename, count: data.records_count }))
+      } else {
+        toast.success(i18n.t('exportSuccess'))
+      }
     },
     onError: (error) => {
-      toast.error(getErrorMessage(error, 'Failed to generate report export.'))
+      toast.error(getErrorMessage(error, i18n.t('exportFailed')))
     },
   })
 }

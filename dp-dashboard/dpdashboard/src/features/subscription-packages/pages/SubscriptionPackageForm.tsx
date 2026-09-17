@@ -4,6 +4,7 @@ import { Plus, Trash2 } from 'lucide-react'
 import { BaseInputField } from '@/shared/components/base-input-field'
 import { Button } from '@/shared/components/button'
 import { FormStatusField } from '@/shared/components/FormStatusField'
+import { cn } from '@/shared/utils/utils'
 import type { SubscriptionPackageFormValues } from './validationSchema'
 
 interface SubscriptionPackageFormProps {
@@ -33,7 +34,7 @@ export function SubscriptionPackageForm({ disabled = false }: SubscriptionPackag
         <BaseInputField name="descriptionEn" label={`${t('description')} (${t('englishName')})`} disabled={disabled} />
       </div>
 
-      <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
         <BaseInputField
           name="maximum_family_members"
           label={t('maximumFamilyMembers')}
@@ -41,6 +42,75 @@ export function SubscriptionPackageForm({ disabled = false }: SubscriptionPackag
           required
           disabled={disabled}
         />
+
+        <Controller
+          name="maximum_invoices"
+          control={control}
+          render={({ field, fieldState: { error } }) => {
+            const isUnlimited = field.value === null || field.value === undefined
+            const rawError = error?.message
+            const displayError = rawError ? t(rawError) : undefined
+
+            return (
+              <div className="w-full space-y-1.5">
+                <div className="flex items-center justify-between">
+                  <label className="text-xs font-bold text-gray-500 uppercase tracking-wider">
+                    {t('maximumInvoices')}
+                  </label>
+                  <label
+                    className={cn(
+                      'flex items-center gap-1.5 text-xs font-medium cursor-pointer select-none transition-colors',
+                      isUnlimited ? 'text-main font-semibold' : 'text-muted-foreground hover:text-foreground',
+                      disabled && 'opacity-60 cursor-not-allowed'
+                    )}
+                  >
+                    <input
+                      type="checkbox"
+                      checked={isUnlimited}
+                      disabled={disabled}
+                      onChange={(e) => {
+                        if (e.target.checked) {
+                          field.onChange(null)
+                        } else {
+                          field.onChange(0)
+                        }
+                      }}
+                      className="h-3.5 w-3.5 rounded border-border text-main focus:ring-main cursor-pointer"
+                    />
+                    <span>{t('unlimited')}</span>
+                  </label>
+                </div>
+
+                <div className="relative flex items-center">
+                  <input
+                    type="number"
+                    min={0}
+                    dir="ltr"
+                    disabled={disabled || isUnlimited}
+                    value={isUnlimited ? '' : (field.value ?? '')}
+                    onChange={(e) => {
+                      const val = e.target.value
+                      field.onChange(val === '' ? '' : Number(val))
+                    }}
+                    placeholder={isUnlimited ? t('unlimited') : '0'}
+                    className={cn(
+                      'w-full h-10 px-3.5 rounded-xl border border-gray-200 bg-white text-sm text-gray-800 placeholder-gray-400 focus:outline-none focus:ring-1 focus:ring-main focus:border-main transition-all',
+                      displayError && 'border-rose-500 focus:ring-rose-500 focus:border-rose-500',
+                      (disabled || isUnlimited) &&
+                        'bg-gray-100/80 border-gray-200/80 text-gray-600 opacity-95 cursor-not-allowed select-none shadow-none focus:ring-0 focus:border-gray-200/80'
+                    )}
+                    style={{
+                      fontVariantNumeric: 'lining-nums tabular-nums',
+                      fontFeatureSettings: '"lnum" on, "tnum" on',
+                    }}
+                  />
+                </div>
+                {displayError && <p className="text-xs text-rose-500 font-semibold">{displayError}</p>}
+              </div>
+            )
+          }}
+        />
+
         <BaseInputField name="sort_order" label={t('sortOrder')} type="number" disabled={disabled} />
         <div className="flex flex-col gap-1.5">
           <label className="text-xs font-bold text-gray-500 uppercase tracking-wider">{t('status')}</label>

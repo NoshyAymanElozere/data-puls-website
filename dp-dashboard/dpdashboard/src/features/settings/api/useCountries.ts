@@ -1,5 +1,6 @@
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query'
 import toast from 'react-hot-toast'
+import i18n from '@/shared/i18n/i18n'
 import api, { getErrorMessage } from '@/shared/services/axios'
 import type { LaravelPaginatedResponse, SuccessResponse, Translatable } from '@/shared/types/laravel'
 import { appendTranslatable, createPutFormData } from '@/shared/utils/form-data'
@@ -101,11 +102,11 @@ export function useCreateCountry(setError?: UseFormSetError<CountryFormData>) {
     onSuccess: (res) => {
       qc.invalidateQueries({ queryKey: ['countries-list'] })
       qc.invalidateQueries({ queryKey: ['countries-active'] })
-      toast.success(res.message || 'Country created successfully.')
+      toast.success(res.message || i18n.t('countryCreated'))
     },
     onError: (error) => {
       if (setError && applyValidationErrors(error, setError)) return
-      toast.error(getErrorMessage(error, 'Failed to create country.'))
+      toast.error(getErrorMessage(error, i18n.t('countryCreateFailed')))
     },
   })
 }
@@ -125,11 +126,11 @@ export function useUpdateCountry(setError?: UseFormSetError<CountryFormData>) {
       qc.invalidateQueries({ queryKey: ['countries-list'] })
       qc.invalidateQueries({ queryKey: ['countries-active'] })
       qc.invalidateQueries({ queryKey: ['country', variables.id] })
-      toast.success(res.message || 'Country updated successfully.')
+      toast.success(res.message || i18n.t('countryUpdated'))
     },
     onError: (error) => {
       if (setError && applyValidationErrors(error, setError)) return
-      toast.error(getErrorMessage(error, 'Failed to update country.'))
+      toast.error(getErrorMessage(error, i18n.t('countryUpdateFailed')))
     },
   })
 }
@@ -145,10 +146,10 @@ export function useToggleCountryStatus() {
     onSuccess: (res) => {
       qc.invalidateQueries({ queryKey: ['countries-list'] })
       qc.invalidateQueries({ queryKey: ['countries-active'] })
-      toast.success(res.message || 'Country status updated successfully.')
+      toast.success(res.message || i18n.t('countryStatusUpdated'))
     },
     onError: (error) => {
-      toast.error(getErrorMessage(error, 'Failed to toggle country status.'))
+      toast.error(getErrorMessage(error, i18n.t('countryStatusFailed')))
     },
   })
 }
@@ -163,10 +164,10 @@ export function useDeleteCountry() {
     onSuccess: () => {
       qc.invalidateQueries({ queryKey: ['countries-list'] })
       qc.invalidateQueries({ queryKey: ['countries-active'] })
-      toast.success('Country deleted successfully.')
+      toast.success(i18n.t('countryDeleted'))
     },
     onError: (error) => {
-      toast.error(getErrorMessage(error, 'Failed to delete country.'))
+      toast.error(getErrorMessage(error, i18n.t('countryDeleteFailed')))
     },
   })
 }

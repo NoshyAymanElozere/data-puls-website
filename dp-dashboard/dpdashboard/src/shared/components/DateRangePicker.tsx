@@ -139,45 +139,41 @@ export function DateRangePicker({
           </button>
         </Popover.Trigger>
 
-        <Popover.Content
-          align="start"
-          className="z-[9999] rounded-2xl border border-border/80 bg-card p-4 shadow-xl flex flex-col md:flex-row gap-4 animate-in fade-in slide-in-from-top-1 duration-150"
-        >
-          {/* Presets Sidebar */}
-          <div className="flex flex-col gap-1 border-r border-border/40 pr-2 min-w-[140px] rtl:border-r-0 rtl:border-l rtl:pr-0 rtl:pl-2">
-            <span className="text-[10px] font-bold text-gray-400 uppercase tracking-wider mb-2 px-2">
-              {t('presets') || 'Presets'}
-            </span>
-            {presets.map((preset, idx) => (
-              <button
-                key={idx}
-                type="button"
-                onClick={() => applyPreset(preset)}
-                className="w-full text-left rtl:text-right px-2.5 py-1.5 text-xs font-semibold rounded-lg hover:bg-main/5 hover:text-main text-foreground/90 transition-colors cursor-pointer"
-              >
-                {preset.label}
-              </button>
-            ))}
-          </div>
+        <Popover.Portal>
+          <Popover.Content
+            align="start"
+            sideOffset={4}
+            className="z-[99999] rounded-2xl border border-border/80 bg-card p-4 shadow-xl flex flex-col md:flex-row gap-4 animate-in fade-in slide-in-from-top-1 duration-150 text-foreground"
+          >
+            {/* Presets Sidebar */}
+            <div className="flex flex-col gap-1 border-r border-border/40 pr-2 min-w-[140px] rtl:border-r-0 rtl:border-l rtl:pr-0 rtl:pl-2">
+              <span className="text-[10px] font-bold text-gray-400 uppercase tracking-wider mb-2 px-2">
+                {t('presets') || 'Presets'}
+              </span>
+              {presets.map((preset, idx) => (
+                <button
+                  key={idx}
+                  type="button"
+                  onClick={() => applyPreset(preset)}
+                  className="w-full text-left rtl:text-right px-2.5 py-1.5 text-xs font-semibold rounded-lg hover:bg-main/5 hover:text-main text-foreground/90 transition-colors cursor-pointer"
+                >
+                  {preset.label}
+                </button>
+              ))}
+            </div>
 
-          {/* DayPicker Calendar */}
-          <div className="react-day-picker-container bg-white rounded-xl p-1">
-            <DayPicker
-              mode="range"
-              selected={selectedRange}
-              onSelect={handleSelect}
-              locale={dateLocale}
-              className="m-0 border-0"
-              classNames={{
-                selected: 'bg-main text-white hover:bg-main hover:text-white rounded-lg',
-                range_middle: 'bg-main/10 text-main rounded-none',
-                range_start: 'bg-main text-white rounded-l-lg rounded-r-none',
-                range_end: 'bg-main text-white rounded-r-lg rounded-l-none',
-                today: 'text-main font-bold border-b-2 border-main'
-              }}
-            />
-          </div>
-        </Popover.Content>
+            {/* DayPicker Calendar */}
+            <div className="react-day-picker-container bg-card rounded-xl p-1 text-foreground">
+              <DayPicker
+                mode="range"
+                selected={selectedRange}
+                onSelect={handleSelect}
+                locale={dateLocale}
+                className="m-0 border-0"
+              />
+            </div>
+          </Popover.Content>
+        </Popover.Portal>
       </Popover.Root>
 
       {hasError && (

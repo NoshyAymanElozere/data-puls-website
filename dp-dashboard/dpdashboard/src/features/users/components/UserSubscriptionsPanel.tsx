@@ -185,6 +185,15 @@ export function UserSubscriptionsPanel({ user }: UserSubscriptionsPanelProps) {
                 value={active.package.maximum_family_members}
                 t={t}
               />
+              <DetailField
+                label={t('maximumInvoices')}
+                value={
+                  active.package.maximum_invoices === null || active.package.maximum_invoices === undefined
+                    ? t('unlimited')
+                    : active.package.maximum_invoices
+                }
+                t={t}
+              />
             </div>
             {(active.package.features?.length ?? 0) > 0 && (
               <div>

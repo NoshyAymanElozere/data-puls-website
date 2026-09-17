@@ -1,5 +1,6 @@
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query'
 import toast from 'react-hot-toast'
+import i18n from '@/shared/i18n/i18n'
 import api, { getErrorMessage } from '@/shared/services/axios'
 import type { LaravelPaginatedResponse, SuccessResponse, Translatable } from '@/shared/types/laravel'
 import { appendOptionalFile, appendTranslatable, createPutFormData } from '@/shared/utils/form-data'
@@ -78,11 +79,11 @@ export function useCreatePageSection(setError?: UseFormSetError<PageSectionFormD
     onSuccess: (res, variables) => {
       qc.invalidateQueries({ queryKey: ['page-sections-list', variables.pageId] })
       qc.invalidateQueries({ queryKey: ['page', variables.pageId] })
-      toast.success(res.message || 'Section created successfully.')
+      toast.success(res.message || i18n.t('sectionCreated'))
     },
     onError: (error) => {
       if (setError && applyValidationErrors(error, setError)) return
-      toast.error(getErrorMessage(error, 'Failed to create section.'))
+      toast.error(getErrorMessage(error, i18n.t('sectionCreateFailed')))
     },
   })
 }
@@ -110,11 +111,11 @@ export function useUpdatePageSection(setError?: UseFormSetError<PageSectionFormD
       qc.invalidateQueries({ queryKey: ['page-sections-list', variables.pageId] })
       qc.invalidateQueries({ queryKey: ['page-section', variables.id] })
       qc.invalidateQueries({ queryKey: ['page', variables.pageId] })
-      toast.success(res.message || 'Section updated successfully.')
+      toast.success(res.message || i18n.t('sectionUpdated'))
     },
     onError: (error) => {
       if (setError && applyValidationErrors(error, setError)) return
-      toast.error(getErrorMessage(error, 'Failed to update section.'))
+      toast.error(getErrorMessage(error, i18n.t('sectionUpdateFailed')))
     },
   })
 }
@@ -130,10 +131,10 @@ export function useDeletePageSection() {
     onSuccess: (pageId) => {
       qc.invalidateQueries({ queryKey: ['page-sections-list', pageId] })
       qc.invalidateQueries({ queryKey: ['page', pageId] })
-      toast.success('Section deleted successfully.')
+      toast.success(i18n.t('sectionDeleted'))
     },
     onError: (error) => {
-      toast.error(getErrorMessage(error, 'Failed to delete section.'))
+      toast.error(getErrorMessage(error, i18n.t('sectionDeleteFailed')))
     },
   })
 }

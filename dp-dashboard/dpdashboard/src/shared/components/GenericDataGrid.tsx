@@ -4,6 +4,7 @@ import { AllCommunityModule, ModuleRegistry, themeQuartz } from 'ag-grid-communi
 import { useTranslation } from 'react-i18next'
 import { SlidersHorizontal, ChevronLeft, ChevronRight } from 'lucide-react'
 import { cn } from '@/shared/utils/utils'
+import { AG_GRID_LOCALE_AR, AG_GRID_LOCALE_EN } from '@/shared/i18n/agGridLocale'
 
 // Register all community features
 ModuleRegistry.registerModules([AllCommunityModule])
@@ -86,6 +87,7 @@ interface GenericDataGridProps<TData = any> extends AgGridReactProps<TData> {
   totalPages?: number
   onPageChange?: (page: number) => void
   paginationLinks?: Array<{ url: string | null; label: string; active: boolean }>
+  hidePagination?: boolean
 }
 
 export function GenericDataGrid<TData = any>({
@@ -99,9 +101,10 @@ export function GenericDataGrid<TData = any>({
   totalPages = 1,
   onPageChange,
   paginationLinks,
+  hidePagination = false,
   ...props
 }: GenericDataGridProps<TData>) {
-  const { i18n } = useTranslation()
+  const { t, i18n } = useTranslation()
   const isRtl = i18n.language === 'ar'
   const gridInstanceKey = `${i18n.language}-${isRtl ? 'rtl' : 'ltr'}`
 
@@ -125,10 +128,10 @@ export function GenericDataGrid<TData = any>({
   }, [gridApi, isRtl, i18n.language])
 
   const displayRowData = React.useMemo(() => {
-    if (isServerSide || !rowData) return rowData
+    if (hidePagination || isServerSide || !rowData) return rowData
     const startIndex = (localPage - 1) * localPageSize
     return rowData.slice(startIndex, startIndex + localPageSize)
-  }, [rowData, isServerSide, localPage, localPageSize])
+  }, [rowData, isServerSide, hidePagination, localPage, localPageSize])
 
   const activePage = isServerSide ? (currentPage || 1) : localPage
   const totalPagesCount = isServerSide
@@ -237,6 +240,14 @@ export function GenericDataGrid<TData = any>({
     }
   }, [props.defaultColDef])
 
+  const gridLocaleText = React.useMemo(() => {
+    const baseLocale = isRtl ? AG_GRID_LOCALE_AR : AG_GRID_LOCALE_EN
+    return {
+      ...baseLocale,
+      ...props.localeText,
+    }
+  }, [isRtl, props.localeText])
+
   return (
     <div className="w-full flex flex-col gap-3">
       <div className="flex justify-end relative z-10">
@@ -246,13 +257,13 @@ export function GenericDataGrid<TData = any>({
             className="flex items-center gap-2 px-4 py-2 text-xs font-bold rounded-xl bg-card text-foreground hover:bg-primary/5 hover:border-primary/30 transition-all duration-200 active:scale-95 shadow-sm"
           >
             <SlidersHorizontal className="h-3.5 w-3.5 text-muted-foreground transition-colors group-hover:text-primary" />
-            <span>تعديل الأعمدة / Columns</span>
+            <span>{t('columns')}</span>
           </button>
 
           {isOpen && (
             <div className={`absolute top-full mt-2 w-60 rounded-2xl border border-border/60 bg-card/95 backdrop-blur-md p-2.5 shadow-xl shadow-black/10 z-50 animate-in fade-in slide-in-from-top-2 duration-150 ${isRtl ? 'left-0' : 'right-0'}`}>
               <div className="px-2.5 py-2 text-[11px] uppercase tracking-wider font-semibold text-muted-foreground/80 border-b border-border/40 mb-2">
-                إظهار وإخفاء الأعمدة
+                {t('showHideColumns')}
               </div>
               <div className="max-h-64 overflow-y-auto space-y-0.5 pr-1">
                 {columns.map((col) => (
@@ -275,7 +286,7 @@ export function GenericDataGrid<TData = any>({
         </div>
       </div>
 
-      <div className="w-full animate-fade-in" style={{ height }} dir={isRtl ? 'rtl' : 'ltr'}>
+      <div className="w-full animate-fade-in" style={{ height: (props.domLayout === 'autoHeight' || height === 'auto') ? 'auto' : height }} dir={isRtl ? 'rtl' : 'ltr'}>
         <AgGridReact
           key={gridInstanceKey}
           theme={customTheme}
@@ -283,6 +294,7 @@ export function GenericDataGrid<TData = any>({
           columnDefs={columnDefs}
           defaultColDef={defaultColDef}
           enableRtl={isRtl}
+          localeText={gridLocaleText}
           loading={loading}
           loadingOverlayComponent={CustomLoadingOverlay}
           pagination={false}
@@ -300,124 +312,126 @@ export function GenericDataGrid<TData = any>({
       </div>
 
       {/* Modern Custom Pagination component for both server and memory lists */}
-      <div className="flex flex-col sm:flex-row items-center justify-between gap-4 px-6 py-4 bg-card border border-border/60 rounded-2xl shadow-sm mt-4 animate-in fade-in duration-200" dir={isRtl ? 'rtl' : 'ltr'}>
-        <div className="flex flex-wrap items-center gap-3">
-          <span className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full text-xs font-bold bg-primary/10 text-primary border border-primary/20">
-            <span className="w-1.5 h-1.5 rounded-full bg-primary animate-pulse" />
-            {isServerSide ? (
-              isRtl ? `الصفحة ${activePage} من ${totalPagesCount}` : `Page ${activePage} of ${totalPagesCount}`
-            ) : (
-              isRtl
-                ? `عرض ${startRowIndex}-${endRowIndex} من أصل ${totalEntriesCount} مدخل`
-                : `Showing ${startRowIndex}-${endRowIndex} of ${totalEntriesCount} entries`
-            )}
-          </span>
+      {!hidePagination && (
+        <div className="flex flex-col sm:flex-row items-center justify-between gap-4 px-6 py-4 bg-card border border-border/60 rounded-2xl shadow-sm mt-4 animate-in fade-in duration-200" dir={isRtl ? 'rtl' : 'ltr'}>
+          <div className="flex flex-wrap items-center gap-3">
+            <span className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full text-xs font-bold bg-primary/10 text-primary border border-primary/20">
+              <span className="w-1.5 h-1.5 rounded-full bg-primary animate-pulse" />
+              {isServerSide ? (
+                isRtl ? `الصفحة ${activePage} من ${totalPagesCount}` : `Page ${activePage} of ${totalPagesCount}`
+              ) : (
+                isRtl
+                  ? `عرض ${startRowIndex}-${endRowIndex} من أصل ${totalEntriesCount} مدخل`
+                  : `Showing ${startRowIndex}-${endRowIndex} of ${totalEntriesCount} entries`
+              )}
+            </span>
 
-          {!isServerSide && (
-            <div className="flex items-center gap-1.5 text-xs font-bold text-muted-foreground/80">
-              <span>{isRtl ? 'حجم الصفحة:' : 'Page Size:'}</span>
-              <select
-                value={localPageSize}
-                onChange={(e) => {
-                  setLocalPageSize(Number(e.target.value))
-                  setLocalPage(1)
-                }}
-                className="bg-background border border-border/50 rounded-xl px-2.5 py-1 outline-none text-foreground cursor-pointer focus:border-primary transition-all text-xs font-bold h-7"
-              >
-                {[5, 10, 20, 50, 100].map((size) => (
-                  <option key={size} value={size}>
-                    {size}
-                  </option>
-                ))}
-              </select>
-            </div>
-          )}
-        </div>
-
-        <div className="flex items-center gap-2">
-          {isServerSide && paginationLinks && paginationLinks.length > 0 ? (
-            paginationLinks.map((link, idx) => {
-              const isPrev = link.label.includes('Previous') || link.label.includes('&laquo;') || link.label.includes('«')
-              const isNext = link.label.includes('Next') || link.label.includes('&raquo;') || link.label.includes('»')
-
-              let cleanLabel = link.label
-                .replace('&laquo; ', '')
-                .replace(' &raquo;', '')
-                .replace('« ', '')
-                .replace(' »', '')
-                .replace('Previous', '')
-                .replace('Next', '')
-
-              const pageMatch = link.url ? link.url.match(/page=(\d+)/) : null
-              const pageNum = pageMatch ? parseInt(pageMatch[1], 10) : null
-
-              return (
-                <button
-                  key={idx}
-                  onClick={() => pageNum && handlePageChange(pageNum)}
-                  disabled={!link.url}
-                  className={cn(
-                    "h-9 min-w-9 px-3 flex items-center justify-center rounded-xl border text-xs font-bold transition-all duration-300 disabled:opacity-40 disabled:pointer-events-none active:scale-95",
-                    link.active
-                      ? "bg-primary text-primary-foreground border-primary shadow-md shadow-primary/20 font-extrabold"
-                      : "border-border/60 bg-background text-muted-foreground hover:text-foreground hover:bg-muted hover:border-border"
-                  )}
+            {!isServerSide && (
+              <div className="flex items-center gap-1.5 text-xs font-bold text-muted-foreground/80">
+                <span>{isRtl ? 'حجم الصفحة:' : 'Page Size:'}</span>
+                <select
+                  value={localPageSize}
+                  onChange={(e) => {
+                    setLocalPageSize(Number(e.target.value))
+                    setLocalPage(1)
+                  }}
+                  className="bg-background border border-border/50 rounded-xl px-2.5 py-1 outline-none text-foreground cursor-pointer focus:border-primary transition-all text-xs font-bold h-7"
                 >
-                  {isPrev ? (
-                    isRtl ? <ChevronRight className="h-4 w-4 stroke-[2.5]" /> : <ChevronLeft className="h-4 w-4 stroke-[2.5]" />
-                  ) : isNext ? (
-                    isRtl ? <ChevronLeft className="h-4 w-4 stroke-[2.5]" /> : <ChevronRight className="h-4 w-4 stroke-[2.5]" />
-                  ) : (
-                    cleanLabel
-                  )}
-                </button>
-              )
-            })
-          ) : (
-            <>
-              <button
-                onClick={() => handlePageChange(Math.max((activePage || 1) - 1, 1))}
-                disabled={activePage === 1}
-                className="h-9 w-9 flex items-center justify-center rounded-xl border border-border/60 bg-background text-muted-foreground hover:text-foreground hover:bg-muted hover:border-border transition-all duration-300 disabled:opacity-40 disabled:pointer-events-none active:scale-95"
-              >
-                {isRtl ? <ChevronRight className="h-4 w-4 stroke-[2.5]" /> : <ChevronLeft className="h-4 w-4 stroke-[2.5]" />}
-              </button>
+                  {[5, 10, 20, 50, 100].map((size) => (
+                    <option key={size} value={size}>
+                      {size}
+                    </option>
+                  ))}
+                </select>
+              </div>
+            )}
+          </div>
 
-              {getPageNumbers().map((pageNum, idx) => {
-                if (pageNum === '...') {
-                  return (
-                    <span key={`dots-${idx}`} className="h-9 w-9 flex items-center justify-center text-xs font-bold text-muted-foreground/60 select-none">
-                      ...
-                    </span>
-                  )
-                }
+          <div className="flex items-center gap-2">
+            {isServerSide && paginationLinks && paginationLinks.length > 0 ? (
+              paginationLinks.map((link, idx) => {
+                const isPrev = link.label.includes('Previous') || link.label.includes('&laquo;') || link.label.includes('«')
+                const isNext = link.label.includes('Next') || link.label.includes('&raquo;') || link.label.includes('»')
+
+                let cleanLabel = link.label
+                  .replace('&laquo; ', '')
+                  .replace(' &raquo;', '')
+                  .replace('« ', '')
+                  .replace(' »', '')
+                  .replace('Previous', '')
+                  .replace('Next', '')
+
+                const pageMatch = link.url ? link.url.match(/page=(\d+)/) : null
+                const pageNum = pageMatch ? parseInt(pageMatch[1], 10) : null
+
                 return (
                   <button
-                    key={pageNum}
-                    onClick={() => handlePageChange(Number(pageNum))}
+                    key={idx}
+                    onClick={() => pageNum && handlePageChange(pageNum)}
+                    disabled={!link.url}
                     className={cn(
-                      "h-9 min-w-9 px-3 flex items-center justify-center rounded-xl border text-xs font-bold transition-all duration-300 active:scale-95",
-                      activePage === pageNum
+                      "h-9 min-w-9 px-3 flex items-center justify-center rounded-xl border text-xs font-bold transition-all duration-300 disabled:opacity-40 disabled:pointer-events-none active:scale-95",
+                      link.active
                         ? "bg-primary text-primary-foreground border-primary shadow-md shadow-primary/20 font-extrabold"
                         : "border-border/60 bg-background text-muted-foreground hover:text-foreground hover:bg-muted hover:border-border"
                     )}
                   >
-                    {pageNum}
+                    {isPrev ? (
+                      isRtl ? <ChevronRight className="h-4 w-4 stroke-[2.5]" /> : <ChevronLeft className="h-4 w-4 stroke-[2.5]" />
+                    ) : isNext ? (
+                      isRtl ? <ChevronLeft className="h-4 w-4 stroke-[2.5]" /> : <ChevronRight className="h-4 w-4 stroke-[2.5]" />
+                    ) : (
+                      cleanLabel
+                    )}
                   </button>
                 )
-              })}
+              })
+            ) : (
+              <>
+                <button
+                  onClick={() => handlePageChange(Math.max((activePage || 1) - 1, 1))}
+                  disabled={activePage === 1}
+                  className="h-9 w-9 flex items-center justify-center rounded-xl border border-border/60 bg-background text-muted-foreground hover:text-foreground hover:bg-muted hover:border-border transition-all duration-300 disabled:opacity-40 disabled:pointer-events-none active:scale-95"
+                >
+                  {isRtl ? <ChevronRight className="h-4 w-4 stroke-[2.5]" /> : <ChevronLeft className="h-4 w-4 stroke-[2.5]" />}
+                </button>
 
-              <button
-                onClick={() => handlePageChange(Math.min((activePage || 1) + 1, totalPagesCount))}
-                disabled={activePage === totalPagesCount}
-                className="h-9 w-9 flex items-center justify-center rounded-xl border border-border/60 bg-background text-muted-foreground hover:text-foreground hover:bg-muted hover:border-border transition-all duration-300 disabled:opacity-40 disabled:pointer-events-none active:scale-95"
-              >
-                {isRtl ? <ChevronLeft className="h-4 w-4 stroke-[2.5]" /> : <ChevronRight className="h-4 w-4 stroke-[2.5]" />}
-              </button>
-            </>
-          )}
+                {getPageNumbers().map((pageNum, idx) => {
+                  if (pageNum === '...') {
+                    return (
+                      <span key={`dots-${idx}`} className="h-9 w-9 flex items-center justify-center text-xs font-bold text-muted-foreground/60 select-none">
+                        ...
+                      </span>
+                    )
+                  }
+                  return (
+                    <button
+                      key={pageNum}
+                      onClick={() => handlePageChange(Number(pageNum))}
+                      className={cn(
+                        "h-9 min-w-9 px-3 flex items-center justify-center rounded-xl border text-xs font-bold transition-all duration-300 active:scale-95",
+                        activePage === pageNum
+                          ? "bg-primary text-primary-foreground border-primary shadow-md shadow-primary/20 font-extrabold"
+                          : "border-border/60 bg-background text-muted-foreground hover:text-foreground hover:bg-muted hover:border-border"
+                      )}
+                    >
+                      {pageNum}
+                    </button>
+                  )
+                })}
+
+                <button
+                  onClick={() => handlePageChange(Math.min((activePage || 1) + 1, totalPagesCount))}
+                  disabled={activePage === totalPagesCount}
+                  className="h-9 w-9 flex items-center justify-center rounded-xl border border-border/60 bg-background text-muted-foreground hover:text-foreground hover:bg-muted hover:border-border transition-all duration-300 disabled:opacity-40 disabled:pointer-events-none active:scale-95"
+                >
+                  {isRtl ? <ChevronLeft className="h-4 w-4 stroke-[2.5]" /> : <ChevronRight className="h-4 w-4 stroke-[2.5]" />}
+                </button>
+              </>
+            )}
+          </div>
         </div>
-      </div>
+      )}
     </div>
   )
 }

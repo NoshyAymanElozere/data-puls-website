@@ -37,6 +37,14 @@ export function getSubscriptionPackagesColumnDefs({
       width: 160,
     },
     {
+      headerName: t('maximumInvoices'),
+      field: 'maximum_invoices',
+      filter: false,
+      width: 150,
+      valueFormatter: (params) =>
+        params.value === null || params.value === undefined ? t('unlimited') : String(params.value),
+    },
+    {
       headerName: t('sortOrder'),
       field: 'sort_order',
       filter: false,

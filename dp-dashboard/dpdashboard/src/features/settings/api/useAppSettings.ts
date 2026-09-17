@@ -1,6 +1,7 @@
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query'
 import axios from 'axios'
 import toast from 'react-hot-toast'
+import i18n from '@/shared/i18n/i18n'
 import api, { getErrorMessage } from '@/shared/services/axios'
 import type { SuccessResponse, Translatable } from '@/shared/types/laravel'
 import { appendOptionalFile, appendTranslatable, createPutFormData } from '@/shared/utils/form-data'
@@ -224,11 +225,11 @@ export function useUpdateAppSettingsGeneral(setError?: UseFormSetError<GeneralSe
     onSuccess: (res) => {
       qc.invalidateQueries({ queryKey: ['app-settings', 'general'] })
       qc.invalidateQueries({ queryKey: ['app-branding-public'] })
-      toast.success(res.message || 'Settings updated successfully.')
+      toast.success(res.message || i18n.t('settingsUpdated'))
     },
     onError: (error) => {
       if (setError && applyValidationErrors(error, setError)) return
-      toast.error(getErrorMessage(error, 'Failed to update settings.'))
+      toast.error(getErrorMessage(error, i18n.t('settingsUpdateFailed')))
     },
   })
 }
@@ -243,11 +244,11 @@ export function useUpdateAppSettingsContact(setError?: UseFormSetError<ContactSe
     },
     onSuccess: (res) => {
       qc.invalidateQueries({ queryKey: ['app-settings', 'contact'] })
-      toast.success(res.message || 'Contact settings updated successfully.')
+      toast.success(res.message || i18n.t('contactSettingsUpdated'))
     },
     onError: (error) => {
       if (setError && applyValidationErrors(error, setError)) return
-      toast.error(getErrorMessage(error, 'Failed to update contact settings.'))
+      toast.error(getErrorMessage(error, i18n.t('contactSettingsUpdateFailed')))
     },
   })
 }

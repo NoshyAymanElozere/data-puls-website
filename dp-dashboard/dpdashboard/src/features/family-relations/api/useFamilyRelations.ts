@@ -1,5 +1,6 @@
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query'
 import toast from 'react-hot-toast'
+import i18n from '@/shared/i18n/i18n'
 import api, { getErrorMessage } from '@/shared/services/axios'
 import type { LaravelPaginatedResponse, SuccessResponse } from '@/shared/types/laravel'
 import { buildQueryParams } from '@/shared/utils/query-params'
@@ -64,10 +65,10 @@ export function useCreateFamilyRelation() {
     },
     onSuccess: (res) => {
       qc.invalidateQueries({ queryKey: ['family-relations-list'] })
-      toast.success(res?.message || 'Family relation created successfully.')
+      toast.success(res?.message || i18n.t('familyRelationCreated'))
     },
     onError: (error) => {
-      toast.error(getErrorMessage(error, 'Failed to create family relation.'))
+      toast.error(getErrorMessage(error, i18n.t('familyRelationCreateFailed')))
     },
   })
 }
@@ -92,10 +93,10 @@ export function useUpdateFamilyRelation() {
     onSuccess: (res, variables) => {
       qc.invalidateQueries({ queryKey: ['family-relations-list'] })
       qc.invalidateQueries({ queryKey: ['family-relation', variables.id] })
-      toast.success(res?.message || 'Family relation updated successfully.')
+      toast.success(res?.message || i18n.t('familyRelationUpdated'))
     },
     onError: (error) => {
-      toast.error(getErrorMessage(error, 'Failed to update family relation.'))
+      toast.error(getErrorMessage(error, i18n.t('familyRelationUpdateFailed')))
     },
   })
 }
@@ -111,13 +112,39 @@ export function useToggleFamilyRelationStatus() {
       )
       return response.data
     },
-    onSuccess: (res, variables) => {
+    onMutate: async ({ id, is_active }) => {
+      await qc.cancelQueries({ queryKey: ['family-relations-list'] })
+      const previousQueries = qc.getQueriesData({ queryKey: ['family-relations-list'] })
+
+      qc.setQueriesData<LaravelPaginatedResponse<FamilyRelationListItem>>(
+        { queryKey: ['family-relations-list'] },
+        (old) => {
+          if (!old || !old.data) return old
+          return {
+            ...old,
+            data: old.data.map((item) =>
+              item.id === id ? { ...item, is_active } : item
+            ),
+          }
+        }
+      )
+
+      return { previousQueries }
+    },
+    onError: (error, _variables, context) => {
+      if (context?.previousQueries) {
+        context.previousQueries.forEach(([key, data]) => {
+          qc.setQueryData(key, data)
+        })
+      }
+      toast.error(getErrorMessage(error, i18n.t('statusUpdateFailed')))
+    },
+    onSettled: (_data, _error, variables) => {
       qc.invalidateQueries({ queryKey: ['family-relations-list'] })
       qc.invalidateQueries({ queryKey: ['family-relation', variables.id] })
-      toast.success(res?.message || 'Status updated successfully.')
     },
-    onError: (error) => {
-      toast.error(getErrorMessage(error, 'Failed to update status.'))
+    onSuccess: (res) => {
+      toast.success(res?.message || i18n.t('statusUpdated'))
     },
   })
 }
@@ -132,10 +159,10 @@ export function useDeleteFamilyRelation() {
     },
     onSuccess: (res) => {
       qc.invalidateQueries({ queryKey: ['family-relations-list'] })
-      toast.success(res?.message || 'Family relation deleted successfully.')
+      toast.success(res?.message || i18n.t('familyRelationDeleted'))
     },
     onError: (error) => {
-      toast.error(getErrorMessage(error, 'Failed to delete family relation.'))
+      toast.error(getErrorMessage(error, i18n.t('familyRelationDeleteFailed')))
     },
   })
 }

@@ -1,5 +1,6 @@
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query'
 import toast from 'react-hot-toast'
+import i18n from '@/shared/i18n/i18n'
 import api, { getErrorMessage } from '@/shared/services/axios'
 import type { LaravelPaginatedResponse, SuccessResponse, Translatable } from '@/shared/types/laravel'
 import { getLocalizedValue } from '@/shared/utils/localized-value'
@@ -74,11 +75,11 @@ export function useCreateContactSubject(setError?: UseFormSetError<ContactSubjec
     onSuccess: (res) => {
       qc.invalidateQueries({ queryKey: ['contact-subjects-list'] })
       qc.invalidateQueries({ queryKey: ['contact-subjects-active'] })
-      toast.success(res.message || 'Contact subject created successfully.')
+      toast.success(res.message || i18n.t('contactSubjectCreated'))
     },
     onError: (error) => {
       if (setError && applyValidationErrors(error, setError)) return
-      toast.error(getErrorMessage(error, 'Failed to create contact subject.'))
+      toast.error(getErrorMessage(error, i18n.t('contactSubjectCreateFailed')))
     },
   })
 }
@@ -95,11 +96,11 @@ export function useUpdateContactSubject(setError?: UseFormSetError<ContactSubjec
       qc.invalidateQueries({ queryKey: ['contact-subjects-list'] })
       qc.invalidateQueries({ queryKey: ['contact-subjects-active'] })
       qc.invalidateQueries({ queryKey: ['contact-subject', variables.id] })
-      toast.success(res.message || 'Contact subject updated successfully.')
+      toast.success(res.message || i18n.t('contactSubjectUpdated'))
     },
     onError: (error) => {
       if (setError && applyValidationErrors(error, setError)) return
-      toast.error(getErrorMessage(error, 'Failed to update contact subject.'))
+      toast.error(getErrorMessage(error, i18n.t('contactSubjectUpdateFailed')))
     },
   })
 }
@@ -114,10 +115,10 @@ export function useDeleteContactSubject() {
     onSuccess: () => {
       qc.invalidateQueries({ queryKey: ['contact-subjects-list'] })
       qc.invalidateQueries({ queryKey: ['contact-subjects-active'] })
-      toast.success('Contact subject deleted successfully.')
+      toast.success(i18n.t('contactSubjectDeleted'))
     },
     onError: (error) => {
-      toast.error(getErrorMessage(error, 'Failed to delete contact subject.'))
+      toast.error(getErrorMessage(error, i18n.t('contactSubjectDeleteFailed')))
     },
   })
 }
@@ -133,10 +134,10 @@ export function useToggleContactSubjectStatus() {
     onSuccess: (res) => {
       qc.invalidateQueries({ queryKey: ['contact-subjects-list'] })
       qc.invalidateQueries({ queryKey: ['contact-subjects-active'] })
-      toast.success(res.message || 'Status updated successfully.')
+      toast.success(res.message || i18n.t('statusUpdated'))
     },
     onError: (error) => {
-      toast.error(getErrorMessage(error, 'Failed to update status.'))
+      toast.error(getErrorMessage(error, i18n.t('statusUpdateFailed')))
     },
   })
 }

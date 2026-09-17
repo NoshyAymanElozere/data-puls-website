@@ -25,4 +25,12 @@ export default defineConfig({
       '@': path.resolve(__dirname, './src'),
     },
   },
+  server: {
+    proxy: {
+      '/storage': {
+        target: 'https://herz-dashboard.am.prompita.com',
+        changeOrigin: true,
+      },
+    },
+  },
 })

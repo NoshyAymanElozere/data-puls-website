@@ -16,6 +16,13 @@ export const schema = z.object({
   descriptionEn: z.string().optional().default(''),
   descriptionAr: z.string().optional().default(''),
   maximum_family_members: z.coerce.number().min(1),
+  maximum_invoices: z
+    .preprocess((val) => {
+      if (val === '' || val === null || val === undefined) return null
+      const n = Number(val)
+      return Number.isNaN(n) ? val : n
+    }, z.number().int().min(0).nullable().optional())
+    .default(null),
   sort_order: z.coerce.number().min(0),
   is_active: z.boolean(),
   monthly_price: z.coerce.number().min(0),
@@ -49,6 +56,7 @@ export function getInitialValues(item?: Partial<SubscriptionPackage> | null): Su
       descriptionEn: '',
       descriptionAr: '',
       maximum_family_members: 1,
+      maximum_invoices: null,
       sort_order: 0,
       is_active: true,
       monthly_price: 0,
@@ -65,6 +73,7 @@ export function getInitialValues(item?: Partial<SubscriptionPackage> | null): Su
     descriptionEn: translatableField(item.description, 'en'),
     descriptionAr: translatableField(item.description, 'ar'),
     maximum_family_members: item.maximum_family_members ?? 1,
+    maximum_invoices: item.maximum_invoices ?? null,
     sort_order: item.sort_order ?? 0,
     is_active: item.is_active ?? true,
     ...priceFields,

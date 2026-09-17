@@ -1,5 +1,6 @@
 import React from 'react'
 import { ChevronLeft, ChevronRight, MoreHorizontal } from 'lucide-react'
+import { useTranslation } from 'react-i18next'
 import { cn } from '@/shared/utils/utils'
 import { Button } from './button'
 
@@ -36,6 +37,7 @@ function getPages(current: number, total: number, siblings = 1): (number | '...'
 }
 
 export function Pagination({ page, totalPages, onPageChange, siblings = 1 }: PaginationProps) {
+  const { t } = useTranslation()
   if (totalPages <= 1) return null
   const pages = getPages(page, totalPages, siblings)
 
@@ -46,7 +48,7 @@ export function Pagination({ page, totalPages, onPageChange, siblings = 1 }: Pag
         size="icon"
         disabled={page === 1}
         onClick={() => onPageChange(page - 1)}
-        aria-label="Previous page"
+        aria-label={t('previousPage')}
       >
         <ChevronLeft className="h-4 w-4" />
       </Button>
@@ -75,7 +77,7 @@ export function Pagination({ page, totalPages, onPageChange, siblings = 1 }: Pag
         size="icon"
         disabled={page === totalPages}
         onClick={() => onPageChange(page + 1)}
-        aria-label="Next page"
+        aria-label={t('nextPage')}
       >
         <ChevronRight className="h-4 w-4" />
       </Button>
@@ -92,9 +94,10 @@ interface PageSizeSelectorProps {
 }
 
 export function PageSizeSelector({ pageSize, options = [10, 25, 50, 100], onChange }: PageSizeSelectorProps) {
+  const { t } = useTranslation()
   return (
     <div className="flex items-center gap-2 text-sm text-muted-foreground">
-      <span>Rows per page</span>
+      <span>{t('rowsPerPage')}</span>
       <select
         value={pageSize}
         onChange={(e) => onChange(Number(e.target.value))}

@@ -1,4 +1,5 @@
 #!/usr/bin/env bash
+
 set -euo pipefail
 
 echo "=== Pulling latest changes ==="
@@ -9,10 +10,14 @@ git checkout -- index.html
 
 echo "=== Building frontend ==="
 export VITE_API_URL="${VITE_API_URL:-https://herz-dashboard.am.prompita.com/admin}"
+
+npm ci --legacy-peer-deps
 npm run build
 
 echo "=== Publishing dist to web root ==="
-# Copy build output including dotfiles (.htaccess SPA fallback is required for /hirz/login etc.)
 cp -r dist/. .
+
+echo "=== Cleaning build dependencies ==="
+rm -rf node_modules
 
 echo "=== Deploy complete ==="

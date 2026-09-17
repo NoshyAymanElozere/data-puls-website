@@ -24,25 +24,28 @@ export function FamilyRelationsFormModal({
   const { t, i18n } = useTranslation()
   const isRtl = i18n.language === 'ar'
 
-  const { data: detail } = useFamilyRelation(open && editingItem ? editingItem.id : null)
+  const { data: detail, isLoading: isLoadingDetail } = useFamilyRelation(
+    open && editingItem ? editingItem.id : null
+  )
 
   const [nameEn, setNameEn] = useState('')
   const [nameAr, setNameAr] = useState('')
   const [sortOrder, setSortOrder] = useState(1)
   const [isActive, setIsActive] = useState(true)
 
+  const isFetchingDetail = Boolean(
+    editingItem && (!detail || detail.id !== editingItem.id || isLoadingDetail)
+  )
+
   useEffect(() => {
     if (open) {
-      if (detail) {
-        setNameEn(detail.name?.en || '')
-        setNameAr(detail.name?.ar || '')
-        setSortOrder(detail.sort_order ?? 1)
-        setIsActive(detail.is_active ?? true)
-      } else if (editingItem) {
-        setNameEn(editingItem.name || '')
-        setNameAr(editingItem.name || '')
-        setSortOrder(editingItem.sort_order ?? 1)
-        setIsActive(editingItem.is_active ?? true)
+      if (editingItem) {
+        if (detail && detail.id === editingItem.id) {
+          setNameEn(detail.name?.en || '')
+          setNameAr(detail.name?.ar || '')
+          setSortOrder(detail.sort_order ?? 1)
+          setIsActive(detail.is_active ?? true)
+        }
       } else {
         setNameEn('')
         setNameAr('')
@@ -72,10 +75,16 @@ export function FamilyRelationsFormModal({
       cancelLabel={t('cancel')}
       onAgreeButtonClick={handleSubmit}
       onCancelButtonClick={() => onOpenChange(false)}
-      loading={loading}
+      loading={loading || isFetchingDetail}
       size="md"
     >
-      <div className="space-y-4" dir={isRtl ? 'rtl' : 'ltr'}>
+      {isFetchingDetail ? (
+        <div className="flex flex-col items-center justify-center py-10 space-y-3">
+          <div className="w-6 h-6 border-2 border-main border-t-transparent rounded-full animate-spin" />
+          <span className="text-xs font-semibold text-muted-foreground">{t('loading')}...</span>
+        </div>
+      ) : (
+        <div className="space-y-4" dir={isRtl ? 'rtl' : 'ltr'}>
         <div className="flex flex-col gap-1.5">
           <label className="text-xs font-bold text-muted-foreground uppercase tracking-wider">
             {t('englishNameCol')} *
@@ -136,6 +145,7 @@ export function FamilyRelationsFormModal({
           </div>
         </div>
       </div>
+    )}
     </ModalStatus>
   )
 }

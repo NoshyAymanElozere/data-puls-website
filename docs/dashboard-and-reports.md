@@ -81,6 +81,12 @@ Returns aggregated top-level KPI metrics comparing current period to the precedi
       "change_direction": "increase",
       "subtitle": "increase from last month"
     },
+    "menu_counts": {
+      "users": 542,
+      "warranty_periods": 12,
+      "categories": 28,
+      "reports": 5
+    },
     "travel_packages": { "...": "Backward-compatible alias for total_invoices" },
     "tourist_destinations": { "...": "Backward-compatible alias for active_warranties" },
     "tourist_attractions": { "...": "Backward-compatible alias for total_spending" },

@@ -1,5 +1,6 @@
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query'
 import toast from 'react-hot-toast'
+import i18n from '@/shared/i18n/i18n'
 import api, { getErrorMessage } from '@/shared/services/axios'
 import type { LaravelPaginatedResponse, SuccessResponse, Translatable } from '@/shared/types/laravel'
 import { appendTranslatable, createPutFormData } from '@/shared/utils/form-data'
@@ -104,11 +105,11 @@ export function useCreateCity(setError?: UseFormSetError<CityFormData>) {
     onSuccess: (res) => {
       qc.invalidateQueries({ queryKey: ['cities-list'] })
       qc.invalidateQueries({ queryKey: ['cities-active'] })
-      toast.success(res.message || 'City created successfully.')
+      toast.success(res.message || i18n.t('cityCreated'))
     },
     onError: (error) => {
       if (setError && applyValidationErrors(error, setError)) return
-      toast.error(getErrorMessage(error, 'Failed to create city.'))
+      toast.error(getErrorMessage(error, i18n.t('cityCreateFailed')))
     },
   })
 }
@@ -125,11 +126,11 @@ export function useUpdateCity(setError?: UseFormSetError<CityFormData>) {
       qc.invalidateQueries({ queryKey: ['cities-list'] })
       qc.invalidateQueries({ queryKey: ['cities-active'] })
       qc.invalidateQueries({ queryKey: ['city', variables.id] })
-      toast.success(res.message || 'City updated successfully.')
+      toast.success(res.message || i18n.t('cityUpdated'))
     },
     onError: (error) => {
       if (setError && applyValidationErrors(error, setError)) return
-      toast.error(getErrorMessage(error, 'Failed to update city.'))
+      toast.error(getErrorMessage(error, i18n.t('cityUpdateFailed')))
     },
   })
 }
@@ -148,10 +149,10 @@ export function useToggleCityStatus() {
       if (res.data?.country_id) {
         qc.invalidateQueries({ queryKey: ['country', res.data.country_id] })
       }
-      toast.success(res.message || 'City status updated successfully.')
+      toast.success(res.message || i18n.t('cityStatusUpdated'))
     },
     onError: (error) => {
-      toast.error(getErrorMessage(error, 'Failed to toggle city status.'))
+      toast.error(getErrorMessage(error, i18n.t('cityStatusFailed')))
     },
   })
 }
@@ -166,10 +167,10 @@ export function useDeleteCity() {
     onSuccess: () => {
       qc.invalidateQueries({ queryKey: ['cities-list'] })
       qc.invalidateQueries({ queryKey: ['cities-active'] })
-      toast.success('City deleted successfully.')
+      toast.success(i18n.t('cityDeleted'))
     },
     onError: (error) => {
-      toast.error(getErrorMessage(error, 'Failed to delete city.'))
+      toast.error(getErrorMessage(error, i18n.t('cityDeleteFailed')))
     },
   })
 }

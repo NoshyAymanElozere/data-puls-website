@@ -1,5 +1,6 @@
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query'
 import toast from 'react-hot-toast'
+import i18n from '@/shared/i18n/i18n'
 import api, { getErrorMessage, getValidationErrors } from '@/shared/services/axios'
 import type { LaravelPaginatedResponse, SuccessResponse, Translatable } from '@/shared/types/laravel'
 import { getLocalizedValue } from '@/shared/utils/localized-value'
@@ -156,11 +157,11 @@ export function useCreateCategory(setError?: UseFormSetError<CategoryFormValues>
     },
     onSuccess: (res) => {
       qc.invalidateQueries({ queryKey: ['categories-list'] })
-      toast.success(res.message || 'Category created successfully.')
+      toast.success(res.message || i18n.t('categoryCreated'))
     },
     onError: (error) => {
       if (setError && applyCategoryValidationErrors(error, setError)) return
-      toast.error(getErrorMessage(error, 'Failed to create category.'))
+      toast.error(getErrorMessage(error, i18n.t('categoryCreateFailed')))
     },
   })
 }
@@ -180,11 +181,11 @@ export function useUpdateCategory(setError?: UseFormSetError<CategoryFormValues>
     onSuccess: (res, variables) => {
       qc.invalidateQueries({ queryKey: ['categories-list'] })
       qc.invalidateQueries({ queryKey: ['category', variables.id] })
-      toast.success(res.message || 'Category updated successfully.')
+      toast.success(res.message || i18n.t('categoryUpdated'))
     },
     onError: (error) => {
       if (setError && applyCategoryValidationErrors(error, setError)) return
-      toast.error(getErrorMessage(error, 'Failed to update category.'))
+      toast.error(getErrorMessage(error, i18n.t('categoryUpdateFailed')))
     },
   })
 }
@@ -198,10 +199,10 @@ export function useDeleteCategory() {
     },
     onSuccess: () => {
       qc.invalidateQueries({ queryKey: ['categories-list'] })
-      toast.success('Category deleted successfully.')
+      toast.success(i18n.t('categoryDeleted'))
     },
     onError: (error) => {
-      toast.error(getErrorMessage(error, 'Failed to delete category.'))
+      toast.error(getErrorMessage(error, i18n.t('categoryDeleteFailed')))
     },
   })
 }
@@ -216,10 +217,10 @@ export function useToggleCategoryStatus() {
     },
     onSuccess: (res) => {
       qc.invalidateQueries({ queryKey: ['categories-list'] })
-      toast.success(res.message || 'Status updated successfully.')
+      toast.success(res.message || i18n.t('statusUpdated'))
     },
     onError: (error) => {
-      toast.error(getErrorMessage(error, 'Failed to update status.'))
+      toast.error(getErrorMessage(error, i18n.t('statusUpdateFailed')))
     },
   })
 }

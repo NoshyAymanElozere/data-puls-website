@@ -1,10 +1,12 @@
 import type { ColDef } from 'ag-grid-community'
 import type { TFunction } from 'i18next'
 import { Edit2, Eye, HeartHandshake, Trash2 } from 'lucide-react'
+import { StatusToggle } from '@/shared/components/StatusToggle'
 import type { FamilyRelationListItem } from '../types/family-relations'
 
 interface FamilyRelationsColumnDefsProps {
   t: TFunction
+  isRtl?: boolean
   onView: (relation: FamilyRelationListItem) => void
   onEdit: (relation: FamilyRelationListItem) => void
   onDelete: (relation: FamilyRelationListItem) => void
@@ -13,6 +15,7 @@ interface FamilyRelationsColumnDefsProps {
 
 export function getFamilyRelationsColumnDefs({
   t,
+  isRtl = false,
   onView,
   onEdit,
   onDelete,
@@ -63,24 +66,14 @@ export function getFamilyRelationsColumnDefs({
     {
       headerName: t('status'),
       field: 'is_active',
-      width: 140,
+      width: 160,
       cellRenderer: (params: { data: FamilyRelationListItem; value: boolean }) => {
-        const isActive = !!params.value
+        if (!params.data) return null
         return (
-          <button
-            type="button"
-            onClick={(e) => {
-              e.stopPropagation()
-              if (params.data) onToggleStatus(params.data)
-            }}
-            className={`inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-bold transition-all cursor-pointer ${
-              isActive
-                ? 'bg-emerald-500/10 text-emerald-600 dark:text-emerald-400 border border-emerald-500/20 hover:bg-emerald-500/20'
-                : 'bg-rose-500/10 text-rose-600 dark:text-rose-400 border border-rose-500/20 hover:bg-rose-500/20'
-            }`}
-          >
-            {isActive ? t('active') : t('inactive')}
-          </button>
+          <StatusToggle
+            value={params.data.is_active}
+            onChange={() => onToggleStatus(params.data)}
+          />
         )
       },
     },
@@ -99,7 +92,7 @@ export function getFamilyRelationsColumnDefs({
       width: 130,
       sortable: false,
       filter: false,
-      pinned: 'right',
+      pinned: isRtl ? 'left' : 'right',
       cellRenderer: (params: { data: FamilyRelationListItem }) => {
         if (!params.data) return null
         return (

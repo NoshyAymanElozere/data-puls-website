@@ -1,5 +1,6 @@
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query'
 import toast from 'react-hot-toast'
+import i18n from '@/shared/i18n/i18n'
 import api, { getErrorMessage } from '@/shared/services/axios'
 import type { LaravelPaginatedResponse, SuccessResponse } from '@/shared/types/laravel'
 import { buildQueryParams } from '@/shared/utils/query-params'
@@ -32,7 +33,7 @@ export interface UserListItem {
 export interface UserDetail extends UserListItem {
   name?: string | null
   avatar_url: string
-  birth_date: string | null
+  date_of_birth: string | null
   gender_label: string | null
   preferred_language: PreferredLanguage | null
   status_label: string
@@ -42,6 +43,7 @@ export interface UserDetail extends UserListItem {
   updated_at: string
   invoices_count?: number
   family_members_count?: number
+  categories_count?: number
   account_owner_id?: number | null
   account_owner?: AccountOwnerInfo | null
   family_relation_id?: number | null
@@ -52,24 +54,37 @@ export interface UserDetail extends UserListItem {
 }
 
 export interface UserFormPayload {
+  name?: string | null
   email: string
   phone: string
   password?: string
   password_confirmation?: string
-  birth_date?: string | null
+  date_of_birth?: string | null
   gender?: UserGender | null
   preferred_language?: PreferredLanguage | null
   status?: UserStatus
 }
 
-function toApiPayload(formData: UserFormValues): UserFormPayload {
+function toApiPayload(formData: UserFormValues, isUpdate = false): UserFormPayload {
   const payload: UserFormPayload = {
     email: formData.email,
     phone: formData.phone,
     status: formData.status,
   }
 
-  if (formData.birth_date) payload.birth_date = formData.birth_date
+  const trimmedName = formData.name?.trim()
+  if (trimmedName) {
+    payload.name = trimmedName
+  } else if (isUpdate) {
+    payload.name = null
+  }
+
+  if (formData.date_of_birth) {
+    payload.date_of_birth = formData.date_of_birth
+  } else if (isUpdate) {
+    payload.date_of_birth = null
+  }
+
   if (formData.gender) payload.gender = formData.gender
   if (formData.preferred_language) payload.preferred_language = formData.preferred_language
   if (formData.password) {
@@ -121,16 +136,16 @@ export function useCreateUser(setError?: UseFormSetError<UserFormValues>) {
 
   return useMutation({
     mutationFn: async (payload: UserFormValues) => {
-      const response = await api.post<SuccessResponse<UserDetail>>('/users', toApiPayload(payload))
+      const response = await api.post<SuccessResponse<UserDetail>>('/users', toApiPayload(payload, false))
       return response.data
     },
     onSuccess: (res) => {
       qc.invalidateQueries({ queryKey: ['users-list'] })
-      toast.success(res.message || 'User created successfully.')
+      toast.success(res.message || i18n.t('userCreated'))
     },
     onError: (error) => {
       if (setError && applyValidationErrors(error, setError)) return
-      toast.error(getErrorMessage(error, 'Failed to create user.'))
+      toast.error(getErrorMessage(error, i18n.t('userCreateFailed')))
     },
   })
 }
@@ -140,17 +155,17 @@ export function useUpdateUser(setError?: UseFormSetError<UserFormValues>) {
 
   return useMutation({
     mutationFn: async ({ id, payload }: { id: number; payload: UserFormValues }) => {
-      const response = await api.put<SuccessResponse<UserDetail>>(`/users/${id}`, toApiPayload(payload))
+      const response = await api.put<SuccessResponse<UserDetail>>(`/users/${id}`, toApiPayload(payload, true))
       return response.data
     },
     onSuccess: (res, variables) => {
       qc.invalidateQueries({ queryKey: ['users-list'] })
       qc.invalidateQueries({ queryKey: ['user', variables.id] })
-      toast.success(res.message || 'User updated successfully.')
+      toast.success(res.message || i18n.t('userUpdated'))
     },
     onError: (error) => {
       if (setError && applyValidationErrors(error, setError)) return
-      toast.error(getErrorMessage(error, 'Failed to update user.'))
+      toast.error(getErrorMessage(error, i18n.t('userUpdateFailed')))
     },
   })
 }
@@ -164,12 +179,29 @@ export function useDeleteUser() {
     },
     onSuccess: () => {
       qc.invalidateQueries({ queryKey: ['users-list'] })
-      toast.success('User deleted successfully.')
+      toast.success(i18n.t('userDeleted'))
     },
     onError: (error) => {
-      toast.error(getErrorMessage(error, 'Failed to delete user.'))
+      toast.error(getErrorMessage(error, i18n.t('userDeleteFailed')))
     },
   })
+}
+
+function patchUserStatusInLists(
+  qc: ReturnType<typeof useQueryClient>,
+  id: number,
+  status: UserStatus
+) {
+  qc.setQueriesData<LaravelPaginatedResponse<UserListItem>>(
+    { queryKey: ['users-list'] },
+    (old) => {
+      if (!old?.data) return old
+      return {
+        ...old,
+        data: old.data.map((user) => (user.id === id ? { ...user, status } : user)),
+      }
+    }
+  )
 }
 
 export function useUpdateUserStatus() {
@@ -180,12 +212,30 @@ export function useUpdateUserStatus() {
       const response = await api.patch<SuccessResponse<UserDetail>>(`/users/${id}/status`, { status })
       return response.data
     },
-    onSuccess: (res) => {
-      qc.invalidateQueries({ queryKey: ['users-list'] })
-      toast.success(res.message || 'User status updated.')
+    onMutate: async ({ id, status }) => {
+      await qc.cancelQueries({ queryKey: ['users-list'] })
+      const previousLists = qc.getQueriesData<LaravelPaginatedResponse<UserListItem>>({
+        queryKey: ['users-list'],
+      })
+      patchUserStatusInLists(qc, id, status)
+      return { previousLists }
     },
-    onError: (error) => {
-      toast.error(getErrorMessage(error, 'Failed to update user status.'))
+    onError: (error, _, context) => {
+      context?.previousLists?.forEach(([queryKey, data]) => {
+        qc.setQueryData(queryKey, data)
+      })
+      toast.error(getErrorMessage(error, i18n.t('userStatusFailed')))
+    },
+    onSuccess: (res, { id, status }) => {
+      // Keep list in sync even if a concurrent refetch raced the optimistic patch
+      patchUserStatusInLists(qc, id, status)
+      toast.success(res.message || i18n.t('userStatusUpdated'))
+    },
+    onSettled: (_data, _error, variables) => {
+      qc.invalidateQueries({ queryKey: ['users-list'] })
+      if (variables?.id) {
+        qc.invalidateQueries({ queryKey: ['user', variables.id] })
+      }
     },
   })
 }

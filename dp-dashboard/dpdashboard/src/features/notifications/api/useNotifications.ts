@@ -1,6 +1,7 @@
 import { useEffect } from 'react'
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query'
 import toast from 'react-hot-toast'
+import i18n from '@/shared/i18n/i18n'
 import api, { getErrorMessage } from '@/shared/services/axios'
 import type { LaravelPaginatedResponse } from '@/shared/types/laravel'
 import { getEcho } from '@/shared/services/echo'
@@ -88,7 +89,7 @@ export function useNotifications() {
       queryClient.invalidateQueries({ queryKey: ['notifications'] })
     },
     onError: (error) => {
-      toast.error(getErrorMessage(error, 'Failed to mark notification as read.'))
+      toast.error(getErrorMessage(error, i18n.t('markNotificationReadFailed')))
     },
   })
 
@@ -101,7 +102,7 @@ export function useNotifications() {
       queryClient.invalidateQueries({ queryKey: ['notifications'] })
     },
     onError: (error) => {
-      toast.error(getErrorMessage(error, 'Failed to mark all as read.'))
+      toast.error(getErrorMessage(error, i18n.t('markAllNotificationsReadFailed')))
     },
   })
 

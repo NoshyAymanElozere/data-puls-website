@@ -208,10 +208,10 @@ export default function Reports() {
       {/* Header & Export Action */}
       <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
         <div>
-          <h1 className="text-2xl sm:text-3xl font-extrabold tracking-tight text-[#111827]">
+          <h1 className="text-2xl sm:text-3xl font-extrabold tracking-tight text-[#111827] dark:text-white">
             {t('reports')}
           </h1>
-          <p className="text-sm text-gray-500 mt-1">{t('reportsSubtitle')}</p>
+          <p className="text-sm text-gray-500 dark:text-gray-400 mt-1">{t('reportsSubtitle')}</p>
         </div>
 
         <div className="flex items-center gap-3">
@@ -282,7 +282,7 @@ export default function Reports() {
                 </h3>
               )}
               <p className="text-xs text-gray-500 mt-1 font-medium">
-                {t('outOf', 'of')} {warrantiesTotal.toLocaleString()} {t('warrantiesModule')}
+                {t('outOf')} {warrantiesTotal.toLocaleString()} {t('warrantiesModule')}
               </p>
             </div>
           </CardContent>
@@ -311,7 +311,7 @@ export default function Reports() {
                 </h3>
               )}
               <p className="text-xs text-gray-500 mt-1 font-medium">
-                {t('monthlyRecurringRevenue', 'Monthly Recurring Revenue')}
+                {t('monthlyRecurringRevenue')}
               </p>
             </div>
           </CardContent>
@@ -656,7 +656,7 @@ export default function Reports() {
                 </div>
                 <div>
                   <p className="text-xs text-gray-400 font-bold uppercase tracking-wider">
-                    {t('topCategory', 'Top Category')}
+                    {t('topCategory')}
                   </p>
                   <h4 className="text-lg font-black text-gray-900 mt-0.5">
                     {isRtl
@@ -822,7 +822,7 @@ export default function Reports() {
           {/* Warranties Status Grid */}
           <div className="grid grid-cols-2 sm:grid-cols-4 gap-4">
             <Card className="border border-gray-100 rounded-2xl shadow-xs bg-white p-4">
-              <p className="text-xs text-gray-400 font-bold uppercase">{t('totalWarranties', 'Total Warranties')}</p>
+              <p className="text-xs text-gray-400 font-bold uppercase">{t('totalWarranties')}</p>
               <h4 className="text-xl font-black text-gray-900 mt-1">
                 {warrantiesReport?.summary?.total_warranties ?? warrantiesTotal}
               </h4>
@@ -976,10 +976,10 @@ export default function Reports() {
                   <table className="w-full text-left text-xs">
                     <thead>
                       <tr className="border-b border-gray-100 text-gray-400 font-bold uppercase">
-                        <th className="pb-3 text-start">{t('package', 'Package')}</th>
-                        <th className="pb-3 text-end">{t('totalSubscribers', 'Total')}</th>
+                        <th className="pb-3 text-start">{t('package')}</th>
+                        <th className="pb-3 text-end">{t('totalSubscribers')}</th>
                         <th className="pb-3 text-end">{t('activeSubscribers')}</th>
-                        <th className="pb-3 text-end">{t('monthlyMrr', 'Monthly MRR')}</th>
+                        <th className="pb-3 text-end">{t('monthlyMrr')}</th>
                       </tr>
                     </thead>
                     <tbody className="divide-y divide-gray-50">
@@ -1055,7 +1055,7 @@ export default function Reports() {
         </div>
       )}
 
-      {/* Tab 5: Users & Demographics */}
+      {/* Tab 5: Users */}
       {activeTab === 'users' && (
         <div className="space-y-6">
           {/* Users KPI Summary */}
@@ -1086,103 +1086,65 @@ export default function Reports() {
             </Card>
           </div>
 
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-            {/* Geographic Distribution */}
-            <Card className="border border-gray-100 rounded-2xl shadow-xs bg-white">
-              <CardHeader className="border-b border-gray-50 px-6 py-4">
-                <CardTitle className="text-base font-bold text-gray-900">
-                  {t('geographicDistribution')}
-                </CardTitle>
-              </CardHeader>
-              <CardContent className="p-6">
-                <div className="space-y-4">
-                  {(
-                    usersReport?.geographic_distribution || [
-                      { name: 'Riyadh', users_count: 1250, percentage: 44.0 },
-                      { name: 'Jeddah', users_count: 680, percentage: 23.9 },
-                      { name: 'Dammam', users_count: 320, percentage: 11.3 },
-                      { name: 'Khobar', users_count: 210, percentage: 7.4 },
-                    ]
-                  ).map((city, i) => (
-                    <div key={i} className="space-y-1.5">
-                      <div className="flex items-center justify-between text-xs font-semibold">
-                        <span className="text-gray-800">{city.name}</span>
-                        <span className="text-gray-900 font-bold">
-                          {city.users_count} ({city.percentage}%)
-                        </span>
-                      </div>
-                      <div className="w-full h-2 bg-gray-100 rounded-full overflow-hidden">
-                        <div
-                          className="h-full bg-blue-600 rounded-full transition-all"
-                          style={{ width: `${city.percentage}%` }}
-                        />
-                      </div>
-                    </div>
-                  ))}
-                </div>
-              </CardContent>
-            </Card>
-
-            {/* Top Spenders Table */}
-            <Card className="border border-gray-100 rounded-2xl shadow-xs bg-white">
-              <CardHeader className="border-b border-gray-50 px-6 py-4">
-                <CardTitle className="text-base font-bold text-gray-900">
-                  {t('topSpenders')}
-                </CardTitle>
-              </CardHeader>
-              <CardContent className="p-6">
-                <div className="overflow-x-auto">
-                  <table className="w-full text-left text-xs">
-                    <thead>
-                      <tr className="border-b border-gray-100 text-gray-400 font-bold uppercase">
-                        <th className="pb-3 text-start">{t('users')}</th>
-                        <th className="pb-3 text-end">{t('invoicesCount')}</th>
-                        <th className="pb-3 text-end">{t('totalSpent')}</th>
+          {/* Top Spenders Table */}
+          <Card className="border border-gray-100 rounded-2xl shadow-xs bg-white">
+            <CardHeader className="border-b border-gray-50 px-6 py-4">
+              <CardTitle className="text-base font-bold text-gray-900">
+                {t('topSpenders')}
+              </CardTitle>
+            </CardHeader>
+            <CardContent className="p-6">
+              <div className="overflow-x-auto">
+                <table className="w-full text-left text-xs">
+                  <thead>
+                    <tr className="border-b border-gray-100 text-gray-400 font-bold uppercase">
+                      <th className="pb-3 text-start">{t('users')}</th>
+                      <th className="pb-3 text-end">{t('invoicesCount')}</th>
+                      <th className="pb-3 text-end">{t('totalSpent')}</th>
+                    </tr>
+                  </thead>
+                  <tbody className="divide-y divide-gray-50">
+                    {(
+                      usersReport?.top_spenders || [
+                        {
+                          user_id: 45,
+                          name: 'Mohammed Al-Otaibi',
+                          city: 'Riyadh',
+                          total_spent: 48500,
+                          invoice_count: 28,
+                        },
+                        {
+                          user_id: 89,
+                          name: 'Sarah Al-Ghamdi',
+                          city: 'Jeddah',
+                          total_spent: 34200,
+                          invoice_count: 19,
+                        },
+                        {
+                          user_id: 112,
+                          name: 'Abdullah Al-Shehri',
+                          city: 'Dammam',
+                          total_spent: 29800,
+                          invoice_count: 14,
+                        },
+                      ]
+                    ).map((user) => (
+                      <tr key={user.user_id} className="hover:bg-gray-50/50 transition-colors">
+                        <td className="py-3 text-start">
+                          <p className="font-bold text-gray-800">{user.name}</p>
+                          <p className="text-[10px] text-gray-400">{user.city}</p>
+                        </td>
+                        <td className="py-3 text-gray-600 text-end font-semibold">{user.invoice_count}</td>
+                        <td className="py-3 text-end font-extrabold text-emerald-600">
+                          {formatCurrency(user.total_spent)}
+                        </td>
                       </tr>
-                    </thead>
-                    <tbody className="divide-y divide-gray-50">
-                      {(
-                        usersReport?.top_spenders || [
-                          {
-                            user_id: 45,
-                            name: 'Mohammed Al-Otaibi',
-                            city: 'Riyadh',
-                            total_spent: 48500,
-                            invoice_count: 28,
-                          },
-                          {
-                            user_id: 89,
-                            name: 'Sarah Al-Ghamdi',
-                            city: 'Jeddah',
-                            total_spent: 34200,
-                            invoice_count: 19,
-                          },
-                          {
-                            user_id: 112,
-                            name: 'Abdullah Al-Shehri',
-                            city: 'Dammam',
-                            total_spent: 29800,
-                            invoice_count: 14,
-                          },
-                        ]
-                      ).map((user) => (
-                        <tr key={user.user_id} className="hover:bg-gray-50/50 transition-colors">
-                          <td className="py-3 text-start">
-                            <p className="font-bold text-gray-800">{user.name}</p>
-                            <p className="text-[10px] text-gray-400">{user.city}</p>
-                          </td>
-                          <td className="py-3 text-gray-600 text-end font-semibold">{user.invoice_count}</td>
-                          <td className="py-3 text-end font-extrabold text-emerald-600">
-                            {formatCurrency(user.total_spent)}
-                          </td>
-                        </tr>
-                      ))}
-                    </tbody>
-                  </table>
-                </div>
-              </CardContent>
-            </Card>
-          </div>
+                    ))}
+                  </tbody>
+                </table>
+              </div>
+            </CardContent>
+          </Card>
         </div>
       )}
 
