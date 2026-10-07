@@ -1,4 +1,5 @@
 import React, { useState, useMemo, useEffect } from "react";
+import { API_BASE_URL } from "../../config/api";
 import { useLanguage } from "../../components/LanguageContext";
 import BlogHero from "./layouts/BlogHero";
 import BlogCategories from "./layouts/BlogCategories";
@@ -41,7 +42,7 @@ export default function Blog() {
 
     const fetchBlogs = async () => {
       try {
-        const response = await fetch("http://localhost:5000/api/blogs", {
+        const response = await fetch(`${API_BASE_URL}/blogs`, {
           headers: {
             "Accept-Language": language
           }
@@ -59,7 +60,7 @@ export default function Blog() {
 
     const fetchDepartments = async () => {
       try {
-        const response = await fetch("http://localhost:5000/api/departments", {
+        const response = await fetch(`${API_BASE_URL}/departments`, {
           headers: {
             "Accept-Language": language
           }

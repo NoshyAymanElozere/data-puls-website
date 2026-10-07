@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import Head from "next/head";
 import { useParams, Navigate } from "@/components/RouterShim";
+import { API_BASE_URL } from "../../config/api";
 import { useLanguage } from "../../components/LanguageContext";
 import CTA from "./../Home/layouts/HomeCTA/HomeCTA";
 import Services from "./../Home/layouts/HomeServices/HomeServices";
@@ -97,7 +98,7 @@ export default function BlogDetail({ slug: externalSlug }: { slug?: string }) {
 
     const fetchDynamicData = async () => {
       try {
-        const detailRes = await fetch(`http://localhost:5000/api/blogs/${id}`, {
+        const detailRes = await fetch(`${API_BASE_URL}/blogs/${id}`, {
           headers: {
             "Accept-Language": language
           }
@@ -117,7 +118,7 @@ export default function BlogDetail({ slug: externalSlug }: { slug?: string }) {
 
     const fetchBlogsList = async () => {
       try {
-        const listRes = await fetch(`http://localhost:5000/api/blogs`, {
+        const listRes = await fetch(`${API_BASE_URL}/blogs`, {
           headers: {
             "Accept-Language": language
           }

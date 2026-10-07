@@ -2,6 +2,7 @@ import React, {useState, useRef} from "react";
 import {Section} from "./../../../../components/UI";
 import {useLanguage} from "./../../../../components/LanguageContext";
 import {Reveal} from "./../../../../components/Reveal";
+import {API_BASE_URL} from "./../../../../config/api";
 
 interface HomeContactProps {
   content: {
@@ -37,6 +38,65 @@ export default function HomeContact({content}: HomeContactProps) {
   const [activeLocationIndex, setActiveLocationIndex] = useState(0);
   const activeLocation = locations[activeLocationIndex];
   const tabsRef = useRef<HTMLDivElement>(null);
+
+  const [formData, setFormData] = useState({
+    name: "",
+    email: "",
+    subject: "",
+    message: "",
+  });
+  const [loading, setLoading] = useState(false);
+  const [status, setStatus] = useState<{type: "success" | "error"; msg: string} | null>(null);
+
+  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+    setFormData((prev) => ({...prev, [e.target.name]: e.target.value}));
+  };
+
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!formData.name || !formData.email || !formData.message) {
+      setStatus({
+        type: "error",
+        msg: language === "ar" ? "يرجى ملء جميع الحقول المطلوبة (الاسم، البريد، الرسالة)." : "Please fill in all required fields (Name, Email, Message).",
+      });
+      return;
+    }
+
+    setLoading(true);
+    setStatus(null);
+
+    try {
+      const response = await fetch(`${API_BASE_URL}/contact`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(formData),
+      });
+
+      const result = await response.json();
+
+      if (response.ok && result.success) {
+        setStatus({
+          type: "success",
+          msg: result.message || (language === "ar" ? "تم إرسال رسالتك بنجاح!" : "Your message has been sent successfully!"),
+        });
+        setFormData({name: "", email: "", subject: "", message: ""});
+      } else {
+        setStatus({
+          type: "error",
+          msg: result.message || (language === "ar" ? "حدث خطأ أثناء الإرسال." : "Failed to send message."),
+        });
+      }
+    } catch (err: any) {
+      setStatus({
+        type: "error",
+        msg: language === "ar" ? "تعذر الاتصال بالسيرفر. يرجى المحاولة لاحقاً." : "Could not connect to server. Please try again later.",
+      });
+    } finally {
+      setLoading(false);
+    }
+  };
 
   const scrollTabs = (direction: "left" | "right") => {
     if (tabsRef.current) {
@@ -284,27 +344,47 @@ export default function HomeContact({content}: HomeContactProps) {
                 <div className="lg:col-span-7">
                   <form
                     className="space-y-6 bg-brand-900/20 p-6 md:p-8 rounded-2xl border border-brand-800/30"
-                    onSubmit={(e) => e.preventDefault()}
+                    onSubmit={handleSubmit}
                   >
+                    {status && (
+                      <div
+                        className={`p-4 rounded-lg text-sm font-medium border transition-all ${
+                          status.type === "success"
+                            ? "bg-emerald-500/10 border-emerald-500/30 text-emerald-300"
+                            : "bg-rose-500/10 border-rose-500/30 text-rose-300"
+                        }`}
+                      >
+                        {status.msg}
+                      </div>
+                    )}
+
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
                       <div className="group">
                         <label className={labelClass}>
-                          {displayContent.form.name}
+                          {displayContent.form.name} *
                         </label>
                         <input
                           type="text"
+                          name="name"
+                          value={formData.name}
+                          onChange={handleInputChange}
                           className={inputClass}
                           placeholder={displayContent.form.name}
+                          required
                         />
                       </div>
                       <div className="group">
                         <label className={labelClass}>
-                          {displayContent.form.email}
+                          {displayContent.form.email} *
                         </label>
                         <input
                           type="email"
+                          name="email"
+                          value={formData.email}
+                          onChange={handleInputChange}
                           className={inputClass}
                           placeholder="work@company.com"
+                          required
                         />
                       </div>
                     </div>
@@ -314,24 +394,37 @@ export default function HomeContact({content}: HomeContactProps) {
                       </label>
                       <input
                         type="text"
+                        name="subject"
+                        value={formData.subject}
+                        onChange={handleInputChange}
                         className={inputClass}
                         placeholder="General Inquiry"
                       />
                     </div>
                     <div className="group">
                       <label className={labelClass}>
-                        {displayContent.form.message}
+                        {displayContent.form.message} *
                       </label>
                       <textarea
                         rows={4}
+                        name="message"
+                        value={formData.message}
+                        onChange={handleInputChange}
                         className={`${inputClass} resize-none`}
                         placeholder={`Message for ${activeLocation.title} Team...`}
+                        required
                       ></textarea>
                     </div>
 
                     <div className="pt-2">
-                      <button className="w-full bg-brand-600 hover:bg-brand-500 text-white font-bold py-4 rounded-lg uppercase tracking-widest text-sm transition-all shadow-[0_0_25px_-5px_rgba(67,97,238,0.4)] hover:shadow-[0_0_35px_-5px_rgba(67,97,238,0.6)] hover:-translate-y-0.5 flex items-center justify-center gap-3 group">
-                        {displayContent.form.submit}
+                      <button
+                        type="submit"
+                        disabled={loading}
+                        className="w-full bg-brand-600 hover:bg-brand-500 text-white font-bold py-4 rounded-lg uppercase tracking-widest text-sm transition-all shadow-[0_0_25px_-5px_rgba(67,97,238,0.4)] hover:shadow-[0_0_35px_-5px_rgba(67,97,238,0.6)] hover:-translate-y-0.5 flex items-center justify-center gap-3 group disabled:opacity-50 disabled:cursor-not-allowed"
+                      >
+                        {loading
+                          ? (language === "ar" ? "جاري الإرسال..." : "Sending...")
+                          : displayContent.form.submit}
                         <i
                           className={`fa-solid ${dir === "rtl" ? "fa-arrow-left" : "fa-arrow-right"} transition-transform group-hover:translate-x-1 rtl:group-hover:-translate-x-1`}
                         ></i>

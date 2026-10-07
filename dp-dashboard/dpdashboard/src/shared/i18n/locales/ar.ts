@@ -74,5 +74,17 @@ export const ar = {
   departments: "الأقسام",
   department: "قسم",
   arabicName: "الاسم بالعربية",
-  englishName: "الاسم بالإنجليزية"
+  englishName: "الاسم بالإنجليزية",
+
+  // Contact Management
+  contactMessages: "رسائل التواصل",
+  contactMessage: "رسالة تواصل",
+  senderName: "اسم المرسل",
+  emailAddress: "البريد الإلكتروني",
+  phone: "رقم الهاتف",
+  location: "المكتب / الفرع",
+  subject: "الموضوع",
+  messageSnippet: "ملخص الرسالة",
+  receivedAt: "تاريخ الاستلام",
+  aboutUs: "عن الشركة"
 }

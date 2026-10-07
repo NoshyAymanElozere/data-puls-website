@@ -16,17 +16,12 @@ export const connectDB = async () => {
         return;
     }
 
-    const mongoURI = process.env.MONGO_URI;
-
-    if (!mongoURI) {
-        console.error('MONGO_URI is not defined in the environment variables.');
-        return; // Don't call process.exit(1) on serverless platforms
-    }
+    const mongoURI = process.env.MONGO_URI || 'mongodb://localhost:27017/data-pulse-web';
 
     try {
         await mongoose.connect(mongoURI);
         isConnected = true;
-        console.log('Successfully connected to MongoDB Atlas!');
+        console.log(`Successfully connected to MongoDB at ${mongoURI}`);
     } catch (err) {
         console.error('MongoDB connection error:', err.message);
     }

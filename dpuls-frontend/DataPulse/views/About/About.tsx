@@ -1,4 +1,4 @@
-import React, {useMemo} from "react";
+import React, {useMemo, useState, useEffect} from "react";
 import Head from "next/head";
 import {useLanguage} from "../../components/LanguageContext";
 import CTA from "./../Home/layouts/HomeCTA/HomeCTA";
@@ -13,14 +13,40 @@ import AboutHero from "./layouts/AboutHero";
 import AboutOverview from "./layouts/AboutOverview";
 import AboutMissionVision from "./layouts/AboutMissionVision";
 import AboutValues from "./layouts/AboutValues";
+import { API_BASE_URL } from "../../config/api";
 
 export default function About() {
   const {language} = useLanguage();
 
-  // Load local translations based on current language
-  const content = useMemo(() => {
+  const staticContent = useMemo(() => {
     return language === "ar" ? arContent : enContent;
   }, [language]);
+
+  const [apiContent, setApiContent] = useState<any>(null);
+
+  useEffect(() => {
+    let isMounted = true;
+    fetch(`${API_BASE_URL}/about`, {
+      headers: {
+        "Accept-Language": language,
+      },
+    })
+      .then((res) => res.json())
+      .then((json) => {
+        if (isMounted && json && json.success && json.data) {
+          setApiContent(json.data);
+        }
+      })
+      .catch((err) => {
+        console.error("Error fetching about content from backend:", err);
+      });
+
+    return () => {
+      isMounted = false;
+    };
+  }, [language]);
+
+  const content = apiContent || staticContent;
 
   const homeData = useMemo(() => {
     return language === "ar" ? homeAr : homeEn;

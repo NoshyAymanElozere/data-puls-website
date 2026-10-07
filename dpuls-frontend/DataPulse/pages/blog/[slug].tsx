@@ -1,6 +1,7 @@
 import BlogDetail from "@/views/BlogDetails/BlogDetail";
 import Head from "next/head";
 import { GetStaticPaths, GetStaticProps } from "next";
+import { API_BASE_URL } from "@/config/api";
 
 export default function BlogDetailPage({ slug }: { slug: string }) {
   return (
@@ -31,7 +32,7 @@ export default function BlogDetailPage({ slug }: { slug: string }) {
 
 export const getStaticPaths: GetStaticPaths = async () => {
   try {
-    const res = await fetch("http://localhost:5000/api/blogs");
+    const res = await fetch(`${API_BASE_URL}/blogs`);
     if (res.ok) {
       const resJson = await res.json();
       if (resJson.success && Array.isArray(resJson.data)) {

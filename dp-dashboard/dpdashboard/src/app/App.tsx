@@ -7,6 +7,8 @@ import BlogList from '@/features/blog/pages/BlogList'
 import BlogForm from '@/features/blog/pages/BlogForm'
 import BlogView from '@/features/blog/pages/BlogView'
 import DepartmentList from '@/features/department/pages/DepartmentList'
+import ContactList from '@/features/contact/pages/ContactList'
+import AboutForm from '@/features/about/pages/AboutForm'
 
 import { ProtectedRoute, PublicRoute } from '@/shared/components/RouteGuards'
 
@@ -40,6 +42,12 @@ function App() {
 
             {/* Department Module Routes */}
             <Route path="departments" element={<DepartmentList />} />
+
+            {/* Contact Messages Route */}
+            <Route path="contact" element={<ContactList />} />
+
+            {/* About Us Module Route */}
+            <Route path="about" element={<AboutForm />} />
 
             <Route path="*" element={<Placeholder title="404 Not Found" />} />
           </Route>

@@ -1,4 +1,5 @@
 import React from "react";
+import {API_BASE_URL} from "../../config/api";
 import HomeHero from "./layouts/HomeHero/HomeHero";
 import HomeAbout from "./layouts/HomeAbout/HomeAbout";
 import HomeServices from "./layouts/HomeServices/HomeServices";
@@ -38,12 +39,13 @@ export default function Home() {
   const [blogs, setBlogs] = React.useState<any[]>([]);
   const [categories, setCategories] = React.useState<any[]>([]);
 
+
   React.useEffect(() => {
     setIsMounted(true);
 
     const fetchBlogs = async () => {
       try {
-        const response = await fetch("http://localhost:5000/api/blogs", {
+        const response = await fetch(`${API_BASE_URL}/blogs`, {
           headers: {
             "Accept-Language": activeLanguage
           }
@@ -61,7 +63,7 @@ export default function Home() {
 
     const fetchDepartments = async () => {
       try {
-        const response = await fetch("http://localhost:5000/api/departments", {
+        const response = await fetch(`${API_BASE_URL}/departments`, {
           headers: {
             "Accept-Language": activeLanguage
           }

@@ -5,7 +5,9 @@ import {
   ChevronLeft,
   ChevronRight,
   BookOpen,
-  FolderKanban
+  FolderKanban,
+  Mail,
+  Building2
 } from 'lucide-react'
 import React from 'react'
 import { useTranslation } from 'react-i18next'
@@ -16,6 +18,8 @@ import { useProfile } from '@/features/auth/api/useAuth'
 const navItems = [
   { label: 'Blogs', href: '/blogs', icon: BookOpen },
   { label: 'Departments', href: '/departments', icon: FolderKanban },
+  { label: 'contactMessages', href: '/contact', icon: Mail },
+  { label: 'aboutUs', href: '/about', icon: Building2 },
 ]
 
 

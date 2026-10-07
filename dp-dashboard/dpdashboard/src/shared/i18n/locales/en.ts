@@ -74,5 +74,17 @@ export const en = {
   departments: "Departments",
   department: "Department",
   arabicName: "Arabic Name",
-  englishName: "English Name"
+  englishName: "English Name",
+
+  // Contact Management
+  contactMessages: "Contact Messages",
+  contactMessage: "Contact Message",
+  senderName: "Sender Name",
+  emailAddress: "Email Address",
+  phone: "Phone Number",
+  location: "Office / Region",
+  subject: "Subject",
+  messageSnippet: "Message Snippet",
+  receivedAt: "Received At",
+  aboutUs: "About Us"
 }
