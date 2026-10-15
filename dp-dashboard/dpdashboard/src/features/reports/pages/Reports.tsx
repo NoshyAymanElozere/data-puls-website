@@ -1,4 +1,5 @@
-import React, { useState } from 'react'
+import React, { useState, useMemo } from 'react'
+import { useNavigate } from 'react-router-dom'
 import { Card, CardHeader, CardTitle, CardContent } from '@/shared/components/card'
 import {
   BarChart,
@@ -23,14 +24,22 @@ import {
   FileText,
   CheckCircle2,
   ShieldCheck,
+  ShieldAlert,
+  AlertTriangle,
+  Clock,
   CreditCard,
   Users as UsersIcon,
   PieChart as PieChartIcon,
   Award,
   Sparkles,
+  ChevronLeft,
+  ChevronRight,
+  ArrowLeft,
+  ArrowRight,
 } from 'lucide-react'
 import { formatCurrency, cn } from '@/shared/utils/utils'
 import { useTranslation } from 'react-i18next'
+import { useExpiringWarranties } from '@/features/dashboard/api/useDashboard'
 import {
   useReportsSummary,
   useFinancialGrowth,
@@ -51,6 +60,7 @@ const COLORS = ['#2563eb', '#10b981', '#f59e0b', '#8b5cf6', '#ec4899', '#06b6d4'
 export default function Reports() {
   const { t, i18n } = useTranslation()
   const isRtl = i18n.language === 'ar'
+  const navigate = useNavigate()
 
   // Tab State
   const [activeTab, setActiveTab] = useState<ReportTab>('overview')
@@ -104,6 +114,8 @@ export default function Reports() {
     date_from: dateFrom || undefined,
     date_to: dateTo || undefined,
   })
+
+  const { data: expiringWarrantiesList } = useExpiringWarranties()
 
   const {
     data: subscriptionsReport,
@@ -203,6 +215,81 @@ export default function Reports() {
     { id: 'users', label: t('tabUsers'), icon: UsersIcon },
   ]
 
+  const getForecastPeriodLabel = (period: string) => {
+    if (!period) return ''
+    const p = period.toLowerCase()
+    if (p.includes('15') || p.includes('urgent') || p.includes('7')) return t('urgent15Days')
+    if (p.includes('16') || p.includes('30') || p.includes('approaching')) return t('approaching30Days')
+    if (p.includes('more') || p.includes('later') || p.includes('90')) return t('moreThan30Days')
+    return t(period, period)
+  }
+
+  const forecastRanges = useMemo(() => {
+    if (expiringWarrantiesList) {
+      const urgent = expiringWarrantiesList.filter((item) => Math.round(item.days_remaining) <= 15).length
+      const approaching = expiringWarrantiesList.filter((item) => {
+        const days = Math.round(item.days_remaining)
+        return days > 15 && days <= 30
+      }).length
+      const later = expiringWarrantiesList.filter((item) => Math.round(item.days_remaining) > 30).length
+
+      return [
+        {
+          key: 'urgent',
+          label: t('urgent15Days'),
+          count: urgent,
+          urgency: 'urgent',
+          icon: ShieldAlert,
+          colorClass: 'bg-rose-100 text-rose-600',
+        },
+        {
+          key: 'approaching',
+          label: t('approaching30Days'),
+          count: approaching,
+          urgency: 'approaching',
+          icon: AlertTriangle,
+          colorClass: 'bg-amber-100 text-amber-600',
+        },
+        {
+          key: 'later',
+          label: t('moreThan30Days'),
+          count: later,
+          urgency: 'later',
+          icon: Clock,
+          colorClass: 'bg-blue-100 text-blue-600',
+        },
+      ]
+    }
+
+    const list = warrantiesReport?.expiring_forecast
+    return [
+      {
+        key: 'urgent',
+        label: t('urgent15Days'),
+        count: list?.[0]?.count ?? 0,
+        urgency: 'urgent',
+        icon: ShieldAlert,
+        colorClass: 'bg-rose-100 text-rose-600',
+      },
+      {
+        key: 'approaching',
+        label: t('approaching30Days'),
+        count: list?.[1]?.count ?? 0,
+        urgency: 'approaching',
+        icon: AlertTriangle,
+        colorClass: 'bg-amber-100 text-amber-600',
+      },
+      {
+        key: 'later',
+        label: t('moreThan30Days'),
+        count: list?.[2]?.count ?? 0,
+        urgency: 'later',
+        icon: Clock,
+        colorClass: 'bg-blue-100 text-blue-600',
+      },
+    ]
+  }, [expiringWarrantiesList, warrantiesReport?.expiring_forecast, t])
+
   return (
     <div className="space-y-6 animate-fade-in pb-12">
       {/* Header & Export Action */}
@@ -228,10 +315,16 @@ export default function Reports() {
       {/* 4 Top KPI Cards */}
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
         {/* Card 1: Invoices */}
-        <Card className="border border-gray-100 rounded-2xl shadow-xs bg-white hover:shadow-md transition-shadow">
+        <Card
+          onClick={() => setActiveTab('invoices')}
+          className={cn(
+            'border border-gray-100 rounded-2xl shadow-xs bg-white hover:shadow-md hover:border-blue-200 transition-all cursor-pointer group',
+            activeTab === 'invoices' && 'ring-2 ring-main/30 border-main/40'
+          )}
+        >
           <CardContent className="p-5">
             <div className="flex items-center justify-between">
-              <div className="p-3 rounded-xl bg-blue-50 text-blue-600">
+              <div className="p-3 rounded-xl bg-blue-50 text-blue-600 group-hover:scale-105 transition-transform">
                 <FileText className="h-5 w-5" />
               </div>
               <Badge className="bg-emerald-50 text-emerald-700 hover:bg-emerald-50 border-0 text-xs font-bold">
@@ -258,10 +351,16 @@ export default function Reports() {
         </Card>
 
         {/* Card 2: Warranties */}
-        <Card className="border border-gray-100 rounded-2xl shadow-xs bg-white hover:shadow-md transition-shadow">
+        <Card
+          onClick={() => setActiveTab('warranties')}
+          className={cn(
+            'border border-gray-100 rounded-2xl shadow-xs bg-white hover:shadow-md hover:border-emerald-200 transition-all cursor-pointer group',
+            activeTab === 'warranties' && 'ring-2 ring-main/30 border-main/40'
+          )}
+        >
           <CardContent className="p-5">
             <div className="flex items-center justify-between">
-              <div className="p-3 rounded-xl bg-emerald-50 text-emerald-600">
+              <div className="p-3 rounded-xl bg-emerald-50 text-emerald-600 group-hover:scale-105 transition-transform">
                 <ShieldCheck className="h-5 w-5" />
               </div>
               {warrantiesExpiring > 0 && (
@@ -289,10 +388,16 @@ export default function Reports() {
         </Card>
 
         {/* Card 3: Subscriptions */}
-        <Card className="border border-gray-100 rounded-2xl shadow-xs bg-white hover:shadow-md transition-shadow">
+        <Card
+          onClick={() => setActiveTab('subscriptions')}
+          className={cn(
+            'border border-gray-100 rounded-2xl shadow-xs bg-white hover:shadow-md hover:border-purple-200 transition-all cursor-pointer group',
+            activeTab === 'subscriptions' && 'ring-2 ring-main/30 border-main/40'
+          )}
+        >
           <CardContent className="p-5">
             <div className="flex items-center justify-between">
-              <div className="p-3 rounded-xl bg-purple-50 text-purple-600">
+              <div className="p-3 rounded-xl bg-purple-50 text-purple-600 group-hover:scale-105 transition-transform">
                 <CreditCard className="h-5 w-5" />
               </div>
               <Badge className="bg-purple-50 text-purple-700 hover:bg-purple-50 border-0 text-xs font-bold">
@@ -318,10 +423,16 @@ export default function Reports() {
         </Card>
 
         {/* Card 4: Users */}
-        <Card className="border border-gray-100 rounded-2xl shadow-xs bg-white hover:shadow-md transition-shadow">
+        <Card
+          onClick={() => setActiveTab('users')}
+          className={cn(
+            'border border-gray-100 rounded-2xl shadow-xs bg-white hover:shadow-md hover:border-rose-200 transition-all cursor-pointer group',
+            activeTab === 'users' && 'ring-2 ring-main/30 border-main/40'
+          )}
+        >
           <CardContent className="p-5">
             <div className="flex items-center justify-between">
-              <div className="p-3 rounded-xl bg-rose-50 text-rose-600">
+              <div className="p-3 rounded-xl bg-rose-50 text-rose-600 group-hover:scale-105 transition-transform">
                 <UsersIcon className="h-5 w-5" />
               </div>
               <Badge className="bg-rose-50 text-rose-700 hover:bg-rose-50 border-0 text-xs font-bold">
@@ -463,10 +574,11 @@ export default function Reports() {
                     value={selectedYear}
                     onChange={(e) => setSelectedYear(Number(e.target.value))}
                     aria-label={t('year')}
-                    className="h-8 px-2.5 text-xs font-semibold rounded-lg border border-gray-200 bg-gray-50/50 text-gray-700 focus:outline-none"
+                    className="h-8 px-2.5 text-xs font-semibold rounded-lg border border-gray-200 bg-gray-50/50 text-black dark:text-black focus:outline-none [color-scheme:light]"
+                    style={{ color: '#000000', colorScheme: 'light' }}
                   >
                     {[currentYear, currentYear - 1, currentYear - 2].map((y) => (
-                      <option key={y} value={y}>
+                      <option key={y} value={y} className="text-black bg-white" style={{ color: '#000000', backgroundColor: '#ffffff' }}>
                         {y}
                       </option>
                     ))}
@@ -499,7 +611,7 @@ export default function Reports() {
                 </div>
               </CardHeader>
               <CardContent className="p-6">
-                <div className="h-[300px] w-full">
+                <div className="h-[300px] w-full" dir="ltr">
                   {isFinancialLoading ? (
                     <div className="h-full w-full flex items-center justify-center">
                       <Loader2 className="h-6 w-6 animate-spin text-main" />
@@ -525,6 +637,8 @@ export default function Reports() {
                             borderRadius: '12px',
                             border: 'none',
                             boxShadow: '0 8px 24px rgba(0,0,0,0.08)',
+                            direction: isRtl ? 'rtl' : 'ltr',
+                            textAlign: isRtl ? 'right' : 'left',
                           }}
                           formatter={(v: number) => [`${v.toLocaleString()} SAR`]}
                         />
@@ -572,14 +686,18 @@ export default function Reports() {
                 </Badge>
               </CardHeader>
               <CardContent className="p-6">
-                <div className="h-[300px] w-full">
+                <div className="h-[300px] w-full" dir="ltr">
                   {isCategoryLoading ? (
                     <div className="h-full w-full flex items-center justify-center">
                       <Loader2 className="h-6 w-6 animate-spin text-main" />
                     </div>
                   ) : (
                     <ResponsiveContainer width="100%" height="100%">
-                      <BarChart data={categoryChartData} layout="vertical">
+                      <BarChart
+                        data={categoryChartData}
+                        layout="vertical"
+                        margin={{ top: 10, right: 30, left: 16, bottom: 5 }}
+                      >
                         <CartesianGrid strokeDasharray="3 3" horizontal={false} stroke="#f3f4f6" />
                         <XAxis
                           type="number"
@@ -593,14 +711,19 @@ export default function Reports() {
                           type="category"
                           axisLine={false}
                           tickLine={false}
-                          tick={{ fontSize: 11 }}
-                          width={130}
+                          tick={{ fontSize: 11, fill: '#4b5563' }}
+                          tickFormatter={(val: string) =>
+                            val && val.length > 20 ? `${val.slice(0, 18)}…` : val
+                          }
+                          width={140}
                         />
                         <Tooltip
                           contentStyle={{
                             borderRadius: '12px',
                             border: 'none',
                             boxShadow: '0 8px 24px rgba(0,0,0,0.08)',
+                            direction: isRtl ? 'rtl' : 'ltr',
+                            textAlign: isRtl ? 'right' : 'left',
                           }}
                           formatter={(v: number, _, entry) => [
                             `${v}% (${entry.payload.sales ? entry.payload.sales.toLocaleString() + ' SAR' : ''})`,
@@ -720,7 +843,7 @@ export default function Reports() {
                 </CardTitle>
               </CardHeader>
               <CardContent className="p-6">
-                <div className="h-[280px] w-full">
+                <div className="h-[280px] w-full" dir="ltr">
                   {isInvoicesLoading ? (
                     <div className="h-full w-full flex items-center justify-center">
                       <Loader2 className="h-6 w-6 animate-spin text-main" />
@@ -745,6 +868,8 @@ export default function Reports() {
                             borderRadius: '12px',
                             border: 'none',
                             boxShadow: '0 8px 24px rgba(0,0,0,0.08)',
+                            direction: isRtl ? 'rtl' : 'ltr',
+                            textAlign: isRtl ? 'right' : 'left',
                           }}
                         />
                         <Bar dataKey="count" name={t('invoicesCount')} fill="#2563eb" radius={[6, 6, 0, 0]} />
@@ -801,7 +926,10 @@ export default function Reports() {
                           <td className="py-3 text-gray-600 text-end">{formatCurrency(store.sales_volume)}</td>
                           <td className="py-3 text-gray-600 text-end">{store.invoices_count}</td>
                           <td className="py-3 text-end">
-                            <Badge variant="outline" className="text-xs font-semibold">
+                            <Badge
+                              variant="outline"
+                              className="text-xs font-semibold text-black dark:text-black border-gray-200 dark:border-gray-300"
+                            >
                               {store.share_percentage}%
                             </Badge>
                           </td>
@@ -821,8 +949,19 @@ export default function Reports() {
         <div className="space-y-6">
           {/* Warranties Status Grid */}
           <div className="grid grid-cols-2 sm:grid-cols-4 gap-4">
-            <Card className="border border-gray-100 rounded-2xl shadow-xs bg-white p-4">
-              <p className="text-xs text-gray-400 font-bold uppercase">{t('totalWarranties')}</p>
+            <Card
+              onClick={() => navigate('/expiring-warranties')}
+              className="border border-gray-100 rounded-2xl shadow-xs bg-white p-4 cursor-pointer hover:shadow-md hover:border-gray-300 transition-all group"
+              title={t('viewAll')}
+            >
+              <div className="flex items-center justify-between">
+                <p className="text-xs text-gray-400 font-bold uppercase">{t('totalWarranties')}</p>
+                {isRtl ? (
+                  <ChevronLeft className="h-3.5 w-3.5 text-gray-300 group-hover:text-gray-600 group-hover:-translate-x-0.5 transition-all" />
+                ) : (
+                  <ChevronRight className="h-3.5 w-3.5 text-gray-300 group-hover:text-gray-600 group-hover:translate-x-0.5 transition-all" />
+                )}
+              </div>
               <h4 className="text-xl font-black text-gray-900 mt-1">
                 {warrantiesReport?.summary?.total_warranties ?? warrantiesTotal}
               </h4>
@@ -833,8 +972,19 @@ export default function Reports() {
                 {warrantiesReport?.summary?.active_warranties ?? warrantiesActive}
               </h4>
             </Card>
-            <Card className="border border-gray-100 rounded-2xl shadow-xs bg-white p-4">
-              <p className="text-xs text-gray-400 font-bold uppercase">{t('expiringSoonCount')}</p>
+            <Card
+              onClick={() => navigate('/expiring-warranties?urgency=approaching')}
+              className="border border-gray-100 rounded-2xl shadow-xs bg-white p-4 cursor-pointer hover:shadow-md hover:border-amber-200 transition-all group"
+              title={t('viewAll')}
+            >
+              <div className="flex items-center justify-between">
+                <p className="text-xs text-gray-400 font-bold uppercase">{t('expiringSoonCount')}</p>
+                {isRtl ? (
+                  <ChevronLeft className="h-3.5 w-3.5 text-gray-300 group-hover:text-amber-600 group-hover:-translate-x-0.5 transition-all" />
+                ) : (
+                  <ChevronRight className="h-3.5 w-3.5 text-gray-300 group-hover:text-amber-600 group-hover:translate-x-0.5 transition-all" />
+                )}
+              </div>
               <h4 className="text-xl font-black text-amber-600 mt-1">
                 {warrantiesReport?.summary?.expiring_soon_count ?? warrantiesExpiring}
               </h4>
@@ -850,50 +1000,76 @@ export default function Reports() {
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
             {/* Upcoming Expirations Forecast */}
             <Card className="border border-gray-100 rounded-2xl shadow-xs bg-white">
-              <CardHeader className="border-b border-gray-50 px-6 py-4">
+              <CardHeader className="border-b border-gray-50 px-6 py-4 flex flex-row items-center justify-between">
                 <CardTitle className="text-base font-bold text-gray-900">
                   {t('expiringForecast')}
                 </CardTitle>
+                <button
+                  type="button"
+                  onClick={() => navigate('/expiring-warranties')}
+                  className="text-xs font-semibold text-main hover:underline flex items-center gap-1"
+                >
+                  <span>{t('viewAll')}</span>
+                  {isRtl ? <ArrowLeft className="h-3.5 w-3.5" /> : <ArrowRight className="h-3.5 w-3.5" />}
+                </button>
               </CardHeader>
               <CardContent className="p-6">
                 <div className="space-y-4">
-                  {(
-                    warrantiesReport?.expiring_forecast || [
-                      { period: 'Next 7 Days', count: 8 },
-                      { period: 'Next 30 Days', count: 45 },
-                      { period: 'Next 90 Days', count: 112 },
-                    ]
-                  ).map((forecast, i) => (
-                    <div key={i} className="p-4 rounded-xl bg-gray-50 flex items-center justify-between">
-                      <div className="flex items-center gap-3">
-                        <div
-                          className={cn(
-                            'p-2.5 rounded-lg',
-                            i === 0 ? 'bg-rose-100 text-rose-600' : i === 1 ? 'bg-amber-100 text-amber-600' : 'bg-blue-100 text-blue-600'
-                          )}
-                        >
-                          <ShieldCheck className="h-5 w-5" />
+                  {forecastRanges.map((range) => {
+                    const Icon = range.icon
+                    return (
+                      <div
+                        key={range.key}
+                        onClick={() => navigate(`/expiring-warranties?urgency=${range.urgency}`)}
+                        className="p-4 rounded-xl bg-gray-50 hover:bg-gray-100/80 cursor-pointer transition-all flex items-center justify-between group active:scale-[0.99]"
+                      >
+                        <div className="flex items-center gap-3">
+                          <div
+                            className={cn(
+                              'p-2.5 rounded-lg transition-transform group-hover:scale-105',
+                              range.colorClass
+                            )}
+                          >
+                            <Icon className="h-5 w-5" />
+                          </div>
+                          <div>
+                            <p className="text-xs font-bold text-gray-800 group-hover:text-main transition-colors">
+                              {range.label}
+                            </p>
+                            <p className="text-[11px] text-gray-400">{t('warrantiesModule')}</p>
+                          </div>
                         </div>
-                        <div>
-                          <p className="text-xs font-bold text-gray-800">{forecast.period}</p>
-                          <p className="text-[11px] text-gray-400">{t('warrantiesModule')}</p>
+                        <div className="flex items-center gap-2">
+                          <span className="text-lg font-extrabold text-gray-900">
+                            {range.count}
+                          </span>
+                          {isRtl ? (
+                            <ChevronLeft className="h-4 w-4 text-gray-300 group-hover:text-main group-hover:-translate-x-0.5 transition-all" />
+                          ) : (
+                            <ChevronRight className="h-4 w-4 text-gray-300 group-hover:text-main group-hover:translate-x-0.5 transition-all" />
+                          )}
                         </div>
                       </div>
-                      <span className="text-lg font-extrabold text-gray-900">
-                        {forecast.count}
-                      </span>
-                    </div>
-                  ))}
+                    )
+                  })}
                 </div>
               </CardContent>
             </Card>
 
             {/* Warranties Duration by Period */}
             <Card className="border border-gray-100 rounded-2xl shadow-xs bg-white">
-              <CardHeader className="border-b border-gray-50 px-6 py-4">
+              <CardHeader className="border-b border-gray-50 px-6 py-4 flex flex-row items-center justify-between">
                 <CardTitle className="text-base font-bold text-gray-900">
                   {t('durationBreakdown')}
                 </CardTitle>
+                <button
+                  type="button"
+                  onClick={() => navigate('/warranty-periods')}
+                  className="text-xs font-semibold text-main hover:underline flex items-center gap-1"
+                >
+                  <span>{t('viewAll')}</span>
+                  {isRtl ? <ArrowLeft className="h-3.5 w-3.5" /> : <ArrowRight className="h-3.5 w-3.5" />}
+                </button>
               </CardHeader>
               <CardContent className="p-6">
                 <div className="space-y-4">
@@ -1201,15 +1377,16 @@ export default function Reports() {
                 <select
                   value={exportModule}
                   onChange={(e) => setExportModule(e.target.value as ReportExportModule)}
-                  className="w-full h-10 px-3 rounded-xl border border-gray-200 text-xs font-semibold bg-gray-50/50 focus:bg-white focus:outline-none focus:ring-1 focus:ring-main"
+                  className="w-full h-10 px-3 rounded-xl border border-gray-200 text-xs font-semibold bg-gray-50/50 focus:bg-white focus:outline-none focus:ring-1 focus:ring-main text-black dark:text-black [color-scheme:light]"
+                  style={{ color: '#000000', colorScheme: 'light' }}
                 >
-                  <option value="all">{t('allModules')}</option>
-                  <option value="invoices">{t('invoicesModule')}</option>
-                  <option value="warranties">{t('warrantiesModule')}</option>
-                  <option value="subscriptions">{t('subscriptionsModule')}</option>
-                  <option value="users">{t('usersModule')}</option>
-                  <option value="financial">{t('financialModule')}</option>
-                  <option value="categories">{t('categoriesModule')}</option>
+                  <option value="all" className="text-black bg-white" style={{ color: '#000000', backgroundColor: '#ffffff' }}>{t('allModules')}</option>
+                  <option value="invoices" className="text-black bg-white" style={{ color: '#000000', backgroundColor: '#ffffff' }}>{t('invoicesModule')}</option>
+                  <option value="warranties" className="text-black bg-white" style={{ color: '#000000', backgroundColor: '#ffffff' }}>{t('warrantiesModule')}</option>
+                  <option value="subscriptions" className="text-black bg-white" style={{ color: '#000000', backgroundColor: '#ffffff' }}>{t('subscriptionsModule')}</option>
+                  <option value="users" className="text-black bg-white" style={{ color: '#000000', backgroundColor: '#ffffff' }}>{t('usersModule')}</option>
+                  <option value="financial" className="text-black bg-white" style={{ color: '#000000', backgroundColor: '#ffffff' }}>{t('financialModule')}</option>
+                  <option value="categories" className="text-black bg-white" style={{ color: '#000000', backgroundColor: '#ffffff' }}>{t('categoriesModule')}</option>
                 </select>
               </div>
 

@@ -27,6 +27,7 @@ export const en = {
   dashboard: 'Dashboard',
   users: 'Users',
   reports: 'Reports',
+  viewAll: 'View All',
   name: 'Name',
   role: 'Role',
   createdAt: 'Created',
@@ -453,6 +454,7 @@ export const en = {
   today: 'Today',
   next7Days: 'Next 7 Days',
   next30Days: 'Next 30 Days',
+  next90Days: 'Next 90 Days',
   nextMonth: 'Next Month',
   selectDateRange: 'Select date range...',
   // Notification Settings & Logs

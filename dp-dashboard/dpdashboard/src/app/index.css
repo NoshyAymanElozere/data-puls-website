@@ -291,3 +291,82 @@
   font-weight: 600;
 }
 
+/* React Select Theme & Dark Mode Styling */
+.react-select__control {
+  background-color: hsl(var(--card)) !important;
+  border-color: hsl(var(--border)) !important;
+  color: hsl(var(--foreground)) !important;
+}
+
+.react-select__single-value {
+  color: hsl(var(--foreground)) !important;
+}
+
+.react-select__input-container,
+.react-select__input {
+  color: hsl(var(--foreground)) !important;
+}
+
+.react-select__placeholder {
+  color: hsl(var(--muted-foreground)) !important;
+}
+
+.react-select__menu {
+  background-color: hsl(var(--popover)) !important;
+  border: 1px solid hsl(var(--border)) !important;
+  border-radius: 0.75rem !important;
+  box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.25), 0 8px 10px -6px rgba(0, 0, 0, 0.25) !important;
+  overflow: hidden !important;
+}
+
+.react-select__menu-list {
+  background-color: hsl(var(--popover)) !important;
+  padding: 4px !important;
+}
+
+.react-select__option {
+  color: hsl(var(--popover-foreground)) !important;
+  background-color: transparent !important;
+  border-radius: 0.5rem !important;
+  margin: 2px 0 !important;
+  cursor: pointer !important;
+}
+
+.react-select__option--is-focused:not(.react-select__option--is-selected) {
+  background-color: color-mix(in srgb, var(--main-color, #5B4B8A) 16%, transparent) !important;
+  color: hsl(var(--popover-foreground)) !important;
+}
+
+.react-select__option--is-selected {
+  background-color: var(--main-color, #5B4B8A) !important;
+  color: #ffffff !important;
+}
+
+.react-select__indicator-separator {
+  background-color: hsl(var(--border)) !important;
+}
+
+.react-select__dropdown-indicator,
+.react-select__clear-indicator {
+  color: hsl(var(--muted-foreground)) !important;
+}
+
+.react-select__dropdown-indicator:hover,
+.react-select__clear-indicator:hover {
+  color: hsl(var(--foreground)) !important;
+}
+
+.react-select__no-options-message {
+  color: hsl(var(--muted-foreground)) !important;
+}
+
+/* Ensure select dropdowns inside white containers render black text in dark mode */
+.dark .bg-white select,
+.dark .bg-white select option,
+.dark select.text-black,
+.dark select.text-black option,
+select[style*="color: #000000"] option {
+  color: #000000 !important;
+  background-color: #ffffff !important;
+  color-scheme: light !important;
+}

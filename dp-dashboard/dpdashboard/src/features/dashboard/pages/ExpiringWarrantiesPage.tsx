@@ -1,5 +1,5 @@
-import React, { useMemo, useState } from 'react'
-import { useNavigate } from 'react-router-dom'
+import React, { useMemo, useState, useEffect } from 'react'
+import { useNavigate, useSearchParams } from 'react-router-dom'
 import { useTranslation } from 'react-i18next'
 import {
   ArrowLeft,
@@ -27,11 +27,25 @@ export default function ExpiringWarrantiesPage() {
   const { t, i18n } = useTranslation()
   const isRtl = i18n.language === 'ar'
   const navigate = useNavigate()
+  const [searchParams] = useSearchParams()
 
   const { data: warranties, isLoading, isError, refetch, isRefetching } = useExpiringWarranties()
 
   const [search, setSearch] = useState('')
-  const [urgencyFilter, setUrgencyFilter] = useState<'all' | 'urgent' | 'approaching' | 'later'>('all')
+  const initialUrgency = searchParams.get('urgency')
+  const [urgencyFilter, setUrgencyFilter] = useState<'all' | 'urgent' | 'approaching' | 'later'>(() => {
+    if (initialUrgency === 'urgent' || initialUrgency === 'approaching' || initialUrgency === 'later') {
+      return initialUrgency
+    }
+    return 'all'
+  })
+
+  useEffect(() => {
+    const u = searchParams.get('urgency')
+    if (u === 'urgent' || u === 'approaching' || u === 'later' || u === 'all') {
+      setUrgencyFilter(u)
+    }
+  }, [searchParams])
 
   // Invoice Detail Modal states
   const [selectedInvoice, setSelectedInvoice] = useState<InvoiceListItem | null>(null)

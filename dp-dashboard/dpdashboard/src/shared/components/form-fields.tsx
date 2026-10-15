@@ -216,6 +216,127 @@ export function ControlledCheckbox<T extends FieldValues>({
   )
 }
 
+const getReactSelectStyles = (isError?: boolean): any => ({
+  control: (baseStyles: any, state: any) => ({
+    ...baseStyles,
+    borderRadius: '0.75rem',
+    backgroundColor: 'hsl(var(--card))',
+    borderColor: isError
+      ? '#ef4444'
+      : state.isFocused
+        ? 'var(--main-color, #5B4B8A)'
+        : 'hsl(var(--border))',
+    boxShadow: state.isFocused ? '0 0 0 1px var(--main-color, #5B4B8A)' : 'none',
+    '&:hover': {
+      borderColor: isError ? '#ef4444' : 'hsl(var(--muted-foreground))',
+    },
+    minHeight: '2.5rem',
+    transition: 'all 0.15s ease',
+  }),
+  valueContainer: (baseStyles: any) => ({
+    ...baseStyles,
+    padding: '2px 12px',
+  }),
+  singleValue: (baseStyles: any) => ({
+    ...baseStyles,
+    color: 'hsl(var(--foreground))',
+  }),
+  input: (baseStyles: any) => ({
+    ...baseStyles,
+    color: 'hsl(var(--foreground))',
+  }),
+  placeholder: (baseStyles: any) => ({
+    ...baseStyles,
+    color: 'hsl(var(--muted-foreground))',
+  }),
+  menu: (baseStyles: any) => ({
+    ...baseStyles,
+    borderRadius: '0.75rem',
+    backgroundColor: 'hsl(var(--popover))',
+    border: '1px solid hsl(var(--border))',
+    boxShadow: '0 10px 25px -5px rgba(0, 0, 0, 0.25), 0 8px 10px -6px rgba(0, 0, 0, 0.25)',
+    zIndex: 99999,
+    overflow: 'hidden',
+    padding: '4px',
+  }),
+  menuPortal: (baseStyles: any) => ({
+    ...baseStyles,
+    zIndex: 99999,
+  }),
+  menuList: (baseStyles: any) => ({
+    ...baseStyles,
+    backgroundColor: 'hsl(var(--popover))',
+    maxHeight: '220px',
+    overflowY: 'auto',
+    padding: '0',
+  }),
+  option: (baseStyles: any, state: any) => ({
+    ...baseStyles,
+    backgroundColor: state.isSelected
+      ? 'var(--main-color, #5B4B8A)'
+      : state.isFocused
+        ? 'color-mix(in srgb, var(--main-color, #5B4B8A) 16%, transparent)'
+        : 'transparent',
+    color: state.isSelected
+      ? '#ffffff'
+      : 'hsl(var(--popover-foreground))',
+    borderRadius: '0.5rem',
+    margin: '2px 0',
+    padding: '8px 12px',
+    fontSize: '0.875rem',
+    fontWeight: state.isSelected ? 600 : 500,
+    cursor: state.isDisabled ? 'not-allowed' : 'pointer',
+    '&:active': {
+      backgroundColor: state.isSelected
+        ? 'var(--main-color, #5B4B8A)'
+        : 'color-mix(in srgb, var(--main-color, #5B4B8A) 24%, transparent)',
+    },
+  }),
+  noOptionsMessage: (baseStyles: any) => ({
+    ...baseStyles,
+    color: 'hsl(var(--muted-foreground))',
+    fontSize: '0.875rem',
+  }),
+  dropdownIndicator: (baseStyles: any, state: any) => ({
+    ...baseStyles,
+    color: state.isFocused ? 'var(--main-color, #5B4B8A)' : 'hsl(var(--muted-foreground))',
+    '&:hover': {
+      color: 'hsl(var(--foreground))',
+    },
+    padding: '4px 8px',
+  }),
+  clearIndicator: (baseStyles: any) => ({
+    ...baseStyles,
+    color: 'hsl(var(--muted-foreground))',
+    '&:hover': {
+      color: 'hsl(var(--foreground))',
+    },
+    padding: '4px 8px',
+  }),
+  indicatorSeparator: (baseStyles: any) => ({
+    ...baseStyles,
+    backgroundColor: 'hsl(var(--border))',
+  }),
+  multiValue: (baseStyles: any) => ({
+    ...baseStyles,
+    backgroundColor: 'hsl(var(--muted))',
+    borderRadius: '0.375rem',
+  }),
+  multiValueLabel: (baseStyles: any) => ({
+    ...baseStyles,
+    color: 'hsl(var(--foreground))',
+  }),
+  multiValueRemove: (baseStyles: any) => ({
+    ...baseStyles,
+    color: 'hsl(var(--muted-foreground))',
+    borderRadius: '0 0.375rem 0.375rem 0',
+    '&:hover': {
+      backgroundColor: 'hsl(var(--destructive) / 0.15)',
+      color: 'hsl(var(--destructive))',
+    },
+  }),
+})
+
 export function ControlledSearchableSelect<T extends FieldValues>({
   name,
   control,
@@ -245,29 +366,10 @@ export function ControlledSearchableSelect<T extends FieldValues>({
               classNamePrefix="react-select"
               isSearchable
               menuPlacement="auto"
+              menuPosition="fixed"
+              menuPortalTarget={typeof document !== 'undefined' ? document.body : null}
               menuShouldScrollIntoView={false}
-              styles={{
-                control: (baseStyles, state) => ({
-                  ...baseStyles,
-                  borderRadius: '0.75rem',
-                  borderColor: fieldState.error ? '#ef4444' : state.isFocused ? '#5B4B8A' : '#E8E4D9',
-                  boxShadow: 'none',
-                  '&:hover': {
-                    borderColor: fieldState.error ? '#ef4444' : '#94a3b8',
-                  },
-                  minHeight: '2.25rem',
-                }),
-                menu: (baseStyles) => ({
-                  ...baseStyles,
-                  borderRadius: '0.75rem',
-                  zIndex: 99999,
-                }),
-                menuList: (baseStyles) => ({
-                  ...baseStyles,
-                  maxHeight: '220px',
-                  overflowY: 'auto',
-                }),
-              }}
+              styles={getReactSelectStyles(!!fieldState.error)}
             />
           </FormField>
         )
@@ -310,29 +412,10 @@ export function ControlledMultiSelect<T extends FieldValues>({
               isSearchable
               className="react-select-container text-sm"
               menuPlacement="auto"
+              menuPosition="fixed"
+              menuPortalTarget={typeof document !== 'undefined' ? document.body : null}
               menuShouldScrollIntoView={false}
-              styles={{
-                control: (baseStyles, state) => ({
-                  ...baseStyles,
-                  borderRadius: '0.75rem',
-                  borderColor: fieldState.error ? '#ef4444' : state.isFocused ? '#5B4B8A' : '#E8E4D9',
-                  boxShadow: 'none',
-                  '&:hover': {
-                    borderColor: fieldState.error ? '#ef4444' : '#94a3b8',
-                  },
-                  minHeight: '2.25rem',
-                }),
-                menu: (baseStyles) => ({
-                  ...baseStyles,
-                  borderRadius: '0.75rem',
-                  zIndex: 99999,
-                }),
-                menuList: (baseStyles) => ({
-                  ...baseStyles,
-                  maxHeight: '220px',
-                  overflowY: 'auto',
-                }),
-              }}
+              styles={getReactSelectStyles(!!fieldState.error)}
             />
           </FormField>
         )
