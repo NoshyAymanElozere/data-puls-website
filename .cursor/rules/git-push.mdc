@@ -1,0 +1,24 @@
+---
+description: Push every commit to GitHub, GitLab and the GitHub monorepo Dashboard/ folder
+alwaysApply: true
+---
+
+# Push After Every Commit
+
+After **every** commit, run from the repo root (`herz-frontend/`):
+
+```bash
+bash scripts/push-all.sh
+```
+
+It:
+1. Pushes `main` to GitHub `origin` (`NoshyAymanElozere/data-puls-website`).
+2. Syncs GitLab `gitlab` (`amasha-datapulse/herz-front`), whose root is `dp-dashboard/dpdashboard`.
+3. Syncs the GitHub monorepo `hirz` (`ahmdessam/hirz`): replaces only its `Dashboard/` folder.
+
+Targets 2 and 3 have unrelated histories, so each gets a normal commit on top of its `main` with the content of `dp-dashboard/dpdashboard` from `HEAD`.
+
+Rules:
+- **Never force-push** to any remote.
+- Only committed `HEAD` is pushed; commit first.
+- Windows `CRYPT_E_REVOCATION_OFFLINE`: the script already uses `-c http.sslBackend=openssl`.
