@@ -10,6 +10,10 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '.
 import { Checkbox } from './controls'
 import { useTranslation } from 'react-i18next'
 import ReactSelect from 'react-select'
+import { SearchableSelect } from './SearchableSelect'
+
+/** Max dropdown height before internal scroll; Floating UI shrinks further to fit the viewport */
+const SEARCHABLE_SELECT_MAX_MENU_HEIGHT = 220
 
 // ─── Form Field Wrapper ───────────────────────────────────────────────────────
 
@@ -28,9 +32,13 @@ export function FormField({ label, error, required, hint, className, children, h
   const translatedError = error ? t(error) : undefined
 
   return (
-    <div className={cn('flex flex-col gap-1.5', className)}>
+    <div className={cn('flex flex-col gap-1.5 overflow-visible', className)}>
       {label && (
-        <Label htmlFor={htmlFor} required={required}>
+        <Label
+          htmlFor={htmlFor}
+          required={required}
+          className="text-xs font-bold text-muted-foreground uppercase tracking-wider"
+        >
           {label}
         </Label>
       )}
@@ -353,23 +361,17 @@ export function ControlledSearchableSelect<T extends FieldValues>({
       name={name}
       control={control}
       render={({ field, fieldState }) => {
-        const selectedValue = options.find((o) => o.value === field.value) || null
         return (
           <FormField label={label} error={fieldState.error?.message} required={required} hint={hint} htmlFor={name} className={className}>
-            <ReactSelect
+            <SearchableSelect
               id={name}
-              isDisabled={disabled}
+              disabled={disabled}
               placeholder={placeholder}
               options={options}
-              value={selectedValue}
-              onChange={(val: any) => field.onChange(val ? val.value : '')}
-              classNamePrefix="react-select"
-              isSearchable
-              menuPlacement="auto"
-              menuPosition="fixed"
-              menuPortalTarget={typeof document !== 'undefined' ? document.body : null}
-              menuShouldScrollIntoView={false}
-              styles={getReactSelectStyles(!!fieldState.error)}
+              value={field.value ?? ''}
+              onChange={field.onChange}
+              error={!!fieldState.error}
+              maxMenuHeight={SEARCHABLE_SELECT_MAX_MENU_HEIGHT}
             />
           </FormField>
         )
@@ -415,6 +417,7 @@ export function ControlledMultiSelect<T extends FieldValues>({
               menuPosition="fixed"
               menuPortalTarget={typeof document !== 'undefined' ? document.body : null}
               menuShouldScrollIntoView={false}
+              maxMenuHeight={SEARCHABLE_SELECT_MAX_MENU_HEIGHT}
               styles={getReactSelectStyles(!!fieldState.error)}
             />
           </FormField>

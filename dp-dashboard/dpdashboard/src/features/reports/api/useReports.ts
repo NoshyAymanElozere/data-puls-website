@@ -290,6 +290,84 @@ export interface MerchantsReportData {
   }>
 }
 
+export interface DiscountCodesReportParams {
+  date_from?: string
+  date_to?: string
+  type?: 'percentage' | 'fixed_amount' | 'free_period'
+  owner_name?: string
+  search?: string
+}
+
+export interface DiscountCodesReportData {
+  summary: {
+    total_codes: number
+    active_codes: number
+    total_uses: number
+    unique_users: number
+    total_discount: number
+    total_revenue: number
+    currency: string
+    top_code: {
+      id: number
+      code: string
+      owner_name: string | null
+      uses_count: number
+    } | null
+  }
+  by_owner: Array<{
+    owner_name: string
+    codes_count: number
+    uses_count: number
+    unique_users: number
+    total_revenue: number
+  }>
+  codes: Array<{
+    id: number
+    code: string
+    owner_name: string | null
+    owner_contact: string | null
+    type: 'percentage' | 'fixed_amount' | 'free_period'
+    type_label: string
+    value: number | null
+    free_months: number | null
+    availability: 'active' | 'scheduled' | 'expired' | 'inactive'
+    uses_count: number
+    unique_users: number
+    free_months_granted: number
+    total_discount: number
+    total_revenue: number
+    max_uses: number | null
+    last_used_at: string | null
+  }>
+}
+
+export interface CitiesReportParams {
+  country_id?: number
+  date_from?: string
+  date_to?: string
+}
+
+export interface CitiesReportData {
+  summary: {
+    total_users: number
+    total_subscribers: number
+    users_without_city: number
+    cities_count: number
+    top_city_by_users: { city_id: number; name: string; users_count: number } | null
+    top_city_by_subscribers: { city_id: number; name: string; subscribers_count: number } | null
+  }
+  cities: Array<{
+    city_id: number
+    name: string
+    country_id: number
+    country_name: string | null
+    users_count: number
+    subscribers_count: number
+    subscription_rate: number
+    users_percentage: number
+  }>
+}
+
 export type ReportExportFormat = 'csv' | 'xlsx' | 'pdf'
 export type ReportExportModule =
   | 'all'
@@ -463,6 +541,42 @@ export function useMerchantsReport(params?: MerchantsReportParams) {
         limit: params?.limit,
       })
       const res = await api.get<SuccessResponse<MerchantsReportData>>(`/reports/merchants?${query}`)
+      return res.data.data
+    },
+    staleTime: 60_000,
+  })
+}
+
+/** Hook to fetch Discount Codes & Influencers analytics report (completed redemptions only) */
+export function useDiscountCodesReport(params?: DiscountCodesReportParams) {
+  return useQuery({
+    queryKey: ['reports-discount-codes', params],
+    queryFn: async () => {
+      const query = buildQueryParams({
+        date_from: params?.date_from,
+        date_to: params?.date_to,
+        type: params?.type,
+        owner_name: params?.owner_name,
+        search: params?.search,
+      })
+      const res = await api.get<SuccessResponse<DiscountCodesReportData>>(`/reports/discount-codes?${query}`)
+      return res.data.data
+    },
+    staleTime: 60_000,
+  })
+}
+
+/** Hook to fetch Users & Subscribers by City report */
+export function useCitiesReport(params?: CitiesReportParams) {
+  return useQuery({
+    queryKey: ['reports-cities', params],
+    queryFn: async () => {
+      const query = buildQueryParams({
+        country_id: params?.country_id,
+        date_from: params?.date_from,
+        date_to: params?.date_to,
+      })
+      const res = await api.get<SuccessResponse<CitiesReportData>>(`/reports/cities?${query}`)
       return res.data.data
     },
     staleTime: 60_000,

@@ -22,6 +22,7 @@ import { cn } from '@/shared/utils/utils'
 import { resolveMediaUrl } from '@/shared/utils/media-url'
 import { useDeleteUserInvoice, useUserInvoices } from '../api/useUserInvoices'
 import type { InvoiceListItem } from '../types/invoices'
+import { resolveInvoiceAttachment } from '../utils/invoiceAttachment'
 import { InvoiceDetailModal } from './InvoiceDetailModal'
 
 interface UserInvoicesPanelProps {
@@ -168,6 +169,7 @@ export function UserInvoicesPanel({ userId, showFamilyFilter = true }: UserInvoi
               ) : (
                 invoices.map((inv) => {
                   const catName = getCategoryName(inv.category)
+                  const { imageUrl, file } = resolveInvoiceAttachment(inv)
                   return (
                     <tr
                       key={inv.id}
@@ -179,9 +181,16 @@ export function UserInvoicesPanel({ userId, showFamilyFilter = true }: UserInvoi
                     >
                       <td className="px-4 py-3.5 whitespace-nowrap">
                         <div className="flex items-center gap-3">
-                          {inv.image ? (
+                          {file ? (
+                            <div
+                              className="h-10 w-10 rounded-xl bg-muted text-muted-foreground border border-border/60 flex items-center justify-center shrink-0 shadow-xs"
+                              title={file.name}
+                            >
+                              <FileText className="h-5 w-5" />
+                            </div>
+                          ) : imageUrl ? (
                             <img
-                              src={resolveMediaUrl(inv.image)}
+                              src={resolveMediaUrl(imageUrl)}
                               alt={inv.invoice_number}
                               className="h-10 w-10 rounded-xl object-cover border border-border/60 shadow-xs shrink-0"
                             />

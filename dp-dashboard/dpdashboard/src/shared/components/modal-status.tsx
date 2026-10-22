@@ -40,7 +40,7 @@ export function ModalStatus({
   if (type === 'delete') {
     return (
       <Dialog open={open} onOpenChange={onOpenChange}>
-        <DialogContent size={size || 'sm'} className="max-h-[92vh] overflow-y-auto">
+        <DialogContent size={size || 'sm'} className="max-h-[92vh] overflow-visible">
           <div className="flex flex-col items-center text-center p-4">
             {/* Trash Icon */}
             <div className="h-16 w-16 flex items-center justify-center rounded-2xl bg-rose-50 dark:bg-rose-950/40 text-rose-500 mb-6 border border-rose-100 dark:border-rose-900/40 shadow-sm">
@@ -82,7 +82,8 @@ export function ModalStatus({
 
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
-      <DialogContent size={size} className="max-h-[92vh] overflow-y-auto">
+      {/* overflow-visible: avoids clipping react-select menus inside the dialog */}
+      <DialogContent size={size} className="max-h-[92vh] overflow-visible">
         <DialogHeader>
           <DialogTitle className="text-lg font-bold text-foreground">{title}</DialogTitle>
           {description && (
@@ -93,7 +94,7 @@ export function ModalStatus({
         </DialogHeader>
 
         {children && (
-          <div className="py-2">
+          <div className="py-2 overflow-visible">
             {children}
           </div>
         )}

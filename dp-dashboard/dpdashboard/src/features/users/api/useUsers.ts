@@ -2,7 +2,7 @@ import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query'
 import toast from 'react-hot-toast'
 import i18n from '@/shared/i18n/i18n'
 import api, { getErrorMessage } from '@/shared/services/axios'
-import type { LaravelPaginatedResponse, SuccessResponse } from '@/shared/types/laravel'
+import type { LaravelPaginatedResponse, SuccessResponse, Translatable } from '@/shared/types/laravel'
 import { buildQueryParams } from '@/shared/utils/query-params'
 import { applyValidationErrors } from '@/shared/utils/form-errors'
 import type { UseFormSetError } from 'react-hook-form'
@@ -11,12 +11,73 @@ import type { UserSubscription } from '../types/subscriptions'
 
 import type { AccountOwnerInfo, FamilyMemberPermissions, FamilyRelationBasic } from '../types/family'
 
-export type { UserSubscription, UserSubscriptionPackage } from '../types/subscriptions'
+export type { UserSubscription, UserSubscriptionDiscount, UserSubscriptionPackage } from '../types/subscriptions'
 export type { AccountOwnerInfo, FamilyMemberPermissions, FamilyRelationBasic } from '../types/family'
 
 export type UserStatus = 'active' | 'suspended'
 export type UserGender = 'male' | 'female'
 export type PreferredLanguage = 'ar' | 'en'
+export type UserAccessType = 'subscription' | 'trial' | 'none'
+
+export interface UserLocationRef {
+  id: number
+  name: string | Translatable | null
+}
+
+export interface UserSubscriptionAccess {
+  access_type: UserAccessType
+  has_access: boolean
+  is_subscribed: boolean
+  is_in_trial: boolean
+  trial_enabled: boolean
+  trial_months: number | null
+  trial_starts_at: string | null
+  trial_ends_at: string | null
+  trial_days_remaining: number | null
+  trial_ended: boolean
+  package: {
+    id: number
+    name: string
+    maximum_invoices: number | null
+    maximum_family_members: number
+  } | null
+}
+
+export interface UsersFilters {
+  search?: string
+  status?: string
+  gender?: string
+  registeredFrom?: string
+  registeredTo?: string
+  countryId?: string
+  cityId?: string
+  /** Only `true` is sent (as is_subscribed=1); false means "no filter". */
+  isSubscribed?: boolean
+  accessType?: UserAccessType | ''
+}
+
+export interface UsersStatsBreakdownItem {
+  id: number
+  name: string | Translatable | null
+  count: number
+}
+
+export interface UsersStatsCityItem extends UsersStatsBreakdownItem {
+  country_name: string | Translatable | null
+}
+
+export interface UsersStats {
+  total: number
+  active: number
+  suspended: number
+  subscribed: number
+  in_trial: number
+  no_access: number
+  new_this_month: number
+  without_city: number
+  by_country: UsersStatsBreakdownItem[]
+  by_city: UsersStatsCityItem[]
+}
 
 export interface UserListItem {
   id: number
@@ -27,6 +88,9 @@ export interface UserListItem {
   age: number | null
   status: UserStatus
   is_subscribed: boolean
+  access_type?: UserAccessType | null
+  city?: UserLocationRef | null
+  country?: UserLocationRef | null
   created_at: string
 }
 
@@ -50,6 +114,7 @@ export interface UserDetail extends UserListItem {
   family_relation?: FamilyRelationBasic | null
   permissions?: FamilyMemberPermissions | null
   active_subscription: UserSubscription | null
+  subscription_access?: UserSubscriptionAccess | null
   subscriptions: UserSubscription[]
 }
 
@@ -95,27 +160,39 @@ function toApiPayload(formData: UserFormValues, isUpdate = false): UserFormPaylo
   return payload
 }
 
-export function useUsersList(
-  page = 1,
-  search = '',
-  status = '',
-  gender = '',
-  registeredFrom = '',
-  registeredTo = ''
-) {
+function buildUsersFilterParams(filters: UsersFilters, page?: number) {
+  return buildQueryParams({
+    page,
+    search: filters.search,
+    status: filters.status,
+    gender: filters.gender,
+    registered_from: filters.registeredFrom,
+    registered_to: filters.registeredTo,
+    country_id: filters.countryId,
+    city_id: filters.cityId,
+    is_subscribed: filters.isSubscribed ? 1 : undefined,
+    access_type: filters.accessType,
+  })
+}
+
+export function useUsersList(page = 1, filters: UsersFilters = {}) {
   return useQuery({
-    queryKey: ['users-list', page, search, status, gender, registeredFrom, registeredTo],
+    queryKey: ['users-list', page, filters],
     queryFn: async () => {
-      const params = buildQueryParams({
-        page,
-        search,
-        status,
-        gender,
-        registered_from: registeredFrom,
-        registered_to: registeredTo,
-      })
+      const params = buildUsersFilterParams(filters, page)
       const response = await api.get<LaravelPaginatedResponse<UserListItem>>(`/users?${params}`)
       return response.data
+    },
+  })
+}
+
+export function useUsersStats(filters: UsersFilters = {}) {
+  return useQuery({
+    queryKey: ['users-stats', filters],
+    queryFn: async () => {
+      const params = buildUsersFilterParams(filters)
+      const response = await api.get<SuccessResponse<UsersStats>>(`/users/stats?${params}`)
+      return response.data.data
     },
   })
 }
@@ -141,6 +218,7 @@ export function useCreateUser(setError?: UseFormSetError<UserFormValues>) {
     },
     onSuccess: (res) => {
       qc.invalidateQueries({ queryKey: ['users-list'] })
+      qc.invalidateQueries({ queryKey: ['users-stats'] })
       toast.success(res.message || i18n.t('userCreated'))
     },
     onError: (error) => {
@@ -160,6 +238,7 @@ export function useUpdateUser(setError?: UseFormSetError<UserFormValues>) {
     },
     onSuccess: (res, variables) => {
       qc.invalidateQueries({ queryKey: ['users-list'] })
+      qc.invalidateQueries({ queryKey: ['users-stats'] })
       qc.invalidateQueries({ queryKey: ['user', variables.id] })
       toast.success(res.message || i18n.t('userUpdated'))
     },
@@ -179,6 +258,7 @@ export function useDeleteUser() {
     },
     onSuccess: () => {
       qc.invalidateQueries({ queryKey: ['users-list'] })
+      qc.invalidateQueries({ queryKey: ['users-stats'] })
       toast.success(i18n.t('userDeleted'))
     },
     onError: (error) => {
@@ -233,6 +313,7 @@ export function useUpdateUserStatus() {
     },
     onSettled: (_data, _error, variables) => {
       qc.invalidateQueries({ queryKey: ['users-list'] })
+      qc.invalidateQueries({ queryKey: ['users-stats'] })
       if (variables?.id) {
         qc.invalidateQueries({ queryKey: ['user', variables.id] })
       }

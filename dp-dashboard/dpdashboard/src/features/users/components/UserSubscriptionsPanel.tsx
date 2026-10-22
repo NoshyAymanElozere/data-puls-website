@@ -5,8 +5,10 @@ import type { ColDef } from 'ag-grid-community'
 import { useMemo, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import type { SubscriptionStatus } from '@/features/subscription-packages/api/useSubscriptionPackages'
-import type { UserDetail, UserSubscription } from '../api/useUsers'
+import type { UserDetail, UserSubscription, UserSubscriptionAccess, UserSubscriptionDiscount } from '../api/useUsers'
 import { getLocalizedValue } from '@/shared/utils/localized-value'
+import { Gift, TicketPercent } from 'lucide-react'
+import { AccessTypeBadge } from './AccessTypeBadge'
 
 export function isUnpaidSubscription(item: UserSubscription): boolean {
   return (
@@ -51,6 +53,70 @@ function DetailField({
       <span className="text-[11px] font-bold text-muted-foreground uppercase tracking-wider">{label}</span>
       <span className="text-sm font-semibold text-foreground">{display}</span>
     </div>
+  )
+}
+
+function formatAccessDate(value: string | null | undefined, lang: string): string | null {
+  if (!value) return null
+  const date = new Date(value)
+  if (Number.isNaN(date.getTime())) return value
+  return date.toLocaleDateString(lang === 'ar' ? 'ar-EG' : 'en-GB', {
+    year: 'numeric',
+    month: 'short',
+    day: 'numeric',
+  })
+}
+
+function formatAmount(value: number | null | undefined): string {
+  if (value == null) return '—'
+  return value.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })
+}
+
+function DiscountInline({ discount }: { discount: UserSubscriptionDiscount }) {
+  return (
+    <span className="inline-flex items-center gap-1.5 text-xs font-semibold text-foreground">
+      <TicketPercent className="h-3.5 w-3.5 text-main shrink-0" />
+      <span className="font-mono font-bold">{discount.code || '—'}</span>
+      <span className="text-muted-foreground">(-{formatAmount(discount.discount_amount)})</span>
+    </span>
+  )
+}
+
+function SubscriptionAccessBlock({ access }: { access: UserSubscriptionAccess }) {
+  const { t, i18n } = useTranslation()
+  const trialStatusLabel = access.is_in_trial
+    ? t('trialActive')
+    : access.trial_ended
+      ? t('trialEnded')
+      : access.trial_enabled
+        ? t('trialNotStarted')
+        : t('trialDisabled')
+
+  return (
+    <Card className="border-border/60 bg-muted/20 shadow-none rounded-xl">
+      <CardHeader className="px-4 py-3 border-b border-border/30 flex flex-row items-center justify-between gap-2 space-y-0">
+        <CardTitle className="text-sm font-bold flex items-center gap-2">
+          <Gift className="h-4 w-4 text-main" /> {t('freeTrialAccess')}
+        </CardTitle>
+        <AccessTypeBadge value={access.access_type} />
+      </CardHeader>
+      <CardContent className="p-4">
+        <div className="grid grid-cols-2 sm:grid-cols-3 gap-3">
+          <DetailField label={t('trialStatus')} value={trialStatusLabel} t={t} />
+          <DetailField label={t('trialStartsAt')} value={formatAccessDate(access.trial_starts_at, i18n.language) ?? '—'} t={t} />
+          <DetailField label={t('trialEndsAt')} value={formatAccessDate(access.trial_ends_at, i18n.language) ?? '—'} t={t} />
+          <DetailField
+            label={t('trialDaysRemaining')}
+            value={access.is_in_trial ? (access.trial_days_remaining ?? '—') : '—'}
+            t={t}
+          />
+          <DetailField label={t('trialEnded')} value={access.trial_ended} t={t} />
+          {access.package?.name ? (
+            <DetailField label={t('package')} value={access.package.name} t={t} />
+          ) : null}
+        </div>
+      </CardContent>
+    </Card>
   )
 }
 
@@ -108,6 +174,17 @@ export function UserSubscriptionsPanel({ user }: UserSubscriptionsPanelProps) {
         },
       },
       {
+        headerName: t('discountCode'),
+        filter: false,
+        sortable: false,
+        width: 170,
+        cellRenderer: (params: { data?: UserSubscription }) => {
+          const discount = params.data?.discount
+          if (!discount) return <span className="text-muted-foreground">—</span>
+          return <DiscountInline discount={discount} />
+        },
+      },
+      {
         headerName: t('remainingDays'),
         filter: false,
         sortable: false,
@@ -151,6 +228,8 @@ export function UserSubscriptionsPanel({ user }: UserSubscriptionsPanelProps) {
         </Badge>
       </div>
 
+      {user.subscription_access ? <SubscriptionAccessBlock access={user.subscription_access} /> : null}
+
       {user.is_subscribed && active ? (
         <Card className="border-main/20 bg-main/5 shadow-none rounded-xl">
           <CardHeader className="px-4 py-3 border-b border-border/30">
@@ -180,6 +259,18 @@ export function UserSubscriptionsPanel({ user }: UserSubscriptionsPanelProps) {
               <DetailField label={t('startsAt')} value={active.starts_at ?? '—'} t={t} />
               <DetailField label={t('endsAt')} value={active.ends_at ?? '—'} t={t} />
               <DetailField label={t('trialEndsAt')} value={active.trial_ends_at ?? '—'} t={t} />
+              {active.discount ? (
+                <div className="flex flex-col gap-1">
+                  <span className="text-[11px] font-bold text-muted-foreground uppercase tracking-wider">
+                    {t('discountCode')}
+                  </span>
+                  <DiscountInline discount={active.discount} />
+                  <span className="text-[11px] text-muted-foreground">
+                    {t('discountAmount')}: {formatAmount(active.discount.discount_amount)} · {t('finalAmount')}:{' '}
+                    {formatAmount(active.discount.final_amount)}
+                  </span>
+                </div>
+              ) : null}
               <DetailField
                 label={t('maximumFamilyMembers')}
                 value={active.package.maximum_family_members}

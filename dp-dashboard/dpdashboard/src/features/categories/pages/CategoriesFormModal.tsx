@@ -14,6 +14,8 @@ interface CategoriesFormModalProps {
   open: boolean
   onOpenChange: (open: boolean) => void
   editingItem: Category | null
+  detail?: Category | null
+  detailLoading?: boolean
   onSave: (data: unknown) => void
   loading: boolean
   label: string
@@ -26,6 +28,8 @@ export function CategoriesFormModal({
   open,
   onOpenChange,
   editingItem,
+  detail,
+  detailLoading = false,
   onSave,
   loading,
   label,
@@ -36,11 +40,13 @@ export function CategoriesFormModal({
   const { i18n, t } = useTranslation()
   const { control, reset, handleSubmit } = useFormContext()
 
+  const source = detail ?? editingItem
+
   useEffect(() => {
-    if (open) {
-      reset(getInitialValues(editingItem, parentId))
-    }
-  }, [editingItem, open, parentId, reset])
+    if (!open) return
+    if (editingItem?.id && detailLoading) return
+    reset(getInitialValues(source, parentId))
+  }, [open, editingItem?.id, detailLoading, source, parentId, reset])
 
   const isRtl = i18n.language === 'ar'
 
@@ -59,16 +65,16 @@ export function CategoriesFormModal({
       cancelLabel={t('cancel')}
       onAgreeButtonClick={isViewOnly ? () => onOpenChange(false) : handleSubmit(onSave)}
       onCancelButtonClick={() => onOpenChange(false)}
-      loading={loading}
+      loading={loading || detailLoading}
       size="lg"
     >
       <div className="space-y-4 max-h-[70vh] overflow-y-auto px-1 py-1" dir={isRtl ? 'rtl' : 'ltr'}>
         {/* Category Type & Creator Info (View or Edit mode) */}
-        {editingItem && (
+        {source && (
           <div className="flex flex-wrap items-center justify-between gap-2 p-3 rounded-xl bg-muted/40 border border-border/50 text-xs">
             <div className="flex items-center gap-2">
               <span className="text-muted-foreground font-medium">{t('categoryType')}:</span>
-              {editingItem.is_default ? (
+              {source.is_default ? (
                 <Badge variant="info" dot>
                   {t('systemDefault')}
                 </Badge>
@@ -81,10 +87,10 @@ export function CategoriesFormModal({
             <div className="flex items-center gap-1.5 text-muted-foreground">
               <span className="font-medium">{t('creator')}:</span>
               <span className="font-semibold text-foreground">
-                {editingItem.creator_name || (editingItem.is_default ? t('systemCreator') : editingItem.user?.name || '—')}
+                {source.creator_name || editingItem?.creator_name || (source.is_default ? t('systemCreator') : source.user?.name || '—')}
               </span>
-              {editingItem.user?.email && (
-                <span className="text-muted-foreground/80">({editingItem.user.email})</span>
+              {source.user?.email && (
+                <span className="text-muted-foreground/80">({source.user.email})</span>
               )}
             </div>
           </div>

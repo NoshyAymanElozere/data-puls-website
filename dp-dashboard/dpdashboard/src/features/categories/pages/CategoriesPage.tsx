@@ -13,6 +13,7 @@ import { FormProvider } from 'react-hook-form'
 import { useTranslation } from 'react-i18next'
 import {
   useCategoriesList,
+  useCategory,
   useCreateCategory,
   useDeleteCategory,
   useToggleCategoryStatus,
@@ -42,6 +43,10 @@ export default function CategoriesPage() {
 
   const schema = editingItem ? updateSchema : createSchema
   const methods = useZodForm(schema, getInitialValues(null, null))
+
+  const { data: categoryDetail, isLoading: categoryDetailLoading } = useCategory(
+    isModalOpen && editingItem?.id ? editingItem.id : null
+  )
 
   const { data: paginatedData, isLoading } = useCategoriesList(
     table.page,
@@ -167,6 +172,8 @@ export default function CategoriesPage() {
           open={isModalOpen}
           onOpenChange={setIsModalOpen}
           editingItem={editingItem}
+          detail={categoryDetail}
+          detailLoading={categoryDetailLoading}
           onSave={handleSave}
           loading={createMutation.isPending || updateMutation.isPending}
           label={label}

@@ -4,10 +4,7 @@ import { BaseInputField } from '@/shared/components/base-input-field'
 import ModalStatus from '@/shared/components/modal-status'
 import { ImageUpload } from '@/shared/components/image-upload'
 import type { PageSection } from '@/features/pages/api/usePageSections'
-// @ts-ignore
-import { CKEditor } from '@ckeditor/ckeditor5-react'
-// @ts-ignore
-import ClassicEditor from '@ckeditor/ckeditor5-build-classic'
+import { RichTextEditor } from '@/shared/components/rich-text-editor'
 
 interface PageSectionFormModalProps {
   open: boolean
@@ -54,32 +51,24 @@ export function PageSectionFormModal({
         />
         <div className="grid grid-cols-2 gap-4">
           <div className="space-y-2" dir="rtl">
-            <label className="text-xs font-bold text-gray-500 uppercase">{t('arabicName') || 'Arabic'} Description</label>
+            <label className="text-xs font-bold text-muted-foreground uppercase">{t('arabicName') || 'Arabic'} Description</label>
             <Controller
               name="descriptionAr"
               control={control}
               render={({ field }) => (
                 /* @ts-ignore */
-                <CKEditor
-                  editor={ClassicEditor}
-                  data={field.value || ''}
-                  onChange={(_, editor) => field.onChange(editor.getData())}
-                />
+                <RichTextEditor value={field.value} onChange={field.onChange} contentLanguage="ar" />
               )}
             />
           </div>
           <div className="space-y-2" dir="ltr">
-            <label className="text-xs font-bold text-gray-500 uppercase">{t('englishName') || 'English'} Description</label>
+            <label className="text-xs font-bold text-muted-foreground uppercase">{t('englishName') || 'English'} Description</label>
             <Controller
               name="descriptionEn"
               control={control}
               render={({ field }) => (
                 /* @ts-ignore */
-                <CKEditor
-                  editor={ClassicEditor}
-                  data={field.value || ''}
-                  onChange={(_, editor) => field.onChange(editor.getData())}
-                />
+                <RichTextEditor value={field.value} onChange={field.onChange} contentLanguage="en" />
               )}
             />
           </div>

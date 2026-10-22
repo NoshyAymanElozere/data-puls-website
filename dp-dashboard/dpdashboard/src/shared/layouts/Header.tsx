@@ -40,6 +40,8 @@ const routeTitles: Record<string, string> = {
   '/': 'dashboard',
   '/users': 'users',
   '/reports': 'reports',
+  '/discount-codes': 'discountCodes',
+  '/subscriber-follow-up': 'subscriberFollowUp',
   '/settings': 'settings',
 }
 

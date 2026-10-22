@@ -203,6 +203,53 @@
   color: var(--main-color) !important;
 }
 
+/* CKEditor 5 in dark mode: drive its own palette from the theme tokens */
+.dark .ck {
+  --ck-color-base-background: hsl(var(--card));
+  --ck-color-base-foreground: hsl(var(--muted));
+  --ck-color-base-border: hsl(var(--border));
+  --ck-color-text: hsl(var(--foreground));
+  --ck-color-toolbar-background: hsl(var(--muted));
+  --ck-color-toolbar-border: hsl(var(--border));
+  --ck-color-button-default-hover-background: hsl(var(--accent));
+  --ck-color-button-default-active-background: hsl(var(--accent));
+  --ck-color-button-on-background: hsl(var(--accent));
+  --ck-color-button-on-hover-background: hsl(var(--accent));
+  --ck-color-dropdown-panel-background: hsl(var(--popover));
+  --ck-color-dropdown-panel-border: hsl(var(--border));
+  --ck-color-panel-background: hsl(var(--popover));
+  --ck-color-panel-border: hsl(var(--border));
+  --ck-color-list-background: hsl(var(--popover));
+  --ck-color-list-button-hover-background: hsl(var(--accent));
+  --ck-color-input-background: hsl(var(--card));
+  --ck-color-input-border: hsl(var(--border));
+  --ck-color-input-text: hsl(var(--foreground));
+  --ck-color-labeled-field-label-background: hsl(var(--popover));
+  --ck-color-link-default: var(--main-color);
+}
+
+.dark .ck-editor {
+  border-color: hsl(var(--border)) !important;
+}
+
+.dark .ck.ck-editor__top .ck-toolbar {
+  background: hsl(var(--muted)) !important;
+  border-bottom-color: hsl(var(--border)) !important;
+}
+
+.dark .ck.ck-editor__main>.ck-editor__editable {
+  background: hsl(var(--card)) !important;
+  color: hsl(var(--foreground)) !important;
+}
+
+.dark .ck.ck-toolbar .ck-button:hover {
+  background: hsl(var(--accent)) !important;
+}
+
+.dark .ck.ck-editor__editable :is(h1, h2, h3, h4, strong, blockquote, a) {
+  color: inherit;
+}
+
 /* Remove AG Grid Cell Focus Border */
 .ag-cell:focus, .ag-cell-focus {
   outline: none !important;
@@ -292,6 +339,10 @@
 }
 
 /* React Select Theme & Dark Mode Styling */
+.react-select__menu-portal {
+  z-index: 99999 !important;
+}
+
 .react-select__control {
   background-color: hsl(var(--card)) !important;
   border-color: hsl(var(--border)) !important;

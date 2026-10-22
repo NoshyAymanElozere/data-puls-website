@@ -54,7 +54,7 @@ export function CountrySelect<T extends FieldValues>({
       key={`country-${String(selectedId)}-${options.length}`}
       name={name}
       control={control}
-      label={label !== undefined ? label : `${t('country') || 'Country'} ${required ? '*' : ''}`}
+      label={label !== undefined ? label : t('country') || 'Country'}
       options={options}
       placeholder={t('chooseCountry') || 'Choose country...'}
       disabled={disabled}

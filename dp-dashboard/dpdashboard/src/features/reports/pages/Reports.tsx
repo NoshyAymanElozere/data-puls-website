@@ -1,4 +1,4 @@
-import React, { useState, useMemo } from 'react'
+import React, { useState, useMemo, useEffect } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { Card, CardHeader, CardTitle, CardContent } from '@/shared/components/card'
 import {
@@ -36,10 +36,20 @@ import {
   ChevronRight,
   ArrowLeft,
   ArrowRight,
+  TicketPercent,
+  MapPin,
 } from 'lucide-react'
 import { formatCurrency, cn } from '@/shared/utils/utils'
 import { useTranslation } from 'react-i18next'
 import { useExpiringWarranties } from '@/features/dashboard/api/useDashboard'
+import { useActiveCountries } from '@/features/settings/api/useCountries'
+import { getLocalizedValue } from '@/shared/utils/localized-value'
+import {
+  AVAILABILITY_BADGE_VARIANTS,
+  AVAILABILITY_LABEL_KEYS,
+  DISCOUNT_TYPE_LABEL_KEYS,
+  formatDiscountValue,
+} from '@/features/discount-codes/api/useDiscountCodes'
 import {
   useReportsSummary,
   useFinancialGrowth,
@@ -48,12 +58,14 @@ import {
   useWarrantiesReport,
   useSubscriptionsReport,
   useUsersReport,
+  useDiscountCodesReport,
+  useCitiesReport,
   useExportReport,
   type ReportExportFormat,
   type ReportExportModule,
 } from '../api/useReports'
 
-type ReportTab = 'overview' | 'invoices' | 'warranties' | 'subscriptions' | 'users'
+type ReportTab = 'overview' | 'invoices' | 'warranties' | 'subscriptions' | 'users' | 'discountCodes' | 'cities'
 
 const COLORS = ['#2563eb', '#10b981', '#f59e0b', '#8b5cf6', '#ec4899', '#06b6d4', '#64748b']
 
@@ -71,6 +83,17 @@ export default function Reports() {
   const [financialPeriod, setFinancialPeriod] = useState<'monthly' | 'quarterly'>('monthly')
   const [dateFrom, setDateFrom] = useState<string>('')
   const [dateTo, setDateTo] = useState<string>('')
+
+  // Tab-specific filters (discount codes: owner / influencer, cities: country)
+  const [ownerInput, setOwnerInput] = useState<string>('')
+  const [ownerFilter, setOwnerFilter] = useState<string>('')
+  const [countryFilter, setCountryFilter] = useState<string>('')
+
+  // Debounce the owner text filter so typing doesn't fire a request per keystroke
+  useEffect(() => {
+    const timer = setTimeout(() => setOwnerFilter(ownerInput.trim()), 400)
+    return () => clearTimeout(timer)
+  }, [ownerInput])
 
   // Export Modal state
   const [isExportOpen, setIsExportOpen] = useState(false)
@@ -135,6 +158,28 @@ export default function Reports() {
     date_to: dateTo || undefined,
   })
 
+  const {
+    data: discountCodesReport,
+    isLoading: isDiscountCodesLoading,
+    refetch: refetchDiscountCodes,
+  } = useDiscountCodesReport({
+    date_from: dateFrom || undefined,
+    date_to: dateTo || undefined,
+    owner_name: ownerFilter || undefined,
+  })
+
+  const {
+    data: citiesReport,
+    isLoading: isCitiesLoading,
+    refetch: refetchCities,
+  } = useCitiesReport({
+    country_id: countryFilter ? Number(countryFilter) : undefined,
+    date_from: dateFrom || undefined,
+    date_to: dateTo || undefined,
+  })
+
+  const { data: activeCountries } = useActiveCountries()
+
   const exportMutation = useExportReport()
 
   const handleRefreshAll = () => {
@@ -150,6 +195,10 @@ export default function Reports() {
       refetchSubscriptions()
     } else if (activeTab === 'users') {
       refetchUsers()
+    } else if (activeTab === 'discountCodes') {
+      refetchDiscountCodes()
+    } else if (activeTab === 'cities') {
+      refetchCities()
     }
   }
 
@@ -213,6 +262,8 @@ export default function Reports() {
     { id: 'warranties', label: t('tabWarranties'), icon: ShieldCheck },
     { id: 'subscriptions', label: t('tabSubscriptions'), icon: CreditCard },
     { id: 'users', label: t('tabUsers'), icon: UsersIcon },
+    { id: 'discountCodes', label: t('tabDiscountCodes'), icon: TicketPercent },
+    { id: 'cities', label: t('tabCities'), icon: MapPin },
   ]
 
   const getForecastPeriodLabel = (period: string) => {
@@ -1319,6 +1370,341 @@ export default function Reports() {
                   </tbody>
                 </table>
               </div>
+            </CardContent>
+          </Card>
+        </div>
+      )}
+
+      {/* Tab 6: Discount Codes & Influencers */}
+      {activeTab === 'discountCodes' && (
+        <div className="space-y-6">
+          {/* Owner / influencer filter */}
+          <div className="flex flex-col sm:flex-row sm:items-center gap-3">
+            <div className="flex items-center gap-2 text-xs font-semibold text-gray-500">
+              <Filter className="h-3.5 w-3.5 text-gray-400" />
+              <span>{t('discountCodeOwner')}:</span>
+            </div>
+            <input
+              type="text"
+              value={ownerInput}
+              onChange={(e) => setOwnerInput(e.target.value)}
+              placeholder={t('reportsDiscountOwnerPlaceholder')}
+              className="h-9 w-full sm:w-72 px-3 rounded-xl border border-gray-200 text-xs bg-white focus:outline-none focus:ring-1 focus:ring-main"
+            />
+          </div>
+
+          {/* Discount Codes Summary Cards */}
+          <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-4">
+            <Card className="border border-gray-100 rounded-2xl shadow-xs bg-white p-4">
+              <p className="text-xs text-gray-400 font-bold uppercase">{t('reportsDiscountTotalUses')}</p>
+              <h4 className="text-xl font-black text-gray-900 mt-1">
+                {(discountCodesReport?.summary?.total_uses ?? 0).toLocaleString()}
+              </h4>
+              <p className="text-[11px] text-gray-500 mt-0.5">
+                {t('reportsDiscountActiveCodes', {
+                  active: discountCodesReport?.summary?.active_codes ?? 0,
+                  total: discountCodesReport?.summary?.total_codes ?? 0,
+                })}
+              </p>
+            </Card>
+            <Card className="border border-gray-100 rounded-2xl shadow-xs bg-white p-4">
+              <p className="text-xs text-gray-400 font-bold uppercase">{t('reportsDiscountUniqueUsers')}</p>
+              <h4 className="text-xl font-black text-blue-600 mt-1">
+                {(discountCodesReport?.summary?.unique_users ?? 0).toLocaleString()}
+              </h4>
+            </Card>
+            <Card className="border border-gray-100 rounded-2xl shadow-xs bg-white p-4">
+              <p className="text-xs text-gray-400 font-bold uppercase">{t('reportsDiscountRevenue')}</p>
+              <h4 className="text-xl font-black text-emerald-600 mt-1 truncate">
+                {formatCurrency(
+                  discountCodesReport?.summary?.total_revenue ?? 0,
+                  discountCodesReport?.summary?.currency || 'SAR'
+                )}
+              </h4>
+            </Card>
+            <Card className="border border-gray-100 rounded-2xl shadow-xs bg-white p-4">
+              <p className="text-xs text-gray-400 font-bold uppercase">{t('reportsDiscountGiven')}</p>
+              <h4 className="text-xl font-black text-rose-600 mt-1 truncate">
+                {formatCurrency(
+                  discountCodesReport?.summary?.total_discount ?? 0,
+                  discountCodesReport?.summary?.currency || 'SAR'
+                )}
+              </h4>
+            </Card>
+            <Card className="border border-gray-100 rounded-2xl shadow-xs bg-white p-4">
+              <p className="text-xs text-gray-400 font-bold uppercase">{t('reportsDiscountTopCode')}</p>
+              {discountCodesReport?.summary?.top_code ? (
+                <>
+                  <h4 className="text-xl font-black text-purple-600 mt-1 font-mono truncate" dir="ltr">
+                    {discountCodesReport.summary.top_code.code}
+                  </h4>
+                  <p className="text-[11px] text-gray-500 mt-0.5 truncate">
+                    {discountCodesReport.summary.top_code.uses_count} {t('discountCodeUses')}
+                    {discountCodesReport.summary.top_code.owner_name
+                      ? ` · ${discountCodesReport.summary.top_code.owner_name}`
+                      : ''}
+                  </p>
+                </>
+              ) : (
+                <h4 className="text-xl font-black text-gray-300 mt-1">—</h4>
+              )}
+            </Card>
+          </div>
+
+          {/* Performance by Influencer / Owner */}
+          <Card className="border border-gray-100 rounded-2xl shadow-xs bg-white">
+            <CardHeader className="border-b border-gray-50 px-6 py-4">
+              <CardTitle className="text-base font-bold text-gray-900">{t('reportsDiscountByOwner')}</CardTitle>
+            </CardHeader>
+            <CardContent className="p-6">
+              {isDiscountCodesLoading ? (
+                <div className="flex items-center justify-center py-10">
+                  <Loader2 className="h-6 w-6 animate-spin text-main" />
+                </div>
+              ) : !discountCodesReport?.by_owner?.length ? (
+                <p className="text-sm text-gray-400 text-center py-8">{t('noDataFound')}</p>
+              ) : (
+                <div className="overflow-x-auto">
+                  <table className="w-full text-left text-xs">
+                    <thead>
+                      <tr className="border-b border-gray-100 text-gray-400 font-bold uppercase">
+                        <th className="pb-3 text-start">{t('discountCodeOwner')}</th>
+                        <th className="pb-3 text-end">{t('reportsDiscountCodesCount')}</th>
+                        <th className="pb-3 text-end">{t('discountCodeUses')}</th>
+                        <th className="pb-3 text-end">{t('reportsDiscountUniqueUsers')}</th>
+                        <th className="pb-3 text-end">{t('reportsDiscountRevenue')}</th>
+                      </tr>
+                    </thead>
+                    <tbody className="divide-y divide-gray-50">
+                      {discountCodesReport.by_owner.map((owner) => (
+                        <tr key={owner.owner_name} className="hover:bg-gray-50/50 transition-colors">
+                          <td className="py-3 font-bold text-gray-800 text-start">{owner.owner_name}</td>
+                          <td className="py-3 text-gray-600 text-end">{owner.codes_count}</td>
+                          <td className="py-3 text-gray-900 font-semibold text-end">{owner.uses_count}</td>
+                          <td className="py-3 text-gray-600 text-end">{owner.unique_users}</td>
+                          <td className="py-3 text-end font-bold text-emerald-600">
+                            {formatCurrency(owner.total_revenue, discountCodesReport.summary.currency || 'SAR')}
+                          </td>
+                        </tr>
+                      ))}
+                    </tbody>
+                  </table>
+                </div>
+              )}
+            </CardContent>
+          </Card>
+
+          {/* Per-code performance */}
+          <Card className="border border-gray-100 rounded-2xl shadow-xs bg-white">
+            <CardHeader className="border-b border-gray-50 px-6 py-4">
+              <CardTitle className="text-base font-bold text-gray-900">{t('reportsDiscountCodesTable')}</CardTitle>
+            </CardHeader>
+            <CardContent className="p-6">
+              {isDiscountCodesLoading ? (
+                <div className="flex items-center justify-center py-10">
+                  <Loader2 className="h-6 w-6 animate-spin text-main" />
+                </div>
+              ) : !discountCodesReport?.codes?.length ? (
+                <p className="text-sm text-gray-400 text-center py-8">{t('noDataFound')}</p>
+              ) : (
+                <div className="overflow-x-auto">
+                  <table className="w-full text-left text-xs whitespace-nowrap">
+                    <thead>
+                      <tr className="border-b border-gray-100 text-gray-400 font-bold uppercase">
+                        <th className="pb-3 pe-4 text-start">{t('code')}</th>
+                        <th className="pb-3 pe-4 text-start">{t('discountCodeOwner')}</th>
+                        <th className="pb-3 pe-4 text-start">{t('type')}</th>
+                        <th className="pb-3 pe-4 text-start">{t('discountCodeAvailability')}</th>
+                        <th className="pb-3 pe-4 text-end">{t('discountCodeUses')}</th>
+                        <th className="pb-3 pe-4 text-end">{t('reportsDiscountUniqueUsers')}</th>
+                        <th className="pb-3 pe-4 text-end">{t('reportsDiscountFreeMonthsGranted')}</th>
+                        <th className="pb-3 pe-4 text-end">{t('reportsDiscountGiven')}</th>
+                        <th className="pb-3 pe-4 text-end">{t('reportsDiscountRevenue')}</th>
+                        <th className="pb-3 text-end">{t('reportsDiscountLastUsed')}</th>
+                      </tr>
+                    </thead>
+                    <tbody className="divide-y divide-gray-50">
+                      {discountCodesReport.codes.map((code) => (
+                        <tr key={code.id} className="hover:bg-gray-50/50 transition-colors">
+                          <td className="py-3 pe-4 text-start font-mono font-bold text-gray-900" dir="ltr">
+                            {code.code}
+                          </td>
+                          <td className="py-3 pe-4 text-start">
+                            <p className="font-semibold text-gray-800">{code.owner_name || '—'}</p>
+                            {code.owner_contact && (
+                              <p className="text-[10px] text-gray-400" dir="ltr">
+                                {code.owner_contact}
+                              </p>
+                            )}
+                          </td>
+                          <td className="py-3 pe-4 text-start text-gray-600">
+                            {t(DISCOUNT_TYPE_LABEL_KEYS[code.type])}
+                            <span className="text-gray-400"> · {formatDiscountValue(code, t)}</span>
+                          </td>
+                          <td className="py-3 pe-4 text-start">
+                            <Badge variant={AVAILABILITY_BADGE_VARIANTS[code.availability] ?? 'outline'} dot>
+                              {t(AVAILABILITY_LABEL_KEYS[code.availability])}
+                            </Badge>
+                          </td>
+                          <td className="py-3 pe-4 text-end font-semibold text-gray-900">
+                            {code.uses_count}
+                            {code.max_uses ? <span className="text-gray-400"> / {code.max_uses}</span> : null}
+                          </td>
+                          <td className="py-3 pe-4 text-end text-gray-600">{code.unique_users}</td>
+                          <td className="py-3 pe-4 text-end text-gray-600">{code.free_months_granted || '—'}</td>
+                          <td className="py-3 pe-4 text-end text-rose-600 font-semibold">
+                            {formatCurrency(code.total_discount, discountCodesReport.summary.currency || 'SAR')}
+                          </td>
+                          <td className="py-3 pe-4 text-end font-bold text-emerald-600">
+                            {formatCurrency(code.total_revenue, discountCodesReport.summary.currency || 'SAR')}
+                          </td>
+                          <td className="py-3 text-end text-gray-500">{code.last_used_at || '—'}</td>
+                        </tr>
+                      ))}
+                    </tbody>
+                  </table>
+                </div>
+              )}
+            </CardContent>
+          </Card>
+        </div>
+      )}
+
+      {/* Tab 7: Users & Subscribers by City */}
+      {activeTab === 'cities' && (
+        <div className="space-y-6">
+          {/* Country filter */}
+          <div className="flex flex-col sm:flex-row sm:items-center gap-3">
+            <div className="flex items-center gap-2 text-xs font-semibold text-gray-500">
+              <Filter className="h-3.5 w-3.5 text-gray-400" />
+              <span>{t('country')}:</span>
+            </div>
+            <select
+              value={countryFilter}
+              onChange={(e) => setCountryFilter(e.target.value)}
+              className="h-9 w-full sm:w-56 px-3 rounded-xl border border-gray-200 text-xs font-semibold bg-white focus:outline-none focus:ring-1 focus:ring-main"
+            >
+              <option value="">{t('reportsCitiesAllCountries')}</option>
+              {(activeCountries || []).map((country) => (
+                <option key={country.id} value={String(country.id)}>
+                  {getLocalizedValue(country.name, i18n.language)}
+                </option>
+              ))}
+            </select>
+          </div>
+
+          {/* Cities Summary Cards */}
+          <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-4">
+            <Card className="border border-gray-100 rounded-2xl shadow-xs bg-white p-4">
+              <p className="text-xs text-gray-400 font-bold uppercase">{t('reportsCitiesTotalUsers')}</p>
+              <h4 className="text-xl font-black text-gray-900 mt-1">
+                {(citiesReport?.summary?.total_users ?? 0).toLocaleString()}
+              </h4>
+              <p className="text-[11px] text-gray-500 mt-0.5">
+                {t('reportsCitiesCount', { count: citiesReport?.summary?.cities_count ?? 0 })}
+              </p>
+            </Card>
+            <Card className="border border-gray-100 rounded-2xl shadow-xs bg-white p-4">
+              <p className="text-xs text-gray-400 font-bold uppercase">{t('totalSubscribers')}</p>
+              <h4 className="text-xl font-black text-emerald-600 mt-1">
+                {(citiesReport?.summary?.total_subscribers ?? 0).toLocaleString()}
+              </h4>
+            </Card>
+            <Card className="border border-gray-100 rounded-2xl shadow-xs bg-white p-4">
+              <p className="text-xs text-gray-400 font-bold uppercase">{t('reportsCitiesUsersWithoutCity')}</p>
+              <h4 className="text-xl font-black text-amber-600 mt-1">
+                {(citiesReport?.summary?.users_without_city ?? 0).toLocaleString()}
+              </h4>
+            </Card>
+            <Card className="border border-gray-100 rounded-2xl shadow-xs bg-white p-4">
+              <p className="text-xs text-gray-400 font-bold uppercase">{t('reportsCitiesTopByUsers')}</p>
+              {citiesReport?.summary?.top_city_by_users ? (
+                <>
+                  <h4 className="text-xl font-black text-blue-600 mt-1 truncate">
+                    {citiesReport.summary.top_city_by_users.name}
+                  </h4>
+                  <p className="text-[11px] text-gray-500 mt-0.5">
+                    {citiesReport.summary.top_city_by_users.users_count.toLocaleString()} {t('users')}
+                  </p>
+                </>
+              ) : (
+                <h4 className="text-xl font-black text-gray-300 mt-1">—</h4>
+              )}
+            </Card>
+            <Card className="border border-gray-100 rounded-2xl shadow-xs bg-white p-4">
+              <p className="text-xs text-gray-400 font-bold uppercase">{t('reportsCitiesTopBySubscribers')}</p>
+              {citiesReport?.summary?.top_city_by_subscribers ? (
+                <>
+                  <h4 className="text-xl font-black text-purple-600 mt-1 truncate">
+                    {citiesReport.summary.top_city_by_subscribers.name}
+                  </h4>
+                  <p className="text-[11px] text-gray-500 mt-0.5">
+                    {citiesReport.summary.top_city_by_subscribers.subscribers_count.toLocaleString()}{' '}
+                    {t('subscribers')}
+                  </p>
+                </>
+              ) : (
+                <h4 className="text-xl font-black text-gray-300 mt-1">—</h4>
+              )}
+            </Card>
+          </div>
+
+          {/* Per-city table */}
+          <Card className="border border-gray-100 rounded-2xl shadow-xs bg-white">
+            <CardHeader className="border-b border-gray-50 px-6 py-4">
+              <CardTitle className="text-base font-bold text-gray-900">{t('reportsCitiesTable')}</CardTitle>
+            </CardHeader>
+            <CardContent className="p-6">
+              {isCitiesLoading ? (
+                <div className="flex items-center justify-center py-10">
+                  <Loader2 className="h-6 w-6 animate-spin text-main" />
+                </div>
+              ) : !citiesReport?.cities?.length ? (
+                <p className="text-sm text-gray-400 text-center py-8">{t('noDataFound')}</p>
+              ) : (
+                <div className="overflow-x-auto">
+                  <table className="w-full text-left text-xs whitespace-nowrap">
+                    <thead>
+                      <tr className="border-b border-gray-100 text-gray-400 font-bold uppercase">
+                        <th className="pb-3 pe-4 text-start">{t('city')}</th>
+                        <th className="pb-3 pe-4 text-start">{t('country')}</th>
+                        <th className="pb-3 pe-4 text-end">{t('users')}</th>
+                        <th className="pb-3 pe-4 text-end">{t('subscribers')}</th>
+                        <th className="pb-3 pe-4 text-end">{t('reportsCitiesSubscriptionRate')}</th>
+                        <th className="pb-3 text-start w-48">{t('reportsCitiesUsersShare')}</th>
+                      </tr>
+                    </thead>
+                    <tbody className="divide-y divide-gray-50">
+                      {citiesReport.cities.map((city) => (
+                        <tr key={city.city_id} className="hover:bg-gray-50/50 transition-colors">
+                          <td className="py-3 pe-4 text-start font-bold text-gray-800">{city.name}</td>
+                          <td className="py-3 pe-4 text-start text-gray-500">{city.country_name || '—'}</td>
+                          <td className="py-3 pe-4 text-end font-semibold text-gray-900">
+                            {city.users_count.toLocaleString()}
+                          </td>
+                          <td className="py-3 pe-4 text-end text-emerald-600 font-semibold">
+                            {city.subscribers_count.toLocaleString()}
+                          </td>
+                          <td className="py-3 pe-4 text-end text-gray-700">{city.subscription_rate}%</td>
+                          <td className="py-3 text-start">
+                            <div className="flex items-center gap-2">
+                              <div className="h-1.5 flex-1 rounded-full bg-gray-100 overflow-hidden">
+                                <div
+                                  className="h-full rounded-full bg-main"
+                                  style={{ width: `${Math.min(100, city.users_percentage)}%` }}
+                                />
+                              </div>
+                              <span className="text-gray-600 font-semibold w-12 text-end">
+                                {city.users_percentage}%
+                              </span>
+                            </div>
+                          </td>
+                        </tr>
+                      ))}
+                    </tbody>
+                  </table>
+                </div>
+              )}
             </CardContent>
           </Card>
         </div>

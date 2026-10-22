@@ -4,7 +4,7 @@ import { useTranslation } from 'react-i18next'
 import { BaseInputField } from '@/shared/components/base-input-field'
 import ModalStatus from '@/shared/components/modal-status'
 import { StatusToggle } from '@/shared/components/StatusToggle'
-import { CountrySelect } from '@/shared/components/selects/CountrySelect'
+import { CityFormCountryField } from './CityFormCountryField'
 import type { City } from '../../api/useCities'
 import { getInitialValues } from './validationSchema'
 
@@ -76,7 +76,7 @@ export function CitiesFormModal({
         </div>
         <div className="grid grid-cols-2 gap-4 items-start">
           <div className={isRtl ? 'text-right' : 'text-left'}>
-            <CountrySelect control={control} disabled={isViewOnly} ensureOption={ensureCountry} />
+            <CityFormCountryField disabled={isViewOnly} ensureOption={ensureCountry} />
           </div>
           <div className="flex flex-col gap-1.5">
             <label className="text-xs font-bold text-muted-foreground uppercase tracking-wider">

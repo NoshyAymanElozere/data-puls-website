@@ -145,8 +145,9 @@ export function useToggleOnboardingStatus() {
       const response = await api.patch<SuccessResponse<Onboarding>>(`/onboardings/${id}/status`)
       return response.data
     },
-    onSuccess: () => {
+    onSuccess: (_res, id) => {
       qc.invalidateQueries({ queryKey: ['onboardings-list'] })
+      qc.invalidateQueries({ queryKey: ['onboarding', id] })
       toast.success(i18n.t('onboardingStatusUpdated'))
     },
     onError: (error) => {

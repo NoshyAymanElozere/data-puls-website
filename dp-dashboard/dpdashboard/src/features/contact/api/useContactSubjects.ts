@@ -131,8 +131,9 @@ export function useToggleContactSubjectStatus() {
       const response = await api.patch<SuccessResponse<ContactSubject>>(`/contact-subjects/${id}/status`)
       return response.data
     },
-    onSuccess: (res) => {
+    onSuccess: (res, id) => {
       qc.invalidateQueries({ queryKey: ['contact-subjects-list'] })
+      qc.invalidateQueries({ queryKey: ['contact-subject', id] })
       qc.invalidateQueries({ queryKey: ['contact-subjects-active'] })
       toast.success(res.message || i18n.t('statusUpdated'))
     },

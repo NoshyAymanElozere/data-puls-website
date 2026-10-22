@@ -143,8 +143,9 @@ export function useToggleCityStatus() {
       const response = await api.patch<SuccessResponse<City>>(`/cities/${id}/status`)
       return response.data
     },
-    onSuccess: (res) => {
+    onSuccess: (res, id) => {
       qc.invalidateQueries({ queryKey: ['cities-list'] })
+      qc.invalidateQueries({ queryKey: ['city', id] })
       qc.invalidateQueries({ queryKey: ['cities-active'] })
       if (res.data?.country_id) {
         qc.invalidateQueries({ queryKey: ['country', res.data.country_id] })

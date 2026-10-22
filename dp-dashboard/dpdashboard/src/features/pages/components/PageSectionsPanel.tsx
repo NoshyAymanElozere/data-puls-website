@@ -1,4 +1,4 @@
-import { useState, useMemo } from 'react'
+import { useEffect, useState, useMemo } from 'react'
 import { FormProvider } from 'react-hook-form'
 import { useTranslation } from 'react-i18next'
 import { Plus } from 'lucide-react'
@@ -14,6 +14,7 @@ import { hasPermission } from '@/shared/utils/permissions'
 import {
   useCreatePageSection,
   useDeletePageSection,
+  usePageSection,
   usePageSectionsList,
   useUpdatePageSection,
   sectionToFormValues,
@@ -56,6 +57,9 @@ export function PageSectionsPanel({ pageId }: PageSectionsPanelProps) {
   const items = paginatedData?.data ?? []
 
   const methods = useZodForm(schema, sectionToFormValues(null))
+  const { data: sectionDetail, isLoading: sectionDetailLoading } = usePageSection(
+    isModalOpen && editingItem?.id ? editingItem.id : null
+  )
   const createMutation = useCreatePageSection(methods.setError)
   const updateMutation = useUpdatePageSection(methods.setError)
   const deleteMutation = useDeletePageSection()
@@ -68,9 +72,15 @@ export function PageSectionsPanel({ pageId }: PageSectionsPanelProps) {
 
   const handleOpenEdit = (item: PageSection) => {
     setEditingItem(item)
-    methods.reset(sectionToFormValues(item))
+    methods.reset(sectionToFormValues(null))
     setIsModalOpen(true)
   }
+
+  useEffect(() => {
+    if (isModalOpen && sectionDetail) {
+      methods.reset(sectionToFormValues(sectionDetail))
+    }
+  }, [isModalOpen, sectionDetail, methods.reset])
 
   const handleSave = (formData: SectionFormValues) => {
     if (editingItem?.id) {
@@ -114,12 +124,12 @@ export function PageSectionsPanel({ pageId }: PageSectionsPanelProps) {
         return (
           <div className="flex items-center gap-1 h-full">
             {canUpdate && (
-              <Button variant="ghost" size="icon-sm" onClick={() => handleOpenEdit(item)}>
+              <Button variant="ghost" size="icon-sm" title={t('edit')} onClick={() => handleOpenEdit(item)}>
                 <Pencil className="h-4 w-4" />
               </Button>
             )}
             {canDelete && (
-              <Button variant="ghost" size="icon-sm" onClick={() => setDeletingItem(item)}>
+              <Button variant="ghost" size="icon-sm" title={t('delete')} onClick={() => setDeletingItem(item)}>
                 <Trash2 className="h-4 w-4 text-destructive" />
               </Button>
             )}
@@ -132,9 +142,9 @@ export function PageSectionsPanel({ pageId }: PageSectionsPanelProps) {
   )
 
   return (
-    <Card className="border-border/60 shadow-sm rounded-2xl overflow-hidden bg-white">
-      <CardHeader className="flex flex-row items-center justify-between border-b border-gray-50 px-6 py-5">
-        <CardTitle className="text-lg font-bold text-gray-800">{t('pageSections') || 'Page Sections'}</CardTitle>
+    <Card className="border-border/60 shadow-sm rounded-2xl overflow-hidden bg-card">
+      <CardHeader className="flex flex-row items-center justify-between border-b border-border/40 px-6 py-5">
+        <CardTitle className="text-lg font-bold text-foreground">{t('pageSections') || 'Page Sections'}</CardTitle>
         {canCreate && (
           <Button onClick={handleOpenCreate} className="h-9 px-4 rounded-xl">
             <Plus className="mr-2 h-4 w-4" /> {t('addSection') || 'Add Section'}
@@ -171,9 +181,9 @@ export function PageSectionsPanel({ pageId }: PageSectionsPanelProps) {
         <PageSectionFormModal
           open={isModalOpen}
           onOpenChange={setIsModalOpen}
-          editingItem={editingItem}
+          editingItem={sectionDetail ?? editingItem}
           onSave={handleSave}
-          loading={createMutation.isPending || updateMutation.isPending}
+          loading={createMutation.isPending || updateMutation.isPending || (!!editingItem && sectionDetailLoading)}
         />
       </FormProvider>
 

@@ -11,8 +11,8 @@ import type { UseFormSetError } from 'react-hook-form'
 export interface PageSection {
   id: number
   page_id: number
-  title: Translatable | string
-  description: Translatable | string
+  title: Translatable | string | null
+  description: Translatable | string | null
   sort_order: number
   icon_url?: string | null
   created_at?: string
@@ -144,11 +144,11 @@ export function sectionToFormValues(section?: PageSection | null): PageSectionFo
     return { titleEn: '', titleAr: '', descriptionEn: '', descriptionAr: '', sort_order: 0, icon: null }
   }
 
-  const title = typeof section.title === 'string' ? { en: section.title, ar: section.title } : section.title
+  const title = typeof section.title === 'string' ? { en: section.title, ar: section.title } : section.title ?? ({} as Partial<Translatable>)
   const description =
     typeof section.description === 'string'
       ? { en: section.description, ar: section.description }
-      : section.description
+      : section.description ?? ({} as Partial<Translatable>)
 
   return {
     titleEn: title.en || '',

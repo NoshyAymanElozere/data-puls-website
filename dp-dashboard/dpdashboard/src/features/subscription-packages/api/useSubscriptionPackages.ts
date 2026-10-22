@@ -276,8 +276,9 @@ export function useToggleSubscriptionPackageStatus() {
       )
       return response.data
     },
-    onSuccess: (res) => {
+    onSuccess: (res, id) => {
       qc.invalidateQueries({ queryKey: ['subscription-packages-list'] })
+      qc.invalidateQueries({ queryKey: ['subscription-package', id] })
       toast.success(res.message || i18n.t('statusUpdated'))
     },
     onError: (error) => {

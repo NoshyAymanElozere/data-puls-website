@@ -41,10 +41,10 @@ export const BaseTextAreaField = React.forwardRef<HTMLTextAreaElement, BaseTextA
             placeholder={placeholder}
             rows={rows}
             className={cn(
-              'w-full px-3.5 py-2.5 rounded-xl border border-gray-200 bg-gray-50/50 text-sm text-gray-800 placeholder-gray-400 focus:outline-none focus:ring-1 focus:ring-main focus:border-main transition-all resize-y',
+              'w-full px-3.5 py-2.5 rounded-xl border border-gray-200 bg-gray-50/50 text-sm text-gray-800 placeholder-gray-400 focus:outline-none focus:ring-1 focus:ring-main focus:border-main transition-all resize-y dark:bg-card dark:border-border dark:text-foreground dark:placeholder:text-muted-foreground',
               error && 'border-rose-500 focus:ring-rose-500 focus:border-rose-500',
-              props.disabled && 'bg-gray-100/80 border-gray-200/80 text-gray-600 opacity-95 cursor-not-allowed select-none shadow-none focus:ring-0 focus:border-gray-200/80',
-              props.readOnly && 'bg-gray-50/30 border-gray-200/40 text-gray-700 cursor-default focus:ring-0 focus:border-gray-200/40',
+              props.disabled && 'bg-gray-100/80 border-gray-200/80 text-gray-600 opacity-95 cursor-not-allowed select-none shadow-none focus:ring-0 focus:border-gray-200/80 dark:bg-muted/60 dark:border-border dark:text-muted-foreground',
+              props.readOnly && 'bg-gray-50/30 border-gray-200/40 text-gray-700 cursor-default focus:ring-0 focus:border-gray-200/40 dark:bg-muted/30 dark:border-border dark:text-foreground',
               className
             )}
             {...registerProps}

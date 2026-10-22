@@ -143,8 +143,9 @@ export function useToggleCountryStatus() {
       const response = await api.patch<SuccessResponse<Country>>(`/countries/${id}/status`)
       return response.data
     },
-    onSuccess: (res) => {
+    onSuccess: (res, id) => {
       qc.invalidateQueries({ queryKey: ['countries-list'] })
+      qc.invalidateQueries({ queryKey: ['country', id] })
       qc.invalidateQueries({ queryKey: ['countries-active'] })
       toast.success(res.message || i18n.t('countryStatusUpdated'))
     },

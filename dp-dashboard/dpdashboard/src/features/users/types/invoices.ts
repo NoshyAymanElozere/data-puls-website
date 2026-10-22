@@ -29,11 +29,20 @@ export interface InvoiceReturnExchange {
   is_expired: boolean | null
 }
 
+export interface InvoiceAttachment {
+  url: string
+  name: string
+  mime_type: string | null
+  size: number
+  is_image: boolean
+}
+
 export interface InvoiceListItem {
   id: number
   invoice_number: string
   store_name: string
   image: string | null
+  attachment?: InvoiceAttachment | null
   purchase_date: string
   total_amount: number
   category_id?: number | null

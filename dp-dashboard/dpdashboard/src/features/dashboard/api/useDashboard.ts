@@ -2,7 +2,7 @@ import { useMutation, useQuery } from '@tanstack/react-query'
 import toast from 'react-hot-toast'
 import i18n from '@/shared/i18n/i18n'
 import api, { getErrorMessage } from '@/shared/services/axios'
-import type { SuccessResponse } from '@/shared/types/laravel'
+import type { LaravelPaginatedResponse, SuccessResponse } from '@/shared/types/laravel'
 import { buildQueryParams } from '@/shared/utils/query-params'
 
 export type DashboardPeriod = 'this_month' | 'last_month' | 'this_year'
@@ -35,6 +35,42 @@ export interface UserStatMetric {
   change_percentage: number
   change_direction: 'increase' | 'decrease'
   subtitle: string
+  /** `users_with_at_least_one_invoice` — active users are users who added ≥ 1 invoice */
+  definition?: string
+  /** Users who added invoices within the selected period */
+  active_in_period?: number
+}
+
+export interface TotalUsersStatMetric {
+  total: number
+  new_in_period: number
+  change_percentage: number
+  change_direction: 'increase' | 'decrease'
+  subtitle: string
+}
+
+export interface DownloadsStatMetric {
+  total: number
+  ios: number
+  android: number
+  source: 'manual' | string
+}
+
+export interface SubscriptionRevenueStatMetric {
+  total: number
+  formatted: string
+  currency: string
+  paid_transactions_count: number
+  change_percentage: number
+  change_direction: 'increase' | 'decrease'
+  subtitle: string
+}
+
+export interface SubscribersStatMetric {
+  active: number
+  expiring_soon: number
+  expired_not_renewed: number
+  expiring_soon_days: number
 }
 
 export interface DashboardMenuCounts {
@@ -49,7 +85,49 @@ export interface DashboardStatsData {
   active_warranties: WarrantyStatMetric
   total_spending: SpendingStatMetric
   active_users: UserStatMetric
+  total_users?: TotalUsersStatMetric
+  downloads?: DownloadsStatMetric
+  subscription_revenue?: SubscriptionRevenueStatMetric
+  subscribers?: SubscribersStatMetric
   menu_counts?: DashboardMenuCounts
+}
+
+export type SubscriberFollowUpStatus = 'expiring_soon' | 'active' | 'expired'
+
+export const SUBSCRIBER_FOLLOW_UP_STATUSES: SubscriberFollowUpStatus[] = ['expiring_soon', 'active', 'expired']
+
+export interface SubscriberFollowUpRow {
+  subscription_id: number
+  status: string
+  status_label: string
+  user: { id: number; name: string; phone: string | null; email: string | null } | null
+  package: { id: number; name: string } | null
+  billing_period: string | null
+  billing_period_label: string | null
+  price: number | null
+  currency: string | null
+  auto_renewal: boolean
+  starts_at: string | null
+  ends_at: string | null
+  days_remaining: number | null
+  days_since_expired: number | null
+}
+
+export interface SubscriberFollowUpList {
+  count: number
+  items: SubscriberFollowUpRow[]
+}
+
+export interface SubscriberFollowUpOverview {
+  expiring_soon_days: number
+  lists: Record<SubscriberFollowUpStatus, SubscriberFollowUpList>
+}
+
+export interface SubscribersListParams {
+  status: SubscriberFollowUpStatus
+  search?: string
+  page?: number
+  per_page?: number
 }
 
 export interface DashboardAnalyticsItem {
@@ -122,6 +200,31 @@ export function useExpiringWarranties() {
       return res.data.data
     },
     staleTime: 60_000,
+  })
+}
+
+/** Hook to fetch the subscriber follow-up widget (counts + first 5 rows per list) */
+export function useSubscriberFollowUp() {
+  return useQuery({
+    queryKey: ['dashboard-subscriber-follow-up'],
+    queryFn: async () => {
+      const res = await api.get<SuccessResponse<SubscriberFollowUpOverview>>('/dashboard/subscriber-follow-up')
+      return res.data.data
+    },
+    staleTime: 60_000,
+  })
+}
+
+/** Hook to fetch the paginated subscribers list for the follow-up page */
+export function useDashboardSubscribers({ status, search = '', page = 1, per_page = 15 }: SubscribersListParams) {
+  return useQuery({
+    queryKey: ['dashboard-subscribers', status, search, page, per_page],
+    queryFn: async () => {
+      const params = buildQueryParams({ status, search, page, per_page })
+      const res = await api.get<LaravelPaginatedResponse<SubscriberFollowUpRow>>(`/dashboard/subscribers?${params}`)
+      return res.data
+    },
+    placeholderData: (previous) => previous,
   })
 }
 
@@ -210,7 +313,8 @@ export function useDashboardMenuCounts(stats?: DashboardStatsData) {
     staleTime: 60_000,
   })
 
-  const usersCount = stats?.menu_counts?.users ?? stats?.active_users?.total ?? 0
+  // active_users now means "users with ≥ 1 invoice", so prefer the registered-users total
+  const usersCount = stats?.menu_counts?.users ?? stats?.total_users?.total ?? stats?.active_users?.total ?? 0
   const warrantyPeriodsCount =
     stats?.menu_counts?.warranty_periods ?? fallbackWarrantyPeriods.data ?? 0
   const categoriesCount =

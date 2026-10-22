@@ -19,6 +19,15 @@ export interface UserSubscriptionPackage {
   updated_at?: string
 }
 
+export interface UserSubscriptionDiscount {
+  code: string | null
+  type: string | null
+  status: string
+  original_amount: number
+  discount_amount: number
+  final_amount: number
+}
+
 export interface UserSubscription {
   id: number
   status: SubscriptionStatus
@@ -31,6 +40,7 @@ export interface UserSubscription {
   remaining_days: number | null
   billing_option: SubscriptionPackageBillingOption
   package: UserSubscriptionPackage
+  discount?: UserSubscriptionDiscount | null
   created_at: string
   updated_at: string
 }

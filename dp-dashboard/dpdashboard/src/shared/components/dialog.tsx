@@ -2,6 +2,7 @@ import * as React from 'react'
 import * as DialogPrimitive from '@radix-ui/react-dialog'
 import { X } from 'lucide-react'
 import { cn } from '@/shared/utils/utils'
+import { isSearchableSelectMenuTarget } from './SearchableSelect'
 
 const Dialog = DialogPrimitive.Root
 const DialogTrigger = DialogPrimitive.Trigger
@@ -31,7 +32,7 @@ const DialogContent = React.forwardRef<
     size?: 'sm' | 'md' | 'lg' | 'xl' | '2xl' | '3xl' | 'full'
     hideClose?: boolean
   }
->(({ className, children, size = 'md', hideClose = false, ...props }, ref) => {
+>(({ className, children, size = 'md', hideClose = false, onPointerDownOutside, onFocusOutside, onInteractOutside, ...props }, ref) => {
   const sizeClasses = {
     sm: 'max-w-sm',
     md: 'max-w-lg',
@@ -42,6 +43,15 @@ const DialogContent = React.forwardRef<
     full: 'max-w-[95vw]',
   }
   const isRtl = typeof document !== 'undefined' && document.documentElement.dir === 'rtl'
+
+  const ignorePortaledSelect = (
+    event: Parameters<NonNullable<typeof onPointerDownOutside>>[0]
+  ) => {
+    if (isSearchableSelectMenuTarget(event.target)) {
+      event.preventDefault()
+    }
+  }
+
   return (
     <DialogPortal>
       <DialogOverlay />
@@ -55,6 +65,18 @@ const DialogContent = React.forwardRef<
           sizeClasses[size],
           className
         )}
+        onPointerDownOutside={(event) => {
+          ignorePortaledSelect(event)
+          onPointerDownOutside?.(event)
+        }}
+        onFocusOutside={(event) => {
+          ignorePortaledSelect(event)
+          onFocusOutside?.(event)
+        }}
+        onInteractOutside={(event) => {
+          ignorePortaledSelect(event)
+          onInteractOutside?.(event)
+        }}
         {...props}
       >
         {children}

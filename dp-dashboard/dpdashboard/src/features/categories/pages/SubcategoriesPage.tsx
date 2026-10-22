@@ -54,6 +54,10 @@ export default function SubcategoriesPage() {
   const schema = editingItem ? updateSchema : createSchema
   const methods = useZodForm(schema, getInitialValues(null, parentId))
 
+  const { data: categoryDetail, isLoading: categoryDetailLoading } = useCategory(
+    isModalOpen && editingItem?.id ? editingItem.id : null
+  )
+
   const { data: paginatedData, isLoading } = useCategoriesList(
     table.page,
     table.search,
@@ -210,6 +214,8 @@ export default function SubcategoriesPage() {
             open={isModalOpen}
             onOpenChange={setIsModalOpen}
             editingItem={editingItem}
+            detail={categoryDetail}
+            detailLoading={categoryDetailLoading}
             onSave={handleSave}
             loading={createMutation.isPending || updateMutation.isPending}
             label={label}

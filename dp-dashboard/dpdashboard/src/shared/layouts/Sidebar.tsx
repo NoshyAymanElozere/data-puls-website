@@ -24,6 +24,9 @@ import {
   BellRing,
   ScrollText,
   Send,
+  TicketPercent,
+  UserCheck,
+  Palette,
 } from 'lucide-react'
 
 import { useTranslation } from 'react-i18next'
@@ -31,15 +34,19 @@ import { NavLink, useLocation } from 'react-router-dom'
 import { useProfile } from '@/features/auth/api/useAuth'
 import { AppLogo } from '@/shared/components/AppLogo'
 import { settingLinks } from '@/shared/layouts/SidebarLinks'
+import { hasPermission } from '@/shared/utils/permissions'
 
-const navItems = [
+const navItems: { label: string; href: string; icon: React.ElementType; permission?: string }[] = [
   { label: 'dashboard', href: '/', icon: LayoutDashboard },
   { label: 'reports', href: '/reports', icon: BarChart3 },
   { label: 'users', href: '/users', icon: Users },
   { label: 'familyRelations', href: '/family-relations', icon: HeartHandshake },
   { label: 'subscriptionPackages', href: '/subscription-packages', icon: Package },
+  { label: 'discountCodes', href: '/discount-codes', icon: TicketPercent },
+  { label: 'subscriberFollowUp', href: '/subscriber-follow-up', icon: UserCheck },
   { label: 'categories', href: '/categories', icon: FolderTree },
   { label: 'onboardings', href: '/onboardings', icon: Smartphone },
+  { label: 'appScreens', href: '/screens', icon: Palette, permission: 'screens.view' },
   { label: 'warrantyPeriods', href: '/warranty-periods', icon: ShieldCheck },
   { label: 'expiringWarranties', href: '/expiring-warranties', icon: ShieldAlert },
   { label: 'sendNotification', href: '/send-notification', icon: Send },
@@ -165,7 +172,9 @@ export function Sidebar({ collapsed, onCollapse }: SidebarProps) {
 
         <ul className="space-y-1 px-2">
 
-          {navItems.map((item) => (
+          {navItems
+            .filter((item) => !item.permission || hasPermission(admin, item.permission))
+            .map((item) => (
 
             <NavItem key={item.href} item={item} collapsed={collapsed} />
 

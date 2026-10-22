@@ -4,14 +4,13 @@ import {
   Calendar,
   CheckCircle2,
   Clock,
+  Download,
   FileText,
-  HelpCircle,
   Maximize2,
   Package,
   Receipt,
   RotateCcw,
   ShieldCheck,
-  Store,
   Tag,
   User as UserIcon,
   X,
@@ -23,6 +22,7 @@ import { Avatar } from '@/shared/components/misc'
 import { resolveMediaUrl } from '@/shared/utils/media-url'
 import { useUserInvoiceDetail } from '../api/useUserInvoices'
 import type { InvoiceListItem } from '../types/invoices'
+import { formatFileSize, resolveInvoiceAttachment } from '../utils/invoiceAttachment'
 
 interface InvoiceDetailModalProps {
   open: boolean
@@ -55,6 +55,7 @@ export function InvoiceDetailModal({
     return isRtl ? cat.name.ar || cat.name.en : cat.name.en || cat.name.ar
   }
 
+  const { imageUrl, file: attachmentFile } = resolveInvoiceAttachment(invoice)
   const categoryLabel = getCategoryName(invoice.category)
   const subcategoryLabel = getCategoryName(invoice.subcategory)
 
@@ -231,10 +232,34 @@ export function InvoiceDetailModal({
                     <h4 className="text-xs font-bold uppercase tracking-wider text-muted-foreground flex items-center gap-1.5">
                       <FileText className="h-4 w-4" /> {t('receiptImage')}
                     </h4>
-                    {invoice.image ? (
+                    {attachmentFile ? (
+                      <div className="rounded-2xl border border-border/70 bg-muted/30 aspect-3/4 flex flex-col items-center justify-center text-center gap-3 p-5">
+                        <div className="flex h-16 w-16 items-center justify-center rounded-2xl bg-main/10 text-main border border-main/20">
+                          <FileText className="h-8 w-8" />
+                        </div>
+                        <div className="min-w-0 w-full space-y-1">
+                          <p className="text-sm font-bold text-foreground break-all line-clamp-2" title={attachmentFile.name}>
+                            {attachmentFile.name}
+                          </p>
+                          <p className="text-[11px] font-semibold text-muted-foreground" dir="ltr">
+                            {formatFileSize(attachmentFile.size)}
+                            {attachmentFile.mime_type ? ` · ${attachmentFile.mime_type}` : ''}
+                          </p>
+                        </div>
+                        <a
+                          href={resolveMediaUrl(attachmentFile.url)}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="inline-flex items-center gap-2 h-9 px-4 rounded-xl bg-main text-white text-xs font-bold hover:bg-main/90 transition-colors"
+                        >
+                          <Download className="h-4 w-4" />
+                          {t('openOrDownloadFile')}
+                        </a>
+                      </div>
+                    ) : imageUrl ? (
                       <div className="relative group overflow-hidden rounded-2xl border border-border/70 bg-muted/30 aspect-3/4 flex items-center justify-center">
                         <img
-                          src={resolveMediaUrl(invoice.image)}
+                          src={resolveMediaUrl(imageUrl)}
                           alt={invoice.invoice_number}
                           className="w-full h-full object-contain cursor-pointer transition-transform duration-300 group-hover:scale-105"
                           onClick={() => setIsImageZoomed(true)}
@@ -328,7 +353,7 @@ export function InvoiceDetailModal({
       </Dialog>
 
       {/* Lightbox / Image Zoom Modal */}
-      {isImageZoomed && invoice.image && (
+      {isImageZoomed && imageUrl && (
         <div
           className="fixed inset-0 z-50 bg-black/80 backdrop-blur-md flex items-center justify-center p-4"
           onClick={() => setIsImageZoomed(false)}
@@ -341,7 +366,7 @@ export function InvoiceDetailModal({
             <X className="h-6 w-6" />
           </button>
           <img
-            src={resolveMediaUrl(invoice.image)}
+            src={resolveMediaUrl(imageUrl)}
             alt={invoice.invoice_number}
             className="max-h-[90vh] max-w-[90vw] object-contain rounded-2xl shadow-2xl"
             onClick={(e) => e.stopPropagation()}

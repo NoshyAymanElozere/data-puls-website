@@ -123,8 +123,9 @@ export function useToggleWarrantyPeriodStatus() {
       const response = await api.patch<SuccessResponse<WarrantyPeriod>>(`/warranty-periods/${id}/status`)
       return response.data
     },
-    onSuccess: () => {
+    onSuccess: (_res, id) => {
       qc.invalidateQueries({ queryKey: ['warranty-periods-list'] })
+      qc.invalidateQueries({ queryKey: ['warranty-period', id] })
       toast.success(i18n.t('warrantyPeriodStatusUpdated'))
     },
     onError: (error) => {

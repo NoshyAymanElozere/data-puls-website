@@ -2,8 +2,10 @@ import { Badge } from '@/shared/components/badge'
 import { Button } from '@/shared/components/button'
 import { UserStatusToggle } from '@/shared/components/UserStatusToggle'
 import type { UserListItem, UserStatus } from '@/features/users/api/useUsers'
+import { getLocalizedValue } from '@/shared/utils/localized-value'
 import type { ColDef } from 'ag-grid-community'
 import { Eye, Pencil, Trash2 } from 'lucide-react'
+import { AccessTypeBadge } from '../components/AccessTypeBadge'
 
 interface ColumnDefsProps {
   t: (key: string) => string
@@ -14,6 +16,7 @@ interface ColumnDefsProps {
   setIsViewOnly: (view: boolean) => void
   canUpdate?: boolean
   canDelete?: boolean
+  lang?: string
 }
 
 export function getUsersColumnDefs({
@@ -25,6 +28,7 @@ export function getUsersColumnDefs({
   setIsViewOnly,
   canUpdate = true,
   canDelete = true,
+  lang = 'en',
 }: ColumnDefsProps): ColDef[] {
   return [
     {
@@ -66,6 +70,29 @@ export function getUsersColumnDefs({
       valueFormatter: (params) => (params.value != null ? String(params.value) : '-'),
     },
     {
+      headerName: t('city'),
+      colId: 'city',
+      filter: false,
+      sortable: false,
+      flex: 1,
+      minWidth: 150,
+      cellRenderer: (params: { data?: UserListItem }) => {
+        const item = params.data
+        if (!item) return null
+        const cityName = getLocalizedValue(item.city?.name, lang)
+        const countryName = getLocalizedValue(item.country?.name, lang)
+        if (!cityName && !countryName) return <span className="text-muted-foreground">-</span>
+        return (
+          <div className="flex flex-col justify-center h-full leading-tight min-w-0">
+            <span className="text-sm font-semibold text-foreground truncate">{cityName || '-'}</span>
+            {countryName && (
+              <span className="text-[11px] text-muted-foreground truncate">{countryName}</span>
+            )}
+          </div>
+        )
+      },
+    },
+    {
       headerName: t('subscribed'),
       field: 'is_subscribed',
       filter: false,
@@ -78,6 +105,17 @@ export function getUsersColumnDefs({
             {item.is_subscribed ? t('yes') : t('no')}
           </Badge>
         )
+      },
+    },
+    {
+      headerName: t('accessType'),
+      field: 'access_type',
+      filter: false,
+      width: 170,
+      cellRenderer: (params: { data?: UserListItem }) => {
+        const item = params.data
+        if (!item) return null
+        return <AccessTypeBadge value={item.access_type} />
       },
     },
     {

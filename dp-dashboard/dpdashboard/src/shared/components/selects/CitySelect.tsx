@@ -33,7 +33,7 @@ export function CitySelect<T extends FieldValues>({
     <ControlledSearchableSelect
       name={name}
       control={control}
-      label={label !== undefined ? label : `${t('city') || 'City'} ${required ? '*' : ''}`}
+      label={label !== undefined ? label : t('city') || 'City'}
       options={options}
       placeholder={t('chooseCity') || 'Choose city...'}
       disabled={disabled}

@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import { useState } from 'react'
 import {
   FileText,
   ShieldCheck,
@@ -10,11 +10,15 @@ import {
   Loader2,
   FolderTree,
   FileSpreadsheet,
-  HeartHandshake,
   ShieldAlert,
+  UserPlus,
+  Smartphone,
+  Wallet,
+  Info,
 } from 'lucide-react'
 import { WeeklyPillChart } from '@/features/dashboard/components/WeeklyPillChart'
 import { ExpiringWarrantiesCard } from '@/features/dashboard/components/ExpiringWarrantiesCard'
+import { SubscriberFollowUpCard } from '@/features/dashboard/components/SubscriberFollowUpCard'
 import { ProjectProgressGauge } from '@/features/dashboard/components/ProjectProgressGauge'
 import {
   useDashboardStats,
@@ -43,6 +47,12 @@ export default function Dashboard() {
   const menuCounts = useDashboardMenuCounts(stats)
   const isMenuCountsLoading = menuCounts.isLoading || (isStatsLoading && !stats)
   const exportMutation = useExportDashboardSummary()
+
+  const currencyLabel = isRtl ? 'ر.س' : 'SAR'
+  const activeUsersSubtitle =
+    stats?.active_users?.active_in_period !== undefined
+      ? t('activeUsersInPeriod', { count: stats.active_users.active_in_period })
+      : t('activeUsersDefinition')
 
   return (
     <div className="space-y-6 animate-fade-in pb-10">
@@ -216,8 +226,14 @@ export default function Dashboard() {
         {/* Active Users */}
         <div className="bg-white border border-gray-100 rounded-2xl p-5 shadow-xs flex flex-col justify-between min-h-[9.5rem]">
           <div className="flex justify-between items-start">
-            <span className="text-sm font-semibold text-gray-500">{t('activeUsers')}</span>
-            <div className="h-8 w-8 rounded-full bg-blue-50 flex items-center justify-center">
+            <span
+              className="flex items-center gap-1 text-sm font-semibold text-gray-500 min-w-0"
+              title={t('activeUsersDefinition')}
+            >
+              <span className="truncate">{t('activeUsers')}</span>
+              <Info className="h-3.5 w-3.5 shrink-0 text-gray-400" aria-label={t('activeUsersDefinition')} />
+            </span>
+            <div className="h-8 w-8 shrink-0 rounded-full bg-blue-50 flex items-center justify-center">
               <Users className="h-4 w-4 text-blue-600" />
             </div>
           </div>
@@ -243,9 +259,125 @@ export default function Dashboard() {
               )}
               <span
                 className="text-[10px] text-gray-400 font-semibold truncate"
-                title={translateMetricText(stats?.active_users?.subtitle, t, isRtl, 'increaseFromLastMonth')}
+                title={activeUsersSubtitle}
               >
-                {translateMetricText(stats?.active_users?.subtitle, t, isRtl, 'increaseFromLastMonth')}
+                {activeUsersSubtitle}
+              </span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      {/* Secondary KPI Cards: users growth, downloads, subscription revenue */}
+      <div className="grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-3">
+        {/* Total Users */}
+        <div className="bg-white border border-gray-100 rounded-2xl p-5 shadow-xs flex flex-col justify-between min-h-[9.5rem]">
+          <div className="flex justify-between items-start">
+            <span className="text-sm font-semibold text-gray-500">{t('totalUsers')}</span>
+            <div className="h-8 w-8 shrink-0 rounded-full bg-violet-50 flex items-center justify-center">
+              <UserPlus className="h-4 w-4 text-violet-600" />
+            </div>
+          </div>
+          <div>
+            {isStatsLoading ? (
+              <div className="h-9 w-24 bg-gray-100 rounded animate-pulse" />
+            ) : (
+              <h2 className="text-3xl sm:text-4xl font-extrabold text-[#111827] tracking-tight">
+                {(stats?.total_users?.total ?? 0).toLocaleString()}
+              </h2>
+            )}
+            <div className="flex items-center gap-1.5 mt-2.5 min-w-0">
+              {stats?.total_users?.change_percentage !== undefined && (
+                <ChangeBadge
+                  direction={stats.total_users.change_direction}
+                  percentage={stats.total_users.change_percentage}
+                  className="bg-violet-50 text-violet-700 border-violet-100"
+                />
+              )}
+              <span
+                className="text-[10px] text-gray-400 font-semibold truncate"
+                title={t('newUsersInPeriod', { count: stats?.total_users?.new_in_period ?? 0 })}
+              >
+                {t('newUsersInPeriod', { count: stats?.total_users?.new_in_period ?? 0 })}
+              </span>
+            </div>
+          </div>
+        </div>
+
+        {/* App Downloads (entered manually from settings) */}
+        <div className="bg-white border border-gray-100 rounded-2xl p-5 shadow-xs flex flex-col justify-between min-h-[9.5rem]">
+          <div className="flex justify-between items-start">
+            <span
+              className="flex items-center gap-1 text-sm font-semibold text-gray-500 min-w-0"
+              title={t('downloadsManualHint')}
+            >
+              <span className="truncate">{t('appDownloads')}</span>
+              <Info className="h-3.5 w-3.5 shrink-0 text-gray-400" aria-label={t('downloadsManualHint')} />
+            </span>
+            <div className="h-8 w-8 shrink-0 rounded-full bg-sky-50 flex items-center justify-center">
+              <Smartphone className="h-4 w-4 text-sky-600" />
+            </div>
+          </div>
+          <div>
+            {isStatsLoading ? (
+              <div className="h-9 w-24 bg-gray-100 rounded animate-pulse" />
+            ) : (
+              <h2 className="text-3xl sm:text-4xl font-extrabold text-[#111827] tracking-tight">
+                {(stats?.downloads?.total ?? 0).toLocaleString()}
+              </h2>
+            )}
+            <div className="flex items-center gap-1.5 mt-2.5 min-w-0">
+              <span className="flex-shrink-0 flex h-5 items-center justify-center rounded-md bg-sky-50 px-2 text-[10px] font-bold text-sky-700 border border-sky-100">
+                {t('iosLabel')}: {(stats?.downloads?.ios ?? 0).toLocaleString()}
+              </span>
+              <span className="flex-shrink-0 flex h-5 items-center justify-center rounded-md bg-emerald-50 px-2 text-[10px] font-bold text-emerald-700 border border-emerald-100">
+                {t('androidLabel')}: {(stats?.downloads?.android ?? 0).toLocaleString()}
+              </span>
+              <span className="text-[10px] text-gray-400 font-semibold truncate" title={t('downloadsManualHint')}>
+                {t('enteredManuallyFromSettings')}
+              </span>
+            </div>
+          </div>
+        </div>
+
+        {/* Subscription Revenue */}
+        <div className="bg-white border border-gray-100 rounded-2xl p-5 shadow-xs flex flex-col justify-between min-h-[9.5rem]">
+          <div className="flex justify-between items-start">
+            <span className="text-sm font-semibold text-gray-500">{t('subscriptionRevenue')}</span>
+            <div className="h-8 w-8 shrink-0 rounded-full bg-amber-50 flex items-center justify-center">
+              <Wallet className="h-4 w-4 text-amber-600" />
+            </div>
+          </div>
+          <div>
+            {isStatsLoading ? (
+              <div className="h-9 w-32 bg-gray-100 rounded animate-pulse" />
+            ) : (
+              <div className="flex items-baseline gap-1.5 flex-wrap">
+                <h2 className="text-2xl xl:text-3xl font-extrabold text-[#111827] tracking-tight">
+                  {stats?.subscription_revenue?.formatted
+                    ? stats.subscription_revenue.formatted
+                    : (stats?.subscription_revenue?.total ?? 0).toLocaleString()}
+                </h2>
+                <span className="text-xs font-bold text-gray-400">{currencyLabel}</span>
+              </div>
+            )}
+            <div className="flex items-center gap-1.5 mt-2.5 min-w-0">
+              {stats?.subscription_revenue?.change_percentage !== undefined && (
+                <ChangeBadge
+                  direction={stats.subscription_revenue.change_direction}
+                  percentage={stats.subscription_revenue.change_percentage}
+                  className="bg-amber-50 text-amber-700 border-amber-100"
+                />
+              )}
+              <span
+                className="text-[10px] text-gray-400 font-semibold truncate"
+                title={t('paidTransactionsInPeriod', {
+                  count: stats?.subscription_revenue?.paid_transactions_count ?? 0,
+                })}
+              >
+                {t('paidTransactionsInPeriod', {
+                  count: stats?.subscription_revenue?.paid_transactions_count ?? 0,
+                })}
               </span>
             </div>
           </div>
@@ -392,6 +524,9 @@ export default function Dashboard() {
 
         {/* Right Column (1 Col): Expiring Warranties + Progress Gauge */}
         <div className="space-y-6">
+          {/* Subscriber follow-up: expiring soon / active / expired-not-renewed */}
+          <SubscriberFollowUpCard />
+
           {/* Urgent Expiring Warranties Card (real backend data) */}
           <ExpiringWarrantiesCard />
 
@@ -405,5 +540,29 @@ export default function Dashboard() {
         </div>
       </div>
     </div>
+  )
+}
+
+function ChangeBadge({
+  direction,
+  percentage,
+  className,
+}: {
+  direction: 'increase' | 'decrease'
+  percentage: number
+  className?: string
+}) {
+  return (
+    <span
+      className={cn(
+        'flex-shrink-0 flex h-5 items-center justify-center gap-0.5 rounded-md px-2 text-[10px] font-bold border',
+        className
+      )}
+      dir="ltr"
+    >
+      {direction === 'decrease' ? <ArrowDownRight className="h-3 w-3" /> : <ArrowUpRight className="h-3 w-3" />}
+      {percentage > 0 ? '+' : ''}
+      {percentage}%
+    </span>
   )
 }

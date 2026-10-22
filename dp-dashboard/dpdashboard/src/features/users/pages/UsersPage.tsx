@@ -6,6 +6,9 @@ import { SearchInput } from '@/shared/components/input'
 import ModalStatus from '@/shared/components/modal-status'
 import { useTableState } from '@/shared/hooks/useTableState'
 import { useProfile } from '@/features/auth/api/useAuth'
+import { useActiveCountries } from '@/features/settings/api/useCountries'
+import { useActiveCities } from '@/features/settings/api/useCities'
+import { getLocalizedValue } from '@/shared/utils/localized-value'
 import { hasPermission } from '@/shared/utils/permissions'
 import { Plus } from 'lucide-react'
 import { useMemo, useState } from 'react'
@@ -18,8 +21,12 @@ import {
   useUpdateUserStatus,
   useUser,
   useUsersList,
+  useUsersStats,
+  type UserAccessType,
   type UserListItem,
+  type UsersFilters,
 } from '../api/useUsers'
+import { UsersStatsSection } from '../components/UsersStatsSection'
 import { getUsersColumnDefs } from './ColumnDefs'
 import { UsersFormModal } from './UsersFormModal'
 import { createSchema, getInitialValues, updateSchema, type UserFormValues } from './validationSchema'
@@ -44,6 +51,12 @@ export default function UsersPage() {
   const [registeredFrom, setRegisteredFrom] = useState('')
   const [registeredTo, setRegisteredTo] = useState('')
   const [subscribedOnly, setSubscribedOnly] = useState(false)
+  const [countryFilter, setCountryFilter] = useState('')
+  const [cityFilter, setCityFilter] = useState('')
+  const [accessTypeFilter, setAccessTypeFilter] = useState<UserAccessType | ''>('')
+
+  const { data: countries = [] } = useActiveCountries()
+  const { data: cities = [], isFetching: citiesLoading } = useActiveCities(countryFilter || undefined)
 
   const schema = editingItem && !isViewOnly ? updateSchema : createSchema
   const methods = useZodForm(schema, getInitialValues(null))
@@ -52,18 +65,34 @@ export default function UsersPage() {
     isModalOpen && editingItem ? editingItem.id : null
   )
 
-  const { data: paginatedData, isLoading } = useUsersList(
-    table.page,
-    table.search,
-    statusFilter,
-    genderFilter,
-    registeredFrom,
-    registeredTo
+  const filters = useMemo<UsersFilters>(
+    () => ({
+      search: table.search,
+      status: statusFilter,
+      gender: genderFilter,
+      registeredFrom,
+      registeredTo,
+      countryId: countryFilter,
+      cityId: cityFilter,
+      isSubscribed: subscribedOnly,
+      accessType: accessTypeFilter,
+    }),
+    [
+      table.search,
+      statusFilter,
+      genderFilter,
+      registeredFrom,
+      registeredTo,
+      countryFilter,
+      cityFilter,
+      subscribedOnly,
+      accessTypeFilter,
+    ]
   )
-  const items = useMemo(() => {
-    const rows = paginatedData?.data ?? []
-    return subscribedOnly ? rows.filter((row) => row.is_subscribed) : rows
-  }, [paginatedData?.data, subscribedOnly])
+
+  const { data: paginatedData, isLoading } = useUsersList(table.page, filters)
+  const { data: stats, isLoading: statsLoading } = useUsersStats(filters)
+  const items = paginatedData?.data ?? []
 
   const createMutation = useCreateUser(methods.setError)
   const updateMutation = useUpdateUser(methods.setError)
@@ -97,6 +126,7 @@ export default function UsersPage() {
     setIsViewOnly,
     canUpdate,
     canDelete,
+    lang: i18n.language,
   })
 
   return (
@@ -120,8 +150,10 @@ export default function UsersPage() {
           )}
         </CardHeader>
         <CardContent className="p-6 space-y-4">
-          <div className="flex flex-col lg:flex-row items-stretch lg:items-center gap-3" dir={isRtl ? 'rtl' : 'ltr'}>
-            <div className="flex-1 max-w-md">
+          <UsersStatsSection stats={stats} loading={statsLoading} />
+
+          <div className="flex flex-col sm:flex-row sm:flex-wrap items-stretch sm:items-center gap-3" dir={isRtl ? 'rtl' : 'ltr'}>
+            <div className="flex-1 min-w-[220px] max-w-md">
               <SearchInput
                 placeholder={`${t('search')} ${label}...`}
                 value={table.search}
@@ -152,6 +184,54 @@ export default function UsersPage() {
               <option value="male">{t('male')}</option>
               <option value="female">{t('female')}</option>
             </select>
+            <select
+              value={countryFilter}
+              onChange={(e) => {
+                setCountryFilter(e.target.value)
+                setCityFilter('')
+                table.setPage(1)
+              }}
+              className="w-full sm:w-40 h-10 px-3 rounded-xl border border-border/60 bg-card text-xs font-bold"
+              aria-label={t('country')}
+            >
+              <option value="">{t('allCountries')}</option>
+              {countries.map((country) => (
+                <option key={country.id} value={String(country.id)}>
+                  {getLocalizedValue(country.name, i18n.language)}
+                </option>
+              ))}
+            </select>
+            <select
+              value={cityFilter}
+              onChange={(e) => {
+                setCityFilter(e.target.value)
+                table.setPage(1)
+              }}
+              disabled={citiesLoading && cities.length === 0}
+              className="w-full sm:w-40 h-10 px-3 rounded-xl border border-border/60 bg-card text-xs font-bold disabled:opacity-60"
+              aria-label={t('city')}
+            >
+              <option value="">{t('allCities')}</option>
+              {cities.map((city) => (
+                <option key={city.id} value={String(city.id)}>
+                  {getLocalizedValue(city.name, i18n.language)}
+                </option>
+              ))}
+            </select>
+            <select
+              value={accessTypeFilter}
+              onChange={(e) => {
+                setAccessTypeFilter(e.target.value as UserAccessType | '')
+                table.setPage(1)
+              }}
+              className="w-full sm:w-40 h-10 px-3 rounded-xl border border-border/60 bg-card text-xs font-bold"
+              aria-label={t('accessType')}
+            >
+              <option value="">{t('allAccessTypes')}</option>
+              <option value="subscription">{t('accessTypeSubscription')}</option>
+              <option value="trial">{t('accessTypeTrial')}</option>
+              <option value="none">{t('accessTypeNone')}</option>
+            </select>
             <input
               type="date"
               value={registeredFrom}
@@ -176,7 +256,10 @@ export default function UsersPage() {
               <input
                 type="checkbox"
                 checked={subscribedOnly}
-                onChange={(e) => setSubscribedOnly(e.target.checked)}
+                onChange={(e) => {
+                  setSubscribedOnly(e.target.checked)
+                  table.setPage(1)
+                }}
                 className="rounded border-border"
               />
               {t('subscribedOnly')}

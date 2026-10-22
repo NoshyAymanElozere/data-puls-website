@@ -215,8 +215,9 @@ export function useToggleCategoryStatus() {
       const response = await api.patch<SuccessResponse<Category>>(`/categories/${id}/status`)
       return response.data
     },
-    onSuccess: (res) => {
+    onSuccess: (res, id) => {
       qc.invalidateQueries({ queryKey: ['categories-list'] })
+      qc.invalidateQueries({ queryKey: ['category', id] })
       toast.success(res.message || i18n.t('statusUpdated'))
     },
     onError: (error) => {
