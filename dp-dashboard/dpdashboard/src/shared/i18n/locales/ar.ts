@@ -855,7 +855,6 @@ export const ar = {
   screenFieldsSet: 'حقل محدد',
   screenTexts: 'نصوص الشاشة',
   screenGlobalTheme: 'الثيم العام',
-  screenGlobalThemeDescription: 'الألوان والخط والخلفية الافتراضية لكل الشاشات ما لم يتم تخصيصها.',
   screenGlobalThemeEditHint: 'هذه القيم هي الافتراضية للتطبيق كاملاً، وترثها كل الشاشات ما لم تخصّص حقلاً. جميع الألوان ونوع الخط وحجم الخط مطلوبة.',
   screenUpdatedAt: 'آخر تحديث',
   screenBasicInfo: 'المعلومات الأساسية',

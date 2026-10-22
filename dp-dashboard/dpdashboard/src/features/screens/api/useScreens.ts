@@ -49,7 +49,6 @@ export interface ScreenListItem {
   group: ScreenGroup | null
   group_label: string | null
   name: string
-  description: string | null
   screenshot_url: string | null
   has_custom_theme: boolean
   custom_fields_count: number
@@ -65,7 +64,6 @@ export interface ScreenDetail {
   group: ScreenGroup | null
   group_label: string | null
   name: string | Translatable
-  description: string | Translatable | null
   flutter_file: string | null
   screenshot_url: string | null
   /** PHP may serialise an empty mode as [] instead of {} */
@@ -84,7 +82,7 @@ export interface ScreensListFilters {
 }
 
 /**
- * Only the theme and the screenshot are editable. Name, description, texts and background images
+ * Only the theme and the screenshot are editable. Name, texts and background images
  * are not sent, so the backend keeps their stored values.
  */
 function buildScreenFormData(payload: ScreenFormValues): FormData {

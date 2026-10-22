@@ -855,7 +855,6 @@ export const en = {
   screenFieldsSet: 'fields set',
   screenTexts: 'Screen texts',
   screenGlobalTheme: 'Global theme',
-  screenGlobalThemeDescription: 'Default colors, font and background used by every screen unless overridden.',
   screenGlobalThemeEditHint: 'These values are the app-wide defaults. Every screen inherits them unless it overrides a field. All colors, the font family and the font scale are required.',
   screenUpdatedAt: 'Last updated',
   screenBasicInfo: 'Basic information',

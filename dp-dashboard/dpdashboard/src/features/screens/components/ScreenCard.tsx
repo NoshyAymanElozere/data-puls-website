@@ -95,9 +95,6 @@ export function GlobalThemeCard({ item }: { item: ScreenListItem }) {
             {t('screenGlobalTheme')}
           </Badge>
         </div>
-        <p className="mt-0.5 line-clamp-2 text-xs text-muted-foreground">
-          {item.description || t('screenGlobalThemeDescription')}
-        </p>
         <div className="mt-2 flex flex-wrap items-center gap-3 text-[11px] text-muted-foreground">
           <span className="font-mono" dir="ltr">
             {item.key}

@@ -197,8 +197,6 @@ export default function ScreenEditPage() {
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 rounded-xl border border-border/60 p-4">
                   <ReadOnlyField label={t('arabicName')} value={getLocalizedValue(screen.name, 'ar')} dir="rtl" />
                   <ReadOnlyField label={t('englishName')} value={getLocalizedValue(screen.name, 'en')} dir="ltr" />
-                  <ReadOnlyField label={t('arabicDescription')} value={getLocalizedValue(screen.description, 'ar')} dir="rtl" />
-                  <ReadOnlyField label={t('englishDescription')} value={getLocalizedValue(screen.description, 'en')} dir="ltr" />
                 </div>
               </section>
 
