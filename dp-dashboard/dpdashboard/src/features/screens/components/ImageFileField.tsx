@@ -1,23 +1,15 @@
 import { useEffect, useRef, useState, type ChangeEvent } from 'react'
 import { useFormContext, useWatch } from 'react-hook-form'
 import { useTranslation } from 'react-i18next'
-import { ImageIcon, RotateCcw, Trash2, UploadCloud } from 'lucide-react'
+import { ImageIcon, RotateCcw, UploadCloud } from 'lucide-react'
 import { Button } from '@/shared/components/button'
 import { cn } from '@/shared/utils/utils'
 import type { ScreenFormValues } from '../pages/validationSchema'
 
-type FileFieldName = 'background_image_light' | 'background_image_dark' | 'screenshot'
-type RemoveFieldName = 'remove_background_image_light' | 'remove_background_image_dark'
-
 interface ImageFileFieldProps {
-  name: FileFieldName
-  /** When provided, the current image can be deleted on save. */
-  removeName?: RemoveFieldName
+  name: 'screenshot'
   label?: string
   currentUrl?: string | null
-  /** Image used when nothing is set (e.g. inherited from the global theme). */
-  inheritedUrl?: string | null
-  inheritedLabel?: string
   disabled?: boolean
   previewClassName?: string
   imageClassName?: string
@@ -40,11 +32,8 @@ export function useFilePreview(file: unknown): string | null {
 
 export function ImageFileField({
   name,
-  removeName,
   label,
   currentUrl,
-  inheritedUrl,
-  inheritedLabel,
   disabled = false,
   previewClassName = 'h-40 w-full',
   imageClassName = 'object-cover',
@@ -54,13 +43,8 @@ export function ImageFileField({
   const inputRef = useRef<HTMLInputElement>(null)
 
   const file = useWatch({ control, name })
-  const removed = useWatch({ control, name: removeName ?? 'remove_background_image_light' })
-  const isRemoved = removeName ? Boolean(removed) : false
   const filePreview = useFilePreview(file)
-
-  const ownUrl = filePreview ?? (isRemoved ? null : currentUrl || null)
-  const shownUrl = ownUrl ?? inheritedUrl ?? null
-  const isInherited = !ownUrl && !!inheritedUrl
+  const shownUrl = filePreview ?? (currentUrl || null)
 
   const error = formState.errors[name]?.message as string | undefined
 
@@ -72,21 +56,11 @@ export function ImageFileField({
     const next = e.target.files?.[0]
     if (!next) return
     setValue(name, next, { shouldDirty: true })
-    if (removeName) setValue(removeName, false, { shouldDirty: true })
   }
 
   const clearNewFile = () => {
     setValue(name, null, { shouldDirty: true })
     if (inputRef.current) inputRef.current.value = ''
-  }
-
-  const removeCurrent = () => {
-    clearNewFile()
-    if (removeName) setValue(removeName, true, { shouldDirty: true })
-  }
-
-  const undoRemove = () => {
-    if (removeName) setValue(removeName, false, { shouldDirty: true })
   }
 
   return (
@@ -103,11 +77,7 @@ export function ImageFileField({
         )}
       >
         {shownUrl ? (
-          <img
-            src={shownUrl}
-            alt=""
-            className={cn('h-full w-full', imageClassName, isInherited && 'opacity-60')}
-          />
+          <img src={shownUrl} alt="" className={cn('h-full w-full', imageClassName)} />
         ) : (
           <div className="flex flex-col items-center justify-center p-4 text-center text-muted-foreground">
             <ImageIcon className="h-6 w-6 mb-1.5 opacity-50" />
@@ -115,11 +85,6 @@ export function ImageFileField({
           </div>
         )}
 
-        {isInherited && (
-          <span className="absolute top-2 start-2 rounded-full bg-background/90 px-2 py-0.5 text-[10px] font-bold text-muted-foreground shadow-sm">
-            {inheritedLabel ?? t('screenInherited')}
-          </span>
-        )}
         {filePreview && (
           <span className="absolute top-2 start-2 rounded-full bg-main px-2 py-0.5 text-[10px] font-bold text-white shadow-sm">
             {t('screenNewImage')}
@@ -140,7 +105,7 @@ export function ImageFileField({
         <div className="flex flex-wrap items-center gap-2">
           <Button type="button" variant="outline" size="sm" onClick={pick} className="rounded-lg">
             <UploadCloud className="h-4 w-4" />
-            {ownUrl ? t('screenReplaceImage') : t('uploadImage')}
+            {shownUrl ? t('screenReplaceImage') : t('uploadImage')}
           </Button>
           {filePreview && (
             <Button type="button" variant="ghost" size="sm" onClick={clearNewFile} className="rounded-lg">
@@ -148,30 +113,9 @@ export function ImageFileField({
               {t('screenUndoUpload')}
             </Button>
           )}
-          {removeName && !filePreview && !isRemoved && currentUrl && (
-            <Button
-              type="button"
-              variant="ghost"
-              size="sm"
-              onClick={removeCurrent}
-              className="rounded-lg text-destructive hover:text-destructive"
-            >
-              <Trash2 className="h-4 w-4" />
-              {t('screenRemoveImage')}
-            </Button>
-          )}
-          {removeName && isRemoved && !filePreview && currentUrl && (
-            <Button type="button" variant="ghost" size="sm" onClick={undoRemove} className="rounded-lg">
-              <RotateCcw className="h-4 w-4" />
-              {t('screenUndoRemove')}
-            </Button>
-          )}
         </div>
       )}
 
-      {isRemoved && !filePreview && currentUrl && (
-        <p className="text-xs text-amber-600 font-semibold">{t('screenImageWillBeRemoved')}</p>
-      )}
       <p className="text-[10px] text-muted-foreground">{t('screenImageHint')}</p>
       {error && <p className="text-xs text-rose-500 font-semibold">{t(error)}</p>}
     </div>

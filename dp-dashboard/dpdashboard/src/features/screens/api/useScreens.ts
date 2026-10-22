@@ -4,7 +4,7 @@ import type { UseFormSetError } from 'react-hook-form'
 import api, { getErrorMessage, getValidationErrors } from '@/shared/services/axios'
 import i18n from '@/shared/i18n/i18n'
 import type { LaravelPaginatedResponse, SuccessResponse, Translatable } from '@/shared/types/laravel'
-import { appendOptionalFile, appendTranslatable, createPutFormData } from '@/shared/utils/form-data'
+import { appendOptionalFile, createPutFormData } from '@/shared/utils/form-data'
 import { buildQueryParams } from '@/shared/utils/query-params'
 import type { ScreenFormValues } from '../pages/validationSchema'
 import {
@@ -83,14 +83,12 @@ export interface ScreensListFilters {
   perPage?: number
 }
 
+/**
+ * Only the theme and the screenshot are editable. Name, description, texts and background images
+ * are not sent, so the backend keeps their stored values.
+ */
 function buildScreenFormData(payload: ScreenFormValues): FormData {
   const formData = createPutFormData({})
-
-  appendTranslatable(formData, 'name', { en: payload.nameEn, ar: payload.nameAr })
-  appendTranslatable(formData, 'description', {
-    en: payload.descriptionEn ?? '',
-    ar: payload.descriptionAr ?? '',
-  })
 
   // Each mode is sent in full: the backend replaces the overrides, '' means "inherit from global".
   for (const mode of THEME_MODES) {
@@ -100,41 +98,12 @@ function buildScreenFormData(payload: ScreenFormValues): FormData {
     }
   }
 
-  const texts = payload.texts ?? []
-  if (texts.length === 0) {
-    formData.append('texts', '')
-  } else {
-    texts.forEach((row, index) => {
-      formData.append(`texts[${index}][key]`, row.key.trim())
-      formData.append(`texts[${index}][en]`, row.en ?? '')
-      formData.append(`texts[${index}][ar]`, row.ar ?? '')
-    })
-  }
-
-  appendOptionalFile(formData, 'background_image_light', payload.background_image_light)
-  appendOptionalFile(formData, 'background_image_dark', payload.background_image_dark)
   appendOptionalFile(formData, 'screenshot', payload.screenshot)
-
-  if (payload.remove_background_image_light && !payload.background_image_light) {
-    formData.append('remove_background_image_light', '1')
-  }
-  if (payload.remove_background_image_dark && !payload.background_image_dark) {
-    formData.append('remove_background_image_dark', '1')
-  }
 
   return formData
 }
 
-/** Map backend 422 keys (`name.en`, `theme.light.primary_color`, `texts.0.key`) to form field paths. */
-const SERVER_FIELD_MAP: Record<string, string> = {
-  'name.en': 'nameEn',
-  'name.ar': 'nameAr',
-  'description.en': 'descriptionEn',
-  'description.ar': 'descriptionAr',
-  name: 'nameEn',
-  description: 'descriptionEn',
-}
-
+/** Backend 422 keys (`theme.light.primary_color`) already match the form field paths. */
 function applyScreenValidationErrors(
   error: unknown,
   setError: UseFormSetError<ScreenFormValues>
@@ -143,9 +112,8 @@ function applyScreenValidationErrors(
   if (!errors) return false
 
   Object.entries(errors).forEach(([field, messages]) => {
-    const path = SERVER_FIELD_MAP[field] ?? field
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    setError(path as any, { type: 'server', message: messages[0] })
+    setError(field as any, { type: 'server', message: messages[0] })
   })
 
   return true

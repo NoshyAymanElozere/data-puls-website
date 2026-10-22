@@ -5,8 +5,6 @@ import toast from 'react-hot-toast'
 import { useTranslation } from 'react-i18next'
 import { Link, useParams } from 'react-router-dom'
 import { Badge } from '@/shared/components/badge'
-import { BaseInputField } from '@/shared/components/base-input-field'
-import { BaseTextAreaField } from '@/shared/components/base-textarea-field'
 import { Button } from '@/shared/components/button'
 import { Card, CardContent } from '@/shared/components/card'
 import { useZodForm } from '@/shared/components/form-fields'
@@ -20,11 +18,21 @@ import { cn } from '@/shared/utils/utils'
 import { useScreen, useUpdateScreen } from '../api/useScreens'
 import { ImageFileField } from '../components/ImageFileField'
 import { PhonePreview } from '../components/PhonePreview'
-import { ScreenTextsEditor } from '../components/ScreenTextsEditor'
 import { ThemeFieldsPanel } from '../components/ThemeFieldsPanel'
 import { SCREENS_PERMISSIONS, THEME_MODES, type ThemeMode } from '../constants'
 import { ScreensNoPermission } from './ScreensPage'
 import { getInitialValues, normalizeThemeMode, screenSchema, type ScreenFormValues } from './validationSchema'
+
+function ReadOnlyField({ label, value, dir }: { label: string; value: string; dir: 'rtl' | 'ltr' }) {
+  return (
+    <div className="space-y-1">
+      <p className="text-xs font-bold text-muted-foreground uppercase tracking-wider">{label}</p>
+      <p className="text-sm text-foreground whitespace-pre-line" dir={dir}>
+        {value || '—'}
+      </p>
+    </div>
+  )
+}
 
 function SectionTitle({ children, hint }: { children: ReactNode; hint?: string }) {
   return (
@@ -101,8 +109,7 @@ export default function ScreenEditPage() {
       }
 
   const errors = methods.formState.errors
-  const modeHasErrors = (m: ThemeMode) =>
-    !!errors.theme?.[m] || (m === 'light' ? !!errors.background_image_light : !!errors.background_image_dark)
+  const modeHasErrors = (m: ThemeMode) => !!errors.theme?.[m]
 
   const onSubmit = (values: ScreenFormValues) => {
     updateMutation.mutate({ id: screen.id, payload: values })
@@ -187,15 +194,11 @@ export default function ScreenEditPage() {
               {/* Basic info */}
               <section>
                 <SectionTitle>{t('screenBasicInfo')}</SectionTitle>
-                <div className="space-y-4">
-                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                    <BaseInputField name="nameAr" label={t('arabicName')} disabled={readOnly} dir="rtl" />
-                    <BaseInputField name="nameEn" label={t('englishName')} disabled={readOnly} dir="ltr" />
-                  </div>
-                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                    <BaseTextAreaField name="descriptionAr" label={t('arabicDescription')} rows={3} disabled={readOnly} />
-                    <BaseTextAreaField name="descriptionEn" label={t('englishDescription')} rows={3} disabled={readOnly} />
-                  </div>
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 rounded-xl border border-border/60 p-4">
+                  <ReadOnlyField label={t('arabicName')} value={getLocalizedValue(screen.name, 'ar')} dir="rtl" />
+                  <ReadOnlyField label={t('englishName')} value={getLocalizedValue(screen.name, 'en')} dir="ltr" />
+                  <ReadOnlyField label={t('arabicDescription')} value={getLocalizedValue(screen.description, 'ar')} dir="rtl" />
+                  <ReadOnlyField label={t('englishDescription')} value={getLocalizedValue(screen.description, 'en')} dir="ltr" />
                 </div>
               </section>
 
@@ -221,17 +224,10 @@ export default function ScreenEditPage() {
                       mode={m}
                       isGlobal={isGlobal}
                       globalValues={globalModes ? globalModes[m] : null}
-                      currentBackgroundUrl={themeModes[m].background_image}
                       disabled={readOnly}
                     />
                   </div>
                 ))}
-              </section>
-
-              {/* Texts */}
-              <section>
-                <SectionTitle>{t('screenTexts')}</SectionTitle>
-                <ScreenTextsEditor disabled={readOnly} />
               </section>
             </CardContent>
           </Card>

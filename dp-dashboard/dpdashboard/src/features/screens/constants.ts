@@ -31,12 +31,15 @@ export const THEME_COLOR_FIELDS = [
 ] as const
 export type ThemeColorField = (typeof THEME_COLOR_FIELDS)[number]
 
-/** The 12 non-image theme fields sent as `theme[mode][field]`. */
+/**
+ * The 12 non-image theme fields sent as `theme[mode][field]`. Only the colors are editable in the
+ * dashboard; the font fields are sent back unchanged so the backend keeps their stored values.
+ */
 export const THEME_EDITABLE_FIELDS = [...THEME_COLOR_FIELDS, 'font_family', 'font_scale'] as const
 export type ThemeEditableField = (typeof THEME_EDITABLE_FIELDS)[number]
 
 /** i18n label key per theme field */
-export const THEME_FIELD_LABEL_KEYS: Record<ThemeEditableField | 'background_image', string> = {
+export const THEME_FIELD_LABEL_KEYS: Record<ThemeColorField, string> = {
   primary_color: 'screenFieldPrimaryColor',
   secondary_color: 'screenFieldSecondaryColor',
   background_color: 'screenFieldBackgroundColor',
@@ -47,17 +50,9 @@ export const THEME_FIELD_LABEL_KEYS: Record<ThemeEditableField | 'background_ima
   icon_color: 'screenFieldIconColor',
   button_color: 'screenFieldButtonColor',
   button_text_color: 'screenFieldButtonTextColor',
-  font_family: 'screenFieldFontFamily',
-  font_scale: 'screenFieldFontScale',
-  background_image: 'screenFieldBackgroundImage',
 }
 
-export const FONT_SCALE_MIN = 0.8
-export const FONT_SCALE_MAX = 1.4
-export const FONT_SCALE_STEP = 0.05
-
 export const HEX_COLOR_REGEX = /^#[0-9a-fA-F]{6}$/
-export const TEXT_KEY_REGEX = /^[a-z0-9_.]+$/
 
 export const SCREENS_PERMISSIONS = {
   view: 'screens.view',

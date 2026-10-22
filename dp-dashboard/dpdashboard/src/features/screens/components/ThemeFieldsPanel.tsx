@@ -5,9 +5,6 @@ import { RotateCcw } from 'lucide-react'
 import { cn } from '@/shared/utils/utils'
 import type { ScreenThemeValues } from '../api/useScreens'
 import {
-  FONT_SCALE_MAX,
-  FONT_SCALE_MIN,
-  FONT_SCALE_STEP,
   HEX_COLOR_REGEX,
   THEME_COLOR_FIELDS,
   THEME_FIELD_LABEL_KEYS,
@@ -15,14 +12,12 @@ import {
   type ThemeMode,
 } from '../constants'
 import type { ScreenFormValues } from '../pages/validationSchema'
-import { ImageFileField } from './ImageFileField'
 
 interface ThemeFieldsPanelProps {
   mode: ThemeMode
   isGlobal: boolean
   /** Global theme values for this mode (null for the global row itself). */
   globalValues: ScreenThemeValues | null
-  currentBackgroundUrl?: string | null
   disabled?: boolean
 }
 
@@ -177,164 +172,21 @@ function ColorField({
   )
 }
 
-function FontFamilyField({
-  mode,
-  isGlobal,
-  globalValue,
-  disabled,
-}: {
-  mode: ThemeMode
-  isGlobal: boolean
-  globalValue?: string | null
-  disabled?: boolean
-}) {
-  const { t } = useTranslation()
-  const { control } = useFormContext<ScreenFormValues>()
-  return (
-    <Controller
-      control={control}
-      name={`theme.${mode}.font_family`}
-      render={({ field: rhf, fieldState }) => {
-        const value = (rhf.value ?? '') as string
-        return (
-          <FieldShell
-            label={t(THEME_FIELD_LABEL_KEYS.font_family)}
-            isInherited={!isGlobal && value === ''}
-            showInheritance={!isGlobal}
-            onReset={() => rhf.onChange('')}
-            disabled={disabled}
-            error={fieldState.error?.message ? t(fieldState.error.message) : undefined}
-            hint={!isGlobal && globalValue ? `${t('screenGlobalValue')}: ${globalValue}` : t('screenFontFamilyHint')}
-          >
-            <input
-              type="text"
-              dir="ltr"
-              value={value}
-              disabled={disabled}
-              maxLength={100}
-              placeholder={isGlobal ? 'IBMPlexSansArabic' : globalValue || ''}
-              onChange={(e) => rhf.onChange(e.target.value)}
-              onBlur={rhf.onBlur}
-              className={inputClass}
-              style={value ? { fontFamily: value } : undefined}
-            />
-          </FieldShell>
-        )
-      }}
-    />
-  )
-}
-
-function FontScaleField({
-  mode,
-  isGlobal,
-  globalValue,
-  disabled,
-}: {
-  mode: ThemeMode
-  isGlobal: boolean
-  globalValue?: number | string | null
-  disabled?: boolean
-}) {
-  const { t } = useTranslation()
-  const { control } = useFormContext<ScreenFormValues>()
-  const globalNumber = globalValue === null || globalValue === undefined || globalValue === '' ? null : Number(globalValue)
-
-  return (
-    <Controller
-      control={control}
-      name={`theme.${mode}.font_scale`}
-      render={({ field: rhf, fieldState }) => {
-        const value = (rhf.value ?? '') as string
-        const isInherited = !isGlobal && value === ''
-        const sliderValue = value !== '' && Number.isFinite(Number(value)) ? Number(value) : (globalNumber ?? 1)
-        return (
-          <FieldShell
-            label={t(THEME_FIELD_LABEL_KEYS.font_scale)}
-            isInherited={isInherited}
-            showInheritance={!isGlobal}
-            onReset={() => rhf.onChange('')}
-            disabled={disabled}
-            error={fieldState.error?.message ? t(fieldState.error.message) : undefined}
-            hint={
-              !isGlobal && globalNumber !== null
-                ? `${t('screenGlobalValue')}: ${globalNumber}×`
-                : `${FONT_SCALE_MIN} – ${FONT_SCALE_MAX}`
-            }
-          >
-            <div className="flex items-center gap-3" dir="ltr">
-              <input
-                type="range"
-                min={FONT_SCALE_MIN}
-                max={FONT_SCALE_MAX}
-                step={FONT_SCALE_STEP}
-                value={sliderValue}
-                disabled={disabled}
-                onChange={(e) => rhf.onChange(String(Number(Number(e.target.value).toFixed(2))))}
-                className={cn('flex-1 accent-main', isInherited && 'opacity-50')}
-                aria-label={t(THEME_FIELD_LABEL_KEYS.font_scale)}
-              />
-              <input
-                type="number"
-                min={FONT_SCALE_MIN}
-                max={FONT_SCALE_MAX}
-                step={FONT_SCALE_STEP}
-                value={value}
-                disabled={disabled}
-                placeholder={globalNumber !== null && !isGlobal ? String(globalNumber) : '1'}
-                onChange={(e) => rhf.onChange(e.target.value)}
-                onBlur={rhf.onBlur}
-                className={cn(inputClass, 'w-20 text-center')}
-              />
-            </div>
-          </FieldShell>
-        )
-      }}
-    />
-  )
-}
-
-export function ThemeFieldsPanel({
-  mode,
-  isGlobal,
-  globalValues,
-  currentBackgroundUrl,
-  disabled,
-}: ThemeFieldsPanelProps) {
-  const { t } = useTranslation()
+export function ThemeFieldsPanel({ mode, isGlobal, globalValues, disabled }: ThemeFieldsPanelProps) {
   const g = globalValues ?? {}
 
   return (
-    <div className="space-y-4">
-      <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
-        {THEME_COLOR_FIELDS.map((field) => (
-          <ColorField
-            key={`${mode}-${field}`}
-            mode={mode}
-            field={field}
-            isGlobal={isGlobal}
-            globalValue={g[field]}
-            disabled={disabled}
-          />
-        ))}
-        <FontFamilyField mode={mode} isGlobal={isGlobal} globalValue={g.font_family} disabled={disabled} />
-        <FontScaleField mode={mode} isGlobal={isGlobal} globalValue={g.font_scale} disabled={disabled} />
-      </div>
-
-      <div className="rounded-xl border border-border/60 p-3 max-w-sm">
-        <ImageFileField
-          key={`bg-${mode}`}
-          name={mode === 'light' ? 'background_image_light' : 'background_image_dark'}
-          removeName={mode === 'light' ? 'remove_background_image_light' : 'remove_background_image_dark'}
-          label={t(THEME_FIELD_LABEL_KEYS.background_image)}
-          currentUrl={currentBackgroundUrl}
-          inheritedUrl={isGlobal ? null : g.background_image}
-          inheritedLabel={t('screenInheritedFromGlobal')}
+    <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+      {THEME_COLOR_FIELDS.map((field) => (
+        <ColorField
+          key={`${mode}-${field}`}
+          mode={mode}
+          field={field}
+          isGlobal={isGlobal}
+          globalValue={g[field]}
           disabled={disabled}
-          previewClassName="h-56 w-full"
-          imageClassName="object-contain"
         />
-      </div>
+      ))}
     </div>
   )
 }

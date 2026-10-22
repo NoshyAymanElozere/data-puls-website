@@ -4,7 +4,6 @@ import { Bell, FileText, Home, ScanLine, User } from 'lucide-react'
 import type { ScreenThemeValues } from '../api/useScreens'
 import { HEX_COLOR_REGEX, THEME_COLOR_FIELDS, type ThemeColorField, type ThemeMode } from '../constants'
 import type { ScreenFormValues } from '../pages/validationSchema'
-import { useFilePreview } from './ImageFileField'
 
 interface PhonePreviewProps {
   mode: ThemeMode
@@ -46,12 +45,6 @@ export function PhonePreview({ mode, isGlobal, globalValues, currentBackgroundUr
   const { t, i18n } = useTranslation()
   const { control } = useFormContext<ScreenFormValues>()
   const values = useWatch({ control, name: `theme.${mode}` })
-  const bgFile = useWatch({ control, name: mode === 'light' ? 'background_image_light' : 'background_image_dark' })
-  const bgRemoved = useWatch({
-    control,
-    name: mode === 'light' ? 'remove_background_image_light' : 'remove_background_image_dark',
-  })
-  const bgFilePreview = useFilePreview(bgFile)
 
   const g = isGlobal ? {} : (globalValues ?? {})
 
@@ -70,7 +63,7 @@ export function PhonePreview({ mode, isGlobal, globalValues, currentBackgroundUr
   const scale = Number.isFinite(rawScale) && rawScale > 0 ? rawScale : 1
   const px = (size: number) => `${(size * scale).toFixed(1)}px`
 
-  const ownBg = bgFilePreview ?? (bgRemoved ? null : currentBackgroundUrl || null)
+  const ownBg = currentBackgroundUrl || null
   const backgroundImage = ownBg ?? (isGlobal ? null : g.background_image || null)
 
   return (
