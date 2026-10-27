@@ -1,0 +1,23 @@
+---
+description: Implement every requirement end to end in backend and dashboard, push both, then report what the server must pull
+alwaysApply: true
+---
+
+# Full-Stack Delivery
+
+Every requirement is implemented on **both** sides without asking first:
+
+- Dashboard: `herz-frontend/dp-dashboard/dpdashboard` (this repo).
+- Backend: `../herz-backend/Backend` (Laravel; follow its `AGENTS.md`: tests, Postman docs, one-line commits).
+
+If a requirement only needs one side (the other already supports it), check the other side to confirm and say so.
+
+Then, without asking:
+
+1. Commit each repo that changed, following that repo's commit rules.
+2. Push each one to all its remotes:
+   - Dashboard: `bash scripts/push-all.sh` from `herz-frontend/` (GitHub origin, GitLab herz-front, hirz `Dashboard/`).
+   - Backend: `bash scripts/push-all.sh` from `herz-backend/Backend/` (GitLab herz, hirz `Backend/`).
+3. End with a **"Server pull"** section listing what the server must pull: each repo/folder that changed
+   (backend, dashboard, or both) with its commit, plus any follow-up steps the change needs
+   (migrations, seeders, `composer install`, cache clear, dashboard rebuild).
