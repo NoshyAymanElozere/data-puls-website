@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react'
 import { useTranslation } from 'react-i18next'
-import { Search, UserCheck, X, Loader2, Phone, Mail } from 'lucide-react'
+import { Search, UserCheck, X, Loader2, Phone } from 'lucide-react'
 import { useQuery } from '@tanstack/react-query'
 import api from '@/shared/services/axios'
 import type { LaravelPaginatedResponse } from '@/shared/types/laravel'
@@ -90,12 +90,6 @@ export const UserAutocompleteSelect: React.FC<UserAutocompleteSelectProps> = ({
                 <Phone className="h-3 w-3" />
                 {selectedUser.phone}
               </span>
-              {selectedUser.email && (
-                <span className="flex items-center gap-1 truncate">
-                  <Mail className="h-3 w-3" />
-                  {selectedUser.email}
-                </span>
-              )}
             </div>
           </div>
         </div>
@@ -189,7 +183,7 @@ export const UserAutocompleteSelect: React.FC<UserAutocompleteSelectProps> = ({
                         </span>
                       </div>
                       <p className="text-[11px] text-muted-foreground font-mono truncate">
-                        {user.phone} {user.email ? `• ${user.email}` : ''}
+                        {user.phone}
                       </p>
                     </div>
                   </div>

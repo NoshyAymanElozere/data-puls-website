@@ -40,34 +40,10 @@ export function getUsersColumnDefs({
       valueFormatter: (params) => params.value || '-',
     },
     {
-      headerName: t('email'),
-      field: 'email',
-      filter: false,
-      flex: 1,
-      minWidth: 180,
-    },
-    {
       headerName: t('phone'),
       field: 'phone',
       filter: false,
       width: 140,
-    },
-    {
-      headerName: t('gender'),
-      field: 'gender',
-      filter: false,
-      width: 110,
-      valueFormatter: (params) => {
-        if (!params.value) return '-'
-        return params.value === 'male' ? t('male') : t('female')
-      },
-    },
-    {
-      headerName: t('age'),
-      field: 'age',
-      filter: false,
-      width: 80,
-      valueFormatter: (params) => (params.value != null ? String(params.value) : '-'),
     },
     {
       headerName: t('city'),
@@ -126,6 +102,13 @@ export function getUsersColumnDefs({
       valueFormatter: (params) => (params.value != null ? String(params.value) : '-'),
     },
     {
+      headerName: t('familyMembersCount'),
+      field: 'family_members_count',
+      filter: false,
+      width: 130,
+      valueFormatter: (params) => (params.value != null ? String(params.value) : '-'),
+    },
+    {
       headerName: t('status'),
       field: 'status',
       filter: false,
@@ -141,13 +124,6 @@ export function getUsersColumnDefs({
           />
         )
       },
-    },
-    {
-      headerName: t('registeredAt'),
-      field: 'created_at',
-      filter: false,
-      width: 170,
-      valueFormatter: (params) => params.value || '-',
     },
     {
       headerName: t('actions'),

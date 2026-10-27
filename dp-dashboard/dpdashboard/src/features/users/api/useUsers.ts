@@ -82,21 +82,22 @@ export interface UsersStats {
 export interface UserListItem {
   id: number
   name?: string | null
-  email: string
   phone: string
-  gender: UserGender | null
-  age: number | null
   status: UserStatus
   is_subscribed: boolean
   access_type?: UserAccessType | null
   city?: UserLocationRef | null
   country?: UserLocationRef | null
   invoices_count?: number
-  created_at: string
+  family_members_count?: number
 }
 
 export interface UserDetail extends UserListItem {
   name?: string | null
+  email: string
+  gender: UserGender | null
+  age: number | null
+  created_at: string
   avatar_url: string
   date_of_birth: string | null
   gender_label: string | null
@@ -106,7 +107,6 @@ export interface UserDetail extends UserListItem {
   phone_verified_at: string | null
   last_login_at: string | null
   updated_at: string
-  family_members_count?: number
   categories_count?: number
   account_owner_id?: number | null
   account_owner?: AccountOwnerInfo | null

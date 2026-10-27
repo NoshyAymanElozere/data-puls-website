@@ -299,13 +299,9 @@ export default function UsersPage() {
             setEditingItem({
               id: userId,
               name: null,
-              email: '',
               phone: '',
-              gender: null,
-              age: null,
               status: 'active',
               is_subscribed: false,
-              created_at: '',
             })
             setIsViewOnly(true)
             setIsModalOpen(true)
