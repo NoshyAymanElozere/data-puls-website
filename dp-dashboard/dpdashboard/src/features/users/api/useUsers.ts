@@ -91,6 +91,7 @@ export interface UserListItem {
   access_type?: UserAccessType | null
   city?: UserLocationRef | null
   country?: UserLocationRef | null
+  invoices_count?: number
   created_at: string
 }
 
@@ -105,7 +106,6 @@ export interface UserDetail extends UserListItem {
   phone_verified_at: string | null
   last_login_at: string | null
   updated_at: string
-  invoices_count?: number
   family_members_count?: number
   categories_count?: number
   account_owner_id?: number | null

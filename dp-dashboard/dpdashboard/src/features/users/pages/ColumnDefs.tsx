@@ -119,6 +119,13 @@ export function getUsersColumnDefs({
       },
     },
     {
+      headerName: t('invoicesCount'),
+      field: 'invoices_count',
+      filter: false,
+      width: 110,
+      valueFormatter: (params) => (params.value != null ? String(params.value) : '-'),
+    },
+    {
       headerName: t('status'),
       field: 'status',
       filter: false,
