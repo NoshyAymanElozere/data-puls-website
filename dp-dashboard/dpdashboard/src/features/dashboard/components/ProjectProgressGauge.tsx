@@ -34,15 +34,15 @@ export function ProjectProgressGauge({
   const y = 50 - 40 * Math.sin(rad)
 
   return (
-    <Card className="border border-gray-100 rounded-2xl shadow-xs bg-white">
+    <Card className="border border-border rounded-2xl shadow-xs bg-card">
       <div className="p-6 pb-2">
-        <h3 className="font-bold text-[#111827] text-base">{displayTitle}</h3>
-        <p className="text-xs text-gray-400 mt-0.5">{displayLabel}</p>
+        <h3 className="font-bold text-foreground text-base">{displayTitle}</h3>
+        <p className="text-xs text-muted-foreground mt-0.5">{displayLabel}</p>
       </div>
       <CardContent className="p-6 flex flex-col items-center justify-center">
         {isLoading ? (
-          <div className="w-44 h-24 bg-gray-50 rounded-t-full animate-pulse flex items-end justify-center pb-2">
-            <div className="w-12 h-6 bg-gray-200 rounded animate-pulse" />
+          <div className="w-44 h-24 bg-muted/50 rounded-t-full animate-pulse flex items-end justify-center pb-2">
+            <div className="w-12 h-6 bg-muted-foreground/20 rounded animate-pulse" />
           </div>
         ) : (
           <div className="relative w-44 h-24 flex items-end justify-center overflow-hidden">
@@ -57,7 +57,7 @@ export function ProjectProgressGauge({
               <path
                 d="M 10 50 A 40 40 0 0 1 90 50"
                 fill="none"
-                stroke="#f3f4f6"
+                stroke="hsl(var(--muted))"
                 strokeWidth="10"
                 strokeLinecap="round"
               />
@@ -73,10 +73,10 @@ export function ProjectProgressGauge({
               )}
             </svg>
             <div className="text-center z-10">
-              <h4 className="text-3xl font-extrabold text-[#111827] tracking-tight">
+              <h4 className="text-3xl font-extrabold text-foreground tracking-tight">
                 {clampedPercentage}%
               </h4>
-              <p className="text-[10px] text-gray-400 font-bold uppercase tracking-wider mt-0.5">
+              <p className="text-[10px] text-muted-foreground font-bold uppercase tracking-wider mt-0.5">
                 {t('completed')}
               </p>
             </div>
@@ -84,7 +84,7 @@ export function ProjectProgressGauge({
         )}
 
         {/* Breakdown Badges */}
-        <div className="flex gap-4 mt-6 text-[10px] font-bold text-gray-500">
+        <div className="flex gap-4 mt-6 text-[10px] font-bold text-muted-foreground">
           <div className="flex items-center gap-1.5">
             <span className="h-2 w-2 rounded-full bg-emerald-500" />
             <span>{t('completed')}: {breakdown ? `${breakdown.completed}%` : `${clampedPercentage}%`}</span>
@@ -94,7 +94,7 @@ export function ProjectProgressGauge({
             <span>{t('inProgress')}: {breakdown ? `${breakdown.in_progress}%` : '12%'}</span>
           </div>
           <div className="flex items-center gap-1.5">
-            <span className="h-2 w-2 rounded-full bg-gray-300" />
+            <span className="h-2 w-2 rounded-full bg-muted-foreground/40" />
             <span>{t('pending')}: {breakdown ? `${breakdown.pending}%` : '6%'}</span>
           </div>
         </div>

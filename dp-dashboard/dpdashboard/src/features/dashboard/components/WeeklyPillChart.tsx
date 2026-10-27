@@ -35,15 +35,15 @@ export function WeeklyPillChart({
   const displayTitle = title || t('activityAnalytics')
 
   return (
-    <Card className="border border-gray-100 rounded-2xl shadow-xs overflow-hidden bg-white">
+    <Card className="border border-border rounded-2xl shadow-xs overflow-hidden bg-card">
       <div className="p-6 pb-2 flex flex-col gap-2 sm:flex-row sm:justify-between sm:items-center">
         <div>
-          <h3 className="font-bold text-[#111827] text-base">{displayTitle}</h3>
-          <p className="text-xs text-gray-400 mt-0.5">{t('dashboardSubtitle')}</p>
+          <h3 className="font-bold text-foreground text-base">{displayTitle}</h3>
+          <p className="text-xs text-muted-foreground mt-0.5">{t('dashboardSubtitle')}</p>
         </div>
 
         {onPeriodChange && (
-          <div className="flex items-center gap-1 bg-gray-50 p-1 rounded-xl border border-gray-100 self-start sm:self-auto">
+          <div className="flex items-center gap-1 bg-muted/50 p-1 rounded-xl border border-border self-start sm:self-auto">
             {(['weekly', 'monthly', 'yearly'] as const).map((p) => (
               <button
                 key={p}
@@ -51,8 +51,8 @@ export function WeeklyPillChart({
                 className={cn(
                   'px-3 py-1 text-xs font-semibold rounded-lg transition-all',
                   period === p
-                    ? 'bg-white text-main shadow-xs font-bold'
-                    : 'text-gray-500 hover:text-gray-800'
+                    ? 'bg-card text-main shadow-xs font-bold'
+                    : 'text-muted-foreground hover:text-foreground'
                 )}
               >
                 {t(p)}
@@ -67,17 +67,17 @@ export function WeeklyPillChart({
           <div className="flex items-end justify-between h-56 pt-8 px-2 gap-2">
             {[1, 2, 3, 4, 5, 6, 7].map((n) => (
               <div key={n} className="flex-1 flex flex-col items-center gap-3">
-                <div className="w-9 sm:w-11 h-36 bg-gray-100 rounded-full animate-pulse" />
-                <div className="w-4 h-3 bg-gray-100 rounded animate-pulse" />
+                <div className="w-9 sm:w-11 h-36 bg-muted rounded-full animate-pulse" />
+                <div className="w-4 h-3 bg-muted rounded animate-pulse" />
               </div>
             ))}
           </div>
         ) : (
           <div className="flex justify-between items-end h-56 pt-8 px-2 relative">
             <div className="absolute inset-0 top-8 bottom-8 flex flex-col justify-between pointer-events-none opacity-[0.03]">
-              <div className="border-t border-black w-full" />
-              <div className="border-t border-black w-full" />
-              <div className="border-t border-black w-full" />
+              <div className="border-t border-foreground w-full" />
+              <div className="border-t border-foreground w-full" />
+              <div className="border-t border-foreground w-full" />
             </div>
 
             {data.map((col, idx) => (
@@ -88,20 +88,20 @@ export function WeeklyPillChart({
                   </span>
                 )}
 
-                <div className="w-8 sm:w-11 h-36 bg-gray-50 rounded-full overflow-hidden flex flex-col justify-end relative">
+                <div className="w-8 sm:w-11 h-36 bg-muted/50 rounded-full overflow-hidden flex flex-col justify-end relative">
                   <div
                     style={{ height: col.val }}
                     className={cn(
                       'w-full rounded-full transition-all duration-500 group-hover:opacity-90',
                       col.type === 'striped' &&
-                        'bg-gradient-to-t from-gray-200 to-gray-300 border border-dashed border-gray-400',
+                        'bg-gradient-to-t from-muted to-muted-foreground/30 border border-dashed border-muted-foreground/40',
                       col.type === 'solid' && 'bg-main',
                       col.type === 'light' && 'bg-main/60',
                       col.type === 'dark-solid' && 'bg-main-start'
                     )}
                   />
                 </div>
-                <span className="text-xs font-bold text-gray-500">{col.day}</span>
+                <span className="text-xs font-bold text-muted-foreground">{col.day}</span>
               </div>
             ))}
           </div>

@@ -59,15 +59,15 @@ export default function Dashboard() {
       {/* Title & Top Action Bar */}
       <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
         <div>
-          <h1 className="text-3xl font-extrabold tracking-tight text-[#111827] dark:text-white">
+          <h1 className="text-3xl font-extrabold tracking-tight text-foreground">
             {t('dashboard')}
           </h1>
-          <p className="text-sm text-gray-500 dark:text-gray-400 mt-1">{t('dashboardSubtitle')}</p>
+          <p className="text-sm text-muted-foreground mt-1">{t('dashboardSubtitle')}</p>
         </div>
 
         <div className="flex flex-wrap items-center gap-3">
           {/* Period Selector Tabs for Top Stats */}
-          <div className="flex items-center bg-gray-100 p-1 rounded-xl border border-gray-200">
+          <div className="flex items-center bg-muted p-1 rounded-xl border border-border">
             {(['this_month', 'last_month', 'this_year'] as const).map((period) => (
               <button
                 key={period}
@@ -75,8 +75,8 @@ export default function Dashboard() {
                 className={cn(
                   'px-3 py-1.5 text-xs font-semibold rounded-lg transition-all',
                   statsPeriod === period
-                    ? 'bg-white text-gray-900 shadow-xs'
-                    : 'text-gray-500 hover:text-gray-900'
+                    ? 'bg-card text-foreground shadow-xs'
+                    : 'text-muted-foreground hover:text-foreground'
                 )}
               >
                 {t(period === 'this_month' ? 'thisMonth' : period === 'last_month' ? 'lastMonth' : 'thisYear')}
@@ -141,27 +141,27 @@ export default function Dashboard() {
         </div>
 
         {/* Active Warranties */}
-        <div className="bg-white border border-gray-100 rounded-2xl p-5 shadow-xs flex flex-col justify-between min-h-[9.5rem]">
+        <div className="bg-card border border-border rounded-2xl p-5 shadow-xs flex flex-col justify-between min-h-[9.5rem]">
           <div className="flex justify-between items-start">
-            <span className="text-sm font-semibold text-gray-500">{t('activeWarranties')}</span>
-            <div className="h-8 w-8 rounded-full bg-emerald-50 flex items-center justify-center">
-              <ShieldCheck className="h-4 w-4 text-emerald-600" />
+            <span className="text-sm font-semibold text-muted-foreground">{t('activeWarranties')}</span>
+            <div className="h-8 w-8 rounded-full bg-emerald-50 dark:bg-emerald-500/15 flex items-center justify-center">
+              <ShieldCheck className="h-4 w-4 text-emerald-600 dark:text-emerald-300" />
             </div>
           </div>
           <div>
             {isStatsLoading ? (
-              <div className="h-9 w-24 bg-gray-100 rounded animate-pulse" />
+              <div className="h-9 w-24 bg-muted rounded animate-pulse" />
             ) : (
-              <h2 className="text-3xl sm:text-4xl font-extrabold text-[#111827] tracking-tight">
+              <h2 className="text-3xl sm:text-4xl font-extrabold text-foreground tracking-tight">
                 {stats?.active_warranties?.total?.toLocaleString() ?? 0}
               </h2>
             )}
             <div className="flex items-center gap-1.5 mt-2.5 min-w-0">
-              <span className="flex-shrink-0 flex h-5 items-center justify-center rounded-md bg-emerald-50 px-2 text-[10px] font-bold text-emerald-700 border border-emerald-100">
+              <span className="flex-shrink-0 flex h-5 items-center justify-center rounded-md bg-emerald-50 dark:bg-emerald-500/15 px-2 text-[10px] font-bold text-emerald-700 dark:text-emerald-300 border border-emerald-100 dark:border-emerald-500/30">
                 {translateMetricText(stats?.active_warranties?.status, t, isRtl, 'active')}
               </span>
               <span
-                className="text-[10px] text-gray-400 font-semibold truncate"
+                className="text-[10px] text-muted-foreground font-semibold truncate"
                 title={
                   translateMetricText(stats?.active_warranties?.subtitle, t, isRtl) ||
                   (stats?.active_warranties?.expiring_soon_count !== undefined
@@ -179,31 +179,31 @@ export default function Dashboard() {
         </div>
 
         {/* Total Spending */}
-        <div className="bg-white border border-gray-100 rounded-2xl p-5 shadow-xs flex flex-col justify-between min-h-[9.5rem]">
+        <div className="bg-card border border-border rounded-2xl p-5 shadow-xs flex flex-col justify-between min-h-[9.5rem]">
           <div className="flex justify-between items-start">
-            <span className="text-sm font-semibold text-gray-500">{t('totalSpending')}</span>
-            <div className="h-8 w-8 rounded-full bg-indigo-50 flex items-center justify-center">
-              <Coins className="h-4 w-4 text-indigo-600" />
+            <span className="text-sm font-semibold text-muted-foreground">{t('totalSpending')}</span>
+            <div className="h-8 w-8 rounded-full bg-indigo-50 dark:bg-indigo-500/15 flex items-center justify-center">
+              <Coins className="h-4 w-4 text-indigo-600 dark:text-indigo-300" />
             </div>
           </div>
           <div>
             {isStatsLoading ? (
-              <div className="h-9 w-32 bg-gray-100 rounded animate-pulse" />
+              <div className="h-9 w-32 bg-muted rounded animate-pulse" />
             ) : (
               <div className="flex items-baseline gap-1.5 flex-wrap">
-                <h2 className="text-2xl xl:text-3xl font-extrabold text-[#111827] tracking-tight">
+                <h2 className="text-2xl xl:text-3xl font-extrabold text-foreground tracking-tight">
                   {stats?.total_spending?.formatted
                     ? stats.total_spending.formatted
                     : (stats?.total_spending?.total ?? 0).toLocaleString()}
                 </h2>
-                <span className="text-xs font-bold text-gray-400">
+                <span className="text-xs font-bold text-muted-foreground">
                   {isRtl ? 'ر.س' : 'SAR'}
                 </span>
               </div>
             )}
             <div className="flex items-center gap-1.5 mt-2.5 min-w-0">
               {stats?.total_spending?.change_percentage !== undefined && (
-                <span className="flex-shrink-0 flex h-5 items-center justify-center gap-0.5 rounded-md bg-green-50 px-2 text-[10px] font-bold text-emerald-700 border border-emerald-100">
+                <span className="flex-shrink-0 flex h-5 items-center justify-center gap-0.5 rounded-md bg-green-50 dark:bg-green-500/15 px-2 text-[10px] font-bold text-emerald-700 dark:text-emerald-300 border border-emerald-100 dark:border-emerald-500/30">
                   {stats.total_spending.change_direction === 'decrease' ? (
                     <ArrowDownRight className="h-3 w-3" />
                   ) : (
@@ -214,7 +214,7 @@ export default function Dashboard() {
                 </span>
               )}
               <span
-                className="text-[10px] text-gray-400 font-semibold truncate"
+                className="text-[10px] text-muted-foreground font-semibold truncate"
                 title={translateMetricText(stats?.total_spending?.subtitle, t, isRtl, 'increaseFromLastMonth')}
               >
                 {translateMetricText(stats?.total_spending?.subtitle, t, isRtl, 'increaseFromLastMonth')}
@@ -224,30 +224,30 @@ export default function Dashboard() {
         </div>
 
         {/* Active Users */}
-        <div className="bg-white border border-gray-100 rounded-2xl p-5 shadow-xs flex flex-col justify-between min-h-[9.5rem]">
+        <div className="bg-card border border-border rounded-2xl p-5 shadow-xs flex flex-col justify-between min-h-[9.5rem]">
           <div className="flex justify-between items-start">
             <span
-              className="flex items-center gap-1 text-sm font-semibold text-gray-500 min-w-0"
+              className="flex items-center gap-1 text-sm font-semibold text-muted-foreground min-w-0"
               title={t('activeUsersDefinition')}
             >
               <span className="truncate">{t('activeUsers')}</span>
-              <Info className="h-3.5 w-3.5 shrink-0 text-gray-400" aria-label={t('activeUsersDefinition')} />
+              <Info className="h-3.5 w-3.5 shrink-0 text-muted-foreground" aria-label={t('activeUsersDefinition')} />
             </span>
-            <div className="h-8 w-8 shrink-0 rounded-full bg-blue-50 flex items-center justify-center">
-              <Users className="h-4 w-4 text-blue-600" />
+            <div className="h-8 w-8 shrink-0 rounded-full bg-blue-50 dark:bg-blue-500/15 flex items-center justify-center">
+              <Users className="h-4 w-4 text-blue-600 dark:text-blue-300" />
             </div>
           </div>
           <div>
             {isStatsLoading ? (
-              <div className="h-9 w-24 bg-gray-100 rounded animate-pulse" />
+              <div className="h-9 w-24 bg-muted rounded animate-pulse" />
             ) : (
-              <h2 className="text-3xl sm:text-4xl font-extrabold text-[#111827] tracking-tight">
+              <h2 className="text-3xl sm:text-4xl font-extrabold text-foreground tracking-tight">
                 {stats?.active_users?.total?.toLocaleString() ?? 0}
               </h2>
             )}
             <div className="flex items-center gap-1.5 mt-2.5 min-w-0">
               {stats?.active_users?.change_percentage !== undefined && (
-                <span className="flex-shrink-0 flex h-5 items-center justify-center gap-0.5 rounded-md bg-blue-50 px-2 text-[10px] font-bold text-blue-700 border border-blue-100">
+                <span className="flex-shrink-0 flex h-5 items-center justify-center gap-0.5 rounded-md bg-blue-50 dark:bg-blue-500/15 px-2 text-[10px] font-bold text-blue-700 dark:text-blue-300 border border-blue-100 dark:border-blue-500/30">
                   {stats.active_users.change_direction === 'decrease' ? (
                     <ArrowDownRight className="h-3 w-3" />
                   ) : (
@@ -258,7 +258,7 @@ export default function Dashboard() {
                 </span>
               )}
               <span
-                className="text-[10px] text-gray-400 font-semibold truncate"
+                className="text-[10px] text-muted-foreground font-semibold truncate"
                 title={activeUsersSubtitle}
               >
                 {activeUsersSubtitle}
@@ -271,18 +271,18 @@ export default function Dashboard() {
       {/* Secondary KPI Cards: users growth, downloads, subscription revenue */}
       <div className="grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-3">
         {/* Total Users */}
-        <div className="bg-white border border-gray-100 rounded-2xl p-5 shadow-xs flex flex-col justify-between min-h-[9.5rem]">
+        <div className="bg-card border border-border rounded-2xl p-5 shadow-xs flex flex-col justify-between min-h-[9.5rem]">
           <div className="flex justify-between items-start">
-            <span className="text-sm font-semibold text-gray-500">{t('totalUsers')}</span>
-            <div className="h-8 w-8 shrink-0 rounded-full bg-violet-50 flex items-center justify-center">
-              <UserPlus className="h-4 w-4 text-violet-600" />
+            <span className="text-sm font-semibold text-muted-foreground">{t('totalUsers')}</span>
+            <div className="h-8 w-8 shrink-0 rounded-full bg-violet-50 dark:bg-violet-500/15 flex items-center justify-center">
+              <UserPlus className="h-4 w-4 text-violet-600 dark:text-violet-300" />
             </div>
           </div>
           <div>
             {isStatsLoading ? (
-              <div className="h-9 w-24 bg-gray-100 rounded animate-pulse" />
+              <div className="h-9 w-24 bg-muted rounded animate-pulse" />
             ) : (
-              <h2 className="text-3xl sm:text-4xl font-extrabold text-[#111827] tracking-tight">
+              <h2 className="text-3xl sm:text-4xl font-extrabold text-foreground tracking-tight">
                 {(stats?.total_users?.total ?? 0).toLocaleString()}
               </h2>
             )}
@@ -291,11 +291,11 @@ export default function Dashboard() {
                 <ChangeBadge
                   direction={stats.total_users.change_direction}
                   percentage={stats.total_users.change_percentage}
-                  className="bg-violet-50 text-violet-700 border-violet-100"
+                  className="bg-violet-50 dark:bg-violet-500/15 text-violet-700 dark:text-violet-300 border-violet-100 dark:border-violet-500/30"
                 />
               )}
               <span
-                className="text-[10px] text-gray-400 font-semibold truncate"
+                className="text-[10px] text-muted-foreground font-semibold truncate"
                 title={t('newUsersInPeriod', { count: stats?.total_users?.new_in_period ?? 0 })}
               >
                 {t('newUsersInPeriod', { count: stats?.total_users?.new_in_period ?? 0 })}
@@ -305,35 +305,35 @@ export default function Dashboard() {
         </div>
 
         {/* App Downloads (entered manually from settings) */}
-        <div className="bg-white border border-gray-100 rounded-2xl p-5 shadow-xs flex flex-col justify-between min-h-[9.5rem]">
+        <div className="bg-card border border-border rounded-2xl p-5 shadow-xs flex flex-col justify-between min-h-[9.5rem]">
           <div className="flex justify-between items-start">
             <span
-              className="flex items-center gap-1 text-sm font-semibold text-gray-500 min-w-0"
+              className="flex items-center gap-1 text-sm font-semibold text-muted-foreground min-w-0"
               title={t('downloadsManualHint')}
             >
               <span className="truncate">{t('appDownloads')}</span>
-              <Info className="h-3.5 w-3.5 shrink-0 text-gray-400" aria-label={t('downloadsManualHint')} />
+              <Info className="h-3.5 w-3.5 shrink-0 text-muted-foreground" aria-label={t('downloadsManualHint')} />
             </span>
-            <div className="h-8 w-8 shrink-0 rounded-full bg-sky-50 flex items-center justify-center">
-              <Smartphone className="h-4 w-4 text-sky-600" />
+            <div className="h-8 w-8 shrink-0 rounded-full bg-sky-50 dark:bg-sky-500/15 flex items-center justify-center">
+              <Smartphone className="h-4 w-4 text-sky-600 dark:text-sky-300" />
             </div>
           </div>
           <div>
             {isStatsLoading ? (
-              <div className="h-9 w-24 bg-gray-100 rounded animate-pulse" />
+              <div className="h-9 w-24 bg-muted rounded animate-pulse" />
             ) : (
-              <h2 className="text-3xl sm:text-4xl font-extrabold text-[#111827] tracking-tight">
+              <h2 className="text-3xl sm:text-4xl font-extrabold text-foreground tracking-tight">
                 {(stats?.downloads?.total ?? 0).toLocaleString()}
               </h2>
             )}
             <div className="flex items-center gap-1.5 mt-2.5 min-w-0">
-              <span className="flex-shrink-0 flex h-5 items-center justify-center rounded-md bg-sky-50 px-2 text-[10px] font-bold text-sky-700 border border-sky-100">
+              <span className="flex-shrink-0 flex h-5 items-center justify-center rounded-md bg-sky-50 dark:bg-sky-500/15 px-2 text-[10px] font-bold text-sky-700 dark:text-sky-300 border border-sky-100 dark:border-sky-500/30">
                 {t('iosLabel')}: {(stats?.downloads?.ios ?? 0).toLocaleString()}
               </span>
-              <span className="flex-shrink-0 flex h-5 items-center justify-center rounded-md bg-emerald-50 px-2 text-[10px] font-bold text-emerald-700 border border-emerald-100">
+              <span className="flex-shrink-0 flex h-5 items-center justify-center rounded-md bg-emerald-50 dark:bg-emerald-500/15 px-2 text-[10px] font-bold text-emerald-700 dark:text-emerald-300 border border-emerald-100 dark:border-emerald-500/30">
                 {t('androidLabel')}: {(stats?.downloads?.android ?? 0).toLocaleString()}
               </span>
-              <span className="text-[10px] text-gray-400 font-semibold truncate" title={t('downloadsManualHint')}>
+              <span className="text-[10px] text-muted-foreground font-semibold truncate" title={t('downloadsManualHint')}>
                 {t('enteredManuallyFromSettings')}
               </span>
             </div>
@@ -341,24 +341,24 @@ export default function Dashboard() {
         </div>
 
         {/* Subscription Revenue */}
-        <div className="bg-white border border-gray-100 rounded-2xl p-5 shadow-xs flex flex-col justify-between min-h-[9.5rem]">
+        <div className="bg-card border border-border rounded-2xl p-5 shadow-xs flex flex-col justify-between min-h-[9.5rem]">
           <div className="flex justify-between items-start">
-            <span className="text-sm font-semibold text-gray-500">{t('subscriptionRevenue')}</span>
-            <div className="h-8 w-8 shrink-0 rounded-full bg-amber-50 flex items-center justify-center">
-              <Wallet className="h-4 w-4 text-amber-600" />
+            <span className="text-sm font-semibold text-muted-foreground">{t('subscriptionRevenue')}</span>
+            <div className="h-8 w-8 shrink-0 rounded-full bg-amber-50 dark:bg-amber-500/15 flex items-center justify-center">
+              <Wallet className="h-4 w-4 text-amber-600 dark:text-amber-300" />
             </div>
           </div>
           <div>
             {isStatsLoading ? (
-              <div className="h-9 w-32 bg-gray-100 rounded animate-pulse" />
+              <div className="h-9 w-32 bg-muted rounded animate-pulse" />
             ) : (
               <div className="flex items-baseline gap-1.5 flex-wrap">
-                <h2 className="text-2xl xl:text-3xl font-extrabold text-[#111827] tracking-tight">
+                <h2 className="text-2xl xl:text-3xl font-extrabold text-foreground tracking-tight">
                   {stats?.subscription_revenue?.formatted
                     ? stats.subscription_revenue.formatted
                     : (stats?.subscription_revenue?.total ?? 0).toLocaleString()}
                 </h2>
-                <span className="text-xs font-bold text-gray-400">{currencyLabel}</span>
+                <span className="text-xs font-bold text-muted-foreground">{currencyLabel}</span>
               </div>
             )}
             <div className="flex items-center gap-1.5 mt-2.5 min-w-0">
@@ -366,11 +366,11 @@ export default function Dashboard() {
                 <ChangeBadge
                   direction={stats.subscription_revenue.change_direction}
                   percentage={stats.subscription_revenue.change_percentage}
-                  className="bg-amber-50 text-amber-700 border-amber-100"
+                  className="bg-amber-50 dark:bg-amber-500/15 text-amber-700 dark:text-amber-300 border-amber-100 dark:border-amber-500/30"
                 />
               )}
               <span
-                className="text-[10px] text-gray-400 font-semibold truncate"
+                className="text-[10px] text-muted-foreground font-semibold truncate"
                 title={t('paidTransactionsInPeriod', {
                   count: stats?.subscription_revenue?.paid_transactions_count ?? 0,
                 })}
@@ -397,13 +397,13 @@ export default function Dashboard() {
           />
 
           {/* Quick Domain Management Shortcuts with Live Counts */}
-          <Card className="border border-gray-100 rounded-2xl shadow-xs bg-white">
-            <div className="p-6 pb-4 border-b border-gray-50 flex items-center justify-between">
+          <Card className="border border-border rounded-2xl shadow-xs bg-card">
+            <div className="p-6 pb-4 border-b border-border flex items-center justify-between">
               <div>
-                <h3 className="font-bold text-[#111827] text-base">
+                <h3 className="font-bold text-foreground text-base">
                   {t('menu')}
                 </h3>
-                <p className="text-xs text-gray-400 mt-0.5">
+                <p className="text-xs text-muted-foreground mt-0.5">
                   {t('dashboardMenuSubtitle')}
                 </p>
               </div>
@@ -413,25 +413,25 @@ export default function Dashboard() {
                 {/* Users */}
                 <Link
                   to="/users"
-                  className="relative flex flex-col justify-between p-4 rounded-xl border border-gray-100/90 bg-white hover:border-blue-200 hover:shadow-md hover:-translate-y-0.5 transition-all duration-200 group"
+                  className="relative flex flex-col justify-between p-4 rounded-xl border border-border bg-card hover:border-blue-200 hover:shadow-md hover:-translate-y-0.5 transition-all duration-200 group"
                 >
                   <div className="flex items-center justify-between mb-3 w-full">
-                    <div className="h-10 w-10 rounded-xl bg-blue-50 border border-blue-100/60 text-blue-600 flex items-center justify-center group-hover:scale-105 group-hover:bg-blue-600 group-hover:text-white transition-all">
+                    <div className="h-10 w-10 rounded-xl bg-blue-50 dark:bg-blue-500/15 border border-blue-100/60 text-blue-600 dark:text-blue-300 flex items-center justify-center group-hover:scale-105 group-hover:bg-blue-600 group-hover:text-white transition-all">
                       <Users className="h-5 w-5" />
                     </div>
-                    <span className="opacity-0 group-hover:opacity-100 transition-opacity text-blue-600">
+                    <span className="opacity-0 group-hover:opacity-100 transition-opacity text-blue-600 dark:text-blue-300">
                       <ArrowUpRight className="h-4 w-4" />
                     </span>
                   </div>
                   <div>
                     {isMenuCountsLoading ? (
-                      <div className="h-7 w-14 bg-gray-100 rounded animate-pulse mb-1" />
+                      <div className="h-7 w-14 bg-muted rounded animate-pulse mb-1" />
                     ) : (
-                      <div className="text-2xl font-extrabold text-[#111827] tracking-tight group-hover:text-blue-600 transition-colors">
+                      <div className="text-2xl font-extrabold text-foreground tracking-tight group-hover:text-blue-600 transition-colors">
                         {menuCounts.users.toLocaleString()}
                       </div>
                     )}
-                    <span className="text-xs font-semibold text-gray-500 block mt-0.5">
+                    <span className="text-xs font-semibold text-muted-foreground block mt-0.5">
                       {t('users')}
                     </span>
                   </div>
@@ -440,25 +440,25 @@ export default function Dashboard() {
                 {/* Warranty Periods */}
                 <Link
                   to="/warranty-periods"
-                  className="relative flex flex-col justify-between p-4 rounded-xl border border-gray-100/90 bg-white hover:border-amber-200 hover:shadow-md hover:-translate-y-0.5 transition-all duration-200 group"
+                  className="relative flex flex-col justify-between p-4 rounded-xl border border-border bg-card hover:border-amber-200 hover:shadow-md hover:-translate-y-0.5 transition-all duration-200 group"
                 >
                   <div className="flex items-center justify-between mb-3 w-full">
-                    <div className="h-10 w-10 rounded-xl bg-amber-50 border border-amber-100/60 text-amber-600 flex items-center justify-center group-hover:scale-105 group-hover:bg-amber-600 group-hover:text-white transition-all">
+                    <div className="h-10 w-10 rounded-xl bg-amber-50 dark:bg-amber-500/15 border border-amber-100/60 text-amber-600 dark:text-amber-300 flex items-center justify-center group-hover:scale-105 group-hover:bg-amber-600 group-hover:text-white transition-all">
                       <ShieldAlert className="h-5 w-5" />
                     </div>
-                    <span className="opacity-0 group-hover:opacity-100 transition-opacity text-amber-600">
+                    <span className="opacity-0 group-hover:opacity-100 transition-opacity text-amber-600 dark:text-amber-300">
                       <ArrowUpRight className="h-4 w-4" />
                     </span>
                   </div>
                   <div>
                     {isMenuCountsLoading ? (
-                      <div className="h-7 w-14 bg-gray-100 rounded animate-pulse mb-1" />
+                      <div className="h-7 w-14 bg-muted rounded animate-pulse mb-1" />
                     ) : (
-                      <div className="text-2xl font-extrabold text-[#111827] tracking-tight group-hover:text-amber-600 transition-colors">
+                      <div className="text-2xl font-extrabold text-foreground tracking-tight group-hover:text-amber-600 transition-colors">
                         {menuCounts.warrantyPeriods.toLocaleString()}
                       </div>
                     )}
-                    <span className="text-xs font-semibold text-gray-500 block mt-0.5">
+                    <span className="text-xs font-semibold text-muted-foreground block mt-0.5">
                       {t('warrantyPeriods')}
                     </span>
                   </div>
@@ -467,25 +467,25 @@ export default function Dashboard() {
                 {/* Categories */}
                 <Link
                   to="/categories"
-                  className="relative flex flex-col justify-between p-4 rounded-xl border border-gray-100/90 bg-white hover:border-emerald-200 hover:shadow-md hover:-translate-y-0.5 transition-all duration-200 group"
+                  className="relative flex flex-col justify-between p-4 rounded-xl border border-border bg-card hover:border-emerald-200 hover:shadow-md hover:-translate-y-0.5 transition-all duration-200 group"
                 >
                   <div className="flex items-center justify-between mb-3 w-full">
-                    <div className="h-10 w-10 rounded-xl bg-emerald-50 border border-emerald-100/60 text-emerald-600 flex items-center justify-center group-hover:scale-105 group-hover:bg-emerald-600 group-hover:text-white transition-all">
+                    <div className="h-10 w-10 rounded-xl bg-emerald-50 dark:bg-emerald-500/15 border border-emerald-100/60 text-emerald-600 dark:text-emerald-300 flex items-center justify-center group-hover:scale-105 group-hover:bg-emerald-600 group-hover:text-white transition-all">
                       <FolderTree className="h-5 w-5" />
                     </div>
-                    <span className="opacity-0 group-hover:opacity-100 transition-opacity text-emerald-600">
+                    <span className="opacity-0 group-hover:opacity-100 transition-opacity text-emerald-600 dark:text-emerald-300">
                       <ArrowUpRight className="h-4 w-4" />
                     </span>
                   </div>
                   <div>
                     {isMenuCountsLoading ? (
-                      <div className="h-7 w-14 bg-gray-100 rounded animate-pulse mb-1" />
+                      <div className="h-7 w-14 bg-muted rounded animate-pulse mb-1" />
                     ) : (
-                      <div className="text-2xl font-extrabold text-[#111827] tracking-tight group-hover:text-emerald-600 transition-colors">
+                      <div className="text-2xl font-extrabold text-foreground tracking-tight group-hover:text-emerald-600 transition-colors">
                         {menuCounts.categories.toLocaleString()}
                       </div>
                     )}
-                    <span className="text-xs font-semibold text-gray-500 block mt-0.5">
+                    <span className="text-xs font-semibold text-muted-foreground block mt-0.5">
                       {t('categories')}
                     </span>
                   </div>
@@ -494,25 +494,25 @@ export default function Dashboard() {
                 {/* Reports */}
                 <Link
                   to="/reports"
-                  className="relative flex flex-col justify-between p-4 rounded-xl border border-gray-100/90 bg-white hover:border-purple-200 hover:shadow-md hover:-translate-y-0.5 transition-all duration-200 group"
+                  className="relative flex flex-col justify-between p-4 rounded-xl border border-border bg-card hover:border-purple-200 hover:shadow-md hover:-translate-y-0.5 transition-all duration-200 group"
                 >
                   <div className="flex items-center justify-between mb-3 w-full">
-                    <div className="h-10 w-10 rounded-xl bg-purple-50 border border-purple-100/60 text-purple-600 flex items-center justify-center group-hover:scale-105 group-hover:bg-purple-600 group-hover:text-white transition-all">
+                    <div className="h-10 w-10 rounded-xl bg-purple-50 dark:bg-purple-500/15 border border-purple-100/60 text-purple-600 dark:text-purple-300 flex items-center justify-center group-hover:scale-105 group-hover:bg-purple-600 group-hover:text-white transition-all">
                       <FileSpreadsheet className="h-5 w-5" />
                     </div>
-                    <span className="opacity-0 group-hover:opacity-100 transition-opacity text-purple-600">
+                    <span className="opacity-0 group-hover:opacity-100 transition-opacity text-purple-600 dark:text-purple-300">
                       <ArrowUpRight className="h-4 w-4" />
                     </span>
                   </div>
                   <div>
                     {isMenuCountsLoading ? (
-                      <div className="h-7 w-14 bg-gray-100 rounded animate-pulse mb-1" />
+                      <div className="h-7 w-14 bg-muted rounded animate-pulse mb-1" />
                     ) : (
-                      <div className="text-2xl font-extrabold text-[#111827] tracking-tight group-hover:text-purple-600 transition-colors">
+                      <div className="text-2xl font-extrabold text-foreground tracking-tight group-hover:text-purple-600 transition-colors">
                         {menuCounts.reports.toLocaleString()}
                       </div>
                     )}
-                    <span className="text-xs font-semibold text-gray-500 block mt-0.5">
+                    <span className="text-xs font-semibold text-muted-foreground block mt-0.5">
                       {t('reports')}
                     </span>
                   </div>
