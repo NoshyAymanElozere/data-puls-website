@@ -69,6 +69,9 @@ export default function SubscriberFollowUpPage() {
   const period: SubscriberExpiringPeriod | '' = SUBSCRIBER_EXPIRING_PERIODS.includes(periodParam as SubscriberExpiringPeriod)
     ? (periodParam as SubscriberExpiringPeriod)
     : ''
+  const endsFrom = searchParams.get('ends_from') ?? ''
+  const endsTo = searchParams.get('ends_to') ?? ''
+  const isCustomRange = status === 'expiring_soon' && (searchParams.get('range') === 'custom' || !!endsFrom || !!endsTo)
 
   const [page, setPage] = useState(1)
   const [searchInput, setSearchInput] = useState('')
@@ -87,17 +90,32 @@ export default function SubscriberFollowUpPage() {
   const { data: paginated, isLoading, isFetching, refetch } = useDashboardSubscribers({
     status,
     search,
-    period,
+    period: isCustomRange ? '' : period,
+    endsFrom: isCustomRange ? endsFrom : '',
+    endsTo: isCustomRange ? endsTo : '',
     page,
     per_page: PER_PAGE,
   })
 
   const rows = paginated?.data ?? []
 
-  const handlePeriodChange = (next: SubscriberExpiringPeriod | '') => {
+  const handlePeriodChange = (next: SubscriberExpiringPeriod | 'custom' | '') => {
     const params = new URLSearchParams(searchParams)
-    if (next) params.set('period', next)
-    else params.delete('period')
+    params.delete('period')
+    params.delete('range')
+    params.delete('ends_from')
+    params.delete('ends_to')
+    if (next === 'custom') params.set('range', 'custom')
+    else if (next) params.set('period', next)
+    setSearchParams(params, { replace: true })
+    setPage(1)
+  }
+
+  const handleRangeChange = (key: 'ends_from' | 'ends_to', value: string) => {
+    const params = new URLSearchParams(searchParams)
+    params.set('range', 'custom')
+    if (value) params.set(key, value)
+    else params.delete(key)
     setSearchParams(params, { replace: true })
     setPage(1)
   }
@@ -330,8 +348,8 @@ export default function SubscriberFollowUpPage() {
           <div className="flex w-full flex-col gap-2 sm:w-auto sm:flex-row sm:items-center" dir={isRtl ? 'rtl' : 'ltr'}>
             {status === 'expiring_soon' && (
               <select
-                value={period}
-                onChange={(e) => handlePeriodChange(e.target.value as SubscriberExpiringPeriod | '')}
+                value={isCustomRange ? 'custom' : period}
+                onChange={(e) => handlePeriodChange(e.target.value as SubscriberExpiringPeriod | 'custom' | '')}
                 aria-label={t('followUpExpiringWithin')}
                 className="w-full sm:w-48 h-10 px-3 rounded-xl border border-border/60 bg-card text-xs font-bold"
               >
@@ -343,7 +361,31 @@ export default function SubscriberFollowUpPage() {
                     {t('followUpExpiringWithin')}: {t(`followUpPeriod_${p}`)}
                   </option>
                 ))}
+                <option value="custom">{t('followUpPeriod_custom')}</option>
               </select>
+            )}
+            {isCustomRange && (
+              <div className="flex items-center gap-2">
+                <input
+                  type="date"
+                  value={endsFrom}
+                  max={endsTo || undefined}
+                  onChange={(e) => handleRangeChange('ends_from', e.target.value)}
+                  aria-label={t('followUpEndsFrom')}
+                  title={t('followUpEndsFrom')}
+                  className="h-10 w-full sm:w-40 px-3 rounded-xl border border-border/60 bg-card text-xs font-bold"
+                />
+                <span className="text-xs text-muted-foreground">{t('followUpRangeTo')}</span>
+                <input
+                  type="date"
+                  value={endsTo}
+                  min={endsFrom || undefined}
+                  onChange={(e) => handleRangeChange('ends_to', e.target.value)}
+                  aria-label={t('followUpEndsTo')}
+                  title={t('followUpEndsTo')}
+                  className="h-10 w-full sm:w-40 px-3 rounded-xl border border-border/60 bg-card text-xs font-bold"
+                />
+              </div>
             )}
             <div className="w-full sm:w-80">
             <SearchInput

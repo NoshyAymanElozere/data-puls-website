@@ -139,6 +139,9 @@ export interface SubscribersListParams {
   status: SubscriberFollowUpStatus
   search?: string
   period?: SubscriberExpiringPeriod | ''
+  /** Custom subscription end-date range (YYYY-MM-DD); replaces `period` when set */
+  endsFrom?: string
+  endsTo?: string
   page?: number
   per_page?: number
 }
@@ -229,12 +232,28 @@ export function useSubscriberFollowUp() {
 }
 
 /** Hook to fetch the paginated subscribers list for the follow-up page */
-export function useDashboardSubscribers({ status, search = '', period = '', page = 1, per_page = 15 }: SubscribersListParams) {
+export function useDashboardSubscribers({
+  status,
+  search = '',
+  period = '',
+  endsFrom = '',
+  endsTo = '',
+  page = 1,
+  per_page = 15,
+}: SubscribersListParams) {
   const appliedPeriod = status === 'expiring_soon' ? period : ''
   return useQuery({
-    queryKey: ['dashboard-subscribers', status, search, appliedPeriod, page, per_page],
+    queryKey: ['dashboard-subscribers', status, search, appliedPeriod, endsFrom, endsTo, page, per_page],
     queryFn: async () => {
-      const params = buildQueryParams({ status, search, period: appliedPeriod || undefined, page, per_page })
+      const params = buildQueryParams({
+        status,
+        search,
+        period: appliedPeriod || undefined,
+        ends_from: endsFrom || undefined,
+        ends_to: endsTo || undefined,
+        page,
+        per_page,
+      })
       const res = await api.get<LaravelPaginatedResponse<SubscriberFollowUpRow>>(`/dashboard/subscribers?${params}`)
       return res.data
     },
