@@ -22,6 +22,8 @@ import { cn } from '@/shared/utils/utils'
 import {
   SUBSCRIBER_FOLLOW_UP_STATUSES,
   useDashboardSubscribers,
+  SUBSCRIBER_EXPIRING_PERIODS,
+  type SubscriberExpiringPeriod,
   useSubscriberFollowUp,
   type SubscriberFollowUpRow,
   type SubscriberFollowUpStatus,
@@ -63,6 +65,10 @@ export default function SubscriberFollowUpPage() {
 
   const statusParam = searchParams.get('status')
   const status: SubscriberFollowUpStatus = isSubscriberFollowUpStatus(statusParam) ? statusParam : 'expiring_soon'
+  const periodParam = searchParams.get('period')
+  const period: SubscriberExpiringPeriod | '' = SUBSCRIBER_EXPIRING_PERIODS.includes(periodParam as SubscriberExpiringPeriod)
+    ? (periodParam as SubscriberExpiringPeriod)
+    : ''
 
   const [page, setPage] = useState(1)
   const [searchInput, setSearchInput] = useState('')
@@ -81,11 +87,20 @@ export default function SubscriberFollowUpPage() {
   const { data: paginated, isLoading, isFetching, refetch } = useDashboardSubscribers({
     status,
     search,
+    period,
     page,
     per_page: PER_PAGE,
   })
 
   const rows = paginated?.data ?? []
+
+  const handlePeriodChange = (next: SubscriberExpiringPeriod | '') => {
+    const params = new URLSearchParams(searchParams)
+    if (next) params.set('period', next)
+    else params.delete('period')
+    setSearchParams(params, { replace: true })
+    setPage(1)
+  }
 
   const handleStatusChange = (next: SubscriberFollowUpStatus) => {
     const params = new URLSearchParams(searchParams)
@@ -312,12 +327,31 @@ export default function SubscriberFollowUpPage() {
             </div>
           </div>
 
-          <div className="w-full sm:w-80" dir={isRtl ? 'rtl' : 'ltr'}>
+          <div className="flex w-full flex-col gap-2 sm:w-auto sm:flex-row sm:items-center" dir={isRtl ? 'rtl' : 'ltr'}>
+            {status === 'expiring_soon' && (
+              <select
+                value={period}
+                onChange={(e) => handlePeriodChange(e.target.value as SubscriberExpiringPeriod | '')}
+                aria-label={t('followUpExpiringWithin')}
+                className="w-full sm:w-48 h-10 px-3 rounded-xl border border-border/60 bg-card text-xs font-bold"
+              >
+                <option value="">
+                  {t('followUpExpiringWithin')}: {t('followUpPeriodDefault', { count: overview?.expiring_soon_days ?? 7 })}
+                </option>
+                {SUBSCRIBER_EXPIRING_PERIODS.map((p) => (
+                  <option key={p} value={p}>
+                    {t('followUpExpiringWithin')}: {t(`followUpPeriod_${p}`)}
+                  </option>
+                ))}
+              </select>
+            )}
+            <div className="w-full sm:w-80">
             <SearchInput
               placeholder={t('searchSubscribersPlaceholder')}
               value={searchInput}
               onChange={(e) => setSearchInput(e.target.value)}
             />
+            </div>
           </div>
         </CardHeader>
 

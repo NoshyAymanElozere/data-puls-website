@@ -123,9 +123,22 @@ export interface SubscriberFollowUpOverview {
   lists: Record<SubscriberFollowUpStatus, SubscriberFollowUpList>
 }
 
+/** Expiring-soon window; empty uses the dashboard setting */
+export type SubscriberExpiringPeriod = 'week' | 'two_weeks' | 'month' | 'three_months' | 'six_months' | 'year'
+
+export const SUBSCRIBER_EXPIRING_PERIODS: SubscriberExpiringPeriod[] = [
+  'week',
+  'two_weeks',
+  'month',
+  'three_months',
+  'six_months',
+  'year',
+]
+
 export interface SubscribersListParams {
   status: SubscriberFollowUpStatus
   search?: string
+  period?: SubscriberExpiringPeriod | ''
   page?: number
   per_page?: number
 }
@@ -216,11 +229,12 @@ export function useSubscriberFollowUp() {
 }
 
 /** Hook to fetch the paginated subscribers list for the follow-up page */
-export function useDashboardSubscribers({ status, search = '', page = 1, per_page = 15 }: SubscribersListParams) {
+export function useDashboardSubscribers({ status, search = '', period = '', page = 1, per_page = 15 }: SubscribersListParams) {
+  const appliedPeriod = status === 'expiring_soon' ? period : ''
   return useQuery({
-    queryKey: ['dashboard-subscribers', status, search, page, per_page],
+    queryKey: ['dashboard-subscribers', status, search, appliedPeriod, page, per_page],
     queryFn: async () => {
-      const params = buildQueryParams({ status, search, page, per_page })
+      const params = buildQueryParams({ status, search, period: appliedPeriod || undefined, page, per_page })
       const res = await api.get<LaravelPaginatedResponse<SubscriberFollowUpRow>>(`/dashboard/subscribers?${params}`)
       return res.data
     },

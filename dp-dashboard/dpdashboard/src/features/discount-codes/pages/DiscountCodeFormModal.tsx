@@ -8,6 +8,7 @@ import ModalStatus from '@/shared/components/modal-status'
 import { useSubscriptionPackagesList } from '@/features/subscription-packages/api/useSubscriptionPackages'
 import { getLocalizedValue } from '@/shared/utils/localized-value'
 import { cn } from '@/shared/utils/utils'
+import { DiscountCodeUsersTable } from '../components/DiscountCodeUsersTable'
 import {
   AVAILABILITY_LABEL_KEYS,
   DISCOUNT_TYPE_LABEL_KEYS,
@@ -83,7 +84,7 @@ export function DiscountCodeFormModal({
       onAgreeButtonClick={isViewOnly ? () => onOpenChange(false) : handleSubmit(onSave)}
       onCancelButtonClick={() => onOpenChange(false)}
       loading={loading || detailLoading}
-      size="xl"
+      size={isViewOnly ? '2xl' : 'xl'}
     >
       <div className="max-h-[70vh] overflow-y-auto px-1 space-y-4" dir={isRtl ? 'rtl' : 'ltr'}>
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
@@ -308,6 +309,8 @@ export function DiscountCodeFormModal({
             </div>
           </div>
         )}
+
+        {isViewOnly && source && <DiscountCodeUsersTable codeId={source.id} />}
       </div>
     </ModalStatus>
   )
