@@ -902,7 +902,59 @@ export const en = {
   screenPreviewCardSubtitle: 'Warranty until 12/2027',
   screenPreviewButton: 'Add invoice',
   screenPreviewNote: 'Approximate preview using the resolved colors for the selected mode.',
+
+  // Herz partners & partner sectors
+  herzPartners: 'Herz Partners',
+  herzPartner: 'Partner',
+  herzPartnersSubtitle: 'Partner businesses shown to users in the mobile app, grouped by sector and city.',
+  partnerSectors: 'Partner Sectors',
+  partnerSector: 'Partner Sector',
+  partnerSectorsSubtitle: 'Sectors used to group Herz partners.',
+  partnersCount: 'Partners',
+  choosePartnerSector: 'Choose sector...',
+  allPartnerSectors: 'All Sectors',
+  partnerAddressAr: 'Arabic Address',
+  partnerAddressEn: 'English Address',
+  partnerMapUrl: 'Map URL',
+  partnerOpenMap: 'Open in maps',
+  partnerLogo: 'Logo',
+  partnerLogoHint: 'Optional. Image up to 2MB.',
+  partnerRemoveLogo: 'Remove current logo',
+  partnerLogoTooLarge: 'The logo must not be larger than 2MB.',
+  invalidUrl: 'Enter a valid URL (starting with http:// or https://).',
+  partnerCreated: 'Partner created successfully.',
+  partnerUpdated: 'Partner updated successfully.',
+  partnerDeleted: 'Partner deleted successfully.',
+  partnerStatusUpdated: 'Partner status updated successfully.',
+  partnerCreateFailed: 'Failed to create partner.',
+  partnerUpdateFailed: 'Failed to update partner.',
+  partnerDeleteFailed: 'Failed to delete partner.',
+  partnerStatusFailed: 'Failed to update status.',
+  partnerSectorCreated: 'Partner sector created successfully.',
+  partnerSectorUpdated: 'Partner sector updated successfully.',
+  partnerSectorDeleted: 'Partner sector deleted successfully.',
+  partnerSectorStatusUpdated: 'Partner sector status updated successfully.',
+  partnerSectorCreateFailed: 'Failed to create partner sector.',
+  partnerSectorUpdateFailed: 'Failed to update partner sector.',
+  partnerSectorDeleteFailed: 'Failed to delete partner sector.',
+  partnerSectorStatusFailed: 'Failed to update status.',
+  partnerSectorDeleteConfirmation:
+    'Are you sure you want to delete this sector? Sectors that still have partners cannot be deleted.',
+
+  // Company information (app settings group "company")
+  companySettings: 'Company Information',
+  companySettingsHint: 'Shown at the bottom of "My Account" in the mobile app.',
+  companyNameAr: 'Establishment Name (Arabic)',
+  companyNameEn: 'Establishment Name (English)',
+  commercialRegistrationNumber: 'Commercial Registration Number',
+  vatNumber: 'VAT Number',
+  companySettingsUpdated: 'Company information updated successfully.',
+  companySettingsUpdateFailed: 'Failed to update company information.',
+
+  // Page section full content
+  sectionFullContent: 'Full Content',
+  sectionFullContentHint:
+    'Optional. Opened in the app when the user taps the section (e.g. the full list of terms). The description stays the short summary.',
+  sectionFullContentAr: 'Full Content (Arabic)',
+  sectionFullContentEn: 'Full Content (English)',
 }
-
-
-

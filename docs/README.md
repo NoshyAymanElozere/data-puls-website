@@ -32,7 +32,8 @@ pnpm dev
 | [routing-and-navigation.md](./routing-and-navigation.md) | Routes & sidebar |
 | [styling-and-theming.md](./styling-and-theming.md) | Tailwind & dark mode |
 | [internationalization.md](./internationalization.md) | en/ar + RTL |
-| [settings.md](./settings.md) | Settings module |
+| [settings.md](./settings.md) | Settings module (incl. company info group, page-section full content) |
+| [partners.md](./partners.md) | Herz partners & partner sectors |
 | [adding-a-new-feature.md](./adding-a-new-feature.md) | Copy users CRUD template |
 
 ## Cursor rules

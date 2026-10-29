@@ -27,6 +27,8 @@ import {
   TicketPercent,
   UserCheck,
   Palette,
+  Handshake,
+  Layers,
 } from 'lucide-react'
 
 import { useTranslation } from 'react-i18next'
@@ -45,6 +47,8 @@ const navItems: { label: string; href: string; icon: React.ElementType; permissi
   { label: 'discountCodes', href: '/discount-codes', icon: TicketPercent },
   { label: 'subscriberFollowUp', href: '/subscriber-follow-up', icon: UserCheck },
   { label: 'categories', href: '/categories', icon: FolderTree },
+  { label: 'herzPartners', href: '/partners', icon: Handshake, permission: 'partners.view' },
+  { label: 'partnerSectors', href: '/partner-sectors', icon: Layers, permission: 'partner_sectors.view' },
   { label: 'onboardings', href: '/onboardings', icon: Smartphone },
   { label: 'appScreens', href: '/screens', icon: Palette, permission: 'screens.view' },
   { label: 'warrantyPeriods', href: '/warranty-periods', icon: ShieldCheck },

@@ -8,6 +8,8 @@
 | `/` | Dashboard |
 | `/users` | UsersPage |
 | `/reports` | Reports |
+| `/partners` | PartnersPage (`partners.view`) — see [partners.md](./partners.md) |
+| `/partner-sectors` | PartnerSectorsPage (`partner_sectors.view`) |
 | `/settings/globalsettings` | GlobalSettingsPage |
 | `/settings/countries` | CountriesPage |
 | `/settings/cities` | CitiesPage |

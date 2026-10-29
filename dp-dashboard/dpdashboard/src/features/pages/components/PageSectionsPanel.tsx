@@ -30,6 +30,8 @@ const schema = z.object({
   titleAr: z.string().min(1, 'requiredField'),
   descriptionEn: z.string().min(1, 'requiredField'),
   descriptionAr: z.string().min(1, 'requiredField'),
+  contentEn: z.string().max(200000, 'maxLength'),
+  contentAr: z.string().max(200000, 'maxLength'),
   sort_order: z.coerce.number().min(0),
   icon: z.any().optional(),
 })

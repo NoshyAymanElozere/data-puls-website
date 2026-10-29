@@ -35,6 +35,8 @@ import ExpiringWarrantiesPage from '@/features/dashboard/pages/ExpiringWarrantie
 import SubscriberFollowUpPage from '@/features/dashboard/pages/SubscriberFollowUpPage'
 import DiscountCodesPage from '@/features/discount-codes/pages/DiscountCodesPage'
 import SubscriptionSettingsPage from '@/features/settings/pages/subscriptionsettings/SubscriptionSettingsPage'
+import PartnersPage from '@/features/partners/pages/PartnersPage'
+import PartnerSectorsPage from '@/features/partner-sectors/pages/PartnerSectorsPage'
 
 const Placeholder = ({ title }: { title: string }) => {
   const { t } = useTranslation()
@@ -67,6 +69,8 @@ function App() {
             <Route path="categories" element={<CategoriesPage />} />
             <Route path="categories/:id/subcategories" element={<SubcategoriesPage />} />
             <Route path="categories/:id" element={<CategoryEditPage />} />
+            <Route path="partners" element={<PartnersPage />} />
+            <Route path="partner-sectors" element={<PartnerSectorsPage />} />
             <Route path="onboardings" element={<OnboardingsPage />} />
             <Route path="screens" element={<ScreensPage />} />
             <Route path="screens/:id" element={<ScreenEditPage />} />

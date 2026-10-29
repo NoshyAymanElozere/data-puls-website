@@ -16,6 +16,7 @@ import {
   mapGeneralSettingsToForm,
   mapContactSettingsToForm,
 } from '../../api/useAppSettings'
+import { CompanySettingsCard } from './CompanySettingsCard'
 
 const generalSchema = z.object({
   nameEn: z.string().min(1, 'requiredField'),
@@ -188,6 +189,8 @@ export default function GlobalSettingsPage() {
           </FormProvider>
         </CardContent>
       </Card>
+
+      <CompanySettingsCard />
     </div>
   )
 }

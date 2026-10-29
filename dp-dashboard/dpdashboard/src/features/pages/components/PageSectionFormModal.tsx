@@ -73,6 +73,45 @@ export function PageSectionFormModal({
             />
           </div>
         </div>
+
+        <div className="space-y-3 border-t border-border/40 pt-4">
+          <div>
+            <p className="text-sm font-bold text-foreground">{t('sectionFullContent')}</p>
+            <p className="text-xs text-muted-foreground">{t('sectionFullContentHint')}</p>
+          </div>
+          <div className="grid grid-cols-2 gap-4">
+            <div className="space-y-2" dir="rtl">
+              <label className="text-xs font-bold text-muted-foreground uppercase">{t('sectionFullContentAr')}</label>
+              <Controller
+                name="contentAr"
+                control={control}
+                render={({ field, fieldState }) => (
+                  <>
+                    <RichTextEditor value={field.value} onChange={field.onChange} contentLanguage="ar" />
+                    {fieldState.error?.message && (
+                      <p className="text-xs text-destructive">{t(fieldState.error.message)}</p>
+                    )}
+                  </>
+                )}
+              />
+            </div>
+            <div className="space-y-2" dir="ltr">
+              <label className="text-xs font-bold text-muted-foreground uppercase">{t('sectionFullContentEn')}</label>
+              <Controller
+                name="contentEn"
+                control={control}
+                render={({ field, fieldState }) => (
+                  <>
+                    <RichTextEditor value={field.value} onChange={field.onChange} contentLanguage="en" />
+                    {fieldState.error?.message && (
+                      <p className="text-xs text-destructive">{t(fieldState.error.message)}</p>
+                    )}
+                  </>
+                )}
+              />
+            </div>
+          </div>
+        </div>
       </div>
     </ModalStatus>
   )

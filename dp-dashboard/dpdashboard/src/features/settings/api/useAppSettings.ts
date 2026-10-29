@@ -9,7 +9,7 @@ import { applyValidationErrors } from '@/shared/utils/form-errors'
 import { getPublicApiBaseUrl } from '@/shared/utils/public-api-url'
 import type { UseFormSetError } from 'react-hook-form'
 
-export type AppSettingsGroup = 'general' | 'contact'
+export type AppSettingsGroup = 'general' | 'contact' | 'company'
 
 export interface GeneralAppSettings {
   group: 'general'
@@ -30,6 +30,14 @@ export interface ContactAppSettings {
   youtube?: string | null
 }
 
+/** Legal details shown at the bottom of "My Account" in the mobile app. */
+export interface CompanyAppSettings {
+  group: 'company'
+  name: Translatable
+  commercial_registration_number?: string | null
+  vat_number?: string | null
+}
+
 export interface GeneralSettingsFormData {
   nameEn: string
   nameAr: string
@@ -46,6 +54,13 @@ export interface ContactSettingsFormData {
   instagram: string
   telegram: string
   youtube: string
+}
+
+export interface CompanySettingsFormData {
+  nameEn: string
+  nameAr: string
+  commercial_registration_number: string
+  vat_number: string
 }
 
 export interface PublicAppBranding {
@@ -136,6 +151,15 @@ export function normalizeContactSettings(raw: Record<string, unknown>): ContactA
   }
 }
 
+export function normalizeCompanySettings(raw: Record<string, unknown>): CompanyAppSettings {
+  return {
+    group: 'company',
+    name: normalizeTranslatable(raw.name, raw, 'name'),
+    commercial_registration_number: normalizeString(raw.commercial_registration_number) || null,
+    vat_number: normalizeString(raw.vat_number) || null,
+  }
+}
+
 export function mapGeneralSettingsToForm(settings?: GeneralAppSettings | null): GeneralSettingsFormData {
   return {
     nameEn: settings?.name?.en ?? '',
@@ -158,6 +182,15 @@ export function mapContactSettingsToForm(settings?: ContactAppSettings | null): 
   }
 }
 
+export function mapCompanySettingsToForm(settings?: CompanyAppSettings | null): CompanySettingsFormData {
+  return {
+    nameEn: settings?.name?.en ?? '',
+    nameAr: settings?.name?.ar ?? '',
+    commercial_registration_number: settings?.commercial_registration_number ?? '',
+    vat_number: settings?.vat_number ?? '',
+  }
+}
+
 async function fetchGeneralSettings(): Promise<GeneralAppSettings> {
   const response = await api.get<SuccessResponse<GeneralAppSettings>>('/app-settings/general')
   return normalizeGeneralSettings(unwrapSettingsPayload(response.data))
@@ -166,6 +199,11 @@ async function fetchGeneralSettings(): Promise<GeneralAppSettings> {
 async function fetchContactSettings(): Promise<ContactAppSettings> {
   const response = await api.get<SuccessResponse<ContactAppSettings>>('/app-settings/contact')
   return normalizeContactSettings(unwrapSettingsPayload(response.data))
+}
+
+async function fetchCompanySettings(): Promise<CompanyAppSettings> {
+  const response = await api.get<SuccessResponse<CompanyAppSettings>>('/app-settings/company')
+  return normalizeCompanySettings(unwrapSettingsPayload(response.data))
 }
 
 export async function fetchPublicAppBranding(): Promise<PublicAppBranding> {
@@ -249,6 +287,39 @@ export function useUpdateAppSettingsContact(setError?: UseFormSetError<ContactSe
     onError: (error) => {
       if (setError && applyValidationErrors(error, setError)) return
       toast.error(getErrorMessage(error, i18n.t('contactSettingsUpdateFailed')))
+    },
+  })
+}
+
+export function useAppSettingsCompany() {
+  return useQuery({
+    queryKey: ['app-settings', 'company'],
+    queryFn: fetchCompanySettings,
+  })
+}
+
+/** Laravel validation keys for the company group → form field names. */
+const COMPANY_FIELD_MAP: Record<string, string> = { 'name.en': 'nameEn', 'name.ar': 'nameAr' }
+
+export function useUpdateAppSettingsCompany(setError?: UseFormSetError<CompanySettingsFormData>) {
+  const qc = useQueryClient()
+
+  return useMutation({
+    mutationFn: async (payload: CompanySettingsFormData) => {
+      const response = await api.put<SuccessResponse<CompanyAppSettings>>('/app-settings/company', {
+        name: { en: payload.nameEn, ar: payload.nameAr },
+        commercial_registration_number: payload.commercial_registration_number,
+        vat_number: payload.vat_number,
+      })
+      return response.data
+    },
+    onSuccess: (res) => {
+      qc.invalidateQueries({ queryKey: ['app-settings', 'company'] })
+      toast.success(res.message || i18n.t('companySettingsUpdated'))
+    },
+    onError: (error) => {
+      if (setError && applyValidationErrors(error, setError, COMPANY_FIELD_MAP)) return
+      toast.error(getErrorMessage(error, i18n.t('companySettingsUpdateFailed')))
     },
   })
 }

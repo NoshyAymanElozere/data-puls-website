@@ -13,6 +13,8 @@ export interface PageSection {
   page_id: number
   title: Translatable | string | null
   description: Translatable | string | null
+  /** Full HTML body opened when the user taps the section in the app. `{ en, ar }` on show, string on list. */
+  content?: Translatable | string | null
   sort_order: number
   icon_url?: string | null
   created_at?: string
@@ -23,8 +25,20 @@ export interface PageSectionFormData {
   titleAr: string
   descriptionEn: string
   descriptionAr: string
+  contentEn: string
+  contentAr: string
   sort_order: number
   icon?: File | null
+}
+
+/** Laravel validation keys (`content.en`) → form field names (`contentEn`). */
+const SECTION_FIELD_MAP: Record<string, string> = {
+  'title.en': 'titleEn',
+  'title.ar': 'titleAr',
+  'description.en': 'descriptionEn',
+  'description.ar': 'descriptionAr',
+  'content.en': 'contentEn',
+  'content.ar': 'contentAr',
 }
 
 export function usePageSectionsList(pageId: number | null, page = 1, search = '') {
@@ -60,6 +74,8 @@ function buildSectionFormData(payload: PageSectionFormData, pageId?: number, isU
 
   appendTranslatable(formData, 'title', { en: payload.titleEn, ar: payload.titleAr })
   appendTranslatable(formData, 'description', { en: payload.descriptionEn, ar: payload.descriptionAr })
+  // Optional; empty strings become null on the backend.
+  appendTranslatable(formData, 'content', { en: payload.contentEn ?? '', ar: payload.contentAr ?? '' })
   appendOptionalFile(formData, 'icon', payload.icon)
 
   return formData
@@ -82,7 +98,7 @@ export function useCreatePageSection(setError?: UseFormSetError<PageSectionFormD
       toast.success(res.message || i18n.t('sectionCreated'))
     },
     onError: (error) => {
-      if (setError && applyValidationErrors(error, setError)) return
+      if (setError && applyValidationErrors(error, setError, SECTION_FIELD_MAP)) return
       toast.error(getErrorMessage(error, i18n.t('sectionCreateFailed')))
     },
   })
@@ -114,7 +130,7 @@ export function useUpdatePageSection(setError?: UseFormSetError<PageSectionFormD
       toast.success(res.message || i18n.t('sectionUpdated'))
     },
     onError: (error) => {
-      if (setError && applyValidationErrors(error, setError)) return
+      if (setError && applyValidationErrors(error, setError, SECTION_FIELD_MAP)) return
       toast.error(getErrorMessage(error, i18n.t('sectionUpdateFailed')))
     },
   })
@@ -141,7 +157,16 @@ export function useDeletePageSection() {
 
 export function sectionToFormValues(section?: PageSection | null): PageSectionFormData {
   if (!section) {
-    return { titleEn: '', titleAr: '', descriptionEn: '', descriptionAr: '', sort_order: 0, icon: null }
+    return {
+      titleEn: '',
+      titleAr: '',
+      descriptionEn: '',
+      descriptionAr: '',
+      contentEn: '',
+      contentAr: '',
+      sort_order: 0,
+      icon: null,
+    }
   }
 
   const title = typeof section.title === 'string' ? { en: section.title, ar: section.title } : section.title ?? ({} as Partial<Translatable>)
@@ -149,12 +174,18 @@ export function sectionToFormValues(section?: PageSection | null): PageSectionFo
     typeof section.description === 'string'
       ? { en: section.description, ar: section.description }
       : section.description ?? ({} as Partial<Translatable>)
+  const content =
+    typeof section.content === 'string'
+      ? { en: section.content, ar: section.content }
+      : section.content ?? ({} as Partial<Translatable>)
 
   return {
     titleEn: title.en || '',
     titleAr: title.ar || '',
     descriptionEn: description.en || '',
     descriptionAr: description.ar || '',
+    contentEn: content.en || '',
+    contentAr: content.ar || '',
     sort_order: section.sort_order ?? 0,
     icon: null,
   }
