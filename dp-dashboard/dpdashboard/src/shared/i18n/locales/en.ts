@@ -126,6 +126,8 @@ export const en = {
   arabicDescription: 'Arabic Description',
   englishDescription: 'English Description',
   image: 'Image',
+  imageLight: 'Light mode image',
+  imageDark: 'Dark mode image',
   uploadImage: 'Upload Image',
   noImage: 'No image available',
   onboardingCreated: 'Onboarding created successfully.',

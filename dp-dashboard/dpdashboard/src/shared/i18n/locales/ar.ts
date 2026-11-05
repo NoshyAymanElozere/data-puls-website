@@ -126,6 +126,8 @@ export const ar = {
   arabicDescription: 'الوصف بالعربية',
   englishDescription: 'الوصف بالإنجليزية',
   image: 'الصورة',
+  imageLight: 'صورة الوضع الفاتح',
+  imageDark: 'صورة الوضع الداكن',
   uploadImage: 'رفع صورة',
   noImage: 'لا توجد صورة',
   onboardingCreated: 'تم إنشاء شاشة الترحيب بنجاح.',

@@ -10,6 +10,7 @@ export const schema = z.object({
   sort_order: z.coerce.number().min(0),
   is_active: z.boolean(),
   image: z.any().nullable().optional(),
+  image_dark: z.any().nullable().optional(),
 })
 
 export type OnboardingFormValues = z.infer<typeof schema>
@@ -30,6 +31,7 @@ export function getInitialValues(editingItem?: Partial<Onboarding> | null): Onbo
       sort_order: 0,
       is_active: true,
       image: null,
+      image_dark: null,
     }
   }
 
@@ -41,6 +43,7 @@ export function getInitialValues(editingItem?: Partial<Onboarding> | null): Onbo
     sort_order: editingItem.sort_order ?? 0,
     is_active: editingItem.is_active ?? true,
     image: null,
+    image_dark: null,
   }
 }
 

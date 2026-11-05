@@ -111,13 +111,22 @@ export function OnboardingsFormModal({
           </div>
         </div>
 
-        <ImageUpload
-          name="image"
-          label={t('image')}
-          currentImageUrl={source?.image_url || undefined}
-          disabled={isViewOnly}
-          aspectRatio="aspect-video h-40"
-        />
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+          <ImageUpload
+            name="image"
+            label={t('imageLight')}
+            currentImageUrl={source?.image_url || undefined}
+            disabled={isViewOnly}
+            aspectRatio="aspect-video h-40"
+          />
+          <ImageUpload
+            name="image_dark"
+            label={t('imageDark')}
+            currentImageUrl={source?.image_dark_url || undefined}
+            disabled={isViewOnly}
+            aspectRatio="aspect-video h-40"
+          />
+        </div>
       </div>
     </ModalStatus>
   )

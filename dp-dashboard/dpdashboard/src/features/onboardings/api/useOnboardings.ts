@@ -17,6 +17,7 @@ export interface Onboarding {
   is_active: boolean
   sort_order: number
   image_url?: string | null
+  image_dark_url?: string | null
   created_at?: string
   updated_at?: string
 }
@@ -29,6 +30,7 @@ export interface OnboardingFormData {
   sort_order: number
   is_active: boolean
   image?: File | null
+  image_dark?: File | null
 }
 
 function buildOnboardingFormData(payload: OnboardingFormData, isUpdate = false): FormData {
@@ -47,6 +49,7 @@ function buildOnboardingFormData(payload: OnboardingFormData, isUpdate = false):
     ar: payload.descriptionAr,
   })
   appendOptionalFile(formData, 'image', payload.image)
+  appendOptionalFile(formData, 'image_dark', payload.image_dark)
 
   return formData
 }
