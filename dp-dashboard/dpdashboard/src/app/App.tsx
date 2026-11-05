@@ -38,6 +38,7 @@ import SubscriptionSettingsPage from '@/features/settings/pages/subscriptionsett
 import PartnersPage from '@/features/partners/pages/PartnersPage'
 import PartnerSectorsPage from '@/features/partner-sectors/pages/PartnerSectorsPage'
 import ProfileSectionsPage from '@/features/profile-sections/pages/ProfileSectionsPage'
+import BottomNavItemsPage from '@/features/bottom-nav-items/pages/BottomNavItemsPage'
 
 const Placeholder = ({ title }: { title: string }) => {
   const { t } = useTranslation()
@@ -73,6 +74,7 @@ function App() {
             <Route path="partners" element={<PartnersPage />} />
             <Route path="partner-sectors" element={<PartnerSectorsPage />} />
             <Route path="profile-sections" element={<ProfileSectionsPage />} />
+            <Route path="bottom-nav-items" element={<BottomNavItemsPage />} />
             <Route path="onboardings" element={<OnboardingsPage />} />
             <Route path="screens" element={<ScreensPage />} />
             <Route path="screens/:id" element={<ScreenEditPage />} />

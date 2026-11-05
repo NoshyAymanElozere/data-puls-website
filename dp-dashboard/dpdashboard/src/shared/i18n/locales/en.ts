@@ -933,6 +933,18 @@ export const en = {
   profileSectionsSortFailed: 'Could not save the section order.',
   moveUp: 'Move up',
   moveDown: 'Move down',
+
+  // App bottom bar icons
+  bottomNavItems: 'App Bottom Bar',
+  bottomNavItemsSubtitle: 'Choose the Font Awesome icon of each item in the app\'s bottom bar. Icons appear in the app once it loads them.',
+  bottomNavChangeIcon: 'Change icon',
+  bottomNavChooseIcon: 'Choose an icon',
+  bottomNavSearchIcons: 'Search icons in English, e.g. home, user, receipt',
+  bottomNavNoIconsFound: 'No icons match your search.',
+  bottomNavIconsLoadFailed: 'Could not load the icons.',
+  bottomNavIconsTruncated: 'Showing {{shown}} of {{total}} icons. Search to find more.',
+  bottomNavIconUpdated: 'Icon updated successfully.',
+  bottomNavIconUpdateFailed: 'Could not update the icon.',
   partnerLogoHint: 'Optional. Image up to 2MB.',
   partnerRemoveLogo: 'Remove current logo',
   partnerLogoTooLarge: 'The logo must not be larger than 2MB.',

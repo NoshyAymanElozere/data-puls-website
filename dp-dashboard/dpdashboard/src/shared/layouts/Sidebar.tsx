@@ -30,6 +30,7 @@ import {
   Handshake,
   Layers,
   UserCog,
+  PanelBottom,
 } from 'lucide-react'
 
 import { useTranslation } from 'react-i18next'
@@ -53,6 +54,7 @@ const navItems: { label: string; href: string; icon: React.ElementType; permissi
   { label: 'onboardings', href: '/onboardings', icon: Smartphone },
   { label: 'appScreens', href: '/screens', icon: Palette, permission: 'screens.view' },
   { label: 'profileSections', href: '/profile-sections', icon: UserCog, permission: 'profile_sections.view' },
+  { label: 'bottomNavItems', href: '/bottom-nav-items', icon: PanelBottom, permission: 'bottom_nav_items.view' },
   { label: 'warrantyPeriods', href: '/warranty-periods', icon: ShieldCheck },
   { label: 'expiringWarranties', href: '/expiring-warranties', icon: ShieldAlert },
   { label: 'sendNotification', href: '/send-notification', icon: Send },

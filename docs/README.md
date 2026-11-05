@@ -35,6 +35,7 @@ pnpm dev
 | [settings.md](./settings.md) | Settings module (incl. company info group, page-section full content) |
 | [partners.md](./partners.md) | Herz partners & partner sectors |
 | [profile-sections.md](./profile-sections.md) | Mobile My Account page sections (show, hide, order) |
+| [bottom-nav-items.md](./bottom-nav-items.md) | Mobile bottom bar icons (Font Awesome) |
 | [adding-a-new-feature.md](./adding-a-new-feature.md) | Copy users CRUD template |
 
 ## Cursor rules

@@ -933,6 +933,18 @@ export const ar = {
   profileSectionsSortFailed: 'تعذر حفظ ترتيب الأقسام.',
   moveUp: 'نقل لأعلى',
   moveDown: 'نقل لأسفل',
+
+  // App bottom bar icons
+  bottomNavItems: 'الشريط السفلي للتطبيق',
+  bottomNavItemsSubtitle: 'اختر أيقونة Font Awesome لكل عنصر في الشريط السفلي للتطبيق. تظهر الأيقونات في التطبيق بعد تحميلها.',
+  bottomNavChangeIcon: 'تغيير الأيقونة',
+  bottomNavChooseIcon: 'اختر أيقونة',
+  bottomNavSearchIcons: 'ابحث عن الأيقونات بالإنجليزية، مثل home أو user أو receipt',
+  bottomNavNoIconsFound: 'لا توجد أيقونات مطابقة لبحثك.',
+  bottomNavIconsLoadFailed: 'تعذر تحميل الأيقونات.',
+  bottomNavIconsTruncated: 'عرض {{shown}} من {{total}} أيقونة. استخدم البحث للعثور على المزيد.',
+  bottomNavIconUpdated: 'تم تحديث الأيقونة بنجاح.',
+  bottomNavIconUpdateFailed: 'تعذر تحديث الأيقونة.',
   partnerLogoHint: 'اختياري. صورة حتى 2 ميجابايت.',
   partnerRemoveLogo: 'حذف الشعار الحالي',
   partnerLogoTooLarge: 'يجب ألا يتجاوز حجم الشعار 2 ميجابايت.',

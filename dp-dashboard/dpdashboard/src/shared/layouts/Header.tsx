@@ -45,6 +45,7 @@ const routeTitles: Record<string, string> = {
   '/partners': 'herzPartners',
   '/partner-sectors': 'partnerSectors',
   '/profile-sections': 'profileSections',
+  '/bottom-nav-items': 'bottomNavItems',
   '/settings': 'settings',
 }
 
