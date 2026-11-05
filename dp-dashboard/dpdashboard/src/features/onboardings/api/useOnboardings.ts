@@ -2,36 +2,38 @@ import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query'
 import toast from 'react-hot-toast'
 import api, { getErrorMessage } from '@/shared/services/axios'
 import i18n from '@/shared/i18n/i18n'
-import type { LaravelPaginatedResponse, SuccessResponse, Translatable } from '@/shared/types/laravel'
-import { appendOptionalFile, appendTranslatable, createPutFormData } from '@/shared/utils/form-data'
-import { getLocalizedValue } from '@/shared/utils/localized-value'
+import type { LaravelPaginatedResponse, SuccessResponse } from '@/shared/types/laravel'
+import { appendOptionalFile, createPutFormData } from '@/shared/utils/form-data'
 import { buildQueryParams } from '@/shared/utils/query-params'
 import { applyValidationErrors } from '@/shared/utils/form-errors'
 import type { UseFormSetError } from 'react-hook-form'
 import type { OnboardingFormValues } from '../pages/validationSchema'
 
+export const ONBOARDING_IMAGE_FIELDS = [
+  'image_ar_light',
+  'image_ar_dark',
+  'image_en_light',
+  'image_en_dark',
+] as const
+
+export type OnboardingImageField = (typeof ONBOARDING_IMAGE_FIELDS)[number]
+
 export interface Onboarding {
   id: number
-  title: string | Translatable
-  description: string | Translatable
   is_active: boolean
   sort_order: number
-  image_url?: string | null
-  image_dark_url?: string | null
+  image_ar_light_url?: string | null
+  image_ar_dark_url?: string | null
+  image_en_light_url?: string | null
+  image_en_dark_url?: string | null
   created_at?: string
   updated_at?: string
 }
 
-export interface OnboardingFormData {
-  titleEn: string
-  titleAr: string
-  descriptionEn: string
-  descriptionAr: string
+export type OnboardingFormData = {
   sort_order: number
   is_active: boolean
-  image?: File | null
-  image_dark?: File | null
-}
+} & Partial<Record<OnboardingImageField, File | null>>
 
 function buildOnboardingFormData(payload: OnboardingFormData, isUpdate = false): FormData {
   const formData = createPutFormData({
@@ -43,22 +45,16 @@ function buildOnboardingFormData(payload: OnboardingFormData, isUpdate = false):
     formData.delete('_method')
   }
 
-  appendTranslatable(formData, 'title', { en: payload.titleEn, ar: payload.titleAr })
-  appendTranslatable(formData, 'description', {
-    en: payload.descriptionEn,
-    ar: payload.descriptionAr,
-  })
-  appendOptionalFile(formData, 'image', payload.image)
-  appendOptionalFile(formData, 'image_dark', payload.image_dark)
+  ONBOARDING_IMAGE_FIELDS.forEach((field) => appendOptionalFile(formData, field, payload[field]))
 
   return formData
 }
 
-export function useOnboardingsList(page = 1, search = '', isActive = '') {
+export function useOnboardingsList(page = 1, isActive = '') {
   return useQuery({
-    queryKey: ['onboardings-list', page, search, isActive],
+    queryKey: ['onboardings-list', page, isActive],
     queryFn: async () => {
-      const params = buildQueryParams({ page, search, is_active: isActive })
+      const params = buildQueryParams({ page, is_active: isActive })
       const response = await api.get<LaravelPaginatedResponse<Onboarding>>(`/onboardings?${params}`)
       return response.data
     },
@@ -157,8 +153,4 @@ export function useToggleOnboardingStatus() {
       toast.error(getErrorMessage(error, i18n.t('onboardingStatusFailed')))
     },
   })
-}
-
-export function getOnboardingTitle(title: string | Translatable, lang = 'en'): string {
-  return getLocalizedValue(title, lang)
 }

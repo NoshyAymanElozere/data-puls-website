@@ -2,11 +2,10 @@ import { useEffect } from 'react'
 import { Controller, useFormContext } from 'react-hook-form'
 import { useTranslation } from 'react-i18next'
 import { BaseInputField } from '@/shared/components/base-input-field'
-import { BaseTextAreaField } from '@/shared/components/base-textarea-field'
 import { ImageUpload } from '@/shared/components/image-upload'
 import ModalStatus from '@/shared/components/modal-status'
 import { StatusDropdown } from '@/shared/components/StatusDropdown'
-import type { Onboarding } from '../api/useOnboardings'
+import { ONBOARDING_IMAGE_FIELDS, type Onboarding, type OnboardingImageField } from '../api/useOnboardings'
 import { getInitialValues } from './validationSchema'
 
 interface OnboardingsFormModalProps {
@@ -19,6 +18,13 @@ interface OnboardingsFormModalProps {
   loading: boolean
   label: string
   isViewOnly?: boolean
+}
+
+const IMAGE_LABELS: Record<OnboardingImageField, string> = {
+  image_ar_light: 'onboardingImageArLight',
+  image_ar_dark: 'onboardingImageArDark',
+  image_en_light: 'onboardingImageEnLight',
+  image_en_dark: 'onboardingImageEnDark',
 }
 
 export function OnboardingsFormModal({
@@ -64,28 +70,6 @@ export function OnboardingsFormModal({
     >
       <div className="space-y-4 max-h-[70vh] overflow-y-auto" dir={isRtl ? 'rtl' : 'ltr'}>
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-          <BaseInputField name="titleAr" label={t('arabicTitle')} disabled={isViewOnly} />
-          <BaseInputField name="titleEn" label={t('englishTitle')} disabled={isViewOnly} />
-        </div>
-
-        <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-          <BaseTextAreaField
-            name="descriptionAr"
-            label={t('arabicDescription')}
-            required
-            disabled={isViewOnly}
-            rows={4}
-          />
-          <BaseTextAreaField
-            name="descriptionEn"
-            label={t('englishDescription')}
-            required
-            disabled={isViewOnly}
-            rows={4}
-          />
-        </div>
-
-        <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
           <BaseInputField
             name="sort_order"
             label={t('sortOrder')}
@@ -112,20 +96,16 @@ export function OnboardingsFormModal({
         </div>
 
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-          <ImageUpload
-            name="image"
-            label={t('imageLight')}
-            currentImageUrl={source?.image_url || undefined}
-            disabled={isViewOnly}
-            aspectRatio="aspect-video h-40"
-          />
-          <ImageUpload
-            name="image_dark"
-            label={t('imageDark')}
-            currentImageUrl={source?.image_dark_url || undefined}
-            disabled={isViewOnly}
-            aspectRatio="aspect-video h-40"
-          />
+          {ONBOARDING_IMAGE_FIELDS.map((field) => (
+            <ImageUpload
+              key={field}
+              name={field}
+              label={t(IMAGE_LABELS[field])}
+              currentImageUrl={source?.[`${field}_url`] || undefined}
+              disabled={isViewOnly}
+              aspectRatio="aspect-video h-40"
+            />
+          ))}
         </div>
       </div>
     </ModalStatus>

@@ -2,7 +2,6 @@ import { Button } from '@/shared/components/button'
 import { Card, CardContent, CardHeader, CardTitle } from '@/shared/components/card'
 import { useZodForm } from '@/shared/components/form-fields'
 import { GenericDataGrid } from '@/shared/components/GenericDataGrid'
-import { SearchInput } from '@/shared/components/input'
 import ModalStatus from '@/shared/components/modal-status'
 import { useTableState } from '@/shared/hooks/useTableState'
 import { useProfile } from '@/features/auth/api/useAuth'
@@ -25,7 +24,7 @@ import { OnboardingsFormModal } from './OnboardingsFormModal'
 import { createSchema, getInitialValues, updateSchema, type OnboardingFormValues } from './validationSchema'
 
 export default function OnboardingsPage() {
-  const { t, i18n } = useTranslation()
+  const { t } = useTranslation()
   const label = t('onboardings')
   const table = useTableState()
   const { data: admin } = useProfile()
@@ -47,7 +46,7 @@ export default function OnboardingsPage() {
     isModalOpen && editingItem ? editingItem.id : null
   )
 
-  const { data: paginatedData, isLoading } = useOnboardingsList(table.page, table.search, statusFilter)
+  const { data: paginatedData, isLoading } = useOnboardingsList(table.page, statusFilter)
   const items = paginatedData?.data ?? []
 
   const createMutation = useCreateOnboarding(methods.setError)
@@ -75,7 +74,6 @@ export default function OnboardingsPage() {
 
   const columnDefs = getOnboardingsColumnDefs({
     t,
-    lang: i18n.language,
     toggleMutation,
     setEditingItem,
     setIsModalOpen,
@@ -106,13 +104,6 @@ export default function OnboardingsPage() {
         </CardHeader>
         <CardContent className="p-6 space-y-4">
           <div className="flex flex-col sm:flex-row gap-3 max-w-xl">
-            <div className="flex-1">
-              <SearchInput
-                placeholder={`${t('search')} ${label}...`}
-                value={table.search}
-                onChange={(e) => table.setSearch(e.target.value)}
-              />
-            </div>
             <select
               value={statusFilter}
               onChange={(e) => {

@@ -1,13 +1,11 @@
 import { Button } from '@/shared/components/button'
 import { StatusToggle } from '@/shared/components/StatusToggle'
-import { getLocalizedValue, localizedNameColumnDef } from '@/shared/utils/localized-value'
 import type { ColDef } from 'ag-grid-community'
 import { Eye, Pencil, Trash2 } from 'lucide-react'
-import type { Onboarding } from '../api/useOnboardings'
+import { ONBOARDING_IMAGE_FIELDS, type Onboarding } from '../api/useOnboardings'
 
 interface ColumnDefsProps {
   t: (key: string) => string
-  lang: string
   toggleMutation: { mutate: (id: number) => void; mutateAsync?: (id: number) => Promise<unknown> }
   setEditingItem: (item: Onboarding) => void
   setIsModalOpen: (open: boolean) => void
@@ -19,7 +17,6 @@ interface ColumnDefsProps {
 
 export function getOnboardingsColumnDefs({
   t,
-  lang,
   toggleMutation,
   setEditingItem,
   setIsModalOpen,
@@ -30,35 +27,33 @@ export function getOnboardingsColumnDefs({
 }: ColumnDefsProps): ColDef[] {
   return [
     {
-      headerName: t('image') || 'Image',
-      field: 'image_url',
+      headerName: t('images') || 'Images',
       filter: false,
       sortable: false,
-      width: 90,
-      cellRenderer: (params: { data?: Onboarding }) => {
-        const url = params.data?.image_url
-        if (!url) {
-          return <span className="text-xs text-muted-foreground">—</span>
-        }
-        return (
-          <div className="flex items-center h-full py-1">
-            <img src={url} alt="" className="h-9 w-9 rounded-lg object-cover border border-border/60" />
-          </div>
-        )
-      },
-    },
-    localizedNameColumnDef(t, lang, { field: 'title', headerKey: 'title' }),
-    {
-      headerName: t('description') || 'Description',
-      field: 'description',
-      filter: false,
-      flex: 1.2,
-      valueGetter: (params) => {
-        const data = params.data as Onboarding | undefined
-        if (!data) return ''
-        const text = getLocalizedValue(data.description, lang)
-        return text.length > 80 ? `${text.slice(0, 80)}…` : text
-      },
+      flex: 1,
+      minWidth: 200,
+      cellRenderer: (params: { data?: Onboarding }) => (
+        <div className="flex items-center gap-1.5 h-full py-1">
+          {ONBOARDING_IMAGE_FIELDS.map((field) => {
+            const url = params.data?.[`${field}_url`]
+            return url ? (
+              <img
+                key={field}
+                src={url}
+                alt=""
+                className="h-9 w-9 rounded-lg object-contain bg-muted border border-border/60"
+              />
+            ) : (
+              <span
+                key={field}
+                className="h-9 w-9 rounded-lg border border-dashed border-border flex items-center justify-center text-xs text-muted-foreground"
+              >
+                —
+              </span>
+            )
+          })}
+        </div>
+      ),
     },
     {
       headerName: t('sortOrder') || 'Sort Order',
