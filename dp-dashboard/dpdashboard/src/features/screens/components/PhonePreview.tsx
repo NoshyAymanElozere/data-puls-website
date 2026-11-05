@@ -17,7 +17,7 @@ const FALLBACK_COLORS: Record<ThemeMode, Record<ThemeColorField, string>> = {
   light: {
     primary_color: '#F07522',
     secondary_color: '#291B4E',
-    background_color: '#FCF8ED',
+    background_color: '#FFF0E5',
     card_color: '#FFFFFF',
     border_color: '#E0D5C6',
     text_primary_color: '#291B4E',
