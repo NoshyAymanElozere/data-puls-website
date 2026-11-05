@@ -29,6 +29,7 @@ import {
   Palette,
   Handshake,
   Layers,
+  UserCog,
 } from 'lucide-react'
 
 import { useTranslation } from 'react-i18next'
@@ -51,6 +52,7 @@ const navItems: { label: string; href: string; icon: React.ElementType; permissi
   { label: 'partnerSectors', href: '/partner-sectors', icon: Layers, permission: 'partner_sectors.view' },
   { label: 'onboardings', href: '/onboardings', icon: Smartphone },
   { label: 'appScreens', href: '/screens', icon: Palette, permission: 'screens.view' },
+  { label: 'profileSections', href: '/profile-sections', icon: UserCog, permission: 'profile_sections.view' },
   { label: 'warrantyPeriods', href: '/warranty-periods', icon: ShieldCheck },
   { label: 'expiringWarranties', href: '/expiring-warranties', icon: ShieldAlert },
   { label: 'sendNotification', href: '/send-notification', icon: Send },

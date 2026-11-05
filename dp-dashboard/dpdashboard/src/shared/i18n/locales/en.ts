@@ -923,6 +923,16 @@ export const en = {
   partnerMapUrl: 'Map URL',
   partnerOpenMap: 'Open in maps',
   partnerLogo: 'Logo',
+
+  // My Account page sections
+  profileSections: 'My Account Page',
+  profileSectionsSubtitle: 'Choose which sections appear on the My Account page in the app, and their order. Changes are saved at once.',
+  profileSectionStatusUpdated: 'Section updated successfully.',
+  profileSectionStatusFailed: 'Could not update the section.',
+  profileSectionsSorted: 'Section order saved.',
+  profileSectionsSortFailed: 'Could not save the section order.',
+  moveUp: 'Move up',
+  moveDown: 'Move down',
   partnerLogoHint: 'Optional. Image up to 2MB.',
   partnerRemoveLogo: 'Remove current logo',
   partnerLogoTooLarge: 'The logo must not be larger than 2MB.',

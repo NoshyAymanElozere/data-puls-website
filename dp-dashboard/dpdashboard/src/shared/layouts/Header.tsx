@@ -44,6 +44,7 @@ const routeTitles: Record<string, string> = {
   '/subscriber-follow-up': 'subscriberFollowUp',
   '/partners': 'herzPartners',
   '/partner-sectors': 'partnerSectors',
+  '/profile-sections': 'profileSections',
   '/settings': 'settings',
 }
 

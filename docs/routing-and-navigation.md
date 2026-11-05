@@ -10,6 +10,7 @@
 | `/reports` | Reports |
 | `/partners` | PartnersPage (`partners.view`) — see [partners.md](./partners.md) |
 | `/partner-sectors` | PartnerSectorsPage (`partner_sectors.view`) |
+| `/profile-sections` | ProfileSectionsPage (`profile_sections.view`) — see [profile-sections.md](./profile-sections.md) |
 | `/settings/globalsettings` | GlobalSettingsPage |
 | `/settings/countries` | CountriesPage |
 | `/settings/cities` | CitiesPage |

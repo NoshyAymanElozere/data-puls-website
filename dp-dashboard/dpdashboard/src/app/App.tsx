@@ -37,6 +37,7 @@ import DiscountCodesPage from '@/features/discount-codes/pages/DiscountCodesPage
 import SubscriptionSettingsPage from '@/features/settings/pages/subscriptionsettings/SubscriptionSettingsPage'
 import PartnersPage from '@/features/partners/pages/PartnersPage'
 import PartnerSectorsPage from '@/features/partner-sectors/pages/PartnerSectorsPage'
+import ProfileSectionsPage from '@/features/profile-sections/pages/ProfileSectionsPage'
 
 const Placeholder = ({ title }: { title: string }) => {
   const { t } = useTranslation()
@@ -71,6 +72,7 @@ function App() {
             <Route path="categories/:id" element={<CategoryEditPage />} />
             <Route path="partners" element={<PartnersPage />} />
             <Route path="partner-sectors" element={<PartnerSectorsPage />} />
+            <Route path="profile-sections" element={<ProfileSectionsPage />} />
             <Route path="onboardings" element={<OnboardingsPage />} />
             <Route path="screens" element={<ScreensPage />} />
             <Route path="screens/:id" element={<ScreenEditPage />} />

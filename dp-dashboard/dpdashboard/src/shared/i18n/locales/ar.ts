@@ -923,6 +923,16 @@ export const ar = {
   partnerMapUrl: 'رابط الخريطة',
   partnerOpenMap: 'فتح في الخرائط',
   partnerLogo: 'الشعار',
+
+  // My Account page sections
+  profileSections: 'صفحة حسابي',
+  profileSectionsSubtitle: 'حدد الأقسام التي تظهر في صفحة حسابي في التطبيق وترتيبها. تُحفظ التغييرات فوراً.',
+  profileSectionStatusUpdated: 'تم تحديث القسم بنجاح.',
+  profileSectionStatusFailed: 'تعذر تحديث القسم.',
+  profileSectionsSorted: 'تم حفظ ترتيب الأقسام.',
+  profileSectionsSortFailed: 'تعذر حفظ ترتيب الأقسام.',
+  moveUp: 'نقل لأعلى',
+  moveDown: 'نقل لأسفل',
   partnerLogoHint: 'اختياري. صورة حتى 2 ميجابايت.',
   partnerRemoveLogo: 'حذف الشعار الحالي',
   partnerLogoTooLarge: 'يجب ألا يتجاوز حجم الشعار 2 ميجابايت.',
