@@ -109,8 +109,9 @@ export function UsersFormModal({
       onCancelButtonClick={() => onOpenChange(false)}
       loading={loading || detailLoading}
       size={isViewOnly ? '2xl' : 'lg'}
+      bodyClassName={isViewOnly ? 'max-h-[calc(92vh-11rem)] overflow-y-auto overflow-x-hidden px-1 -mx-1' : undefined}
     >
-      <div className="space-y-4" dir={isRtl ? 'rtl' : 'ltr'}>
+      <div className="space-y-4 min-w-0" dir={isRtl ? 'rtl' : 'ltr'}>
         {isViewOnly && source && (
           <div className="space-y-4">
             {/* User Header Profile Banner */}

@@ -61,7 +61,7 @@ export function UserInvoicesPanel({ userId, showFamilyFilter = true }: UserInvoi
   }
 
   return (
-    <div className="space-y-4" dir={isRtl ? 'rtl' : 'ltr'}>
+    <div className="space-y-4 min-w-0" dir={isRtl ? 'rtl' : 'ltr'}>
       {/* Search & Filter Header */}
       <div className="flex flex-col sm:flex-row items-stretch sm:items-center justify-between gap-3 bg-muted/20 p-2.5 rounded-2xl border border-border/50">
         <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-2.5 flex-1">

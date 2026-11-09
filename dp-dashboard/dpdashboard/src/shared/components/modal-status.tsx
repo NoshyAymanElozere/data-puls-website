@@ -18,6 +18,8 @@ export interface ModalStatusProps {
   children?: React.ReactNode
   size?: 'sm' | 'md' | 'lg' | 'xl' | '2xl' | '3xl' | 'full'
   type?: 'default' | 'delete'
+  /** Extra classes for the body wrapper (e.g. make long content scroll inside the dialog). */
+  bodyClassName?: string
 }
 
 export function ModalStatus({
@@ -32,7 +34,8 @@ export function ModalStatus({
   loading = false,
   children,
   size = 'md',
-  type = 'default'
+  type = 'default',
+  bodyClassName
 }: ModalStatusProps) {
   const isRtl = typeof document !== 'undefined' && document.documentElement.dir === 'rtl'
   const resolvedCancel = cancelLabel !== undefined ? cancelLabel : (isRtl ? 'إلغاء' : 'Cancel')
@@ -83,7 +86,7 @@ export function ModalStatus({
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
       {/* overflow-visible: avoids clipping react-select menus inside the dialog */}
-      <DialogContent size={size} className="max-h-[92vh] overflow-visible">
+      <DialogContent size={size} className="max-h-[92vh] overflow-visible grid-cols-[minmax(0,1fr)]">
         <DialogHeader>
           <DialogTitle className="text-lg font-bold text-foreground">{title}</DialogTitle>
           {description && (
@@ -94,7 +97,8 @@ export function ModalStatus({
         </DialogHeader>
 
         {children && (
-          <div className="py-2 overflow-visible">
+          // min-w-0: DialogContent is a grid; without it wide children (tables) stretch the dialog
+          <div className={cn('py-2 min-w-0 overflow-visible', bodyClassName)}>
             {children}
           </div>
         )}
