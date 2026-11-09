@@ -275,7 +275,7 @@ export function UsersFormModal({
               {/* Tab 5: Subscriptions Content */}
               <TabsContent value="subscriptions" className="mt-4">
                 {detail ? (
-                  <UserSubscriptionsPanel user={detail} />
+                  <UserSubscriptionsPanel user={detail} manageable />
                 ) : (
                   <div className="py-8 text-center text-xs font-semibold text-muted-foreground">
                     Loading subscriptions...

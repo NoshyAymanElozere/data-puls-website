@@ -37,6 +37,10 @@ export interface UserSubscription {
   trial_ends_at: string | null
   ends_at: string | null
   cancelled_at: string | null
+  /** Y-m-d, for date inputs. */
+  starts_at_date?: string | null
+  /** Y-m-d, for date inputs. */
+  ends_at_date?: string | null
   remaining_days: number | null
   billing_option: SubscriptionPackageBillingOption
   package: UserSubscriptionPackage

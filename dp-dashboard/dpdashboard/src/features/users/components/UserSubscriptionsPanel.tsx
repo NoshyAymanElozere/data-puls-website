@@ -7,8 +7,14 @@ import { useTranslation } from 'react-i18next'
 import type { SubscriptionStatus } from '@/features/subscription-packages/api/useSubscriptionPackages'
 import type { UserDetail, UserSubscription, UserSubscriptionAccess, UserSubscriptionDiscount } from '../api/useUsers'
 import { getLocalizedValue } from '@/shared/utils/localized-value'
-import { Gift, TicketPercent } from 'lucide-react'
+import { Ban, Gift, Pencil, Plus, TicketPercent } from 'lucide-react'
 import { AccessTypeBadge } from './AccessTypeBadge'
+import { Button } from '@/shared/components/button'
+import ModalStatus from '@/shared/components/modal-status'
+import { useProfile } from '@/features/auth/api/useAuth'
+import { hasPermission } from '@/shared/utils/permissions'
+import { UserSubscriptionFormModal } from './UserSubscriptionFormModal'
+import { useUpdateUserSubscription } from '../api/useUserSubscriptions'
 
 export function isUnpaidSubscription(item: UserSubscription): boolean {
   return (
@@ -122,11 +128,37 @@ function SubscriptionAccessBlock({ access }: { access: UserSubscriptionAccess })
 
 interface UserSubscriptionsPanelProps {
   user: UserDetail
+  /** Show grant / edit / cancel controls (admins with users.update only). */
+  manageable?: boolean
 }
 
-export function UserSubscriptionsPanel({ user }: UserSubscriptionsPanelProps) {
+export function UserSubscriptionsPanel({ user, manageable = false }: UserSubscriptionsPanelProps) {
   const { t, i18n } = useTranslation()
   const [showUnpaid, setShowUnpaid] = useState(false)
+  const { data: admin } = useProfile()
+  const canManage = manageable && hasPermission(admin, 'users.update') && !user.account_owner_id
+  const [formOpen, setFormOpen] = useState(false)
+  const [editing, setEditing] = useState<UserSubscription | null>(null)
+  const [cancelling, setCancelling] = useState<UserSubscription | null>(null)
+  const updateMutation = useUpdateUserSubscription(user.id)
+
+  const openGrant = () => {
+    setEditing(null)
+    setFormOpen(true)
+  }
+
+  const openEdit = (item: UserSubscription) => {
+    setEditing(item)
+    setFormOpen(true)
+  }
+
+  const confirmCancel = () => {
+    if (!cancelling) return
+    updateMutation.mutate(
+      { subscriptionId: cancelling.id, payload: { status: 'cancelled' } },
+      { onSuccess: () => setCancelling(null) }
+    )
+  }
 
   const active = user.active_subscription && !isUnpaidSubscription(user.active_subscription) ? user.active_subscription : null
   const allSubscriptions = user.subscriptions ?? []
@@ -215,18 +247,64 @@ export function UserSubscriptionsPanel({ user }: UserSubscriptionsPanelProps) {
         width: 150,
         valueGetter: (params) => params.data?.ends_at ?? '—',
       },
+      ...(canManage
+        ? [
+            {
+              headerName: t('actions'),
+              filter: false,
+              sortable: false,
+              width: 100,
+              pinned: (i18n.language === 'ar' ? 'left' : 'right') as 'left' | 'right',
+              cellRenderer: (params: { data?: UserSubscription }) => {
+                const item = params.data
+                if (!item) return null
+                return (
+                  <div className="flex items-center gap-1 h-full">
+                    <Button size="icon-sm" variant="ghost" title={t('editSubscription')} onClick={() => openEdit(item)}>
+                      <Pencil className="h-3.5 w-3.5" />
+                    </Button>
+                    {item.status === 'active' || item.status === 'trial' ? (
+                      <Button
+                        size="icon-sm"
+                        variant="ghost"
+                        title={t('cancelSubscription')}
+                        onClick={() => setCancelling(item)}
+                      >
+                        <Ban className="h-3.5 w-3.5 text-destructive" />
+                      </Button>
+                    ) : null}
+                  </div>
+                )
+              },
+            } satisfies ColDef<UserSubscription>,
+          ]
+        : []),
     ],
-    [t]
+    [t, i18n.language, canManage]
   )
 
   return (
     <div className="space-y-4 pt-2 border-t border-border/40">
       <div className="flex items-center justify-between gap-2">
         <h3 className="text-sm font-bold text-foreground">{t('subscriptions')}</h3>
-        <Badge variant={user.is_subscribed ? 'success' : 'secondary'} dot>
-          {user.is_subscribed ? t('subscribed') : t('notSubscribed')}
-        </Badge>
+        <div className="flex items-center gap-2">
+          <Badge variant={user.is_subscribed ? 'success' : 'secondary'} dot>
+            {user.is_subscribed ? t('subscribed') : t('notSubscribed')}
+          </Badge>
+          {canManage ? (
+            <Button size="sm" onClick={openGrant} className="gap-1.5">
+              <Plus className="h-3.5 w-3.5" />
+              {t('grantSubscription')}
+            </Button>
+          ) : null}
+        </div>
       </div>
+
+      {manageable && user.account_owner_id ? (
+        <p className="text-xs text-muted-foreground rounded-lg bg-muted/40 border border-border/50 p-3">
+          {t('familyMemberSubscriptionNote')}
+        </p>
+      ) : null}
 
       {user.subscription_access ? <SubscriptionAccessBlock access={user.subscription_access} /> : null}
 
@@ -243,9 +321,23 @@ export function UserSubscriptionsPanel({ user }: UserSubscriptionsPanelProps) {
                   <p className="text-xs text-muted-foreground mt-1">{active.package.description}</p>
                 ) : null}
               </div>
-              <Badge variant={getSubscriptionStatusVariant(active.status)} dot>
-                {active.status_label}
-              </Badge>
+              <div className="flex items-center gap-2">
+                <Badge variant={getSubscriptionStatusVariant(active.status)} dot>
+                  {active.status_label}
+                </Badge>
+                {canManage ? (
+                  <>
+                    <Button size="sm" variant="outline" className="gap-1.5" onClick={() => openEdit(active)}>
+                      <Pencil className="h-3.5 w-3.5" />
+                      {t('edit')}
+                    </Button>
+                    <Button size="sm" variant="destructive" className="gap-1.5" onClick={() => setCancelling(active)}>
+                      <Ban className="h-3.5 w-3.5" />
+                      {t('cancelSubscription')}
+                    </Button>
+                  </>
+                ) : null}
+              </div>
             </div>
             <div className="grid grid-cols-2 sm:grid-cols-3 gap-3">
               <DetailField label={t('billingPeriod')} value={active.billing_option.billing_period_label} t={t} />
@@ -341,6 +433,29 @@ export function UserSubscriptionsPanel({ user }: UserSubscriptionsPanelProps) {
           />
         )}
       </div>
+
+      {canManage ? (
+        <>
+          <UserSubscriptionFormModal
+            open={formOpen}
+            onOpenChange={setFormOpen}
+            userId={user.id}
+            subscription={editing}
+          />
+          <ModalStatus
+            open={cancelling !== null}
+            onOpenChange={(open) => !open && setCancelling(null)}
+            type="delete"
+            title={t('cancelSubscription')}
+            description={t('cancelSubscriptionConfirm')}
+            agreeLabel={t('cancelSubscription')}
+            cancelLabel={t('cancel')}
+            onAgreeButtonClick={confirmCancel}
+            onCancelButtonClick={() => setCancelling(null)}
+            loading={updateMutation.isPending}
+          />
+        </>
+      ) : null}
     </div>
   )
 }
