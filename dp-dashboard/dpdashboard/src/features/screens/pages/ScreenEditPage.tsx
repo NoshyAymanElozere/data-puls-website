@@ -221,6 +221,7 @@ export default function ScreenEditPage() {
                     <ThemeFieldsPanel
                       mode={m}
                       isGlobal={isGlobal}
+                      screenKey={screen.key}
                       globalValues={globalModes ? globalModes[m] : null}
                       disabled={readOnly}
                     />

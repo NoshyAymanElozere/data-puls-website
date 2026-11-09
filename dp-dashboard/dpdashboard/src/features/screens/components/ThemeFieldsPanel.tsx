@@ -6,7 +6,7 @@ import { cn } from '@/shared/utils/utils'
 import type { ScreenThemeValues } from '../api/useScreens'
 import {
   HEX_COLOR_REGEX,
-  THEME_COLOR_FIELDS,
+  colorFieldsFor,
   THEME_FIELD_LABEL_KEYS,
   type ThemeColorField,
   type ThemeMode,
@@ -16,6 +16,8 @@ import type { ScreenFormValues } from '../pages/validationSchema'
 interface ThemeFieldsPanelProps {
   mode: ThemeMode
   isGlobal: boolean
+  /** Screen key: the bottom bar has two extra colors. */
+  screenKey?: string
   /** Global theme values for this mode (null for the global row itself). */
   globalValues: ScreenThemeValues | null
   disabled?: boolean
@@ -172,12 +174,12 @@ function ColorField({
   )
 }
 
-export function ThemeFieldsPanel({ mode, isGlobal, globalValues, disabled }: ThemeFieldsPanelProps) {
+export function ThemeFieldsPanel({ mode, isGlobal, screenKey, globalValues, disabled }: ThemeFieldsPanelProps) {
   const g = globalValues ?? {}
 
   return (
     <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
-      {THEME_COLOR_FIELDS.map((field) => (
+      {colorFieldsFor(screenKey).map((field) => (
         <ColorField
           key={`${mode}-${field}`}
           mode={mode}

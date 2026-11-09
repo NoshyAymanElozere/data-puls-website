@@ -895,6 +895,8 @@ export const ar = {
   screenFieldIconColor: 'لون الأيقونات',
   screenFieldButtonColor: 'لون الأزرار',
   screenFieldButtonTextColor: 'لون نص الأزرار',
+  screenFieldHomeIconBackgroundColor: 'خلفية زر الرئيسية',
+  screenFieldNavBackgroundColor: 'خلفية الشريط السفلي',
   screenNewImage: 'جديدة',
   screenReplaceImage: 'استبدال الصورة',
   screenUndoUpload: 'تراجع',

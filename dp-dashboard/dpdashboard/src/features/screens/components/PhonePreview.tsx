@@ -25,6 +25,8 @@ const FALLBACK_COLORS: Record<ThemeMode, Record<ThemeColorField, string>> = {
     icon_color: '#736A86',
     button_color: '#F07522',
     button_text_color: '#FFFFFF',
+    home_icon_background_color: '#F07522',
+    nav_background_color: '#FFFFFF',
   },
   dark: {
     primary_color: '#F07522',
@@ -37,6 +39,8 @@ const FALLBACK_COLORS: Record<ThemeMode, Record<ThemeColorField, string>> = {
     icon_color: '#B5ADC6',
     button_color: '#F07522',
     button_text_color: '#FFFFFF',
+    home_icon_background_color: '#F07522',
+    nav_background_color: '#221A33',
   },
 }
 

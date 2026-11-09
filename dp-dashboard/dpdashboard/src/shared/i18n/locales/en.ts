@@ -895,6 +895,8 @@ export const en = {
   screenFieldIconColor: 'Icon color',
   screenFieldButtonColor: 'Button background',
   screenFieldButtonTextColor: 'Button text',
+  screenFieldHomeIconBackgroundColor: 'Home icon background',
+  screenFieldNavBackgroundColor: 'Nav background',
   screenNewImage: 'New',
   screenReplaceImage: 'Replace image',
   screenUndoUpload: 'Undo',

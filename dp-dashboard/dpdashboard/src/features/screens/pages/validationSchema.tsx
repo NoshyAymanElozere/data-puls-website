@@ -1,6 +1,6 @@
 import { z } from 'zod'
 import type { ScreenDetail, ScreenThemeValues } from '../api/useScreens'
-import { HEX_COLOR_REGEX, THEME_COLOR_FIELDS, THEME_MODES } from '../constants'
+import { BOTTOM_NAV_COLOR_FIELDS, HEX_COLOR_REGEX, THEME_COLOR_FIELDS, THEME_MODES } from '../constants'
 
 /** '' means "not overridden / inherit from global". */
 const colorSchema = z
@@ -19,6 +19,9 @@ const themeModeSchema = z.object({
   icon_color: colorSchema,
   button_color: colorSchema,
   button_text_color: colorSchema,
+  // Bottom bar screen only.
+  home_icon_background_color: colorSchema,
+  nav_background_color: colorSchema,
   // Not editable in the dashboard: the stored values are sent back unchanged.
   font_family: z.string(),
   font_scale: z.string(),
@@ -54,7 +57,7 @@ export type ScreenFormValues = z.infer<typeof screenSchema>
 function toModeFormValues(values: ScreenThemeValues | [] | null | undefined): ThemeModeFormValues {
   const source = normalizeThemeMode(values)
   const result = {} as ThemeModeFormValues
-  for (const field of THEME_COLOR_FIELDS) {
+  for (const field of [...THEME_COLOR_FIELDS, ...BOTTOM_NAV_COLOR_FIELDS]) {
     result[field] = (source[field] ?? '').toString().toUpperCase()
   }
   result.font_family = (source.font_family ?? '').toString()

@@ -25,6 +25,8 @@ export interface ScreenThemeValues {
   icon_color?: string | null
   button_color?: string | null
   button_text_color?: string | null
+  home_icon_background_color?: string | null
+  nav_background_color?: string | null
   font_family?: string | null
   font_scale?: number | string | null
   background_image?: string | null
