@@ -1,5 +1,6 @@
 import { useState } from 'react'
 import { useTranslation } from 'react-i18next'
+import * as DialogPrimitive from '@radix-ui/react-dialog'
 import {
   Calendar,
   CheckCircle2,
@@ -353,26 +354,37 @@ export function InvoiceDetailModal({
       </Dialog>
 
       {/* Lightbox / Image Zoom Modal */}
-      {isImageZoomed && imageUrl && (
-        <div
-          className="fixed inset-0 z-50 bg-black/80 backdrop-blur-md flex items-center justify-center p-4"
-          onClick={() => setIsImageZoomed(false)}
-        >
-          <button
-            type="button"
+      {/* Rendered as a nested Radix dialog so it portals above the invoice dialog */}
+      <DialogPrimitive.Root
+        open={isImageZoomed && !!imageUrl}
+        onOpenChange={setIsImageZoomed}
+      >
+        <DialogPrimitive.Portal>
+          <DialogPrimitive.Overlay className="fixed inset-0 z-[100] bg-black/80 backdrop-blur-md" />
+          <DialogPrimitive.Content
+            aria-describedby={undefined}
+            className="fixed inset-0 z-[100] flex items-center justify-center p-4 outline-none"
             onClick={() => setIsImageZoomed(false)}
-            className="absolute top-6 right-6 h-10 w-10 rounded-full bg-white/20 hover:bg-white/40 text-white flex items-center justify-center cursor-pointer transition-colors"
           >
-            <X className="h-6 w-6" />
-          </button>
-          <img
-            src={resolveMediaUrl(imageUrl)}
-            alt={invoice.invoice_number}
-            className="max-h-[90vh] max-w-[90vw] object-contain rounded-2xl shadow-2xl"
-            onClick={(e) => e.stopPropagation()}
-          />
-        </div>
-      )}
+            <DialogPrimitive.Title className="sr-only">{t('receiptImage')}</DialogPrimitive.Title>
+            <button
+              type="button"
+              onClick={() => setIsImageZoomed(false)}
+              className="absolute top-6 right-6 h-10 w-10 rounded-full bg-white/20 hover:bg-white/40 text-white flex items-center justify-center cursor-pointer transition-colors"
+            >
+              <X className="h-6 w-6" />
+            </button>
+            {imageUrl && (
+              <img
+                src={resolveMediaUrl(imageUrl)}
+                alt={invoice?.invoice_number ?? ''}
+                className="max-h-[90vh] max-w-[90vw] object-contain rounded-2xl shadow-2xl"
+                onClick={(e) => e.stopPropagation()}
+              />
+            )}
+          </DialogPrimitive.Content>
+        </DialogPrimitive.Portal>
+      </DialogPrimitive.Root>
     </>
   )
 }
