@@ -30,9 +30,9 @@ export const THEME_COLOR_FIELDS = [
   'button_text_color',
 ] as const
 
-/** Colors only the bottom bar screen has. Empty = global button color / card color. */
+/** Colors only the bottom bar screen has. Empty = global button / primary / card color. Home button is a start→end gradient. */
 export const BOTTOM_NAV_SCREEN_KEY = 'bottom_navigation'
-export const BOTTOM_NAV_COLOR_FIELDS = ['home_icon_background_color', 'nav_background_color'] as const
+export const BOTTOM_NAV_COLOR_FIELDS = ['home_icon_background_color', 'home_icon_background_end_color', 'nav_background_color'] as const
 export type BottomNavColorField = (typeof BOTTOM_NAV_COLOR_FIELDS)[number]
 
 export type ThemeColorField = (typeof THEME_COLOR_FIELDS)[number] | BottomNavColorField
@@ -68,6 +68,7 @@ export const THEME_FIELD_LABEL_KEYS: Record<ThemeColorField, string> = {
   button_color: 'screenFieldButtonColor',
   button_text_color: 'screenFieldButtonTextColor',
   home_icon_background_color: 'screenFieldHomeIconBackgroundColor',
+  home_icon_background_end_color: 'screenFieldHomeIconBackgroundEndColor',
   nav_background_color: 'screenFieldNavBackgroundColor',
 }
 

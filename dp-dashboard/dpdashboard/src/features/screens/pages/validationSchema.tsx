@@ -21,6 +21,7 @@ const themeModeSchema = z.object({
   button_text_color: colorSchema,
   // Bottom bar screen only.
   home_icon_background_color: colorSchema,
+  home_icon_background_end_color: colorSchema,
   nav_background_color: colorSchema,
   // Not editable in the dashboard: the stored values are sent back unchanged.
   font_family: z.string(),
