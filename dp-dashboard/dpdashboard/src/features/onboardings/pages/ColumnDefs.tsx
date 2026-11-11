@@ -27,7 +27,28 @@ export function getOnboardingsColumnDefs({
 }: ColumnDefsProps): ColDef[] {
   return [
     {
-      headerName: t('images') || 'Images',
+      headerName: t('onboardingMediaType') || 'Type',
+      field: 'type',
+      filter: false,
+      sortable: false,
+      width: 110,
+      cellRenderer: (params: { data?: Onboarding }) => {
+        const type = params.data?.type ?? 'image'
+        return (
+          <span
+            className={
+              type === 'video'
+                ? 'inline-flex items-center rounded-lg px-2 py-0.5 text-xs font-bold bg-violet-500/10 text-violet-600'
+                : 'inline-flex items-center rounded-lg px-2 py-0.5 text-xs font-bold bg-sky-500/10 text-sky-600'
+            }
+          >
+            {t(type)}
+          </span>
+        )
+      },
+    },
+    {
+      headerName: t('onboardingMedia') || 'Media',
       filter: false,
       sortable: false,
       flex: 1,
@@ -36,6 +57,18 @@ export function getOnboardingsColumnDefs({
         <div className="flex items-center gap-1.5 h-full py-1">
           {ONBOARDING_IMAGE_FIELDS.map((field) => {
             const url = params.data?.[`${field}_url`]
+            if (url && params.data?.type === 'video') {
+              return (
+                <video
+                  key={field}
+                  src={url}
+                  muted
+                  playsInline
+                  preload="metadata"
+                  className="h-9 w-9 rounded-lg object-cover bg-muted border border-border/60"
+                />
+              )
+            }
             return url ? (
               <img
                 key={field}

@@ -1,6 +1,6 @@
 import React, { useState, useRef } from 'react'
 import { useFormContext, Controller } from 'react-hook-form'
-import { UploadCloud, X, Image as ImageIcon } from 'lucide-react'
+import { UploadCloud, X, Image as ImageIcon, Video as VideoIcon } from 'lucide-react'
 import { useTranslation } from 'react-i18next'
 import { cn } from '@/shared/utils/utils'
 
@@ -11,6 +11,10 @@ interface ImageUploadProps {
   currentImageUrl?: string
   className?: string
   aspectRatio?: string // e.g. "aspect-video", "aspect-square", "h-28 w-44"
+  /** What the field accepts and previews. Defaults to image. */
+  mediaType?: 'image' | 'video'
+  /** Overrides the size/format hint under the upload prompt. */
+  hint?: string
 }
 
 export function ImageUpload({
@@ -19,8 +23,11 @@ export function ImageUpload({
   disabled = false,
   currentImageUrl,
   className,
-  aspectRatio = "h-32 w-full"
+  aspectRatio = "h-32 w-full",
+  mediaType = 'image',
+  hint,
 }: ImageUploadProps) {
+  const isVideo = mediaType === 'video'
   const { t } = useTranslation()
   const { control } = useFormContext()
   const fileInputRef = useRef<HTMLInputElement>(null)
@@ -45,6 +52,11 @@ export function ImageUpload({
           const file = e.target.files?.[0]
           if (file) {
             onChange(file)
+            if (isVideo) {
+              // Object URLs avoid base64-encoding large videos into memory.
+              setPreview(URL.createObjectURL(file))
+              return
+            }
             const reader = new FileReader()
             reader.onloadend = () => {
               setPreview(reader.result as string)
@@ -91,18 +103,29 @@ export function ImageUpload({
                 type="file"
                 ref={fileInputRef}
                 onChange={handleFileChange}
-                accept="image/*"
+                accept={isVideo ? 'video/mp4,video/webm,video/quicktime' : 'image/*'}
                 className="hidden"
                 disabled={disabled}
               />
 
               {preview ? (
                 <div className="relative w-full h-full group">
-                  <img
-                    src={preview}
-                    alt="upload preview"
-                    className="w-full h-full object-cover transition-transform duration-300 hover:scale-102"
-                  />
+                  {isVideo ? (
+                    <video
+                      src={preview}
+                      className="w-full h-full object-contain bg-black/5"
+                      muted
+                      loop
+                      autoPlay
+                      playsInline
+                    />
+                  ) : (
+                    <img
+                      src={preview}
+                      alt="upload preview"
+                      className="w-full h-full object-cover transition-transform duration-300 hover:scale-102"
+                    />
+                  )}
                   {!disabled && (
                     <div className="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center duration-200">
                       <button
@@ -117,9 +140,13 @@ export function ImageUpload({
                 </div>
               ) : disabled ? (
                 <div className="flex flex-col items-center justify-center p-4 text-center text-gray-400">
-                  <ImageIcon className="h-6 w-6 mb-1.5 opacity-40 text-gray-400" />
+                  {isVideo ? (
+                    <VideoIcon className="h-6 w-6 mb-1.5 opacity-40 text-gray-400" />
+                  ) : (
+                    <ImageIcon className="h-6 w-6 mb-1.5 opacity-40 text-gray-400" />
+                  )}
                   <span className="text-xs font-semibold text-gray-400">
-                    {t('noImage') || 'No image available'}
+                    {isVideo ? t('noVideo') || 'No video available' : t('noImage') || 'No image available'}
                   </span>
                 </div>
               ) : (
@@ -128,10 +155,10 @@ export function ImageUpload({
                     <UploadCloud className="h-6 w-6 text-gray-400" />
                   </div>
                   <span className="text-xs font-bold text-gray-700">
-                    {t('uploadImage') || 'Upload Image'}
+                    {isVideo ? t('uploadVideo') || 'Upload Video' : t('uploadImage') || 'Upload Image'}
                   </span>
                   <span className="text-[10px] text-gray-400 mt-1">
-                    PNG, JPG or GIF up to 5MB
+                    {hint ?? (isVideo ? 'MP4, WebM or MOV' : 'PNG, JPG or GIF up to 5MB')}
                   </span>
                 </div>
               )}

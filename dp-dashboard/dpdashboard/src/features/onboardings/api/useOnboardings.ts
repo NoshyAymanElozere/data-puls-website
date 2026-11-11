@@ -18,10 +18,16 @@ export const ONBOARDING_IMAGE_FIELDS = [
 
 export type OnboardingImageField = (typeof ONBOARDING_IMAGE_FIELDS)[number]
 
+export const ONBOARDING_MEDIA_TYPES = ['image', 'video'] as const
+
+export type OnboardingMediaType = (typeof ONBOARDING_MEDIA_TYPES)[number]
+
 export interface Onboarding {
   id: number
   is_active: boolean
   sort_order: number
+  type: OnboardingMediaType
+  type_label?: string
   image_ar_light_url?: string | null
   image_ar_dark_url?: string | null
   image_en_light_url?: string | null
@@ -33,12 +39,14 @@ export interface Onboarding {
 export type OnboardingFormData = {
   sort_order: number
   is_active: boolean
+  type: OnboardingMediaType
 } & Partial<Record<OnboardingImageField, File | null>>
 
 function buildOnboardingFormData(payload: OnboardingFormData, isUpdate = false): FormData {
   const formData = createPutFormData({
     sort_order: payload.sort_order,
     is_active: payload.is_active,
+    type: payload.type,
   })
 
   if (!isUpdate) {
