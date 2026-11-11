@@ -2,7 +2,7 @@ import { Button } from '@/shared/components/button'
 import { StatusToggle } from '@/shared/components/StatusToggle'
 import type { ColDef } from 'ag-grid-community'
 import { Eye, Pencil, Trash2 } from 'lucide-react'
-import { onboardingMediaFields, type Onboarding } from '../api/useOnboardings'
+import { ONBOARDING_IMAGE_FIELDS, type Onboarding } from '../api/useOnboardings'
 
 interface ColumnDefsProps {
   t: (key: string) => string
@@ -31,27 +31,19 @@ export function getOnboardingsColumnDefs({
       field: 'type',
       filter: false,
       sortable: false,
-      width: 170,
+      width: 110,
       cellRenderer: (params: { data?: Onboarding }) => {
         const type = params.data?.type ?? 'image'
-        const mode = params.data?.video_mode
         return (
-          <div className="flex items-center gap-1.5 h-full">
-            <span
-              className={
-                type === 'video'
-                  ? 'inline-flex items-center rounded-lg px-2 py-0.5 text-xs font-bold bg-violet-500/10 text-violet-600'
-                  : 'inline-flex items-center rounded-lg px-2 py-0.5 text-xs font-bold bg-sky-500/10 text-sky-600'
-              }
-            >
-              {t(type)}
-            </span>
-            {type === 'video' && mode && (
-              <span className="text-[11px] font-semibold text-muted-foreground">
-                {t(mode === 'shared' ? 'onboardingVideoModeSharedShort' : 'onboardingVideoModePerLanguageShort')}
-              </span>
-            )}
-          </div>
+          <span
+            className={
+              type === 'video'
+                ? 'inline-flex items-center rounded-lg px-2 py-0.5 text-xs font-bold bg-violet-500/10 text-violet-600'
+                : 'inline-flex items-center rounded-lg px-2 py-0.5 text-xs font-bold bg-sky-500/10 text-sky-600'
+            }
+          >
+            {t(type)}
+          </span>
         )
       },
     },
@@ -63,7 +55,7 @@ export function getOnboardingsColumnDefs({
       minWidth: 200,
       cellRenderer: (params: { data?: Onboarding }) => (
         <div className="flex items-center gap-1.5 h-full py-1">
-          {onboardingMediaFields(params.data?.type, params.data?.video_mode).map((field) => {
+          {ONBOARDING_IMAGE_FIELDS.map((field) => {
             const url = params.data?.[`${field}_url`]
             if (url && params.data?.type === 'video') {
               return (

@@ -22,48 +22,16 @@ export const ONBOARDING_MEDIA_TYPES = ['image', 'video'] as const
 
 export type OnboardingMediaType = (typeof ONBOARDING_MEDIA_TYPES)[number]
 
-/** per_language: one optional video per language. shared: one video for both languages. */
-export const ONBOARDING_VIDEO_MODES = ['per_language', 'shared'] as const
-
-export type OnboardingVideoMode = (typeof ONBOARDING_VIDEO_MODES)[number]
-
-export const ONBOARDING_VIDEO_FIELDS = ['video', 'video_ar', 'video_en'] as const
-
-export type OnboardingVideoField = (typeof ONBOARDING_VIDEO_FIELDS)[number]
-
-export type OnboardingMediaField = OnboardingImageField | OnboardingVideoField
-
-export const ONBOARDING_MEDIA_FIELDS: readonly OnboardingMediaField[] = [
-  ...ONBOARDING_IMAGE_FIELDS,
-  ...ONBOARDING_VIDEO_FIELDS,
-]
-
-/** Upload fields a slide of this type and video mode uses (the backend rejects the others). */
-export function onboardingMediaFields(
-  type: OnboardingMediaType | undefined,
-  videoMode: OnboardingVideoMode | null | undefined
-): readonly OnboardingMediaField[] {
-  if (type !== 'video') return ONBOARDING_IMAGE_FIELDS
-  if (videoMode === 'shared') return ['video']
-  if (videoMode === 'per_language') return ['video_ar', 'video_en']
-  return []
-}
-
 export interface Onboarding {
   id: number
   is_active: boolean
   sort_order: number
   type: OnboardingMediaType
   type_label?: string
-  video_mode?: OnboardingVideoMode | null
-  video_mode_label?: string | null
   image_ar_light_url?: string | null
   image_ar_dark_url?: string | null
   image_en_light_url?: string | null
   image_en_dark_url?: string | null
-  video_url?: string | null
-  video_ar_url?: string | null
-  video_en_url?: string | null
   created_at?: string
   updated_at?: string
 }
@@ -72,26 +40,20 @@ export type OnboardingFormData = {
   sort_order: number
   is_active: boolean
   type: OnboardingMediaType
-  video_mode?: OnboardingVideoMode | null
-} & Partial<Record<OnboardingMediaField, File | null>>
+} & Partial<Record<OnboardingImageField, File | null>>
 
 function buildOnboardingFormData(payload: OnboardingFormData, isUpdate = false): FormData {
-  const isVideo = payload.type === 'video'
   const formData = createPutFormData({
     sort_order: payload.sort_order,
     is_active: payload.is_active,
     type: payload.type,
-    video_mode: isVideo ? payload.video_mode : null,
   })
 
   if (!isUpdate) {
     formData.delete('_method')
   }
 
-  // Only the active layout's files: the backend prohibits the other fields.
-  onboardingMediaFields(payload.type, payload.video_mode).forEach((field) =>
-    appendOptionalFile(formData, field, payload[field])
-  )
+  ONBOARDING_IMAGE_FIELDS.forEach((field) => appendOptionalFile(formData, field, payload[field]))
 
   return formData
 }
