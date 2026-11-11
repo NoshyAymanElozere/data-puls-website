@@ -1,23 +1,46 @@
 #!/usr/bin/env bash
-
+# Build the dashboard locally and publish only dist/ to the cPanel web folder.
+#
+#   npm run deploy:cpanel          (from dp-dashboard/dpdashboard)
+#
+# The server gets no source, no .git and no node_modules: just the built files.
+# The swap is near-atomic: upload to hirz.new, then rename. The previous release
+# is kept outside the web root (~/hirz-releases/prev) for a quick rollback:
+#   ssh herz-dashboard 'cd ~/public_html && mv hirz ~/hirz-releases/bad && mv ~/hirz-releases/prev hirz'
+#
+# Overridable: HERZ_DASHBOARD_HOST (ssh alias), HERZ_DASHBOARD_WEB_DIR, VITE_API_URL,
+# SKIP_INSTALL=1 to reuse the local node_modules.
 set -euo pipefail
 
-echo "=== Pulling latest changes ==="
-git pull --ff-only origin main
+cd "$(dirname "$0")/.."
 
-echo "=== Restoring source index.html ==="
-git checkout -- index.html
-
-echo "=== Building frontend ==="
+HOST="${HERZ_DASHBOARD_HOST:-herz-dashboard}"
+WEB_DIR="${HERZ_DASHBOARD_WEB_DIR:-public_html/hirz}"
 export VITE_API_URL="${VITE_API_URL:-https://herz-dashboard.am.prompita.com/admin}"
 
-npm ci --legacy-peer-deps
+echo "=== Building (API: $VITE_API_URL) ==="
+if [ "${SKIP_INSTALL:-0}" != "1" ]; then
+    npm ci --legacy-peer-deps --no-audit --no-fund
+fi
 npm run build
+test -f dist/index.html || { echo "dist/index.html missing, aborting" >&2; exit 1; }
 
-echo "=== Publishing dist to web root ==="
-cp -r dist/. .
+echo "=== Uploading dist to $HOST:~/$WEB_DIR ==="
+tar -C dist -czf - . | ssh -o BatchMode=yes -o ConnectTimeout=20 "$HOST" "
+set -euo pipefail
+cd ~
+web=\"$WEB_DIR\"
+new=\"\$web.new\"
+mkdir -p hirz-releases
+rm -rf \"\$new\"
+mkdir -p \"\$new\"
+tar -xzf - -C \"\$new\"
+test -f \"\$new/index.html\"
 
-echo "=== Cleaning build dependencies ==="
-rm -rf node_modules
+rm -rf hirz-releases/prev
+if [ -e \"\$web\" ]; then mv \"\$web\" hirz-releases/prev; fi
+mv \"\$new\" \"\$web\"
+echo \"Published: \$(ls \"\$web/assets\" | wc -l) asset files, \$(du -sh \"\$web\" | cut -f1)\"
+"
 
-echo "=== Deploy complete ==="
+echo "=== Dashboard deployed ==="
