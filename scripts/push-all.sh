@@ -5,6 +5,8 @@
 #   3. GitHub `hirz` monorepo (ahmdessam/hirz) main, by replacing only its Dashboard/ folder
 # Targets 2 and 3 have unrelated histories, so each gets a normal commit on top of its main
 # containing dp-dashboard/dpdashboard from HEAD (never force push).
+# Then deploys the dashboard over SSH (scripts/deploy.sh dashboard: local build, upload dist/).
+# SKIP_DEPLOY=1 pushes only. The backend deploys from its own push-all.sh in herz-backend/Backend.
 # Uses Git's OpenSSL backend because Windows schannel fails with CRYPT_E_REVOCATION_OFFLINE here.
 set -euo pipefail
 
@@ -51,3 +53,9 @@ tree="$(git write-tree)"
 unset GIT_INDEX_FILE
 rm -f "$index"
 push_tree hirz "$tree" "chore(Dashboard): sync $SHORT $SUBJECT"
+
+if [ "${SKIP_DEPLOY:-0}" = "1" ]; then
+    echo "SKIP_DEPLOY=1: not deploying."
+else
+    bash scripts/deploy.sh dashboard
+fi

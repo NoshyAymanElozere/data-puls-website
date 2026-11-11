@@ -18,6 +18,10 @@ It:
 
 Targets 2 and 3 have unrelated histories, so each gets a normal commit on top of its `main` with the content of `dp-dashboard/dpdashboard` from `HEAD`.
 
+4. Deploys the dashboard over SSH (`scripts/deploy.sh dashboard`: builds locally, uploads only `dist/` to `herz-dashboard:~/public_html/hirz`). `SKIP_DEPLOY=1 bash scripts/push-all.sh` pushes without deploying.
+
+The backend's `herz-backend/Backend/scripts/push-all.sh` deploys the backend the same way (SSH pull, migrate, caches, queue restart).
+
 Rules:
 - **Never force-push** to any remote.
 - Only committed `HEAD` is pushed; commit first.

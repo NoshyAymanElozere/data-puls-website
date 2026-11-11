@@ -16,8 +16,13 @@ Then, without asking:
 
 1. Commit each repo that changed, following that repo's commit rules.
 2. Push each one to all its remotes:
-   - Dashboard: `bash scripts/push-all.sh` from `herz-frontend/` (GitHub origin, GitLab herz-front, hirz `Dashboard/`).
-   - Backend: `bash scripts/push-all.sh` from `herz-backend/Backend/` (GitLab herz, hirz `Backend/`).
-3. End with a **"Server pull"** section listing what the server must pull: each repo/folder that changed
-   (backend, dashboard, or both) with its commit, plus any follow-up steps the change needs
-   (migrations, seeders, `composer install`, cache clear, dashboard rebuild).
+   - Dashboard: `bash scripts/push-all.sh` from `herz-frontend/` (GitHub origin, GitLab herz-front, hirz `Dashboard/`),
+     then it deploys the dashboard over SSH.
+   - Backend: `bash scripts/push-all.sh` from `herz-backend/Backend/` (GitLab herz, hirz `Backend/`),
+     then it deploys the backend over SSH (pull, composer if needed, migrate, caches, queue restart).
+   - `SKIP_DEPLOY=1` before either command pushes without deploying.
+3. The push scripts already deploy. To redeploy without pushing: `bash scripts/deploy.sh backend|dashboard|all`
+   from `herz-frontend/` (backend: pull, composer install when needed, migrate, config cache, queue restart;
+   dashboard: `npm run deploy:cpanel`), or `bash scripts/deploy.sh` from `herz-backend/Backend/` for the backend.
+4. End with a **"Deploy"** section: each repo that changed with its commit, whether the deploy succeeded,
+   and any step the script does not cover (seeders, `.env` changes, server limits) that still needs doing by hand.
