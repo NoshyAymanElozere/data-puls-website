@@ -18,6 +18,19 @@ HOST="${HERZ_DASHBOARD_HOST:-herz-dashboard}"
 WEB_DIR="${HERZ_DASHBOARD_WEB_DIR:-public_html/hirz}"
 export VITE_API_URL="${VITE_API_URL:-https://herz-dashboard.am.prompita.com/admin}"
 
+# Local builds ship the working tree, so refuse uncommitted dashboard changes
+# (ALLOW_DIRTY=1 to override). Uses the herz-frontend repo, not the stale nested .git.
+if [ "${ALLOW_DIRTY:-0}" != "1" ] && [ -d ../../.git ]; then
+    repo=(git -C ../..)
+    if ! "${repo[@]}" diff --quiet --ignore-cr-at-eol HEAD -- dp-dashboard/dpdashboard \
+        || [ -n "$("${repo[@]}" ls-files --others --exclude-standard -- dp-dashboard/dpdashboard/src)" ]; then
+        echo "Uncommitted dashboard changes; commit them first or set ALLOW_DIRTY=1:" >&2
+        "${repo[@]}" status --short -- dp-dashboard/dpdashboard >&2
+        exit 1
+    fi
+    echo "=== Deploying commit $("${repo[@]}" log -1 --format='%h %s') ==="
+fi
+
 echo "=== Building (API: $VITE_API_URL) ==="
 if [ "${SKIP_INSTALL:-0}" != "1" ]; then
     npm ci --legacy-peer-deps --no-audit --no-fund
